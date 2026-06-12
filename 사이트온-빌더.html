@@ -20,6 +20,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 .logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;letter-spacing:-.3px}
 .logo .dot{width:22px;height:22px;border-radius:6px;background:var(--accent);display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:#fff}
 .logo small{color:var(--sub);font-weight:500;font-size:11px;margin-left:2px}
+.mode-badge{display:inline-flex;align-items:center;min-height:26px;border:1px solid var(--line);border-radius:999px;background:var(--panel2);color:var(--sub);padding:0 10px;font-size:11.5px;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
 .topbar .spacer{flex:1}
 .vp-group{display:flex;background:var(--panel2);border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .vp-group button{background:none;border:none;color:var(--sub);padding:7px 12px;cursor:pointer;font-size:13px;transition:.2s}
@@ -113,6 +114,21 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
 .add-btn:hover{border-color:var(--accent);color:var(--accent)}
 
 .hint{font-size:11px;color:var(--sub);line-height:1.6;margin-top:10px;background:var(--panel2);border-radius:8px;padding:9px 11px}
+.export-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.export-actions .add-btn{margin-top:0}
+.export-root-row{display:block}
+.export-root-row.off{display:none}
+.mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:4px}
+.mode-tabs button{border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--sub);font:inherit;font-size:12.5px;font-weight:800;padding:9px 8px;cursor:pointer;transition:.18s}
+.mode-tabs button.on{border-color:var(--accent);background:rgba(91,124,250,.16);color:#fff}
+.page-summary{margin-top:10px;color:var(--sub);font-size:11.5px;line-height:1.55}
+.page-list{display:flex;flex-direction:column;gap:6px;margin-top:10px;max-height:310px;overflow:auto;padding-right:3px}
+.page-item{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--txt);padding:8px 9px;text-align:left;font:inherit;cursor:pointer;transition:.15s}
+.page-item:hover{border-color:#3d4453}
+.page-item.on{border-color:var(--accent);box-shadow:0 0 0 1px rgba(91,124,250,.2) inset}
+.page-item b{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.page-item small{color:var(--sub);font-size:10.5px;white-space:nowrap}
+.page-item .page-kind{font-size:10px;color:var(--sub);border:1px solid var(--line);border-radius:999px;padding:2px 6px}
 
 /* 이미지 업로드 */
 .img-drop{border:2px dashed var(--line);border-radius:10px;min-height:84px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;font-size:12.5px;color:var(--sub);transition:.2s;background-size:cover;background-position:center;margin-top:4px}
@@ -147,6 +163,7 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
 
 <div class="topbar">
   <div class="logo"><span class="dot">온</span>사이트온 빌더<small>BETA</small></div>
+  <span class="mode-badge" id="modeBadge">원페이지</span>
   <div class="spacer"></div>
   <div class="vp-group">
     <button class="on" data-vp="desktop" title="데스크톱">🖥️ PC</button>
@@ -166,6 +183,44 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
 
 <div class="app">
   <aside class="sidebar">
+
+    <div class="sec open" id="v4ModePanel">
+      <div class="sec-head"><span class="ico">v4</span><b>사이트 모드 · 페이지</b><span class="chev">›</span></div>
+      <div class="sec-body">
+        <div class="mode-tabs">
+          <button type="button" id="modeOnepage">원페이지</button>
+          <button type="button" id="modeMultipage">멀티페이지</button>
+        </div>
+        <div class="page-summary" id="v4Summary"></div>
+        <div class="page-list" id="v4PageList"></div>
+        <button class="add-btn" type="button" id="v4CopySchema">v4 사이트 JSON 복사</button>
+        <div class="hint">멀티페이지는 현재 원페이지 내용을 비파괴로 분기해 상세 페이지, 미리보기 라우팅, sitemap/robots 포함 ZIP 내보내기를 생성합니다.</div>
+      </div>
+    </div>
+
+    <div class="sec open" id="exportPanel">
+      <div class="sec-head"><span class="ico">⬇</span><b>저장 · 내보내기</b><span class="chev">▶</span></div>
+      <div class="sec-body">
+        <label class="fld">출력 형식</label>
+        <select id="f_export_format">
+          <option value="auto">자동 — 현재 사이트 모드 기준</option>
+          <option value="full-html">풀 HTML 파일 (.html)</option>
+          <option value="static-html-zip">정적 HTML ZIP (.zip)</option>
+          <option value="wp-theme-zip">워드프레스 테마 ZIP (.zip)</option>
+        </select>
+        <label class="fld">파일명 (확장자 자동)</label>
+        <input type="text" id="f_export_filename" placeholder="예: gangnam-dental-homepage">
+        <div class="export-root-row" id="exportRootRow">
+          <label class="fld">ZIP 루트 폴더명</label>
+          <input type="text" id="f_export_root" placeholder="예: siteon-clinic-theme">
+        </div>
+        <div class="export-actions">
+          <button class="add-btn" type="button" id="btnSaveAs">저장 위치 선택</button>
+          <button class="add-btn" type="button" id="btnResetExportName">자동 이름</button>
+        </div>
+        <div class="hint" id="exportHint">파일명과 출력 형식을 정한 뒤 상단 내보내기를 누르거나, 지원 브라우저에서는 저장 위치를 직접 선택할 수 있습니다.</div>
+      </div>
+    </div>
 
     <div class="sec open">
       <div class="sec-head"><span class="ico">🏥</span><b>기본 정보</b><span class="chev">▶</span></div>
@@ -225,8 +280,8 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
           <span id="heroDropTxt">클릭해서 사진 업로드<br><small>병원 내부·외관 사진 권장</small></span>
         </div>
         <button class="add-btn" id="heroImgClear" style="display:none">배경 사진 제거</button>
-        <label class="fld">히어로 배경 영상 (유튜브 URL · 자동 무음 반복)</label>
-        <input type="text" id="f_hvideo" placeholder="https://youtu.be/...">
+        <label class="fld">히어로 배경 영상 (YouTube · MP4 · WebM)</label>
+        <input type="text" id="f_hvideo" placeholder="https://youtu.be/... 또는 https://example.com/hero.mp4">
         <label class="fld">유튜브 소개 영상 URL (본문 섹션)</label>
         <input type="text" id="f_video" placeholder="https://youtu.be/...">
         <div class="hint">💡 업로드한 사진은 자동 압축되어 내보내기 HTML 파일 안에 포함됩니다. 별도 호스팅이 필요 없습니다.</div>
@@ -271,6 +326,23 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
         <label class="fld">카드 라운드 (전역)</label>
         <select id="tk_rd"><option value="">스타일 기본</option><option value="0">각짐 0px</option><option value="8">8px</option><option value="16">16px</option><option value="24">24px</option></select>
         <button class="add-btn" id="tkReset">토큰 초기화</button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head"><span class="ico">v3</span><b>v3 설계 시스템</b><span class="chev">▶</span></div>
+      <div class="sec-body">
+        <div class="toggle-row"><span>v3 출력 레이어</span><label class="switch"><input type="checkbox" id="v3_enabled" checked><span class="slider-t"></span></label></div>
+        <label class="fld">섹션 리듬</label>
+        <select id="v3_sectionY"><option value="compact">콤팩트</option><option value="standard">스탠다드</option><option value="airy">여유롭게</option></select>
+        <label class="fld">컨테이너 폭</label>
+        <select id="v3_container"><option value="980">980px</option><option value="1160">1160px</option><option value="1320">1320px</option></select>
+        <label class="fld">모션 강도</label>
+        <select id="v3_motion"><option value="calm">Calm</option><option value="standard">Standard</option><option value="expressive">Expressive</option></select>
+        <div class="toggle-row"><span>본문 영상 facade</span><label class="switch"><input type="checkbox" id="v3_videoFacade" checked><span class="slider-t"></span></label></div>
+        <div class="toggle-row"><span>IndexedDB 이미지 백업</span><label class="switch"><input type="checkbox" id="v3_idbAssets" checked><span class="slider-t"></span></label></div>
+        <button class="add-btn" id="v3CopyRecipe">v3 레시피 JSON 복사</button>
+        <div class="hint">설계서 v3 기준으로 토큰 · 섹션 레시피 · 성능 보정 메타를 출력 HTML에 포함합니다.</div>
       </div>
     </div>
 
@@ -410,6 +482,10 @@ const state = {
   style:'soft',
   theme:'mint', font:'sans', motion:'soft', speed:100,
   customColor:'#5b7cfa', heroImg:null, logo:null, videoUrl:'', heroVideoUrl:'', naverUrl:'',
+  siteMode:'onepage', currentPage:'/',
+  export:{format:'auto',fileName:'',rootName:''},
+  v4:{schema:'siteon/site-v4'},
+  v3:{enabled:true,sectionY:'standard',containerMax:'1160',motionIntensity:'standard',videoFacade:true,idbAssets:true},
   typo:{headWeight:'',headLs:'',bodyLh:'',bodySize:'',btnRadius:''},
   tokens:{textColor:'',textOpacity:100,shadow:'',density:'',radius:''},
   blocks:[],
@@ -455,6 +531,883 @@ function customTheme(c){
 }
 function currentTheme(){ return state.theme==='custom' ? customTheme(state.customColor) : THEMES.find(t=>t.id===state.theme); }
 
+const V3_DEFAULTS={enabled:true,sectionY:'standard',containerMax:'1160',motionIntensity:'standard',videoFacade:true,idbAssets:true};
+const V3_SECTION_Y={compact:'clamp(56px,7vw,88px)',standard:'clamp(86px,10vw,144px)',airy:'clamp(118px,13vw,196px)'};
+const V3_MOTION={
+  calm:{duration:{fast:160,base:360,slow:720},distance:'18px',easing:'cubic-bezier(.22,1,.36,1)',stagger:'40ms'},
+  standard:{duration:{fast:180,base:520,slow:900},distance:'30px',easing:'cubic-bezier(.22,1,.36,1)',stagger:'70ms'},
+  expressive:{duration:{fast:220,base:700,slow:1200},distance:'44px',easing:'cubic-bezier(.16,1,.3,1)',stagger:'90ms'}
+};
+function v3Settings(){
+  state.v3=Object.assign({},V3_DEFAULTS,state.v3||{});
+  state.v3.containerMax=String(state.v3.containerMax||V3_DEFAULTS.containerMax);
+  return state.v3;
+}
+function hexToRgb(hex){
+  hex=String(hex||'#5b7cfa').trim();
+  if(/^#[0-9a-f]{3}$/i.test(hex)) hex='#'+hex.slice(1).split('').map(c=>c+c).join('');
+  if(!/^#[0-9a-f]{6}$/i.test(hex)) hex='#5b7cfa';
+  const n=parseInt(hex.slice(1),16);
+  return {r:n>>16,g:(n>>8)&255,b:n&255};
+}
+function rgbCss(hex,a){
+  const c=hexToRgb(hex);
+  return `rgba(${c.r},${c.g},${c.b},${a})`;
+}
+function buildV3Tokens(cfg){
+  const v=cfg.v3||v3Settings();
+  const th=cfg.theme||currentTheme();
+  const accent=th.primary||'#5b7cfa';
+  const bgAlt=th.soft||hexMix(accent,255,.92);
+  const ink=th.ink||hexMix(accent,0,.78);
+  const motion=V3_MOTION[v.motionIntensity]||V3_MOTION.standard;
+  const radius=(cfg.tokens&&cfg.tokens.radius!==''&&cfg.tokens.radius!=null)?Number(cfg.tokens.radius):8;
+  const text=(cfg.tokens&&cfg.tokens.textColor)||ink;
+  return {
+    schema:'siteon/tokens-v3',
+    version:3,
+    primitive:{
+      color:{accent,accentDeep:th.deep||hexMix(accent,0,.3),accentSoft:bgAlt,white:'#ffffff',black:'#10131a',line:'#e7ebf0'},
+      font:{sans:"'Pretendard Variable', Pretendard, -apple-system, sans-serif",serif:"'Noto Serif KR', serif",scale:[14,15,16,18,22,28,36,48]},
+      space:{unit:8,scale:{xs:4,sm:8,md:16,lg:24,xl:40,xxl:64}},
+      radius:{sm:4,md:radius,lg:Math.max(radius+8,16),pill:999},
+      shadow:{sm:'0 4px 14px rgba(20,40,60,.06)',md:'0 12px 32px rgba(20,40,60,.12)',lg:'0 24px 70px rgba(20,40,60,.18)'}
+    },
+    semantic:{
+      color:{accent,accentDeep:th.deep||hexMix(accent,0,.3),accentSoft:bgAlt,bg:'#ffffff',bgAlt,bgInverse:ink,textStrong:ink,textBody:text,textSubtle:'#5a6472',textOnInverse:'#ffffff',lineDefault:'#e7ebf0',lineStrong:'#ccd5df'},
+      font:{display:cfg.font==='serif'?"'Noto Serif KR', serif":"'Pretendard Variable', Pretendard, sans-serif",body:"'Pretendard Variable', Pretendard, -apple-system, sans-serif"},
+      layout:{containerMax:v.containerMax+'px',sectionY:V3_SECTION_Y[v.sectionY]||V3_SECTION_Y.standard}
+    },
+    component:{
+      section:{paddingY:V3_SECTION_Y[v.sectionY]||V3_SECTION_Y.standard,paddingX:'24px',containerMax:v.containerMax+'px'},
+      card:{radius:radius+'px',shadow:'var(--siteon-shadow-md)',border:'1px solid var(--siteon-line)'},
+      button:{radius:Math.max(radius,6)+'px',padding:'13px 24px'},
+      nav:{height:'72px',shrinkHeight:'58px'},
+      video:{facade:v.videoFacade,posterFirst:true}
+    },
+    motion:{intensity:v.motionIntensity,duration:motion.duration,distance:motion.distance,easing:motion.easing,stagger:motion.stagger,reducedMotion:'respect'},
+    guard:{contrastMin:4.5,assetStore:v.idbAssets?'indexedDB+metadata':'localStorage'}
+  };
+}
+function buildV3Recipe(cfg){
+  const v=cfg.v3||v3Settings();
+  const order=(state.sectionOrder&&state.sectionOrder.length?state.sectionOrder:ORDER_DEFAULT).slice();
+  const tokenRef=buildV3Tokens(cfg);
+  return {
+    schema:'siteon/recipe-v3',
+    version:3,
+    style:state.style||'soft',
+    tokenPreset:(state.theme||'mint')+'/'+(cfg.font||state.font||'sans'),
+    layout:{sectionY:v.sectionY,containerMax:v.containerMax},
+    motion:{preset:cfg.motion,intensity:v.motionIntensity},
+    sections:order.map((id,i)=>({id,order:i,enabled:id==='blocks'?!!(state.blocks&&state.blocks.length):state.sections[id]!==false,variant:(state.variants&&state.variants[id])||'default'})),
+    tokens:tokenRef
+  };
+}
+function safeJson(obj){ return JSON.stringify(obj).replace(/</g,'\\u003c'); }
+function v3CssVars(tokens){
+  const c=tokens.semantic.color, f=tokens.semantic.font, l=tokens.semantic.layout, m=tokens.motion;
+  return `
+:root{
+  --siteon-accent:${c.accent};
+  --siteon-accent-deep:${c.accentDeep};
+  --siteon-accent-soft:${c.accentSoft};
+  --siteon-bg:${c.bg};
+  --siteon-bg-alt:${c.bgAlt};
+  --siteon-bg-inverse:${c.bgInverse};
+  --siteon-text-strong:${c.textStrong};
+  --siteon-text-body:${c.textBody};
+  --siteon-text-subtle:${c.textSubtle};
+  --siteon-text-on-inverse:${c.textOnInverse};
+  --siteon-line:${c.lineDefault};
+  --siteon-line-strong:${c.lineStrong};
+  --siteon-font-display:${f.display};
+  --siteon-font-body:${f.body};
+  --siteon-container-max:${l.containerMax};
+  --siteon-section-y:${l.sectionY};
+  --siteon-radius-md:${tokens.primitive.radius.md}px;
+  --siteon-radius-lg:${tokens.primitive.radius.lg}px;
+  --siteon-shadow-sm:${tokens.primitive.shadow.sm};
+  --siteon-shadow-md:${tokens.primitive.shadow.md};
+  --siteon-shadow-lg:${tokens.primitive.shadow.lg};
+  --siteon-motion-distance:${m.distance};
+  --siteon-motion-base:${m.duration.base}ms;
+  --siteon-motion-slow:${m.duration.slow}ms;
+  --siteon-motion-ease:${m.easing};
+}
+html[data-siteon-version="3"] body{font-family:var(--siteon-font-body);word-break:keep-all;overflow-wrap:anywhere}
+html[data-siteon-version="3"] h1,html[data-siteon-version="3"] h2,html[data-siteon-version="3"] h3{font-family:var(--siteon-font-display);text-wrap:balance}
+html[data-siteon-version="3"] section{scroll-margin-top:84px}
+html[data-siteon-version="3"] body>section{padding-top:var(--siteon-section-y);padding-bottom:var(--siteon-section-y)}
+html[data-siteon-version="3"] img{max-width:100%}
+html[data-siteon-version="3"] [data-reveal]{will-change:transform,opacity;transition-timing-function:var(--siteon-motion-ease)}
+html[data-siteon-version="3"] [data-reveal].in{will-change:auto}
+.siteon-video-facade{position:relative;display:flex;align-items:center;justify-content:center;width:100%;min-height:280px;aspect-ratio:16/9;border:0;border-radius:inherit;overflow:hidden;background:#111 center/cover no-repeat;color:#fff;cursor:pointer}
+.siteon-video-facade:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.48))}
+.siteon-video-play{position:relative;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--siteon-accent);box-shadow:0 18px 46px ${rgbCss(c.accent,.32)};font-size:22px;line-height:1;padding-left:4px}
+.siteon-video-label{position:absolute;left:18px;bottom:16px;font-size:13px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.9)}
+@media (prefers-reduced-motion:reduce){html[data-siteon-version="3"] [data-reveal]{will-change:auto!important}}
+`;
+}
+function youtubeIdFromUrl(url){
+  const m=String(url||'').match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:embed\/|watch\?v=)|[?&]v=|shorts\/)([\w-]{6,})/);
+  return m?m[1]:'';
+}
+function youtubeEmbedNoCookie(src){
+  const id=youtubeIdFromUrl(src);
+  return id?`https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`:src;
+}
+function applyV3VideoFacade(doc,cfg){
+  if(!((cfg.v3||v3Settings()).videoFacade)) return;
+  doc.querySelectorAll('iframe[src*="youtube"],iframe[src*="youtu.be"]').forEach(frame=>{
+    if(frame.closest('.hero-video')) return;
+    const src=youtubeEmbedNoCookie(frame.getAttribute('src')||'');
+    const id=youtubeIdFromUrl(src);
+    const btn=doc.createElement('button');
+    btn.type='button';
+    btn.className='siteon-video-facade';
+    btn.setAttribute('data-video-src',src);
+    btn.setAttribute('aria-label','영상 재생');
+    if(id) btn.style.backgroundImage=`linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.45)),url(https://i.ytimg.com/vi/${id}/hqdefault.jpg)`;
+    btn.innerHTML='<span class="siteon-video-play">▶</span><span class="siteon-video-label">PLAY VIDEO</span>';
+    frame.replaceWith(btn);
+  });
+}
+function applyV3Output(html,cfg){
+  const v=cfg.v3||v3Settings();
+  if(!v.enabled) return html;
+  try{
+    const doc=new DOMParser().parseFromString(html,'text/html');
+    const tokens=cfg.tokensV3||buildV3Tokens(cfg);
+    const recipe=cfg.recipeV3||buildV3Recipe(cfg);
+    doc.documentElement.setAttribute('data-siteon-version','3');
+    doc.documentElement.setAttribute('data-v3-section-y',v.sectionY);
+    doc.documentElement.setAttribute('data-v3-motion',v.motionIntensity);
+    const metaVersion=doc.createElement('meta'); metaVersion.name='siteon-version'; metaVersion.content='3'; doc.head.appendChild(metaVersion);
+    const metaBudget=doc.createElement('meta'); metaBudget.name='siteon-performance-budget'; metaBudget.content='poster-first, facade-video, metadata-localStorage, blobs-indexedDB'; doc.head.appendChild(metaBudget);
+    const st=doc.createElement('style'); st.id='siteon-v3-runtime'; st.textContent=v3CssVars(tokens); doc.head.appendChild(st);
+    const ts=doc.createElement('script'); ts.type='application/json'; ts.id='siteon-tokens-v3'; ts.textContent=safeJson(tokens); doc.head.appendChild(ts);
+    const rs=doc.createElement('script'); rs.type='application/json'; rs.id='siteon-recipe-v3'; rs.textContent=safeJson(recipe); doc.head.appendChild(rs);
+    const sectionIds=new Set(['hero','about','services','stats','doctors','equipment','gallery','video','pricing','transport','badges','event','faq','booking','location','custom-html']);
+    doc.body.querySelectorAll('section,[id]').forEach(el=>{
+      if(!el.id||!sectionIds.has(el.id)||el.hasAttribute('data-siteon-section')) return;
+      el.setAttribute('data-siteon-section',el.id);
+      if(el.id==='doctors') el.setAttribute('data-section-variant',(state.variants&&state.variants.doctors)||'card');
+    });
+    applyV3VideoFacade(doc,cfg);
+    return '<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
+  }catch(e){ return html; }
+}
+
+// SiteOn v4 multipage model and export layer.
+function normalizeV4Path(path){
+  let p=String(path||'/').trim();
+  if(!p) p='/';
+  if(/^https?:\/\//i.test(p)){
+    try{ p=new URL(p).pathname; }catch(e){ p='/'; }
+  }
+  if(!p.startsWith('/')) p='/'+p;
+  p=p.replace(/\/+/g,'/');
+  if(p!=='/'&&!p.endsWith('/')) p+='/';
+  return p;
+}
+function displayV4Path(path){
+  const p=normalizeV4Path(path);
+  return p==='/'?'/':p.replace(/\/$/,'');
+}
+function v4Settings(){
+  state.siteMode=state.siteMode==='multipage'?'multipage':'onepage';
+  state.currentPage=normalizeV4Path(state.currentPage||'/');
+  state.v4=Object.assign({schema:'siteon/site-v4'},state.v4||{});
+  return state.v4;
+}
+function v4Domain(cfg){
+  return 'https://www.'+String(cfg.name||'siteon').replace(/\s/g,'')+'.kr';
+}
+function v4Plain(text){
+  const div=document.createElement('div');
+  div.innerHTML=String(text||'');
+  return (div.textContent||div.innerText||'').trim();
+}
+function v4Nl2br(text){
+  return String(text||'').replace(/\n/g,'<br>');
+}
+function v4Slug(title,fallback){
+  const raw=v4Plain(title).toLowerCase();
+  const dict=[
+    ['임플란트','implant'],['보철','prosthetics'],['크라운','crown'],['라미네이트','laminate'],
+    ['교정','orthodontics'],['스케일링','scaling'],['미백','whitening'],['신경','root-canal'],
+    ['충치','cavity'],['잇몸','periodontal'],['소아','pediatric'],['사랑니','wisdom-tooth'],
+    ['구강','oral-surgery'],['틀니','denture']
+  ];
+  const hit=dict.find(([key])=>raw.includes(key));
+  if(hit) return hit[1];
+  const ascii=raw.normalize('NFKD').replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-');
+  return ascii||fallback;
+}
+function v4ServiceSlug(sv,i){ return v4Slug(sv&&sv.title,'service-'+(i+1)); }
+function v4DoctorSlug(doc,i){ return v4Slug(doc&&doc.name,'doctor-'+(i+1)); }
+function v4PageKindLabel(kind){
+  return ({home:'홈',about:'소개',services:'진료',service:'상세',doctors:'의료진',doctor:'상세',facility:'시설',cases:'사례',columns:'칼럼',notice:'공지',faq:'FAQ',nonpayment:'고시',privacy:'필수',contact:'문의'})[kind]||kind;
+}
+function buildV4Collections(cfg){
+  return {
+    services:(cfg.services||[]).map((sv,i)=>Object.assign({id:v4ServiceSlug(sv,i),slug:v4ServiceSlug(sv,i)},sv)),
+    doctors:(cfg.doctors||[]).map((doc,i)=>Object.assign({id:v4DoctorSlug(doc,i),slug:v4DoctorSlug(doc,i)},doc)),
+    faq:(cfg.faq||[]).map((item,i)=>Object.assign({id:'faq-'+(i+1)},item)),
+    gallery:(cfg.gallery||[]).map((item,i)=>Object.assign({id:'facility-'+(i+1)},item)),
+    blocks:(cfg.blocks||[]).map((item,i)=>Object.assign({id:'block-'+(i+1)},item))
+  };
+}
+function buildV4Pages(cfg){
+  const pages=[
+    {path:'/',title:'홈',kind:'home',locked:true,nav:true},
+    {path:'/about/',title:'치과소개',kind:'about',nav:true},
+    {path:'/doctors/',title:'의료진',kind:'doctors',nav:true}
+  ];
+  (cfg.doctors||[]).forEach((doc,i)=>{
+    pages.push({path:'/doctors/'+v4DoctorSlug(doc,i)+'/',title:v4Plain(doc.name)||('의료진 '+(i+1)),kind:'doctor',parent:'/doctors/',refIndex:i,nav:false});
+  });
+  pages.push({path:'/services/',title:'진료과목',kind:'services',nav:true});
+  (cfg.services||[]).forEach((sv,i)=>{
+    pages.push({path:'/services/'+v4ServiceSlug(sv,i)+'/',title:v4Plain(sv.title)||('진료 '+(i+1)),kind:'service',parent:'/services/',refIndex:i,nav:false});
+  });
+  pages.push(
+    {path:'/facility/',title:'시설·장비',kind:'facility',nav:true},
+    {path:'/cases/',title:'치료사례',kind:'cases',nav:false},
+    {path:'/columns/',title:'치과칼럼',kind:'columns',nav:false},
+    {path:'/notice/',title:'공지사항',kind:'notice',nav:false},
+    {path:'/faq/',title:'자주 묻는 질문',kind:'faq',nav:true},
+    {path:'/nonpayment/',title:'비급여 고지',kind:'nonpayment',locked:true,nav:false},
+    {path:'/privacy/',title:'개인정보처리방침',kind:'privacy',locked:true,nav:false},
+    {path:'/contact/',title:'오시는 길',kind:'contact',nav:true}
+  );
+  return pages.map(p=>Object.assign({},p,{path:normalizeV4Path(p.path)}));
+}
+function buildV4Site(cfg,path){
+  const pages=buildV4Pages(cfg);
+  const currentPath=normalizeV4Path(path||cfg.currentPage||state.currentPage||'/');
+  return {
+    $schema:'siteon/site-v4',
+    version:4,
+    mode:(cfg.siteMode||state.siteMode)==='multipage'?'multipage':'onepage',
+    globals:{
+      name:cfg.name,
+      slogan:cfg.slogan,
+      phone:cfg.phone,
+      address:cfg.addr,
+      hours:cfg.hours,
+      theme:{id:state.theme,primary:(cfg.theme&&cfg.theme.primary)||state.customColor},
+      naverUrl:cfg.naverUrl
+    },
+    collections:buildV4Collections(cfg),
+    pages,
+    routing:{
+      depthLimit:2,
+      currentPath,
+      onepageAnchors:['#about','#services','#doctors','#gallery','#faq','#booking','#location'],
+      required:['/nonpayment/','/privacy/','/contact/']
+    },
+    export:{onepage:'single-html',multipage:'zip-static-html'}
+  };
+}
+function v4FindPage(cfg,path){
+  const p=normalizeV4Path(path);
+  return buildV4Pages(cfg).find(page=>page.path===p)||null;
+}
+function v4Css(cfg){
+  const th=cfg.theme||currentTheme();
+  const accent=(th&&th.primary)||'#5b7cfa';
+  const deep=(th&&th.deep)||hexMix(accent,0,.35);
+  const soft=(th&&th.soft)||hexMix(accent,255,.92);
+  const ink=(th&&th.ink)||hexMix(accent,0,.78);
+  const font=cfg.font==='serif'?"'Noto Serif KR', serif":"'Pretendard Variable', Pretendard, -apple-system, sans-serif";
+  return `
+:root{--accent:${accent};--deep:${deep};--soft:${soft};--ink:${ink};--line:#e7ebf0;--muted:#657083;--bg:#ffffff;--alt:#f7f9fc;--radius:10px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:${font};color:var(--ink);background:var(--bg);line-height:1.72;letter-spacing:0}
+a{color:inherit;text-decoration:none}img{max-width:100%;display:block}.wrap{width:min(1120px,calc(100% - 40px));margin:0 auto}
+.v4-nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.v4-nav .wrap{height:72px;display:flex;align-items:center;gap:24px}.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:18px}.brand-mark{width:34px;height:34px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:14px}
+.nav-links{display:flex;align-items:center;gap:18px;margin-left:auto;font-size:14px;font-weight:800;color:#4f5968}.nav-links a.on{color:var(--accent)}.cta{display:inline-flex;align-items:center;justify-content:center;border-radius:8px;background:var(--accent);color:#fff!important;padding:10px 15px;font-weight:900}
+.sub-hero{background:linear-gradient(135deg,var(--soft),#fff);border-bottom:1px solid var(--line);padding:76px 0 58px}.crumb{font-size:13px;color:var(--muted);margin-bottom:16px}.crumb a{color:var(--deep);font-weight:800}
+h1{font-size:clamp(34px,5vw,58px);line-height:1.08;margin:0 0 18px;letter-spacing:0}h2{font-size:clamp(26px,3.4vw,40px);line-height:1.18;margin:0 0 18px;letter-spacing:0}h3{font-size:20px;margin:0 0 8px}.lead{max-width:760px;font-size:18px;color:#566171;margin:0}
+.section{padding:72px 0}.section.alt{background:var(--alt)}.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:24px;box-shadow:0 12px 28px rgba(25,40,70,.06)}.card-img{aspect-ratio:4/3;border-radius:8px;background:var(--soft) center/cover no-repeat;margin-bottom:16px}
+.meta{font-size:13px;font-weight:900;color:var(--accent);margin-bottom:8px}.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:8px;padding:12px 18px;font-weight:900;border:1px solid var(--line);background:#fff}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.timeline{counter-reset:step;display:grid;gap:12px}.step{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start}.step:before{counter-increment:step;content:counter(step);width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-weight:900}
+.faq-item{border-bottom:1px solid var(--line);padding:20px 0}.faq-item strong{display:block;font-size:17px;margin-bottom:7px}.info-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}.info-table th,.info-table td{padding:14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.info-table th{width:180px;background:var(--alt)}
+.map{border:0;width:100%;height:360px;border-radius:8px;background:var(--alt)}.v4-footer{background:#111827;color:#e5e7eb;padding:42px 0}.v4-footer .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:30px}.sitemap{display:flex;flex-wrap:wrap;gap:10px 18px}.sitemap a{color:#cbd5e1;font-size:13px}.legal{margin-top:14px;color:#94a3b8;font-size:12px}
+@media(max-width:820px){.v4-nav .wrap{height:auto;min-height:66px;flex-wrap:wrap;padding:12px 0}.nav-links{order:3;width:100%;overflow:auto;gap:14px;padding-bottom:4px}.g2,.g3{grid-template-columns:1fr}.sub-hero{padding:52px 0 42px}.section{padding:52px 0}.v4-footer .wrap{grid-template-columns:1fr}.info-table th{width:120px}}
+`;
+}
+function v4Breadcrumb(cfg,page){
+  if(page.path==='/') return '';
+  const parent=page.parent?v4FindPage(cfg,page.parent):null;
+  return `<div class="crumb"><a href="/">홈</a> / ${parent?`<a href="${parent.path}">${parent.title}</a> / `:''}${page.title}</div>`;
+}
+function v4Nav(cfg,currentPath){
+  const links=[
+    ['/about/','치과소개'],['/services/','진료과목'],['/doctors/','의료진'],
+    ['/facility/','시설·장비'],['/faq/','FAQ'],['/contact/','오시는 길']
+  ];
+  const current=normalizeV4Path(currentPath);
+  return `<nav class="v4-nav"><div class="wrap">
+    <a class="brand" href="/"><span class="brand-mark">온</span><span>${cfg.name}</span></a>
+    <div class="nav-links">${links.map(([href,label])=>`<a class="${current===href||current.startsWith(href)&&href!=='/'?'on':''}" href="${href}">${label}</a>`).join('')}<a class="cta" href="${cfg.naverUrl||'/contact/'}">예약문의</a></div>
+  </div></nav>`;
+}
+function v4Footer(cfg){
+  return `<footer class="v4-footer"><div class="wrap">
+    <div><h3>${cfg.name}</h3><p>${cfg.addr}<br>${v4Nl2br(cfg.hours)}</p><p><strong>${cfg.phone}</strong></p><p class="legal">SiteOn v4 static export · required pages are preserved.</p></div>
+    <div class="sitemap">
+      <a href="/about/">치과소개</a><a href="/services/">진료과목</a><a href="/doctors/">의료진</a><a href="/facility/">시설·장비</a><a href="/cases/">치료사례</a><a href="/columns/">치과칼럼</a><a href="/notice/">공지사항</a><a href="/faq/">FAQ</a><a href="/nonpayment/">비급여 고지</a><a href="/privacy/">개인정보처리방침</a><a href="/contact/">오시는 길</a>
+    </div>
+  </div></footer>`;
+}
+function v4JsonLd(cfg,page){
+  const base=v4Domain(cfg);
+  const url=base+(page.path==='/'?'':page.path);
+  const graph=[{
+    '@context':'https://schema.org',
+    '@type':page.kind==='service'?'MedicalProcedure':page.kind==='faq'?'FAQPage':page.kind==='home'?'Dentist':'MedicalWebPage',
+    name:page.title,
+    url,
+    isPartOf:{'@type':'WebSite',name:cfg.name,url:base},
+    publisher:{'@type':'Dentist',name:cfg.name,telephone:cfg.phone,address:cfg.addr}
+  }];
+  if(page.path!=='/'){
+    graph.push({'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[
+      {'@type':'ListItem',position:1,name:'홈',item:base+'/'},
+      {'@type':'ListItem',position:2,name:page.title,item:url}
+    ]});
+  }
+  if(page.kind==='faq'){
+    graph.push({'@context':'https://schema.org','@type':'FAQPage',mainEntity:(cfg.faq||[]).map(f=>({'@type':'Question',name:v4Plain(f.q),acceptedAnswer:{'@type':'Answer',text:v4Plain(f.a)}}))});
+  }
+  return graph.map(obj=>`<script type="application/ld+json">${safeJson(obj)}<\/script>`).join('\n');
+}
+function v4Shell(cfg,page,body,desc){
+  const title=page.path==='/'?`${cfg.name} | ${cfg.slogan}`:`${page.title} | ${cfg.name}`;
+  const metaDesc=desc||v4Plain(cfg.desc)||`${cfg.name} ${page.title}`;
+  const canonical=v4Domain(cfg)+(page.path==='/'?'':page.path);
+  return `<!DOCTYPE html>
+<html lang="ko" data-siteon-version="4" data-siteon-mode="multipage">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${title}</title>
+<meta name="description" content="${esc(metaDesc)}">
+<link rel="canonical" href="${canonical}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>${v4Css(cfg)}</style>
+${v4JsonLd(cfg,page)}
+</head>
+<body>
+${v4Nav(cfg,page.path)}
+<main>${body}</main>
+${v4Footer(cfg)}
+</body>
+</html>`;
+}
+function v4SubHero(cfg,page,desc){
+  return `<section class="sub-hero"><div class="wrap">${v4Breadcrumb(cfg,page)}<h1>${page.title}</h1><p class="lead">${desc||cfg.desc}</p></div></section>`;
+}
+function v4CardImage(img,caption){
+  return `<div class="card-img" style="${img?`background-image:url(${img})`:''}" role="img" aria-label="${esc(v4Plain(caption)||'image')}"></div>`;
+}
+function v4ServicesHub(cfg,page){
+  const cards=(cfg.services||[]).map((sv,i)=>`<a class="card" href="/services/${v4ServiceSlug(sv,i)}/">
+    ${v4CardImage(sv.img,sv.title)}<div class="meta">SERVICE</div><h3>${sv.title}</h3><p>${sv.desc}</p>
+  </a>`).join('');
+  return v4Shell(cfg,page,`${v4SubHero(cfg,page,'대표 진료를 허브 페이지에서 확인하고 각 상세 페이지로 이동할 수 있습니다.')}<section class="section"><div class="wrap"><div class="grid g3">${cards}</div></div></section>`,'진료과목 허브와 상세 진료 안내');
+}
+function v4ServiceDetail(cfg,page){
+  const sv=(cfg.services||[])[page.refIndex]||{};
+  const doctors=(cfg.doctors||[]).slice(0,3).map((d,i)=>`<a class="card" href="/doctors/${v4DoctorSlug(d,i)}/"><h3>${d.name}</h3><p>${d.role}</p><p class="meta">${d.tag}</p></a>`).join('');
+  const faqs=(cfg.faq||[]).slice(0,3).map(f=>`<div class="faq-item"><strong>${f.q}</strong><p>${f.a}</p></div>`).join('');
+  const body=`${v4SubHero(cfg,page,sv.desc||'진료 전 과정과 예상 흐름을 확인할 수 있습니다.')}
+  <section class="section"><div class="wrap grid g2"><div>${v4CardImage(sv.img,sv.title)}</div><div><h2>${sv.title}</h2><p>${sv.desc}</p><div class="btn-row"><a class="btn primary" href="${cfg.naverUrl||'/contact/'}">예약문의</a><a class="btn" href="/nonpayment/">비급여 고지 보기</a></div></div></div></section>
+  <section class="section alt"><div class="wrap"><h2>진료 프로세스</h2><div class="timeline"><div class="step"><div><h3>정밀 진단</h3><p>상태 확인과 필요한 검사를 먼저 진행합니다.</p></div></div><div class="step"><div><h3>계획 설명</h3><p>치료 범위, 기간, 비용을 단계별로 안내합니다.</p></div></div><div class="step"><div><h3>치료 및 관리</h3><p>치료 후 관리 기준까지 이어서 안내합니다.</p></div></div></div></div></section>
+  <section class="section"><div class="wrap"><h2>관련 의료진</h2><div class="grid g3">${doctors}</div></div></section>
+  <section class="section alt"><div class="wrap"><h2>자주 묻는 질문</h2>${faqs}<div class="btn-row"><a class="btn" href="/faq/">FAQ 전체 보기</a></div></div></section>`;
+  return v4Shell(cfg,page,body,v4Plain(sv.desc));
+}
+function v4DoctorsHub(cfg,page){
+  const cards=(cfg.doctors||[]).map((d,i)=>`<a class="card" href="/doctors/${v4DoctorSlug(d,i)}/">
+    ${v4CardImage(d.img,d.name)}<div class="meta">${d.role}</div><h3>${d.name}</h3><p>${d.tag}</p>
+  </a>`).join('');
+  return v4Shell(cfg,page,`${v4SubHero(cfg,page,'의료진별 진료 분야와 약력을 확인할 수 있습니다.')}<section class="section"><div class="wrap"><div class="grid g3">${cards}</div></div></section>`,'의료진 소개와 상세 프로필');
+}
+function v4DoctorDetail(cfg,page){
+  const d=(cfg.doctors||[])[page.refIndex]||{};
+  const services=(cfg.services||[]).slice(0,4).map((sv,i)=>`<a class="card" href="/services/${v4ServiceSlug(sv,i)}/"><h3>${sv.title}</h3><p>${sv.desc}</p></a>`).join('');
+  const body=`${v4SubHero(cfg,page,d.role||'의료진 상세 프로필입니다.')}
+  <section class="section"><div class="wrap grid g2"><div>${v4CardImage(d.img,d.name)}</div><div><div class="meta">${d.role||''}</div><h2>${d.name}</h2><p>${d.tag||''}</p><p>${cfg.name}의 진료 기준에 맞춰 상담부터 치료 후 관리까지 이어서 안내합니다.</p><div class="btn-row"><a class="btn primary" href="${cfg.naverUrl||'/contact/'}">예약문의</a><a class="btn" href="/doctors/">의료진 전체</a></div></div></div></section>
+  <section class="section alt"><div class="wrap"><h2>관련 진료</h2><div class="grid g2">${services}</div></div></section>`;
+  return v4Shell(cfg,page,body,v4Plain(d.role||d.tag));
+}
+function v4BasicPage(cfg,page){
+  let body='';
+  if(page.kind==='about'){
+    body=`${v4SubHero(cfg,page,cfg.desc)}<section class="section"><div class="wrap grid g2"><div><h2>진료 철학</h2><p>${cfg.desc}</p><p>원페이지의 소개 영역은 요약으로 유지되고, 멀티페이지에서는 병원 소개 상세 페이지로 확장됩니다.</p></div><div class="card"><h3>안내</h3><p>${cfg.addr}</p><p>${v4Nl2br(cfg.hours)}</p></div></div></section>`;
+  }else if(page.kind==='facility'){
+    const cards=(cfg.gallery||[]).map(g=>`<div class="card">${v4CardImage(g.img,g.caption)}<h3>${g.caption}</h3></div>`).join('');
+    body=`${v4SubHero(cfg,page,'진료 공간과 주요 장비를 미리 확인할 수 있습니다.')}<section class="section"><div class="wrap"><div class="grid g3">${cards}</div></div></section>`;
+  }else if(page.kind==='faq'){
+    const items=(cfg.faq||[]).map(f=>`<div class="faq-item"><strong>${f.q}</strong><p>${f.a}</p></div>`).join('');
+    body=`${v4SubHero(cfg,page,'방문 전 자주 확인하는 질문을 모았습니다.')}<section class="section"><div class="wrap">${items}</div></section>`;
+  }else if(page.kind==='contact'){
+    body=`${v4SubHero(cfg,page,'진료시간, 주소, 예약 문의 정보를 확인할 수 있습니다.')}<section class="section"><div class="wrap grid g2"><div class="card"><h2>진료 안내</h2><p>${v4Nl2br(cfg.hours)}</p><p><strong>${cfg.phone}</strong></p><div class="btn-row"><a class="btn primary" href="${cfg.naverUrl||'tel:'+cfg.phone}">예약문의</a></div></div><div class="card"><h2>오시는 길</h2><p>${cfg.addr}</p>${mapEmbed(cfg,0).replace('<section class="map-wrap">','').replace('</section>','')}</div></div></section>`;
+  }else if(page.kind==='nonpayment'){
+    const rows=v4PricingRows(cfg).map(r=>`<tr><th>${r.name}</th><td>${r.price}</td><td>${r.note}</td></tr>`).join('');
+    body=`${v4SubHero(cfg,page,'비급여 진료비 고지 페이지입니다.')}<section class="section"><div class="wrap"><table class="info-table"><thead><tr><th>항목</th><th>금액</th><th>비고</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+  }else if(page.kind==='privacy'){
+    body=`${v4SubHero(cfg,page,'개인정보 처리 기준을 안내합니다.')}<section class="section"><div class="wrap"><div class="card"><h2>개인정보처리방침</h2><p>${cfg.name}은 상담 및 예약 응대에 필요한 최소한의 개인정보를 수집하며, 관련 법령에 따라 안전하게 관리합니다.</p><p>수집 항목: 이름, 연락처, 문의 내용. 보유 기간: 목적 달성 후 지체 없이 파기합니다.</p></div></div></section>`;
+  }else{
+    body=`${v4SubHero(cfg,page,'콘텐츠를 추가하면 이 페이지에 반영됩니다.')}<section class="section"><div class="wrap"><div class="card"><h2>${page.title}</h2><p>현재 원페이지 데이터에서 생성된 v4 페이지입니다. 별도 콘텐츠는 추후 페이지 편집에서 확장할 수 있습니다.</p></div></div></section>`;
+  }
+  return v4Shell(cfg,page,body);
+}
+function v4PricingRows(cfg){
+  const pricing=(cfg.blocks||[]).filter(b=>b.type==='pricing').flatMap(b=>String(b.data||'').split('\n')).map(line=>{
+    const parts=line.split('|').map(v=>v.trim()).filter(Boolean);
+    return parts.length?{name:parts[0],price:parts[1]||'상담 후 안내',note:parts[2]||'-'}:null;
+  }).filter(Boolean);
+  if(pricing.length) return pricing;
+  return (cfg.services||[]).map(sv=>({name:v4Plain(sv.title),price:'상담 후 안내',note:'진단 후 개인별 안내'})).concat([{name:'제증명 수수료',price:'병원 고시 기준',note:'내원 시 확인'}]);
+}
+function applyV4Output(html,cfg,path){
+  try{
+    const doc=new DOMParser().parseFromString(html,'text/html');
+    const page=v4FindPage(cfg,path)||{path:normalizeV4Path(path||'/'),title:'홈',kind:'home'};
+    const mode=(cfg.siteMode||state.siteMode)==='multipage'?'multipage':'onepage';
+    doc.documentElement.setAttribute('data-siteon-version','4');
+    doc.documentElement.setAttribute('data-siteon-mode',mode);
+    const metaVersion=doc.createElement('meta'); metaVersion.name='siteon-version'; metaVersion.content='4'; doc.head.appendChild(metaVersion);
+    const metaMode=doc.createElement('meta'); metaMode.name='siteon-site-mode'; metaMode.content=mode; doc.head.appendChild(metaMode);
+    const ps=doc.createElement('script'); ps.type='application/json'; ps.id='siteon-site-v4'; ps.textContent=safeJson(buildV4Site(cfg,page.path)); doc.head.appendChild(ps);
+    if(page.path==='/'&&mode==='multipage'){
+      const map={'#about':'/about/','#services':'/services/','#doctors':'/doctors/','#gallery':'/facility/','#equipment':'/facility/','#faq':'/faq/','#booking':'/contact/','#location':'/contact/','#pricing':'/nonpayment/'};
+      doc.querySelectorAll('a[href^="#"]').forEach(a=>{
+        const href=a.getAttribute('href');
+        if(map[href]) a.setAttribute('href',map[href]);
+      });
+    }
+    return '<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
+  }catch(e){ return html; }
+}
+function renderV4ResolvedPage(cfg,page,path){
+  const currentPath=normalizeV4Path(path||(page&&page.path)||cfg.currentPage||state.currentPage||'/');
+  page=(page&&normalizeV4Path(page.path)===currentPath)?page:(v4FindPage(cfg,currentPath)||v4FindPage(cfg,'/')||{path:'/',title:'홈',kind:'home'});
+  if(currentPath==='/') return applyV4Output(generateSite(cfg),cfg,'/');
+  if(currentPath==='/services/') return applyV4Output(v4ServicesHub(cfg,page),cfg,currentPath);
+  if(currentPath.startsWith('/services/')) return applyV4Output(v4ServiceDetail(cfg,page),cfg,currentPath);
+  if(currentPath==='/doctors/') return applyV4Output(v4DoctorsHub(cfg,page),cfg,currentPath);
+  if(currentPath.startsWith('/doctors/')) return applyV4Output(v4DoctorDetail(cfg,page),cfg,currentPath);
+  return applyV4Output(v4BasicPage(cfg,page),cfg,currentPath);
+}
+function generateV4Page(cfg,path){
+  const currentPath=normalizeV4Path(path||cfg.currentPage||state.currentPage||'/');
+  const page=v4FindPage(cfg,currentPath)||v4FindPage(cfg,'/')||{path:'/',title:'홈',kind:'home'};
+  return renderV4ResolvedPage(Object.assign({},cfg,{currentPage:currentPath}),page,currentPath);
+}
+function generateCurrentPreview(cfg,path){
+  v4Settings();
+  const currentPath=normalizeV4Path(path||cfg.currentPage||state.currentPage||'/');
+  const previewCfg=Object.assign({},cfg,{currentPage:currentPath});
+  const page=v4FindPage(previewCfg,currentPath)||v4FindPage(previewCfg,'/')||{path:'/',title:'홈',kind:'home'};
+  return state.siteMode==='multipage'?renderV4ResolvedPage(previewCfg,page,currentPath):applyV4Output(generateSite(cfg),cfg,'/');
+}
+function v4PathFromHref(href){
+  if(!href||href.startsWith('#')||/^(tel:|mailto:|javascript:)/i.test(href)) return null;
+  try{
+    const u=new URL(href,'https://siteon.local');
+    return normalizeV4Path(u.pathname);
+  }catch(e){ return null; }
+}
+function routeV4Page(path){
+  const cfg=getConfig();
+  const p=normalizeV4Path(path);
+  if(!v4FindPage(cfg,p)) return false;
+  state.currentPage=p;
+  render();
+  return true;
+}
+function attachV4PreviewRouter(doc){
+  if(!doc||doc.__siteonV4Router) return;
+  doc.__siteonV4Router=true;
+  doc.addEventListener('click',e=>{
+    if(state.siteMode!=='multipage') return;
+    const a=e.target.closest&&e.target.closest('a[href]');
+    if(!a) return;
+    const path=v4PathFromHref(a.getAttribute('href'));
+    if(!path) return;
+    const cfg=getConfig();
+    if(!v4FindPage(cfg,path)) return;
+    e.preventDefault();
+    routeV4Page(path);
+  },true);
+}
+function buildV4Sitemap(cfg){
+  const base=v4Domain(cfg);
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${buildV4Pages(cfg).map(page=>`  <url><loc>${base}${page.path==='/'?'/':page.path}</loc><changefreq>${page.kind==='home'?'weekly':'monthly'}</changefreq><priority>${page.kind==='home'?'1.0':'0.7'}</priority></url>`).join('\n')}\n</urlset>`;
+}
+function buildV4Robots(cfg){
+  const base=v4Domain(cfg);
+  return `User-agent: *\nAllow: /\nSitemap: ${base}/sitemap.xml\n`;
+}
+function v4ExportPath(page){
+  if(page.path==='/') return 'index.html';
+  return page.path.replace(/^\/|\/$/g,'')+'/index.html';
+}
+function buildV4ExportFiles(cfg){
+  const exportCfg=Object.assign({},cfg,{siteMode:'multipage',currentPage:'/'});
+  const files=buildV4Pages(exportCfg).map(page=>({path:v4ExportPath(page),content:generateV4Page(exportCfg,page.path)}));
+  files.push({path:'sitemap.xml',content:buildV4Sitemap(exportCfg)});
+  files.push({path:'robots.txt',content:buildV4Robots(exportCfg)});
+  files.push({path:'assets/site.css',content:'/* SiteOn v4 export keeps critical CSS inline for static portability. */\n'});
+  files.push({path:'assets/site.js',content:'// SiteOn v4 static export interaction slot.\n'});
+  return files;
+}
+const ZIP_CRC_TABLE=(()=>{const t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xedb88320^(c>>>1)):(c>>>1);t[n]=c>>>0;}return t;})();
+function zipCrc32(bytes){let c=0xffffffff;for(let i=0;i<bytes.length;i++)c=ZIP_CRC_TABLE[(c^bytes[i])&255]^(c>>>8);return (c^0xffffffff)>>>0;}
+function zipU16(n){const b=new Uint8Array(2);new DataView(b.buffer).setUint16(0,n,true);return b;}
+function zipU32(n){const b=new Uint8Array(4);new DataView(b.buffer).setUint32(0,n>>>0,true);return b;}
+function zipBytes(parts,total){
+  const out=new Uint8Array(total);
+  let off=0;
+  parts.forEach(p=>{out.set(p,off);off+=p.length;});
+  return out;
+}
+function makeZip(files){
+  const enc=new TextEncoder();
+  const chunks=[], central=[];
+  let offset=0;
+  const now=new Date();
+  const dosTime=(now.getHours()<<11)|(now.getMinutes()<<5)|(now.getSeconds()/2);
+  const dosDate=((now.getFullYear()-1980)<<9)|((now.getMonth()+1)<<5)|now.getDate();
+  files.forEach(file=>{
+    const name=String(file.path).replace(/^\/+/,'');
+    const nameBytes=enc.encode(name);
+    const data=file.content instanceof Uint8Array?file.content:enc.encode(String(file.content));
+    const crc=zipCrc32(data);
+    const local=zipBytes([zipU32(0x04034b50),zipU16(20),zipU16(0x0800),zipU16(0),zipU16(dosTime),zipU16(dosDate),zipU32(crc),zipU32(data.length),zipU32(data.length),zipU16(nameBytes.length),zipU16(0),nameBytes],30+nameBytes.length);
+    chunks.push(local,data);
+    const centralHeader=zipBytes([zipU32(0x02014b50),zipU16(20),zipU16(20),zipU16(0x0800),zipU16(0),zipU16(dosTime),zipU16(dosDate),zipU32(crc),zipU32(data.length),zipU32(data.length),zipU16(nameBytes.length),zipU16(0),zipU16(0),zipU16(0),zipU16(0),zipU32(0),zipU32(offset),nameBytes],46+nameBytes.length);
+    central.push(centralHeader);
+    offset+=local.length+data.length;
+  });
+  const centralSize=central.reduce((n,b)=>n+b.length,0);
+  const end=zipBytes([zipU32(0x06054b50),zipU16(0),zipU16(0),zipU16(files.length),zipU16(files.length),zipU32(centralSize),zipU32(offset),zipU16(0)],22);
+  return new Blob([...chunks,...central,end],{type:'application/zip'});
+}
+const EXPORT_DEFAULTS={format:'auto',fileName:'',rootName:''};
+const EXPORT_LABELS={'full-html':'풀 HTML','static-html-zip':'정적 HTML ZIP','wp-theme-zip':'WP 테마 ZIP'};
+function exportSettings(){
+  state.export=Object.assign({},EXPORT_DEFAULTS,state.export||{});
+  return state.export;
+}
+function normalizeFileBase(name,fallback){
+  let out=String(name||'').trim().replace(/[\\/:*?"<>|]+/g,'-').replace(/\s+/g,' ').replace(/[. ]+$/,'');
+  if(!out) out=String(fallback||'siteon-site').trim();
+  return out||'siteon-site';
+}
+function normalizeZipRoot(name,fallback){
+  let out=String(name||'').trim().toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  if(!out) out=String(fallback||'siteon-clinic').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  return out||'siteon-clinic';
+}
+function stripKnownExtension(name){
+  return String(name||'').replace(/\.(html|zip)$/i,'');
+}
+function withExtension(base,ext){
+  return stripKnownExtension(base)+ext;
+}
+function readExportSettings(){
+  const s=exportSettings();
+  const format=$('#f_export_format'), file=$('#f_export_filename'), root=$('#f_export_root');
+  if(format) s.format=format.value||'auto';
+  if(file) s.fileName=file.value.trim();
+  if(root) s.rootName=root.value.trim();
+  return s;
+}
+function resolveExportKind(){
+  const s=exportSettings();
+  if(s.format==='full-html'||s.format==='static-html-zip'||s.format==='wp-theme-zip') return s.format;
+  return state.siteMode==='multipage'?'static-html-zip':'full-html';
+}
+function defaultZipRoot(cfg,kind){
+  const site=normalizeZipRoot(v4Plain(cfg&&cfg.name),'siteon-clinic');
+  return kind==='wp-theme-zip'?`${site}-theme`:`${site}-html`;
+}
+function defaultExportFileBase(cfg,kind){
+  if(kind==='wp-theme-zip') return defaultZipRoot(cfg,kind);
+  const site=normalizeFileBase(v4Plain(cfg&&cfg.name).replace(/\s+/g,''),'siteon-site');
+  return kind==='static-html-zip'?`${site}-정적HTML`:`${site}-홈페이지`;
+}
+function exportExtension(kind){ return kind==='full-html'?'.html':'.zip'; }
+function exportMime(kind){ return kind==='full-html'?'text/html;charset=utf-8':'application/zip'; }
+function prefixZipFiles(files,root){
+  const clean=String(root||'').replace(/^\/+|\/+$/g,'');
+  return clean?files.map(file=>Object.assign({},file,{path:clean+'/'+String(file.path).replace(/^\/+/,'')})):files;
+}
+function base64Utf8(text){
+  const bytes=new TextEncoder().encode(String(text||''));
+  let binary='';
+  for(let i=0;i<bytes.length;i+=0x8000){
+    binary+=String.fromCharCode.apply(null,bytes.subarray(i,i+0x8000));
+  }
+  return btoa(binary);
+}
+function phpSingleQuoted(text){
+  return "'"+String(text||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")+"'";
+}
+function buildWpStyleCss(cfg,themeRoot){
+  const themeName=v4Plain(cfg.name)||'SiteOn Clinic Theme';
+  return `/*
+Theme Name: ${themeName} SiteOn
+Theme URI: https://siteon.local/
+Author: SiteOn Builder
+Description: Static clinic website theme generated by SiteOn Builder.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.5
+Text Domain: ${themeRoot}
+*/
+
+/* The generated pages keep their critical CSS inline for portability. */
+`;
+}
+function buildWpFunctionsPhp(paths){
+  const pathList=paths.map(path=>'    '+phpSingleQuoted(path)+',').join('\n');
+  return `<?php
+if (!defined('ABSPATH')) { exit; }
+
+function siteon_theme_paths() {
+  return array(
+${pathList}
+  );
+}
+
+function siteon_current_path() {
+  $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
+  $path = parse_url($request_uri, PHP_URL_PATH);
+  if (!is_string($path) || $path === '') { $path = '/'; }
+  $home_path = parse_url(home_url('/'), PHP_URL_PATH);
+  if (is_string($home_path) && $home_path !== '' && $home_path !== '/') {
+    $home_path = '/' . trim($home_path, '/');
+    if (strpos($path, $home_path) === 0) {
+      $path = substr($path, strlen($home_path));
+    }
+  }
+  $path = '/' . trim((string) $path, '/') . '/';
+  return $path === '//' ? '/' : $path;
+}
+
+add_action('after_setup_theme', function () {
+  add_theme_support('title-tag');
+  add_theme_support('post-thumbnails');
+});
+
+add_action('template_redirect', function () {
+  $path = siteon_current_path();
+  if (in_array($path, siteon_theme_paths(), true)) {
+    require get_template_directory() . '/siteon-render.php';
+    exit;
+  }
+}, 0);
+`;
+}
+function buildWpRendererPhp(){
+  return `<?php
+if (!defined('ABSPATH')) { exit; }
+
+$siteon_pages = require __DIR__ . '/siteon-pages.php';
+$siteon_path = function_exists('siteon_current_path') ? siteon_current_path() : '/';
+if (!isset($siteon_pages[$siteon_path])) {
+  $siteon_path = '/';
+}
+
+$html = base64_decode($siteon_pages[$siteon_path], true);
+if (!is_string($html)) {
+  if (function_exists('status_header')) { status_header(500); }
+  echo 'SiteOn page decode failed.';
+  exit;
+}
+
+if (function_exists('status_header')) { status_header(200); }
+
+if (function_exists('wp_head')) {
+  ob_start();
+  wp_head();
+  $siteon_head = ob_get_clean();
+  $html = preg_replace_callback('/<\\/head>/i', function ($match) use ($siteon_head) {
+    return $siteon_head . $match[0];
+  }, $html, 1);
+}
+
+if (function_exists('wp_body_open')) {
+  ob_start();
+  wp_body_open();
+  $siteon_body_open = ob_get_clean();
+  $html = preg_replace_callback('/<body([^>]*)>/i', function ($match) use ($siteon_body_open) {
+    return $match[0] . $siteon_body_open;
+  }, $html, 1);
+}
+
+if (function_exists('wp_footer')) {
+  ob_start();
+  wp_footer();
+  $siteon_footer = ob_get_clean();
+  $html = preg_replace_callback('/<\\/body>/i', function ($match) use ($siteon_footer) {
+    return $siteon_footer . $match[0];
+  }, $html, 1);
+}
+
+echo $html;
+`;
+}
+function buildWpPagesPhp(pageEntries){
+  const rows=pageEntries.map(entry=>'  '+phpSingleQuoted(entry.path)+' => '+phpSingleQuoted(base64Utf8(entry.html))+',').join('\n');
+  return `<?php
+if (!defined('ABSPATH')) { exit; }
+
+return array(
+${rows}
+);
+`;
+}
+function buildWpReadme(cfg,pageEntries,themeRoot){
+  return `SiteOn WordPress Theme
+======================
+
+Theme folder: ${themeRoot}
+Generated pages: ${pageEntries.length}
+
+This classic theme renders the generated static HTML through siteon-render.php.
+WordPress hooks are injected at runtime:
+- wp_head()
+- wp_body_open()
+- wp_footer()
+
+Upload the ZIP through Appearance > Themes > Add New > Upload Theme.
+If pretty URLs do not resolve after activation, open Settings > Permalinks once and save.
+`;
+}
+function buildWpThemeFiles(cfg,themeRoot){
+  const exportCfg=Object.assign({},cfg,{siteMode:'multipage',currentPage:'/'});
+  const pages=buildV4Pages(exportCfg);
+  const pageEntries=pages.map(page=>({path:page.path,title:page.title,html:generateV4Page(exportCfg,page.path)}));
+  return [
+    {path:'style.css',content:buildWpStyleCss(exportCfg,themeRoot)},
+    {path:'functions.php',content:buildWpFunctionsPhp(pageEntries.map(p=>p.path))},
+    {path:'index.php',content:"<?php\nrequire get_template_directory() . '/siteon-render.php';\n"},
+    {path:'front-page.php',content:"<?php\nrequire get_template_directory() . '/siteon-render.php';\n"},
+    {path:'siteon-render.php',content:buildWpRendererPhp()},
+    {path:'siteon-pages.php',content:buildWpPagesPhp(pageEntries)},
+    {path:'README.txt',content:buildWpReadme(exportCfg,pageEntries,themeRoot)},
+    {path:'siteon-export/sitemap.xml',content:buildV4Sitemap(exportCfg)},
+    {path:'siteon-export/robots.txt',content:buildV4Robots(exportCfg)}
+  ];
+}
+function buildExportPackage(cfg){
+  const settings=readExportSettings();
+  const kind=resolveExportKind();
+  const ext=exportExtension(kind);
+  const root=kind==='full-html'?'':normalizeZipRoot(settings.rootName,defaultZipRoot(cfg,kind));
+  const fileBase=normalizeFileBase(settings.fileName,defaultExportFileBase(cfg,kind));
+  let blob;
+  if(kind==='full-html'){
+    blob=new Blob([generateCurrentPreview(cfg)],{type:exportMime(kind)});
+  }else if(kind==='wp-theme-zip'){
+    blob=makeZip(prefixZipFiles(buildWpThemeFiles(cfg,root),root));
+  }else{
+    blob=makeZip(prefixZipFiles(buildV4ExportFiles(cfg),root));
+  }
+  return {kind,root,blob,ext,mime:exportMime(kind),fileName:withExtension(fileBase,ext)};
+}
+function triggerExportDownload(pkg){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(pkg.blob);
+  a.download=pkg.fileName;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+async function saveExportWithPicker(pkg){
+  if(!window.showSaveFilePicker){
+    triggerExportDownload(pkg);
+    showToast('이 브라우저는 위치 선택 저장을 지원하지 않아 다운로드로 저장했습니다.');
+    return;
+  }
+  const accept=pkg.kind==='full-html'?{'text/html':['.html']}:{'application/zip':['.zip']};
+  const handle=await window.showSaveFilePicker({
+    suggestedName:pkg.fileName,
+    types:[{description:EXPORT_LABELS[pkg.kind]||'SiteOn export',accept}]
+  });
+  const writable=await handle.createWritable();
+  await writable.write(pkg.blob);
+  await writable.close();
+  showToast('선택한 위치에 저장했습니다.');
+}
+function syncExportUI(cfg){
+  exportSettings();
+  const format=$('#f_export_format'), file=$('#f_export_filename'), root=$('#f_export_root');
+  if(format&&format.value!==state.export.format) format.value=state.export.format;
+  if(file&&!file.value&&state.export.fileName) file.value=state.export.fileName;
+  if(root&&!root.value&&state.export.rootName) root.value=state.export.rootName;
+  const kind=resolveExportKind();
+  if(file) file.placeholder=defaultExportFileBase(cfg||getConfig(),kind);
+  if(root) root.placeholder=defaultZipRoot(cfg||getConfig(),kind);
+  const rootRow=$('#exportRootRow');
+  if(rootRow) rootRow.classList.toggle('off',kind==='full-html');
+  const exportBtn=$('#btnExport');
+  if(exportBtn) exportBtn.textContent=(EXPORT_LABELS[kind]||'내보내기')+' 내보내기 ⬇';
+  const hint=$('#exportHint');
+  if(hint){
+    const picker=window.showSaveFilePicker?'저장 위치 선택을 지원합니다.':'현재 브라우저는 위치 선택 저장을 지원하지 않아 일반 다운로드로 대체됩니다.';
+    hint.textContent=kind==='wp-theme-zip'
+      ?`워드프레스 업로드용 테마 ZIP을 생성합니다. ZIP 내부 루트는 ${root?root.placeholder:defaultZipRoot(cfg||getConfig(),kind)} 형태입니다. ${picker}`
+      :kind==='static-html-zip'
+        ?`멀티페이지 정적 HTML, sitemap.xml, robots.txt를 ZIP으로 생성합니다. ${picker}`
+        :`현재 미리보기 페이지를 독립 실행 가능한 풀 HTML 파일로 저장합니다. ${picker}`;
+  }
+}
+function syncV4UI(){
+  v4Settings();
+  const cfg=typeof getConfig==='function'?getConfig():null;
+  const pages=cfg?buildV4Pages(cfg):[];
+  const current=v4FindPage(cfg||{},state.currentPage)||pages[0];
+  if(current) state.currentPage=current.path;
+  const modeBadge=$('#modeBadge');
+  if(modeBadge) modeBadge.textContent=state.siteMode==='multipage'?`멀티 · ${pages.length}p`:'원페이지';
+  if(typeof syncExportUI==='function') syncExportUI(cfg);
+  const one=$('#modeOnepage'), multi=$('#modeMultipage');
+  if(one) one.classList.toggle('on',state.siteMode==='onepage');
+  if(multi) multi.classList.toggle('on',state.siteMode==='multipage');
+  const summary=$('#v4Summary');
+  if(summary) summary.textContent=state.siteMode==='multipage'
+    ?`현재 ${pages.length}개 페이지가 생성됩니다. 선택 페이지: ${current?displayV4Path(current.path):'/'}`
+    :'현재 원페이지 앵커 구조입니다. 멀티페이지 전환 시 상세 페이지와 필수 고시 페이지를 비파괴로 생성합니다.';
+  const list=$('#v4PageList');
+  if(list){
+    list.style.display=state.siteMode==='multipage'?'flex':'none';
+    list.innerHTML=pages.map(page=>`<button class="page-item ${current&&current.path===page.path?'on':''}" type="button" data-page-path="${page.path}"><span><b>${page.title}</b><small>${displayV4Path(page.path)}</small></span><span class="page-kind">${v4PageKindLabel(page.kind)}</span></button>`).join('');
+    list.querySelectorAll('[data-page-path]').forEach(btn=>btn.onclick=()=>routeV4Page(btn.dataset.pagePath));
+  }
+}
+function setV4Mode(mode){
+  v4Settings();
+  state.siteMode=mode==='multipage'?'multipage':'onepage';
+  if(state.siteMode==='onepage') state.currentPage='/';
+  else{
+    const cfg=getConfig();
+    if(!v4FindPage(cfg,state.currentPage)) state.currentPage='/';
+  }
+  syncV4UI();
+  render();
+  showToast(state.siteMode==='multipage'?'멀티페이지 미리보기로 전환했습니다.':'원페이지 미리보기로 전환했습니다.');
+}
+
 // 디자인 스타일 셀렉터
 const STYLE_ICONS = {
   soft:`<svg width="22" height="22" viewBox="0 0 22 22"><rect x="3" y="3" width="16" height="6" rx="3" fill="url(#g1)"/><rect x="3" y="12" width="7" height="7" rx="2.5" fill="#5b7cfa" opacity=".6"/><rect x="12" y="12" width="7" height="7" rx="2.5" fill="#8b5cf6" opacity=".6"/><defs><linearGradient id="g1"><stop stop-color="#5b7cfa"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>`,
@@ -496,6 +1449,23 @@ customCard.onclick=()=>selectTheme('custom');
 customCard.querySelector('input').oninput=e=>{state.customColor=e.target.value; if(state.theme!=='custom')selectTheme('custom'); else renderSoon();};
 themeGrid.appendChild(customCard);
 
+function v3StoreAsset(kind, dataUrl){
+  if(!(state.v3&&state.v3.idbAssets) || !dataUrl || !/^data:image\//.test(dataUrl) || !('indexedDB' in window)) return Promise.resolve(null);
+  return new Promise((resolve,reject)=>{
+    const req=indexedDB.open('siteon_v3_assets',1);
+    req.onupgradeneeded=()=>{ req.result.createObjectStore('assets',{keyPath:'id'}); };
+    req.onerror=()=>reject(req.error);
+    req.onsuccess=()=>{
+      const db=req.result;
+      const tx=db.transaction('assets','readwrite');
+      const id=kind+'-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+      tx.objectStore('assets').put({id,kind,dataUrl,bytes:dataUrl.length,createdAt:Date.now()});
+      tx.oncomplete=()=>{ db.close(); resolve(id); };
+      tx.onerror=()=>{ db.close(); reject(tx.error); };
+    };
+  });
+}
+
 // ── 이미지 업로드 헬퍼 (업로드 → 사진 보정 스튜디오 → base64) ──
 function pickImage(maxW, cb){
   const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*';
@@ -509,7 +1479,10 @@ function pickImage(maxW, cb){
         const cv=document.createElement('canvas');
         cv.width=Math.round(img.width*sc); cv.height=Math.round(img.height*sc);
         cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
-        openPhotoEditor(cv.toDataURL('image/jpeg',.9), maxW, cb);
+        openPhotoEditor(cv.toDataURL('image/jpeg',.9), maxW, url=>{
+          v3StoreAsset('image',url).catch(()=>{});
+          cb(url);
+        });
       };
       img.src=r.result;
     };
@@ -582,6 +1555,33 @@ $('#tk_sh').onchange=e=>{state.tokens.shadow=e.target.value;render()};
 $('#tk_dn').onchange=e=>{state.tokens.density=e.target.value;render()};
 $('#tk_rd').onchange=e=>{state.tokens.radius=e.target.value;render()};
 $('#tkReset').onclick=()=>{state.tokens={textColor:'',textOpacity:100,shadow:'',density:'',radius:''};syncTokensUI();render()};
+
+// v3 설계 시스템
+function syncV3UI(){
+  const v=v3Settings();
+  $('#v3_enabled').checked=!!v.enabled;
+  $('#v3_sectionY').value=v.sectionY;
+  $('#v3_container').value=String(v.containerMax);
+  $('#v3_motion').value=v.motionIntensity;
+  $('#v3_videoFacade').checked=!!v.videoFacade;
+  $('#v3_idbAssets').checked=!!v.idbAssets;
+}
+function updateV3(part){
+  Object.assign(v3Settings(),part);
+  render();
+}
+$('#v3_enabled').onchange=e=>updateV3({enabled:e.target.checked});
+$('#v3_sectionY').onchange=e=>updateV3({sectionY:e.target.value});
+$('#v3_container').onchange=e=>updateV3({containerMax:e.target.value});
+$('#v3_motion').onchange=e=>updateV3({motionIntensity:e.target.value});
+$('#v3_videoFacade').onchange=e=>updateV3({videoFacade:e.target.checked});
+$('#v3_idbAssets').onchange=e=>updateV3({idbAssets:e.target.checked});
+$('#v3CopyRecipe').onclick=()=>{
+  const text=JSON.stringify(buildV3Recipe(getConfig()),null,2);
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>showToast('v3 레시피 JSON을 복사했습니다')).catch(()=>prompt('v3 레시피 JSON',text));
+  }else prompt('v3 레시피 JSON',text);
+};
 
 // 블록 라이브러리
 const BLOCK_DEFAULTS={
@@ -804,9 +1804,56 @@ document.querySelectorAll('[data-vp]').forEach(b=>{
   };
 });
 
+$('#modeOnepage').onclick=()=>setV4Mode('onepage');
+$('#modeMultipage').onclick=()=>setV4Mode('multipage');
+$('#v4CopySchema').onclick=()=>{
+  const payload=JSON.stringify(buildV4Site(getConfig()),null,2);
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(payload).then(()=>showToast('v4 사이트 JSON을 복사했습니다.'));
+  }else{
+    const blob=new Blob([payload],{type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='siteon-site-v4.json'; a.click(); URL.revokeObjectURL(a.href);
+  }
+};
+$('#f_export_format').onchange=()=>{
+  state.export.format=$('#f_export_format').value;
+  syncExportUI(getConfig());
+  autoSave();
+};
+['f_export_filename','f_export_root'].forEach(id=>{
+  $('#'+id).oninput=debounce(()=>{
+    const s=readExportSettings();
+    state.export.fileName=s.fileName;
+    state.export.rootName=s.rootName;
+    syncExportUI(getConfig());
+    autoSave();
+  },200);
+});
+$('#btnResetExportName').onclick=()=>{
+  $('#f_export_filename').value='';
+  $('#f_export_root').value='';
+  state.export.fileName='';
+  state.export.rootName='';
+  syncExportUI(getConfig());
+  autoSave();
+};
+$('#btnSaveAs').onclick=async()=>{
+  try{
+    await saveExportWithPicker(buildExportPackage(getConfig()));
+  }catch(err){
+    if(err&&err.name==='AbortError'){
+      showToast('저장을 취소했습니다.');
+      return;
+    }
+    console.error(err);
+    triggerExportDownload(buildExportPackage(getConfig()));
+    showToast('위치 저장에 실패해 다운로드로 저장했습니다.');
+  }
+};
+
 $('#btnRefresh').onclick=render;
 $('#btnNewTab').onclick=()=>{
-  const blob=new Blob([generateSite(getConfig())],{type:'text/html;charset=utf-8'});
+  const blob=new Blob([generateCurrentPreview(getConfig())],{type:'text/html;charset=utf-8'});
   window.open(URL.createObjectURL(blob),'_blank');
 };
 
@@ -814,7 +1861,8 @@ $('#btnNewTab').onclick=()=>{
 const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 
 function getConfig(){
-  return {
+  v4Settings();
+  const cfg = {
     name:esc($('#f_name').value||'우리 병원'),
     slogan:esc($('#f_slogan').value), desc:esc($('#f_desc').value),
     phone:esc($('#f_phone').value), addr:esc($('#f_addr').value), addrRaw:$('#f_addr').value, hours:esc($('#f_hours').value),
@@ -822,7 +1870,8 @@ function getConfig(){
     theme:currentTheme(), font:$('#f_font').value,
     motion:state.motion, speed:(+$('#f_speed').value)/100,
     heroImg:state.heroImg, logo:state.logo, videoUrl:state.videoUrl, heroVideoUrl:state.heroVideoUrl,
-    typo:state.typo, tokens:state.tokens,
+    siteMode:state.siteMode, currentPage:state.currentPage,
+    v3:v3Settings(), typo:state.typo, tokens:state.tokens,
     blocks:(state.blocks||[]).map(b=>({type:b.type,data:esc(b.data)})),
     faq:(state.faq||[]).map(f=>({q:esc(f.q),a:esc(f.a)})),
     gallery:state.gallery.map(g=>({img:g.img,caption:esc(g.caption)})),
@@ -830,14 +1879,19 @@ function getConfig(){
     services:state.services.map(s=>({img:s.img,icon:esc(s.icon),title:esc(s.title),desc:esc(s.desc)})),
     doctors:state.doctors.map(d=>({img:d.img,name:esc(d.name),role:esc(d.role),tag:esc(d.tag)})),
   };
+  cfg.tokensV3=buildV3Tokens(cfg);
+  cfg.recipeV3=buildV3Recipe(cfg);
+  cfg.siteV4=buildV4Site(cfg,state.currentPage);
+  return cfg;
 }
 
 /* ── 프로젝트 저장/복원 ── */
 function projectData(){
   const fields={};
-  ['f_name','f_slogan','f_desc','f_phone','f_addr','f_hours','f_video','f_hvideo','f_naver','f_speed'].forEach(id=>fields[id]=$('#'+id).value);
+  ['f_name','f_slogan','f_desc','f_phone','f_addr','f_hours','f_video','f_hvideo','f_naver','f_speed','f_export_format','f_export_filename','f_export_root'].forEach(id=>fields[id]=$('#'+id).value);
   fields.f_font=$('#f_font').value;
-  return {v:2, fields, state};
+  const cfg=getConfig();
+  return {v:4, fields, state, tokensV3:cfg.tokensV3, recipeV3:cfg.recipeV3, siteV4:cfg.siteV4};
 }
 function applyProject(p){
   if(!p||!p.state)return;
@@ -845,6 +1899,10 @@ function applyProject(p){
   state.sections=Object.assign({about:true,services:true,stats:true,doctors:true,gallery:true,video:true,faq:true,booking:false,location:true},state.sections||{});
   state.typo=Object.assign({headWeight:'',headLs:'',bodyLh:'',bodySize:'',btnRadius:''},state.typo||{});
   state.tokens=Object.assign({textColor:'',textOpacity:100,shadow:'',density:'',radius:''},state.tokens||{});
+  state.v3=Object.assign({},V3_DEFAULTS,state.v3||{});
+  state.v4=Object.assign({schema:'siteon/site-v4'},state.v4||{});
+  state.export=Object.assign({},EXPORT_DEFAULTS,state.export||{});
+  v4Settings();
   if(!Array.isArray(state.faq)) state.faq=[];
   if(!Array.isArray(state.blocks)) state.blocks=[];
   const ORDER_DEF=['about','services','stats','doctors','gallery','video','blocks','faq','booking','location'];
@@ -859,9 +1917,20 @@ function applyProject(p){
   themeGrid.querySelectorAll('.theme-card').forEach(c=>c.classList.toggle('on',c.dataset.tid===state.theme));
   styleList.querySelectorAll('.motion-item').forEach(c=>c.classList.toggle('on',c.dataset.sid===(state.style||'soft')));
   if(!state.style)state.style='soft';
-  drawServices(); drawDoctors(); drawGallery(); drawFaq(); drawBlocks(); syncHeroDrop(); syncLogoDrop(); syncTypoUI(); syncTokensUI();
+  drawServices(); drawDoctors(); drawGallery(); drawFaq(); drawBlocks(); syncHeroDrop(); syncLogoDrop(); syncTypoUI(); syncTokensUI(); syncV3UI(); syncV4UI();
 }
-const autoSave = debounce(()=>{ try{ localStorage.setItem('siteon_project', JSON.stringify(projectData())); }catch(e){} }, 600);
+function showToast(msg){
+  const t=$('#toast');
+  if(!t) return;
+  if(msg) t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t=setTimeout(()=>t.classList.remove('show'),2600);
+}
+const autoSave = debounce(()=>{
+  try{ localStorage.setItem('siteon_project', JSON.stringify(projectData())); }
+  catch(e){ showToast('자동저장 용량이 부족합니다. JSON 파일로 저장해 주세요.'); }
+}, 600);
 
 $('#btnSaveJson').onclick=()=>{
   const blob=new Blob([JSON.stringify(projectData(),null,2)],{type:'application/json'});
@@ -878,8 +1947,22 @@ $('#jsonFile').onchange=e=>{
 
 function render(){
   const cfg=getConfig();
-  $('#urlBar').textContent='https://www.'+cfg.name.replace(/\s/g,'')+'.kr';
-  $('#preview').srcdoc=generateSite(cfg);
+  let currentPath=normalizeV4Path(state.currentPage||'/');
+  let currentPage=state.siteMode==='multipage'?v4FindPage(cfg,currentPath):null;
+  if(state.siteMode==='multipage'&&!currentPage){
+    currentPath='/';
+    currentPage=v4FindPage(cfg,currentPath);
+  }
+  state.currentPage=currentPath;
+  const base='https://www.'+cfg.name.replace(/\s/g,'')+'.kr';
+  const path=state.siteMode==='multipage'?(currentPath==='/'?'':currentPath):'';
+  $('#urlBar').textContent=base+path;
+  const previewCfg=Object.assign({},cfg,{currentPage:currentPath});
+  const previewHtml=state.siteMode==='multipage'
+    ?generateV4Page(previewCfg,currentPath)
+    :generateCurrentPreview(previewCfg,currentPath);
+  $('#preview').srcdoc=previewHtml;
+  syncV4UI();
   autoSave();
   if(typeof histPush==='function'){ try{ histPush(); }catch(e){} }
 }
@@ -887,13 +1970,9 @@ const renderSoon = debounce(render,350);
 
 // 내보내기
 $('#btnExport').onclick=()=>{
-  const cfg=getConfig();
-  const blob=new Blob([generateSite(cfg)],{type:'text/html;charset=utf-8'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download=cfg.name.replace(/\s/g,'')+'-홈페이지.html';
-  a.click(); URL.revokeObjectURL(a.href);
-  const t=$('#toast'); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600);
+  const pkg=buildExportPackage(getConfig());
+  triggerExportDownload(pkg);
+  showToast((EXPORT_LABELS[pkg.kind]||'파일')+'이 다운로드되었습니다.');
 };
 
 /* ═══════════ 템플릿 생성기 (디자이너 프리셋) ═══════════ */
@@ -925,7 +2004,7 @@ function postProcess(html, cfg){
   const order=state.sectionOrder||ORDER_DEFAULT;
   const needReorder=JSON.stringify(order)!==JSON.stringify(ORDER_DEFAULT);
   const needVariant=state.variants&&state.variants.doctors==='list';
-  if(!needReorder&&!needVariant) return html;
+  if(!needReorder&&!needVariant) return applyV3Output(html,cfg);
   try{
     const doc=new DOMParser().parseFromString(html,'text/html');
     if(needVariant){
@@ -948,8 +2027,8 @@ function postProcess(html, cfg){
         ph.remove();
       }
     }
-    return '<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
-  }catch(e){ return html; }
+    return applyV3Output('<!DOCTYPE html>\n'+doc.documentElement.outerHTML,cfg);
+  }catch(e){ return applyV3Output(html,cfg); }
 }
 
 function generateSite(cfg){
@@ -998,12 +2077,24 @@ function logoBrand(cfg, fallbackHtml){
   return fallbackHtml;
 }
 
-// 히어로 배경 영상 (유튜브 무음 루프)
+function heroVideoType(url){
+  const clean=String(url||'').split('?')[0].split('#')[0].toLowerCase();
+  if(clean.endsWith('.mp4')) return 'video/mp4';
+  if(clean.endsWith('.webm')) return 'video/webm';
+  return '';
+}
+
+// 히어로 배경 영상 (YouTube 또는 직접 파일 무음 루프)
 function heroVideo(cfg){
-  const m=(cfg.heroVideoUrl||'').match(/(?:youtu\.be\/|[?&]v=|shorts\/|embed\/)([\w-]{6,})/);
+  const src=String(cfg.heroVideoUrl||'').trim();
+  if(!src) return '';
+  const probe=src.replace(/&amp;/g,'&');
+  const type=heroVideoType(probe);
+  if(type) return `<div class="hero-video" aria-hidden="true"><video autoplay muted loop playsinline preload="metadata" tabindex="-1"><source src="${esc(src)}" type="${type}"></video><span class="hv-shade"></span></div>`;
+  const m=probe.match(/(?:youtu\.be\/|[?&]v=|shorts\/|embed\/)([\w-]{6,})/);
   if(!m) return '';
   const id=m[1];
-  return `<div class="hero-video" aria-hidden="true"><iframe src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&showinfo=0&rel=0&playsinline=1" frameborder="0" allow="autoplay" tabindex="-1"></iframe><span class="hv-shade"></span></div>`;
+  return `<div class="hero-video" aria-hidden="true"><iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&showinfo=0&rel=0&playsinline=1" frameborder="0" allow="autoplay" tabindex="-1"></iframe><span class="hv-shade"></span></div>`;
 }
 
 // FAQ 섹션 (전 스타일 공용, 톤 적응)
@@ -1136,6 +2227,7 @@ const PROD_CSS=`
 @media(max-width:860px){.brand-img img{height:32px;max-width:150px}}
 .hero-video{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none}
 .hero-video iframe{position:absolute;top:50%;left:50%;width:177.78vh;min-width:100%;height:56.25vw;min-height:100%;transform:translate(-50%,-50%);border:0}
+.hero-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
 .hero-video .hv-shade{position:absolute;inset:0;background:rgba(10,14,18,.45)}
 header{position:relative}
 header>*:not(.hero-video){position:relative;z-index:1}
@@ -1247,7 +2339,19 @@ function siteScript(cfg){
 (function(){
   var motion = document.documentElement.getAttribute('data-motion');
   var nav=document.getElementById('nav');
-  if(nav){ window.addEventListener('scroll',function(){ nav.classList.toggle('scrolled',window.scrollY>40); },{passive:true}); }
+  var scrollJobs=[], scrollTick=false;
+  function addScrollJob(fn){ scrollJobs.push(fn); fn(); }
+  function runScrollJobs(){
+    scrollTick=false;
+    for(var i=0;i<scrollJobs.length;i++) scrollJobs[i]();
+  }
+  function requestScrollTick(){
+    if(scrollTick) return;
+    scrollTick=true;
+    requestAnimationFrame(runScrollJobs);
+  }
+  window.addEventListener('scroll',requestScrollTick,{passive:true});
+  if(nav){ addScrollJob(function(){ nav.classList.toggle('scrolled',window.scrollY>40); }); }
 
   var io=new IntersectionObserver(function(es){
     es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
@@ -1341,22 +2445,37 @@ function siteScript(cfg){
   // 스크롤 진행 바
   if(motion!=='none'){
     var pb=document.createElement('div'); pb.className='scroll-progress'; document.body.appendChild(pb);
-    window.addEventListener('scroll',function(){
+    addScrollJob(function(){
       var h=document.documentElement;
       pb.style.transform='scaleX('+(h.scrollTop/((h.scrollHeight-h.clientHeight)||1))+')';
-    },{passive:true});
+    });
   }
+
+  document.querySelectorAll('.siteon-video-facade[data-video-src]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var src=btn.getAttribute('data-video-src');
+      if(!src) return;
+      var ifr=document.createElement('iframe');
+      ifr.src=src+(src.indexOf('?')>=0?'&':'?')+'autoplay=1';
+      ifr.title='영상';
+      ifr.loading='lazy';
+      ifr.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      ifr.allowFullscreen=true;
+      ifr.style.cssText='width:100%;height:100%;min-height:280px;aspect-ratio:16/9;border:0;display:block';
+      btn.replaceWith(ifr);
+    });
+  });
 
   // 히어로 패럴랙스 페이드아웃
   if(motion==='soft'||motion==='dynamic'){
     var hdr=document.querySelector('header'), hin=hdr?hdr.firstElementChild:null;
     if(hin){
-      window.addEventListener('scroll',function(){
+      addScrollJob(function(){
         var y=window.scrollY;
         if(y>window.innerHeight){ return; }
         hin.style.transform='translateY('+(y*0.16)+'px)';
         hin.style.opacity=Math.max(0,1-y/(window.innerHeight*0.85));
-      },{passive:true});
+      });
     }
   }
 
@@ -4260,4 +5379,76 @@ function attachEditLayer(doc){
     const t=normTxt(el.textContent); if(!t||t.length<2)return;
     const entry=R.find(r=>r.val===t||(r.suffix&&t===r.val+normTxt(r.suffix)));
     if(!entry)return;
-    el.setAttribute('d
+    el.setAttribute('data-edx','');
+    try{ el.contentEditable='plaintext-only'; }catch(e){ el.contentEditable='true'; }
+    el.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); });
+    el.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!entry.multiline){ e.preventDefault(); el.blur(); } });
+    el.addEventListener('blur',()=>{
+      let v=el.innerText.replace(/ /g,' ').trim();
+      if(entry.suffix) v=v.replace(new RegExp('\\s*'+entry.suffix+'\\s*$'),'');
+      if(!v||normTxt(v)===entry.val) return;
+      entry.save(v); autoSave(); renderKeepScroll();
+    });
+  });
+
+  // 2) 사진 클릭 교체 (섹션 내 n번째 아이템 ↔ 상태 배열 n번째)
+  const MEDIA_SEL='.gal-img,.im,.fr,.ph-fill,.dr-avatar,.dr-photo,.cl-dr-photo,.cl-dr-ph,.pm-init,.in-ph,.in-av,.av,.sv-ico,.sv-img,.cl-ico,.cl-img,.pm-img,.pp-img,.ic,.gal-ph,.ph,.v,.th';
+  function zone(secSel,itemSel,arr,redraw,maxW){
+    const sec=doc.querySelector(secSel); if(!sec)return;
+    let i=0;
+    sec.querySelectorAll(itemSel).forEach(it=>{
+      const idx=i++; if(!arr[idx])return;
+      const media=it.querySelector('img')||it.querySelector(MEDIA_SEL);
+      if(!media)return;
+      media.classList.add('ed-media'); media.title='클릭: 사진 변경';
+      media.addEventListener('click',e=>{
+        e.preventDefault(); e.stopPropagation();
+        pickImage(maxW,url=>{ arr[idx].img=url; redraw(); autoSave(); renderKeepScroll(); });
+      },true);
+    });
+  }
+  zone('#services','.card.sv,.cl-card,.pm-card,.sp-row,.pp-card,.ph-block,.lx-row,.pr-card,.mg-card,.cv-card,.bd-acc,.sc-svc',state.services,drawServices,900);
+  zone('#doctors','.card.dr,.cl-dr,.pm-dr,.sp-dr,.pp-dr,.ph-dr,.x-dr',state.doctors,drawDoctors,500);
+  zone('#gallery','.gal-item,.cl-gal,.pm-gal,.sp-gal,.pp-gal,.ph-gal,.x-gal',state.gallery,drawGallery,900);
+
+  // 3) 히어로 배경 사진 버튼
+  const hd=doc.querySelector('header');
+  if(hd){
+    try{ if(doc.defaultView.getComputedStyle(hd).position==='static') hd.style.position='relative'; }catch(e){}
+    const b=doc.createElement('button'); b.type='button'; b.className='ed-herobtn';
+    b.textContent=state.heroImg?'히어로 사진 변경':'+ 히어로 사진 추가';
+    b.addEventListener('click',e=>{
+      e.preventDefault();
+      pickImage(1400,url=>{ state.heroImg=url; syncHeroDrop(); autoSave(); renderKeepScroll(); });
+    });
+    hd.appendChild(b);
+  }
+}
+
+// 미리보기 로드 시: 스크롤 복원 + 편집 레이어 부착
+$('#preview').addEventListener('load',()=>{
+  let d,w;
+  try{ d=$('#preview').contentDocument; w=$('#preview').contentWindow; }catch(e){ return; }
+  if(!d||!d.body) return;
+  if(pendingScroll!=null){
+    d.querySelectorAll('[data-reveal]').forEach(el=>el.classList.add('in'));
+    w.scrollTo(0,pendingScroll); pendingScroll=null;
+  }
+  if(state.siteMode==='multipage') attachV4PreviewRouter(d);
+  if(editMode) attachEditLayer(d);
+});
+
+$('#btnEdit').onclick=()=>{
+  editMode=!editMode;
+  $('#btnEdit').textContent='편집 모드 '+(editMode?'ON':'OFF');
+  $('#btnEdit').classList.toggle('btn-primary',editMode);
+  $('#btnEdit').classList.toggle('btn-ghost',!editMode);
+  render();
+};
+
+// 초기화: 자동저장 복원 → UI 구성
+try{ const saved=localStorage.getItem('siteon_project'); if(saved) applyProject(JSON.parse(saved)); }catch(e){}
+drawServices(); drawDoctors(); drawGallery(); drawFaq(); drawBlocks(); syncHeroDrop(); syncLogoDrop(); syncTypoUI(); syncTokensUI(); syncV3UI(); syncV4UI(); render();
+</script>
+</body>
+</html>
