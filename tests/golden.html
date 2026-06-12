@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SiteOn Golden Test</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
+    *{box-sizing:border-box}
+    body{margin:0;padding:28px}
+    main{max-width:1100px;margin:0 auto}
+    h1{font-size:24px;margin:0 0 8px}
+    p{margin:0 0 18px;color:#5f6b7a}
+    .status{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid #e4e9f2;font-size:14px;font-weight:700}
+    .status.pass{color:#087f5b}
+    .status.fail{color:#c92a2a}
+    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e4e9f2;border-radius:10px;overflow:hidden}
+    th,td{padding:10px 12px;border-bottom:1px solid #eef2f7;text-align:left;font-size:13px;vertical-align:top}
+    th{background:#f9fafc;color:#364152}
+    tr:last-child td{border-bottom:0}
+    .ok{color:#087f5b;font-weight:800}
+    .bad{color:#c92a2a;font-weight:800}
+    .mono{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace}
+    iframe{position:absolute;left:-10000px;top:0;width:1280px;height:900px;border:0}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>SiteOn Golden Test</h1>
+    <p>Loads the builder, runs every style through <span class="mono">generateSite(getConfig())</span>, validates required sections, checks emoji leakage, and renders each result in a preview iframe.</p>
+    <div id="status" class="status">Running...</div>
+    <table aria-label="Golden test results">
+      <thead>
+        <tr>
+          <th>Style</th>
+          <th>DOCTYPE</th>
+          <th>Required IDs</th>
+          <th>Emoji</th>
+          <th>Preview</th>
+          <th>Console</th>
+          <th>Errors</th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+    </table>
+  </main>
+  <iframe id="builderFrame" title="SiteOn builder"></iframe>
+  <iframe id="previewFrame" title="Generated preview"></iframe>
+
+  <script>
+    const REQUIRED_IDS = ['about','services','doctors','gallery','faq','location'];
+    const EMOJI_RE = /[\u{1F300}-\u{1FAFF}]/u;
+    const rows = document.getElementById('results');
+    const statusEl = document.getElementById('status');
+    const builderFrame = document.getElementById('builderFrame');
+    const previewFrame = document.getElementById('previewFrame');
+    const previewConsoleErrors = [];
+    const builderLoadConsoleErrors = [];
+
+    window.addEventListener('message', event => {
+      if (event.data && event.data.type === 'golden-console-error') {
+        previewConsoleErrors.push(event.data.message || 'preview console error');
+      }
+      if (event.data && event.data.type === 'golden-builder-console-error') {
+        builderLoadConsoleErrors.push(event.data.message || 'builder console error');
+      }
+    });
+
+    function cell(value, ok) {
+      return `<td class="${ok ? 'ok' : 'bad'}">${ok ? 'PASS' : 'FAIL'}${value ? `<br><span class="mono">${value}</span>` : ''}</td>`;
+    }
+
+    function addRow(result) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${result.name}</strong><br><span class="mono">${result.id}</span></td>
+        ${cell('', result.doctype)}
+        ${cell(result.missingIds.join(', '), result.ids)}
+        ${cell(result.emoji || '', result.noEmoji)}
+        ${cell('', result.preview)}
+        ${cell(result.consoleErrors.join(', '), result.console)}
+        <td>${result.errors.length ? `<span class="bad">${result.errors.join('<br>')}</span>` : '<span class="ok">none</span>'}</td>
+      `;
+      rows.appendChild(tr);
+    }
+
+    function waitForFrameLoad(frame) {
+      return new Promise(resolve => {
+        frame.onload = () => resolve();
+      });
+    }
+
+    function injectConsoleTrap(html) {
+      const trap = `<script>
+        (function(){
+          function send(message){ parent.postMessage({type:'golden-console-error',message:String(message)}, '*'); }
+          var originalError = console.error;
+          console.error = function(){ send(Array.prototype.join.call(arguments, ' ')); return originalError.apply(console, arguments); };
+          window.addEventListener('error', function(e){ send(e.message || 'window error'); });
+          window.addEventListener('unhandledrejection', function(e){ send((e.reason && e.reason.message) || e.reason || 'unhandled rejection'); });
+        })();
+      <\/script>`;
+      return html.replace(/<head([^>]*)>/i, `<head$1>${trap}`);
+    }
+
+    function injectBuilderTrap(html) {
+      const trap = `<script>
+        (function(){
+          function send(message){ parent.postMessage({type:'golden-builder-console-error',message:String(message)}, '*'); }
+          var originalError = console.error;
+          console.error = function(){ send(Array.prototype.join.call(arguments, ' ')); return originalError.apply(console, arguments); };
+          window.addEventListener('error', function(e){ send(e.message || 'window error'); });
+          window.addEventListener('unhandledrejection', function(e){ send((e.reason && e.reason.message) || e.reason || 'unhandled rejection'); });
+        })();
+      <\/script>`;
+      return html.replace(/<head([^>]*)>/i, `<head$1>${trap}`);
+    }
+
+    async function renderPreview(html) {
+      previewConsoleErrors.length = 0;
+      const loaded = waitForFrameLoad(previewFrame);
+      previewFrame.srcdoc = injectConsoleTrap(html);
+      await loaded;
+      await new Promise(resolve => setTimeout(resolve, 60));
+      const doc = previewFrame.contentDocument;
+      return Boolean(doc && doc.body && doc.body.textContent.trim().length > 0);
+    }
+
+    function validateHtml(html) {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const missingIds = REQUIRED_IDS.filter(id => !doc.getElementById(id));
+      const emoji = html.match(EMOJI_RE);
+      return {
+        doctype: html.trimStart().startsWith('<!DOCTYPE') && html.trimEnd().endsWith('</html>'),
+        ids: missingIds.length === 0,
+        missingIds,
+        noEmoji: !emoji,
+        emoji: emoji ? emoji[0] : ''
+      };
+    }
+
+    async function run() {
+      const builderLoaded = new Promise((resolve, reject) => {
+        const timer = setTimeout(() => reject(new Error('Builder load timeout')), 12000);
+        builderFrame.addEventListener('load', () => { clearTimeout(timer); resolve(); }, { once: true });
+      });
+      try {
+        const builderHtml = await fetch('../사이트온-빌더.html').then(response => {
+          if (!response.ok) throw new Error(`Builder fetch failed: ${response.status}`);
+          return response.text();
+        });
+        builderFrame.srcdoc = injectBuilderTrap(builderHtml);
+      } catch (error) {
+        builderFrame.src = '../사이트온-빌더.html';
+      }
+      await builderLoaded;
+
+      const win = builderFrame.contentWindow;
+      if (!win || typeof win.eval !== 'function') {
+        throw new Error('Builder API is not available');
+      }
+      const styles = win.eval('STYLES');
+      if (!Array.isArray(styles)) throw new Error('Builder styles are not available');
+      const builderConsoleErrors = [];
+      const originalBuilderError = win.console.error.bind(win.console);
+      win.console.error = function() {
+        builderConsoleErrors.push(Array.prototype.join.call(arguments, ' '));
+        return originalBuilderError.apply(win.console, arguments);
+      };
+      win.addEventListener('error', event => {
+        builderConsoleErrors.push(event.message || 'builder window error');
+      });
+      win.addEventListener('unhandledrejection', event => {
+        builderConsoleErrors.push((event.reason && event.reason.message) || event.reason || 'builder unhandled rejection');
+      });
+
+      let passed = 0;
+      for (const style of styles) {
+        const result = { id: style.id, name: style.name, errors: [], consoleErrors: [] };
+        try {
+          builderConsoleErrors.length = 0;
+          const html = win.eval(`state.style = ${JSON.stringify(style.id)}; generateSite(getConfig());`);
+          Object.assign(result, validateHtml(html));
+          result.preview = await renderPreview(html);
+          result.consoleErrors = builderLoadConsoleErrors.concat(builderConsoleErrors, previewConsoleErrors);
+          result.console = result.consoleErrors.length === 0;
+          if (!result.doctype) result.errors.push('invalid document boundary');
+          if (!result.ids) result.errors.push('missing required ids');
+          if (!result.noEmoji) result.errors.push('emoji found');
+          if (!result.preview) result.errors.push('preview did not render');
+          if (!result.console) result.errors.push('preview console error');
+        } catch (error) {
+          Object.assign(result, { doctype:false, ids:false, missingIds:REQUIRED_IDS, noEmoji:false, emoji:'', preview:false, console:false });
+          result.errors.push(error && error.message ? error.message : String(error));
+        }
+        if (result.errors.length === 0) passed += 1;
+        addRow(result);
+      }
+
+      const total = styles.length;
+      statusEl.textContent = `${passed}/${total} passed`;
+      statusEl.classList.add(passed === total ? 'pass' : 'fail');
+      if (passed !== total) throw new Error(`Golden test failed: ${passed}/${total}`);
+    }
+
+    run().catch(error => {
+      statusEl.textContent = error.message;
+      statusEl.classList.add('fail');
+      console.error(error);
+    });
+  </script>
+</body>
+</html>
