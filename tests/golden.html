@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SiteOn Golden Test</title>
+  <link rel="icon" href="data:,">
   <style>
     :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
     *{box-sizing:border-box}
@@ -33,6 +34,10 @@
       <thead>
         <tr>
           <th>Style</th>
+          <th>Legacy Snapshot</th>
+          <th>V5 Base</th>
+          <th>V5 Compose</th>
+          <th>V5 Hero</th>
           <th>DOCTYPE</th>
           <th>Required IDs</th>
           <th>Emoji</th>
@@ -74,6 +79,10 @@
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><strong>${result.name}</strong><br><span class="mono">${result.id}</span></td>
+        ${cell('', result.legacySnapshot)}
+        ${cell('', result.v5Base)}
+        ${cell('', result.v5Compose)}
+        ${cell('', result.v5Hero)}
         ${cell('', result.doctype)}
         ${cell(result.missingIds.join(', '), result.ids)}
         ${cell(result.emoji || '', result.noEmoji)}
@@ -103,6 +112,15 @@
       return html.replace(/<head([^>]*)>/i, `<head$1>${trap}`);
     }
 
+    function injectPreviewBase(html) {
+      if (/<base\s/i.test(html)) return html;
+      return html.replace(/<head([^>]*)>/i, `<head$1><base href="${location.origin}/">`);
+    }
+
+    function normalizePreviewAssets(html) {
+      return html.replace(/(["'(])assets\//g, `$1${location.origin}/assets/`);
+    }
+
     function injectBuilderTrap(html) {
       const trap = `<script>
         (function(){
@@ -119,7 +137,7 @@
     async function renderPreview(html) {
       previewConsoleErrors.length = 0;
       const loaded = waitForFrameLoad(previewFrame);
-      previewFrame.srcdoc = injectConsoleTrap(html);
+      previewFrame.srcdoc = injectConsoleTrap(injectPreviewBase(normalizePreviewAssets(html)));
       await loaded;
       await new Promise(resolve => setTimeout(resolve, 60));
       const doc = previewFrame.contentDocument;
@@ -149,7 +167,7 @@
           if (!response.ok) throw new Error(`Builder fetch failed: ${response.status}`);
           return response.text();
         });
-        builderFrame.srcdoc = injectBuilderTrap(builderHtml);
+        builderFrame.srcdoc = injectBuilderTrap(injectPreviewBase(normalizePreviewAssets(builderHtml)));
       } catch (error) {
         builderFrame.src = '../사이트온-빌더.html';
       }
@@ -173,24 +191,36 @@
       win.addEventListener('unhandledrejection', event => {
         builderConsoleErrors.push((event.reason && event.reason.message) || event.reason || 'builder unhandled rejection');
       });
+      const composeGolden = win.eval('migrateComposition(state); v5GoldenCompose();');
+      const heroGolden = win.eval('migrateComposition(state); v5GoldenHero();');
 
       let passed = 0;
       for (const style of styles) {
         const result = { id: style.id, name: style.name, errors: [], consoleErrors: [] };
         try {
           builderConsoleErrors.length = 0;
-          const html = win.eval(`state.style = ${JSON.stringify(style.id)}; generateSite(getConfig());`);
+          const htmlWithoutComposition = win.eval(`state.style = ${JSON.stringify(style.id)}; state.composition = undefined; generateSite(getConfig());`);
+          const html = win.eval(`state.style = ${JSON.stringify(style.id)}; state.composition = defaultComposition(); generateSite(getConfig());`);
+          const htmlV5 = win.eval(`state.style = ${JSON.stringify(style.id)}; state.composition = Object.assign(defaultComposition(), { mode:'auto', rhythm:'editorial' }); generateSite(getConfig());`);
+          result.legacySnapshot = htmlWithoutComposition === html;
+          result.v5Base = !html.includes('data-v5-composition') && htmlV5.includes('data-v5-composition="auto"') && htmlV5.includes('data-v5-rhythm="editorial"') && htmlV5.includes('id="v5-base"');
+          result.v5Compose = Boolean(composeGolden && composeGolden.pass);
+          result.v5Hero = Boolean(heroGolden && heroGolden.pass);
           Object.assign(result, validateHtml(html));
           result.preview = await renderPreview(html);
           result.consoleErrors = builderLoadConsoleErrors.concat(builderConsoleErrors, previewConsoleErrors);
           result.console = result.consoleErrors.length === 0;
+          if (!result.legacySnapshot) result.errors.push('legacy composition changed output');
+          if (!result.v5Base) result.errors.push('v5 base gate failed');
+          if (!result.v5Compose) result.errors.push(`v5 compose failed${composeGolden && composeGolden.fails ? ': ' + composeGolden.fails.join('; ') : ''}`);
+          if (!result.v5Hero) result.errors.push(`v5 hero failed${heroGolden && heroGolden.fails ? ': ' + heroGolden.fails.join('; ') : ''}`);
           if (!result.doctype) result.errors.push('invalid document boundary');
           if (!result.ids) result.errors.push('missing required ids');
           if (!result.noEmoji) result.errors.push('emoji found');
           if (!result.preview) result.errors.push('preview did not render');
           if (!result.console) result.errors.push('preview console error');
         } catch (error) {
-          Object.assign(result, { doctype:false, ids:false, missingIds:REQUIRED_IDS, noEmoji:false, emoji:'', preview:false, console:false });
+          Object.assign(result, { legacySnapshot:false, v5Base:false, v5Compose:false, v5Hero:false, doctype:false, ids:false, missingIds:REQUIRED_IDS, noEmoji:false, emoji:'', preview:false, console:false });
           result.errors.push(error && error.message ? error.message : String(error));
         }
         if (result.errors.length === 0) passed += 1;

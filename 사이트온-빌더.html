@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>사이트온 빌더 — 웹사이트 디자인 빌더</title>
+<link rel="icon" href="data:,">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 :root{
@@ -129,6 +130,12 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
 .page-item b{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .page-item small{color:var(--sub);font-size:10.5px;white-space:nowrap}
 .page-item .page-kind{font-size:10px;color:var(--sub);border:1px solid var(--line);border-radius:999px;padding:2px 6px}
+.page-actions{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+.page-del{width:24px;height:24px;border:1px solid var(--line);border-radius:999px;background:#151922;color:var(--sub);font:inherit;font-weight:900;line-height:1;cursor:pointer}
+.page-del:hover{border-color:#ff7a7a;color:#ffb3b3}
+.custom-page-form{display:grid;gap:7px;margin-top:10px;border-top:1px solid var(--line);padding-top:10px}
+.custom-page-form input{width:100%;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--txt);font:inherit;font-size:12px;padding:9px 10px;outline:none}
+.custom-page-form input:focus{border-color:var(--accent)}
 
 /* 이미지 업로드 */
 .img-drop{border:2px dashed var(--line);border-radius:10px;min-height:84px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;font-size:12.5px;color:var(--sub);transition:.2s;background-size:cover;background-position:center;margin-top:4px}
@@ -142,10 +149,11 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
 
 /* 사진 보정 모달 */
 .pe-modal{display:none;position:fixed;inset:0;background:rgba(8,9,12,.78);z-index:120;align-items:center;justify-content:center;padding:20px}
-.pe-box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;width:600px;max-width:96vw;max-height:94vh;overflow-y:auto}
+.pe-box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;width:760px;max-width:96vw;max-height:94vh;overflow-y:auto}
 .pe-title{font-size:14px;font-weight:700;margin-bottom:14px}
-.pe-canvas-wrap{background:#0a0b0e;border-radius:8px;display:flex;align-items:center;justify-content:center;min-height:200px;margin-bottom:14px;padding:10px}
-#peCanvas{max-width:100%;border-radius:4px}
+.pe-canvas-wrap{background:#0a0b0e;border-radius:8px;display:flex;align-items:center;justify-content:center;min-height:240px;margin-bottom:10px;padding:10px;touch-action:none;user-select:none}
+#peCanvas{max-width:100%;border-radius:4px;cursor:crosshair}
+.pe-help{font-size:12px;color:var(--sub);line-height:1.45;margin:0 0 12px}
 .pe-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .pe-row button{background:var(--panel2);border:1.5px solid var(--line);border-radius:6px;color:var(--txt);padding:7px 13px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
 .pe-row button.on{border-color:var(--accent);color:var(--accent)}
@@ -153,6 +161,7 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
 .pe-sliders label{font-size:11.5px;color:var(--sub);font-weight:600}
 .pe-sliders input{width:100%;accent-color:var(--accent)}
 .pe-actions{display:flex;gap:8px;justify-content:flex-end}
+@media(max-width:760px){.pe-box{width:96vw;padding:16px}.pe-sliders{grid-template-columns:1fr}.pe-canvas-wrap{min-height:200px}}
 
 /* 토스트 */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#fff;color:#111;padding:12px 22px;border-radius:12px;font-size:13.5px;font-weight:700;box-shadow:0 12px 40px rgba(0,0,0,.4);transition:.4s cubic-bezier(.22,1,.36,1);z-index:99;opacity:0}
@@ -193,6 +202,11 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
         </div>
         <div class="page-summary" id="v4Summary"></div>
         <div class="page-list" id="v4PageList"></div>
+        <div class="custom-page-form" id="v4CustomPageForm">
+          <input type="text" id="v4PageTitle" placeholder="메뉴명 예: 이벤트">
+          <input type="text" id="v4PagePath" placeholder="주소 예: /event/">
+          <button class="add-btn" type="button" id="v4AddPage">+ 메뉴 추가</button>
+        </div>
         <button class="add-btn" type="button" id="v4CopySchema">v4 사이트 JSON 복사</button>
         <div class="hint">멀티페이지는 현재 원페이지 내용을 비파괴로 분기해 상세 페이지, 미리보기 라우팅, sitemap/robots 포함 ZIP 내보내기를 생성합니다.</div>
       </div>
@@ -229,11 +243,11 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
         <div class="mini-drop" id="logoDrop">+ 로고 업로드 (PNG 권장)</div>
         <button class="add-btn" id="logoClear" style="display:none">로고 제거 (텍스트 로고 사용)</button>
         <label class="fld">병원 이름</label>
-        <input type="text" id="f_name" value="밝은미소치과">
+        <input type="text" id="f_name" value="사이트온 병원">
         <label class="fld">한 줄 슬로건 (히어로 제목)</label>
-        <input type="text" id="f_slogan" value="평생 건강한 치아, 정직한 진료로 지킵니다">
+        <input type="text" id="f_slogan" value="정확한 진료와 따뜻한 케어로 건강을 지킵니다">
         <label class="fld">소개 문구</label>
-        <textarea id="f_desc">과잉진료 없는 정직한 치과. 대학병원 출신 의료진이 꼭 필요한 치료만 정확하게 제안합니다.</textarea>
+        <textarea id="f_desc">과잉진료 없는 정직한 진료. 대학병원 출신 의료진이 환자에게 필요한 치료만 정확하게 제안합니다.</textarea>
         <label class="fld">전화번호</label>
         <input type="text" id="f_phone" value="02-1234-5678">
         <label class="fld">네이버 예약 URL (선택)</label>
@@ -243,6 +257,24 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
         <label class="fld">진료시간</label>
         <textarea id="f_hours">평일 10:00 - 19:00 / 토요일 10:00 - 14:00
 점심시간 13:00 - 14:00 · 일요일/공휴일 휴진</textarea>
+      </div>
+    </div>
+
+    <div class="sec open">
+      <div class="sec-head"><span class="ico">CTA</span><b>히어로 버튼 · 신뢰문구</b><span class="chev">▶</span></div>
+      <div class="sec-body">
+        <label class="fld">첫 번째 버튼 문구</label>
+        <input type="text" id="heroPrimaryLabel" placeholder="전화 예약">
+        <label class="fld">첫 번째 버튼 링크</label>
+        <input type="text" id="heroPrimaryHref" placeholder="비워두면 전화번호로 연결">
+        <label class="fld">두 번째 버튼 문구</label>
+        <input type="text" id="heroSecondaryLabel" placeholder="진료과목 보기">
+        <label class="fld">두 번째 버튼 링크</label>
+        <input type="text" id="heroSecondaryHref" placeholder="#services 또는 /services/">
+        <label class="fld">히어로 하단 신뢰문구</label>
+        <div id="heroTrustList"></div>
+        <button class="add-btn" type="button" id="addHeroTrust">+ 신뢰문구 추가</button>
+        <div class="hint">문구를 비우거나 삭제하면 히어로 하단에서 바로 빠집니다. 링크는 #services, tel:, https:// 형식을 그대로 사용할 수 있습니다.</div>
       </div>
     </div>
 
@@ -280,6 +312,11 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
           <span id="heroDropTxt">클릭해서 사진 업로드<br><small>병원 내부·외관 사진 권장</small></span>
         </div>
         <button class="add-btn" id="heroImgClear" style="display:none">배경 사진 제거</button>
+        <label class="fld">소개 섹션 사진</label>
+        <div class="img-drop" id="aboutDrop">
+          <span id="aboutDropTxt">클릭해서 소개 사진 업로드<br><small>히어로와 다른 진료실·의료진 사진 권장</small></span>
+        </div>
+        <button class="add-btn" id="aboutImgClear" style="display:none">소개 사진 제거</button>
         <label class="fld">히어로 배경 영상 (YouTube · MP4 · WebM)</label>
         <input type="text" id="f_hvideo" placeholder="https://youtu.be/... 또는 https://example.com/hero.mp4">
         <label class="fld">유튜브 소개 영상 URL (본문 섹션)</label>
@@ -298,6 +335,25 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
       <div class="sec-body">
         <div id="serviceList"></div>
         <button class="add-btn" id="addService">+ 진료 과목 추가</button>
+      </div>
+    </div>
+
+    <div class="sec open">
+      <div class="sec-head"><span class="ico">#</span><b>통계 수치</b><span class="chev">›</span></div>
+      <div class="sec-body">
+        <div id="statsList"></div>
+        <div class="hint">숫자는 쉼표 없이 입력해도 미리보기에서 자동으로 32,000처럼 표시합니다.</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head"><span class="ico">▦</span><b>푸터 디자인</b><span class="chev">▶</span></div>
+      <div class="sec-body">
+        <label class="fld">레이아웃 선택</label>
+        <div class="motion-list" id="footerLayoutList"></div>
+        <label class="fld">메뉴 내용 선택</label>
+        <div class="motion-list" id="footerMenuList"></div>
+        <div class="hint">참고 이미지처럼 좌측 병원 정보, 우측 메뉴, 하단 저작권 라인을 가진 다크 푸터를 기본으로 적용합니다.</div>
       </div>
     </div>
 
@@ -358,7 +414,7 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
         </select>
         <button class="add-btn" id="addBlock">+ 블록 추가</button>
         <div id="blockList"></div>
-        <div class="hint">한 줄에 한 항목, 구분자는 | 입니다. 예: 임플란트(국산)|130만원~</div>
+        <div class="hint">한 줄에 한 항목, 구분자는 | 입니다. 예: 초진 상담|상담 후 안내</div>
       </div>
     </div>
 
@@ -402,7 +458,7 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
 
   <main class="preview-wrap">
     <div class="frame-shell" id="frameShell">
-      <div class="frame-bar"><i></i><i></i><i></i><span class="url" id="urlBar">https://www.밝은미소치과.kr</span></div>
+      <div class="frame-bar"><i></i><i></i><i></i><span class="url" id="urlBar">https://www.siteonclinic.kr</span></div>
       <iframe id="preview" title="미리보기"></iframe>
     </div>
   </main>
@@ -414,6 +470,7 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
   <div class="pe-box">
     <div class="pe-title">사진 보정</div>
     <div class="pe-canvas-wrap"><canvas id="peCanvas"></canvas></div>
+    <p class="pe-help">크롭 박스를 드래그해 이동하고 모서리를 잡아 자를 영역을 조정하세요.</p>
     <div class="pe-row" id="pePresets"></div>
     <div class="pe-sliders">
       <label>밝기<input type="range" id="pe_b" min="70" max="130" value="100"></label>
@@ -425,6 +482,7 @@ input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
     </div>
     <div class="pe-actions">
       <button class="btn btn-ghost" id="peCancel">취소</button>
+      <button class="btn btn-ghost" id="peReset">초기화</button>
       <button class="btn btn-ghost" id="peOrig">보정 없이 사용</button>
       <button class="btn btn-primary" id="peOk">적용</button>
     </div>
@@ -452,7 +510,7 @@ const MOTIONS = [
   {id:'none', name:'모션 끄기', desc:'애니메이션 없음', cls:''},
 ];
 const SECTION_DEFS = [
-  {id:'about', name:'치과 소개'},
+  {id:'about', name:'병원 소개'},
   {id:'services', name:'진료 과목'},
   {id:'stats', name:'숫자로 보는 신뢰'},
   {id:'doctors', name:'의료진 소개'},
@@ -470,7 +528,7 @@ const STYLES = [
   {id:'split', name:'모던 스플릿', desc:'좌우 분할 히어로 · 직선 그리드 · 에이전시 무드'},
   {id:'pop', name:'프렌들리 팝', desc:'파스텔 · 둥근 블롭 · 통통 튀는 모션 (가족·소아)'},
   {id:'photo', name:'포토 에디토리얼', desc:'풀블리드 사진 50:50 · 거대 여백 · 레퍼런스 실측 기반'},
-  {id:'luxe', name:'화이트 럭셔리', desc:'아이보리 · 세리프 · 아치형 사진 · 심미치과 무드'},
+  {id:'luxe', name:'화이트 럭셔리', desc:'아이보리 · 세리프 · 아치형 사진 · 프리미엄 클리닉 무드'},
   {id:'process', name:'메디컬 프로세스', desc:'진료 단계 타임라인 · 정밀·디지털 강조'},
   {id:'magazine', name:'매거진 그리드', desc:'초대형 헤드라인 · 비대칭 사진 · 가로 스크롤 카드'},
   {id:'curve', name:'커브 소프트', desc:'곡선 디바이더 · 톤온톤 · 부드러운 사진 카드'},
@@ -478,11 +536,85 @@ const STYLES = [
   {id:'showcase', name:'풀스크린 쇼케이스', desc:'섹션마다 풀스크린 · 스크롤 스냅 · 몰입형'},
 ];
 
+const STAT_DEFAULTS = [
+  {value:'32000', suffix:'+', label:'누적 진료 환자'},
+  {value:'5000', suffix:'건', label:'주요 진료 건수'},
+  {value:'15', suffix:'년', label:'진료 경력'},
+  {value:'98', suffix:'%', label:'재방문 의향'},
+];
+
+const FOOTER_LAYOUTS = [
+  {id:'reference', name:'레퍼런스 다크', desc:'좌측 병원 정보 · 우측 메뉴 · 하단 저작권'},
+  {id:'clean', name:'클린 센터', desc:'밝은 배경 · 중앙 정렬 · 기본 정보 중심'},
+  {id:'split', name:'라이트 스플릿', desc:'좌측 브랜드 · 우측 메뉴 · 여백형'},
+];
+const FOOTER_MENUS = [
+  {id:'contact', name:'상담·예약형', desc:'비급여 · 상담문의 · 오시는 길 · 개인정보'},
+  {id:'clinic', name:'병원 안내형', desc:'병원소개 · 의료진 · 시설장비 · 진료과목'},
+  {id:'content', name:'콘텐츠 확장형', desc:'블로그 · 진료사례 · 공지사항 · FAQ'},
+];
+const FOOTER_MENU_ITEMS = {
+  contact:[
+    {label:'비급여 진료비 안내', href:'#nonpayment', v4:'/nonpayment/'},
+    {label:'온라인 상담문의', href:'#booking', v4:'/contact/'},
+    {label:'오시는 길', href:'#location', v4:'/contact/'},
+    {label:'개인정보처리방침', href:'#privacy', v4:'/privacy/'},
+  ],
+  clinic:[
+    {label:'병원소개', href:'#about', v4:'/about/'},
+    {label:'의료진 소개', href:'#doctors', v4:'/doctors/'},
+    {label:'시설·장비', href:'#gallery', v4:'/facility/'},
+    {label:'진료과목', href:'#services', v4:'/services/'},
+  ],
+  content:[
+    {label:'블로그 바로가기', href:'#blog', v4:'/columns/'},
+    {label:'진료사례', href:'#gallery', v4:'/cases/'},
+    {label:'공지사항', href:'#notice', v4:'/notice/'},
+    {label:'자주 묻는 질문', href:'#faq', v4:'/faq/'},
+  ],
+};
+
+const HERO_DEFAULTS = {
+  primaryLabel:'전화 예약',
+  primaryHref:'',
+  secondaryLabel:'진료과목 보기',
+  secondaryHref:'#services',
+  trustItems:[
+    {before:'', strong:'15년', after:'한자리 진료'},
+    {before:'대학병원 출신', strong:'전문의 3인', after:''},
+    {before:'', strong:'3D CT', after:'디지털 정밀 진단'},
+    {before:'1인 1기구', strong:'멸균 시스템', after:''},
+  ],
+};
+
+const DEFAULT_HERO_IMAGE = 'assets/korean-dental-hero.jpg';
+function ensureDefaultHeroImage(){
+  let seeded=false;
+  try{ seeded=localStorage.getItem('siteon_generated_hero_seeded_v1')==='1'; }catch(e){}
+  const savedInlineImage=typeof state.heroImg==='string'&&state.heroImg.startsWith('data:image/');
+  if(!state.heroImg || (!seeded&&savedInlineImage)){
+    state.heroImg = DEFAULT_HERO_IMAGE;
+    try{ localStorage.setItem('siteon_generated_hero_seeded_v1','1'); }catch(e){}
+  }
+}
+
+function defaultComposition(){
+  return {
+    mode:'legacy',
+    grid:null,
+    rhythm:'calm',
+    variants:{hero:null,services:null,doctors:null,gallery:null},
+    idioms:[],
+    artDirection:{palette:null,displayFont:null,textFont:null}
+  };
+}
+
 const state = {
   style:'soft',
   theme:'mint', font:'sans', motion:'soft', speed:100,
-  customColor:'#5b7cfa', heroImg:null, logo:null, videoUrl:'', heroVideoUrl:'', naverUrl:'',
+  customColor:'#5b7cfa', heroImg:DEFAULT_HERO_IMAGE, aboutImg:null, logo:null, videoUrl:'', heroVideoUrl:'', naverUrl:'',
   siteMode:'onepage', currentPage:'/',
+  customPages:[],
   export:{format:'auto',fileName:'',rootName:''},
   v4:{schema:'siteon/site-v4'},
   v3:{enabled:true,sectionY:'standard',containerMax:'1160',motionIntensity:'standard',videoFacade:true,idbAssets:true},
@@ -491,10 +623,15 @@ const state = {
   blocks:[],
   sectionOrder:['about','services','stats','doctors','gallery','video','blocks','faq','booking','location'],
   variants:{doctors:'card'},
+  composition:defaultComposition(),
+  stats:STAT_DEFAULTS.map(s=>Object.assign({},s)),
+  footer:{layout:'reference',menu:'contact'},
+  hero:JSON.parse(JSON.stringify(HERO_DEFAULTS)),
+  textEdits:{},
   faq:[
-    {q:'임플란트 비용은 어떻게 되나요?', a:'개인의 골 상태와 식립 위치에 따라 달라집니다. 정밀 진단 후 전체 비용과 단계별 일정을 처음에 안내드리며, 중간에 추가 비용이 발생하지 않도록 사전에 설명드립니다.'},
-    {q:'건강보험이 적용되나요?', a:'만 65세 이상은 임플란트·틀니에 건강보험이 적용됩니다(평생 2개). 충치·신경치료·스케일링 등 일반 진료도 보험 항목으로 진료받으실 수 있습니다.'},
-    {q:'치료할 때 많이 아픈가요?', a:'통증을 줄이는 마취 시스템과 단계적 진행으로 부담을 최소화합니다. 치료 전 과정과 예상되는 느낌을 미리 설명드려 불안감을 줄여드립니다.'},
+    {q:'진료비는 어떻게 안내되나요?', a:'증상과 검사 결과에 따라 필요한 진료 범위가 달라질 수 있습니다. 상담과 진단 후 예상 비용, 일정, 선택지를 먼저 안내드리고 동의 후 진행합니다.'},
+    {q:'건강보험이 적용되나요?', a:'보험 적용 여부는 진료 항목과 환자 상태에 따라 달라집니다. 접수 또는 상담 시 보험 적용 가능 항목과 본인부담금을 함께 안내드립니다.'},
+    {q:'진료할 때 많이 아픈가요?', a:'불편감을 줄이기 위해 단계별 설명과 필요한 통증 관리 절차를 함께 진행합니다. 진료 전 과정과 예상되는 느낌을 미리 안내해 불안을 줄입니다.'},
     {q:'주차는 가능한가요?', a:'건물 내 주차장을 이용하실 수 있으며 2시간 무료 지원됩니다. 만차 시 인근 제휴 주차장을 안내드립니다.'},
     {q:'예약 없이 방문해도 되나요?', a:'가능하지만 대기 시간이 길어질 수 있습니다. 전화 또는 네이버 예약을 이용하시면 대기 없이 진료받으실 수 있습니다.'},
   ],
@@ -505,15 +642,15 @@ const state = {
   ],
   sections:{about:true,services:true,stats:true,doctors:true,gallery:true,video:true,faq:true,booking:false,location:true},
   services:[
-    {icon:'', title:'임플란트', desc:'3D CT 기반 디지털 가이드 시술로 정확하고 안전하게. 뼈이식부터 보철까지 원스톱으로 진행합니다.'},
-    {icon:'', title:'치아보철', desc:'크라운·브릿지·틀니까지. 정밀 인상과 자연치아 색 매칭으로 씹는 기능과 심미를 함께 회복합니다.'},
-    {icon:'', title:'라미네이트', desc:'치아 삭제를 최소화한 미니멀 라미네이트. 얼굴형과 입매에 맞춘 스마일 라인을 디자인합니다.'},
-    {icon:'', title:'치아교정', desc:'투명교정·설측교정 등 라이프스타일에 맞는 교정 플랜. 디지털 시뮬레이션으로 결과를 미리 확인합니다.'},
+    {icon:'', title:'외래 진료', desc:'증상 상담부터 필요한 검사와 처방까지. 환자 상태에 맞춰 정확하고 부담 없는 진료 계획을 안내합니다.'},
+    {icon:'', title:'건강검진', desc:'기본 검사부터 맞춤형 검진까지. 결과 설명과 생활 관리 방향을 함께 제안합니다.'},
+    {icon:'', title:'정밀 검사', desc:'필요한 장비와 검사 프로세스를 기반으로 원인을 확인하고 다음 진료 방향을 세웁니다.'},
+    {icon:'', title:'회복 관리', desc:'진료 후 경과 확인, 생활 습관 관리, 재방문 안내까지 이어지는 사후 관리 프로그램을 운영합니다.'},
   ],
   doctors:[
-    {name:'김민준', role:'대표원장 · 보철과 전문의', tag:'서울대 치의학대학원'},
-    {name:'이서연', role:'교정과 전문의', tag:'연세대 치과대학 외래교수'},
-    {name:'박지호', role:'구강외과 전문의', tag:'임플란트 5,000례'},
+    {name:'김민준', role:'대표원장 · 전문의', tag:'대학병원 출신 의료진'},
+    {name:'이서연', role:'진료원장 · 전문의', tag:'대한의사협회 정회원'},
+    {name:'박지호', role:'검진센터장', tag:'누적 진료 5,000건'},
   ],
 };
 /* ═══════════ UI 구성 ═══════════ */
@@ -538,10 +675,44 @@ const V3_MOTION={
   standard:{duration:{fast:180,base:520,slow:900},distance:'30px',easing:'cubic-bezier(.22,1,.36,1)',stagger:'70ms'},
   expressive:{duration:{fast:220,base:700,slow:1200},distance:'44px',easing:'cubic-bezier(.16,1,.3,1)',stagger:'90ms'}
 };
+const COMPOSITION_MODES=['legacy','auto','manual'];
+const COMPOSITION_RHYTHMS=['calm','editorial','punchy'];
+const COMPOSITION_VARIANTS={
+  hero:['H-a','H-b','H-c','H-d','H-e'],
+  services:['SV-a','SV-b','SV-c','SV-d','SV-e'],
+  doctors:['DR-a','DR-b','DR-c','DR-d'],
+  gallery:[]
+};
+const COMPOSITION_IDIOMS=['I1','I2','I3','I4','I5','I6','I7','I8'];
 function v3Settings(){
   state.v3=Object.assign({},V3_DEFAULTS,state.v3||{});
   state.v3.containerMax=String(state.v3.containerMax||V3_DEFAULTS.containerMax);
   return state.v3;
+}
+function normalizeComposition(input){
+  const out=defaultComposition();
+  const src=(input&&typeof input==='object')?input:{};
+  out.mode=COMPOSITION_MODES.includes(src.mode)?src.mode:'legacy';
+  out.grid=/^G[1-6]$/.test(src.grid||'')?src.grid:null;
+  out.rhythm=COMPOSITION_RHYTHMS.includes(src.rhythm)?src.rhythm:'calm';
+  const variants=(src.variants&&typeof src.variants==='object')?src.variants:{};
+  Object.keys(out.variants).forEach(key=>{
+    const allowed=COMPOSITION_VARIANTS[key]||[];
+    out.variants[key]=allowed.includes(variants[key])?variants[key]:null;
+  });
+  out.idioms=Array.isArray(src.idioms)?src.idioms.filter(id=>COMPOSITION_IDIOMS.includes(id)): [];
+  const art=(src.artDirection&&typeof src.artDirection==='object')?src.artDirection:{};
+  out.artDirection={
+    palette:art.palette&&typeof art.palette==='object'?art.palette:null,
+    displayFont:typeof art.displayFont==='string'?art.displayFont:null,
+    textFont:typeof art.textFont==='string'?art.textFont:null
+  };
+  return out;
+}
+function migrateComposition(st){
+  if(!st||typeof st!=='object') return defaultComposition();
+  st.composition=normalizeComposition(st.composition);
+  return st.composition;
 }
 function hexToRgb(hex){
   hex=String(hex||'#5b7cfa').trim();
@@ -649,6 +820,214 @@ html[data-siteon-version="3"] [data-reveal].in{will-change:auto}
 @media (prefers-reduced-motion:reduce){html[data-siteon-version="3"] [data-reveal]{will-change:auto!important}}
 `;
 }
+function v5RhythmMap(rhythm){
+  const maps={
+    editorial:{about:'xl',services:'lg',stats:'md',doctors:'tight',gallery:'md',video:'md',blocks:'lg',faq:'md',booking:'xl',location:'lg'},
+    calm:{about:'lg',services:'lg',stats:'lg',doctors:'lg',gallery:'lg',video:'lg',blocks:'lg',faq:'lg',booking:'lg',location:'lg'},
+    punchy:{about:'tight',services:'xl',stats:'md',doctors:'md',gallery:'xl',video:'md',blocks:'md',faq:'tight',booking:'tight',location:'md'}
+  };
+  return maps[rhythm]||maps.calm;
+}
+function v5BaseCss(composition){
+  const c=normalizeComposition(composition);
+  const rhythm=v5RhythmMap(c.rhythm);
+  const rhythmCss=Object.entries(rhythm).map(([id,size])=>
+    `html[data-v5-composition] body>section#${id}{padding-top:var(--rh-${size})!important;padding-bottom:var(--rh-${size})!important}`
+  ).join('\n');
+  return `
+:root{
+  --grid-max:clamp(1040px,92vw,1320px);
+  --grid-cols:12;
+  --grid-gap:clamp(16px,2vw,32px);
+  --grid-margin:clamp(20px,6vw,120px);
+  --rh-xl:clamp(120px,16vw,220px);
+  --rh-lg:clamp(90px,11vw,150px);
+  --rh-md:clamp(64px,8vw,104px);
+  --rh-tight:clamp(40px,5vw,64px);
+  --scale:1.25;
+  --t-0:clamp(15px,1vw,17px);
+  --t-1:calc(var(--t-0) * var(--scale));
+  --t-2:calc(var(--t-1) * var(--scale));
+  --t-3:calc(var(--t-2) * var(--scale));
+  --t-4:clamp(40px,6vw,84px);
+  --font-display:var(--siteon-font-display);
+  --font-text:var(--siteon-font-body);
+}
+.gx{display:grid;grid-template-columns:repeat(var(--grid-cols),1fr);gap:var(--grid-gap);max-width:var(--grid-max);margin-inline:auto;padding-inline:var(--grid-margin)}
+.g5{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:auto;align-items:center}
+.g5 .media{grid-column:1 / 8;grid-row:1}
+.g5 .panel{grid-column:6 / 13;grid-row:1;z-index:2;background:var(--siteon-bg-alt);padding:clamp(28px,4vw,56px)}
+.kicker{font:600 var(--t-0)/1 var(--font-text);letter-spacing:.14em;text-transform:uppercase}
+.h-display{font:600 var(--t-4)/1.12 var(--font-display);letter-spacing:-.035em;word-break:keep-all}
+.h-sec{font:600 var(--t-3)/1.2 var(--font-display);letter-spacing:-.03em;word-break:keep-all}
+.body{font:400 var(--t-0)/1.75 var(--font-text);word-break:keep-all}
+.v-label{writing-mode:vertical-rl;text-orientation:mixed;letter-spacing:.2em;font:600 var(--t-0)/1 var(--font-text);color:var(--siteon-text-strong);opacity:.55}
+.idx{counter-reset:item}
+.idx>*{counter-increment:item}
+.idx>*::before{content:"0" counter(item);font:600 var(--t-1)/1 var(--font-display);color:var(--siteon-accent);letter-spacing:-.02em;margin-right:.6em}
+.rule-grid>*{border-top:1px solid color-mix(in srgb,var(--siteon-text-strong) 14%,transparent);padding-block:clamp(20px,3vw,40px)}
+.rule-grid>*:last-child{border-bottom:1px solid color-mix(in srgb,var(--siteon-text-strong) 14%,transparent)}
+.sec-head .rule{display:block;width:48px;height:2px;background:var(--siteon-accent);margin-top:18px}
+${rhythmCss}
+@media(max-width:760px){.gx{grid-template-columns:1fr;padding-inline:clamp(18px,5vw,28px)}.g5 .media,.g5 .panel{grid-column:1 / -1;grid-row:auto}}
+`;
+}
+function v5RhythmCss(composition){
+  const c=normalizeComposition(composition);
+  if(c.mode==='legacy'||c.rhythm==='calm') return '';
+  const rhythm=v5RhythmMap(c.rhythm);
+  const values={xl:'var(--rh-xl)',lg:'var(--rh-lg)',md:'var(--rh-md)',tight:'var(--rh-tight)'};
+  const rules=Object.entries(rhythm).map(([id,size])=>
+    `html[data-v5-composition] body>section#${id}{padding-block:${values[size]}!important}`
+  ).join('');
+  return `<style id="v5-rhythm">${rules}</style>`;
+}
+const V5_SECTION_IDS=SECTION_DEFS.map(section=>section.id);
+function v5SectionLabel(id){
+  const def=SECTION_DEFS.find(section=>section.id===id);
+  return def ? String(def.name||id).split(/[ (]/)[0] || id : id;
+}
+function v5ComposeCss(){
+  return `
+html[data-v5] .v5-sec{position:relative}
+html[data-v5] .v5-vlabel{
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  letter-spacing:.22em;
+  font:600 var(--t-0,15px)/1 var(--font-text,inherit);
+  color:var(--siteon-text-strong,currentColor);
+  opacity:.5;
+  position:absolute;
+  top:clamp(40px,6vw,96px);
+  left:max(10px,2.2vw);
+  pointer-events:none;
+  z-index:1
+}
+@media(max-width:1180px){html[data-v5] .v5-vlabel{display:none}}
+@media(prefers-reduced-motion:reduce){html[data-v5] .v5-vlabel{transition:none}}
+`;
+}
+const V5_HERO_TONE={'H-a':'dark','H-b':'dark','H-c':'light','H-d':'light','H-e':'light'};
+function v5HeroCss(){
+  return `
+html[data-v5] .v5-hero{
+  position:relative;
+  min-height:clamp(680px,96svh,980px);
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  color:var(--ink,var(--siteon-text-strong,#111827));
+  background:var(--soft,var(--siteon-bg-alt,#f6f8fb));
+  isolation:isolate
+}
+html[data-v5] .v5-hero .vh-inner{width:min(1320px,calc(100% - clamp(40px,8vw,160px)));margin-inline:auto;position:relative;z-index:2}
+html[data-v5] .v5-hero .vh-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(20px,3vw,46px);align-items:center;width:100%}
+html[data-v5] .v5-hero .vh-copy{grid-column:1 / 7;max-width:760px}
+html[data-v5] .v5-hero .vh-kicker{display:flex;align-items:center;gap:14px;margin-bottom:clamp(22px,3vw,42px);font:800 15px/1 var(--font-text,inherit);letter-spacing:.12em;color:var(--primary,var(--siteon-accent,#5b7cfa))}
+html[data-v5] .v5-hero .vh-kicker::before{content:"";width:52px;height:2px;background:currentColor}
+html[data-v5] .v5-hero h1{margin:0;font:800 clamp(48px,6.8vw,96px)/1.08 var(--font-display,inherit);letter-spacing:-.03em;word-break:keep-all;color:inherit}
+html[data-v5] .v5-hero p{margin:clamp(22px,3vw,36px) 0 0;font:500 clamp(18px,1.55vw,24px)/1.75 var(--font-text,inherit);word-break:keep-all;color:color-mix(in srgb,currentColor 72%,transparent)}
+html[data-v5] .v5-hero .vh-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:clamp(34px,4vw,54px)}
+html[data-v5] .v5-hero .vh-ctas a{display:inline-flex;align-items:center;justify-content:center;min-height:58px;padding:0 34px;border-radius:8px;text-decoration:none;font:800 16px/1 var(--font-text,inherit);border:1px solid color-mix(in srgb,currentColor 26%,transparent);color:inherit;background:transparent}
+html[data-v5] .v5-hero .vh-ctas a:first-child{background:var(--primary,var(--siteon-accent,#5b7cfa));border-color:var(--primary,var(--siteon-accent,#5b7cfa));color:#fff}
+html[data-v5] .v5-hero .trust{display:flex;gap:clamp(16px,3vw,40px);flex-wrap:wrap;margin-top:clamp(56px,7vw,90px);padding-top:clamp(24px,3vw,34px);border-top:1px solid color-mix(in srgb,currentColor 18%,transparent);font:700 clamp(14px,1.2vw,18px)/1.5 var(--font-text,inherit)}
+html[data-v5] .v5-hero .trust b{font-weight:900;color:inherit}
+html[data-v5] .v5-hero .vh-media{position:relative;overflow:hidden;background:color-mix(in srgb,var(--primary,var(--siteon-accent,#5b7cfa)) 14%,#fff)}
+html[data-v5] .v5-hero .vh-media img,html[data-v5] .v5-hero .hero-video,html[data-v5] .v5-hero .hero-video video,html[data-v5] .v5-hero .hero-video iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+html[data-v5] .v5-hero .hero-video iframe{border:0;transform:scale(1.04)}
+html[data-v5] .v5-hero .hv-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,15,25,.34),rgba(8,15,25,.06));pointer-events:none}
+html[data-v5] .v5-hero .vh-fallback{position:absolute;inset:0;display:grid;place-items:center;font:900 clamp(80px,12vw,180px)/1 var(--font-display,inherit);color:color-mix(in srgb,var(--primary,var(--siteon-accent,#5b7cfa)) 22%,transparent)}
+html[data-v5] .v5-hero.vh-a{color:#fff;background:var(--deep,var(--siteon-text-strong,#111827))}
+html[data-v5] .v5-hero.vh-a .vh-bg{position:absolute;inset:0;z-index:0}
+html[data-v5] .v5-hero.vh-a .vh-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,12,22,.82),rgba(7,12,22,.44) 58%,rgba(7,12,22,.18))}
+html[data-v5] .v5-hero.vh-a .vh-media{position:absolute;inset:0}
+html[data-v5] .v5-hero.vh-a .vh-copy{grid-column:1 / 9}
+html[data-v5] .v5-hero.vh-b{background:var(--deep,var(--siteon-text-strong,#111827));color:#fff}
+html[data-v5] .v5-hero.vh-b .vh-copy{grid-column:1 / 6}
+html[data-v5] .v5-hero.vh-b .vh-photo{grid-column:7 / 13;aspect-ratio:5/7;border-radius:0}
+html[data-v5] .v5-hero.vh-c{align-items:flex-end;padding-block:140px 0;background:#fff;color:var(--ink,var(--siteon-text-strong,#111827))}
+html[data-v5] .v5-hero.vh-c .vh-copy{grid-column:2 / 8;padding-bottom:clamp(56px,7vw,100px)}
+html[data-v5] .v5-hero.vh-c .vh-info{grid-column:9 / 12;align-self:end;margin-bottom:clamp(56px,7vw,100px);padding:34px;border:1px solid rgba(0,0,0,.08);border-radius:20px;background:#fff;box-shadow:0 22px 70px rgba(20,40,80,.1);font-weight:700;line-height:1.7}
+html[data-v5] .v5-hero.vh-c .vh-band{grid-column:1 / -1;aspect-ratio:16/5;border-radius:24px 24px 0 0;margin-top:20px}
+html[data-v5] .v5-hero.vh-d{background:#fff;color:var(--ink,var(--siteon-text-strong,#111827));text-align:center}
+html[data-v5] .v5-hero.vh-d::before{content:"";position:absolute;inset:36px;border:1px solid color-mix(in srgb,var(--primary,var(--siteon-accent,#5b7cfa)) 36%,transparent);pointer-events:none}
+html[data-v5] .v5-hero.vh-d .vh-copy{grid-column:3 / 11;margin-inline:auto}
+html[data-v5] .v5-hero.vh-d .vh-kicker,html[data-v5] .v5-hero.vh-d .vh-ctas,html[data-v5] .v5-hero.vh-d .trust{justify-content:center}
+html[data-v5] .v5-hero.vh-e{background:#fff;color:var(--ink,var(--siteon-text-strong,#111827))}
+html[data-v5] .v5-hero.vh-e .vh-copy{grid-column:2 / 7;z-index:3}
+html[data-v5] .v5-hero.vh-e .vh-photo{grid-column:7 / 13;aspect-ratio:1/1;border-radius:999px;box-shadow:0 34px 120px color-mix(in srgb,var(--primary,var(--siteon-accent,#5b7cfa)) 20%,transparent)}
+html[data-v5] .v5-hero.vh-e .vh-note{position:absolute;right:clamp(24px,5vw,80px);bottom:clamp(34px,7vw,100px);font:800 12px/1 var(--font-text,inherit);letter-spacing:.38em;text-transform:uppercase;color:color-mix(in srgb,currentColor 42%,transparent);writing-mode:vertical-rl}
+@media(max-width:900px){
+  html[data-v5] .v5-hero{min-height:auto;padding-block:132px 72px}
+  html[data-v5] .v5-hero .vh-inner{width:min(100% - 36px,720px)}
+  html[data-v5] .v5-hero .vh-grid{grid-template-columns:1fr}
+  html[data-v5] .v5-hero .vh-copy,html[data-v5] .v5-hero.vh-a .vh-copy,html[data-v5] .v5-hero.vh-b .vh-copy,html[data-v5] .v5-hero.vh-c .vh-copy,html[data-v5] .v5-hero.vh-d .vh-copy,html[data-v5] .v5-hero.vh-e .vh-copy,html[data-v5] .v5-hero.vh-c .vh-info,html[data-v5] .v5-hero.vh-b .vh-photo,html[data-v5] .v5-hero.vh-e .vh-photo,html[data-v5] .v5-hero.vh-c .vh-band{grid-column:1 / -1}
+  html[data-v5] .v5-hero h1{font-size:clamp(40px,13vw,62px)}
+  html[data-v5] .v5-hero.vh-b .vh-photo,html[data-v5] .v5-hero.vh-e .vh-photo,html[data-v5] .v5-hero.vh-c .vh-band{aspect-ratio:4/3}
+  html[data-v5] .v5-hero.vh-c .vh-info{margin:0 0 24px}
+  html[data-v5] .v5-hero.vh-d::before{inset:18px}
+}
+`;
+}
+function v5HeroMedia(cfg, cls){
+  const video=heroVideo(cfg);
+  if(video) return `<div class="vh-media ${cls||''}">${video}</div>`;
+  if(cfg.heroImg) return `<figure class="vh-media ${cls||''}"><img src="${cfg.heroImg}" alt="${cfg.name} main visual"></figure>`;
+  return `<div class="vh-media ${cls||''}"><span class="vh-fallback" aria-hidden="true">+</span></div>`;
+}
+function v5Hero(cfg, variant){
+  const hero=normalizeHero(cfg.hero,true);
+  const trust=heroTrustHTML(cfg);
+  const ctas=`<div class="vh-ctas">${heroCtaPrimary(cfg,'')}${heroCta2(cfg,{cls:'',fallbackHref:'#services',fallbackText:'진료과목 보기'})}</div>`;
+  const copy=`<div class="vh-copy"><div class="vh-kicker">${cfg.name}</div><h1>${cfg.slogan}</h1><p>${cfg.desc}</p>${ctas}${trust}</div>`;
+  if(variant==='H-b') return `<header class="v5-hero vh-b" data-tone="dark"><div class="vh-inner"><div class="vh-grid">${copy}${v5HeroMedia(cfg,'vh-photo')}</div></div></header>`;
+  if(variant==='H-c') return `<header class="v5-hero vh-c" data-tone="light"><div class="vh-inner"><div class="vh-grid">${copy}<aside class="vh-info"><b>${cfg.name}</b><br>${cfg.phone}<br>${cfg.hours}</aside>${v5HeroMedia(cfg,'vh-band')}</div></div></header>`;
+  if(variant==='H-d') return `<header class="v5-hero vh-d" data-tone="light"><div class="vh-inner"><div class="vh-grid">${copy}</div></div></header>`;
+  if(variant==='H-e') return `<header class="v5-hero vh-e" data-tone="light"><div class="vh-inner"><div class="vh-grid">${copy}${v5HeroMedia(cfg,'vh-photo')}</div><span class="vh-note" aria-hidden="true">SCROLL</span></div></header>`;
+  return `<header class="v5-hero vh-a" data-tone="dark"><div class="vh-bg">${v5HeroMedia(cfg,'')}</div><div class="vh-inner"><div class="vh-grid">${copy}</div></div></header>`;
+}
+function composeLayout(doc,cfg){
+  const composition=normalizeComposition((cfg&&cfg.composition)||(typeof state!=='undefined'&&state.composition));
+  if(composition.mode==='legacy') return doc;
+  const root=doc.documentElement;
+  root.setAttribute('data-v5','1');
+  root.setAttribute('data-v5-rhythm',composition.rhythm);
+  if(composition.grid) root.setAttribute('data-v5-grid',composition.grid);
+  const heroVariant=composition.variants&&composition.variants.hero;
+  if(heroVariant&&cfg){
+    const hero=doc.body&&doc.body.querySelector('header[class*="hero"]');
+    if(hero){
+      const template=doc.createElement('template');
+      template.innerHTML=v5Hero(cfg,heroVariant).trim();
+      const nextHero=template.content.firstElementChild;
+      if(nextHero){
+        hero.replaceWith(nextHero);
+        root.setAttribute('data-v5-navtone',V5_HERO_TONE[heroVariant]||'light');
+      }
+    }
+  }
+  const wantsVerticalLabel=(composition.idioms||[]).includes('I1');
+  V5_SECTION_IDS.forEach(id=>{
+    const section=doc.getElementById(id);
+    if(!section) return;
+    section.classList.add('v5-sec');
+    section.setAttribute('data-sec',id);
+    if(wantsVerticalLabel&&!section.querySelector(':scope > .v5-vlabel')){
+      const label=doc.createElement('span');
+      label.className='v5-vlabel';
+      label.setAttribute('aria-hidden','true');
+      label.textContent=v5SectionLabel(id);
+      section.insertBefore(label,section.firstChild);
+    }
+  });
+  return doc;
+}
+function v5HeadInjection(cfg){
+  const composition=normalizeComposition(cfg&&cfg.composition);
+  if(composition.mode==='legacy') return '';
+  const heroCss=composition.variants&&composition.variants.hero?`<style id="v5-hero">${v5HeroCss()}</style>`:'';
+  return `<style id="v5-base">${v5BaseCss(composition)}</style>${v5RhythmCss(composition)}<style id="v5-compose">${v5ComposeCss()}</style>${heroCss}`;
+}
 function youtubeIdFromUrl(url){
   const m=String(url||'').match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:embed\/|watch\?v=)|[?&]v=|shorts\/)([\w-]{6,})/);
   return m?m[1]:'';
@@ -686,6 +1065,14 @@ function applyV3Output(html,cfg){
     const metaVersion=doc.createElement('meta'); metaVersion.name='siteon-version'; metaVersion.content='3'; doc.head.appendChild(metaVersion);
     const metaBudget=doc.createElement('meta'); metaBudget.name='siteon-performance-budget'; metaBudget.content='poster-first, facade-video, metadata-localStorage, blobs-indexedDB'; doc.head.appendChild(metaBudget);
     const st=doc.createElement('style'); st.id='siteon-v3-runtime'; st.textContent=v3CssVars(tokens); doc.head.appendChild(st);
+    const composition=normalizeComposition(cfg.composition);
+    if(composition.mode!=='legacy'){
+      doc.documentElement.setAttribute('data-v5-composition',composition.mode);
+      doc.documentElement.setAttribute('data-v5-rhythm',composition.rhythm);
+      if(!doc.getElementById('v5-base')){
+        const v5=doc.createElement('style'); v5.id='v5-base'; v5.textContent=v5BaseCss(composition); doc.head.appendChild(v5);
+      }
+    }
     const ts=doc.createElement('script'); ts.type='application/json'; ts.id='siteon-tokens-v3'; ts.textContent=safeJson(tokens); doc.head.appendChild(ts);
     const rs=doc.createElement('script'); rs.type='application/json'; rs.id='siteon-recipe-v3'; rs.textContent=safeJson(recipe); doc.head.appendChild(rs);
     const sectionIds=new Set(['hero','about','services','stats','doctors','equipment','gallery','video','pricing','transport','badges','event','faq','booking','location','custom-html']);
@@ -715,6 +1102,22 @@ function displayV4Path(path){
   const p=normalizeV4Path(path);
   return p==='/'?'/':p.replace(/\/$/,'');
 }
+function normalizeCustomPages(items){
+  if(!Array.isArray(items)) return [];
+  const seen=new Set();
+  return items.map(item=>{
+    const title=v4Plain(item&&item.title).trim();
+    const path=normalizeV4Path((item&&item.path)||title);
+    const content=v4Plain(item&&item.content).trim();
+    if(!title||seen.has(path)) return null;
+    seen.add(path);
+    return {title,path,content,kind:'custom',nav:true,custom:true};
+  }).filter(Boolean);
+}
+function customPagesForCfg(cfg){
+  if(cfg&&Object.prototype.hasOwnProperty.call(cfg,'customPages')) return normalizeCustomPages(cfg.customPages);
+  return normalizeCustomPages(state.customPages);
+}
 function v4Settings(){
   state.siteMode=state.siteMode==='multipage'?'multipage':'onepage';
   state.currentPage=normalizeV4Path(state.currentPage||'/');
@@ -735,6 +1138,10 @@ function v4Nl2br(text){
 function v4Slug(title,fallback){
   const raw=v4Plain(title).toLowerCase();
   const dict=[
+    ['내과','internal-medicine'],['검진','checkup'],['건강검진','checkup'],['정밀','diagnostics'],
+    ['수액','iv-therapy'],['영양','nutrition'],['피부','dermatology'],['성형','plastic-surgery'],
+    ['정형','orthopedics'],['통증','pain-clinic'],['재활','rehabilitation'],['안과','ophthalmology'],
+    ['이비인후','ent'],['소아청소년','pediatrics'],['여성','women-clinic'],['한방','korean-medicine'],
     ['임플란트','implant'],['보철','prosthetics'],['크라운','crown'],['라미네이트','laminate'],
     ['교정','orthodontics'],['스케일링','scaling'],['미백','whitening'],['신경','root-canal'],
     ['충치','cavity'],['잇몸','periodontal'],['소아','pediatric'],['사랑니','wisdom-tooth'],
@@ -748,6 +1155,7 @@ function v4Slug(title,fallback){
 function v4ServiceSlug(sv,i){ return v4Slug(sv&&sv.title,'service-'+(i+1)); }
 function v4DoctorSlug(doc,i){ return v4Slug(doc&&doc.name,'doctor-'+(i+1)); }
 function v4PageKindLabel(kind){
+  if(kind==='custom') return '메뉴';
   return ({home:'홈',about:'소개',services:'진료',service:'상세',doctors:'의료진',doctor:'상세',facility:'시설',cases:'사례',columns:'칼럼',notice:'공지',faq:'FAQ',nonpayment:'고시',privacy:'필수',contact:'문의'})[kind]||kind;
 }
 function buildV4Collections(cfg){
@@ -756,13 +1164,14 @@ function buildV4Collections(cfg){
     doctors:(cfg.doctors||[]).map((doc,i)=>Object.assign({id:v4DoctorSlug(doc,i),slug:v4DoctorSlug(doc,i)},doc)),
     faq:(cfg.faq||[]).map((item,i)=>Object.assign({id:'faq-'+(i+1)},item)),
     gallery:(cfg.gallery||[]).map((item,i)=>Object.assign({id:'facility-'+(i+1)},item)),
-    blocks:(cfg.blocks||[]).map((item,i)=>Object.assign({id:'block-'+(i+1)},item))
+    blocks:(cfg.blocks||[]).map((item,i)=>Object.assign({id:'block-'+(i+1)},item)),
+    customPages:customPagesForCfg(cfg).map((item,i)=>Object.assign({id:'custom-page-'+(i+1)},item))
   };
 }
 function buildV4Pages(cfg){
   const pages=[
     {path:'/',title:'홈',kind:'home',locked:true,nav:true},
-    {path:'/about/',title:'치과소개',kind:'about',nav:true},
+    {path:'/about/',title:'병원소개',kind:'about',nav:true},
     {path:'/doctors/',title:'의료진',kind:'doctors',nav:true}
   ];
   (cfg.doctors||[]).forEach((doc,i)=>{
@@ -774,15 +1183,22 @@ function buildV4Pages(cfg){
   });
   pages.push(
     {path:'/facility/',title:'시설·장비',kind:'facility',nav:true},
-    {path:'/cases/',title:'치료사례',kind:'cases',nav:false},
-    {path:'/columns/',title:'치과칼럼',kind:'columns',nav:false},
+    {path:'/cases/',title:'진료사례',kind:'cases',nav:false},
+    {path:'/columns/',title:'건강칼럼',kind:'columns',nav:false},
     {path:'/notice/',title:'공지사항',kind:'notice',nav:false},
     {path:'/faq/',title:'자주 묻는 질문',kind:'faq',nav:true},
     {path:'/nonpayment/',title:'비급여 고지',kind:'nonpayment',locked:true,nav:false},
     {path:'/privacy/',title:'개인정보처리방침',kind:'privacy',locked:true,nav:false},
     {path:'/contact/',title:'오시는 길',kind:'contact',nav:true}
   );
-  return pages.map(p=>Object.assign({},p,{path:normalizeV4Path(p.path)}));
+  const normalized=pages.map(p=>Object.assign({},p,{path:normalizeV4Path(p.path)}));
+  const used=new Set(normalized.map(page=>page.path));
+  customPagesForCfg(cfg).forEach(page=>{
+    if(used.has(page.path)) return;
+    normalized.push(Object.assign({},page,{path:normalizeV4Path(page.path)}));
+    used.add(page.path);
+  });
+  return normalized;
 }
 function buildV4Site(cfg,path){
   const pages=buildV4Pages(cfg);
@@ -846,10 +1262,7 @@ function v4Breadcrumb(cfg,page){
   return `<div class="crumb"><a href="/">홈</a> / ${parent?`<a href="${parent.path}">${parent.title}</a> / `:''}${page.title}</div>`;
 }
 function v4Nav(cfg,currentPath){
-  const links=[
-    ['/about/','치과소개'],['/services/','진료과목'],['/doctors/','의료진'],
-    ['/facility/','시설·장비'],['/faq/','FAQ'],['/contact/','오시는 길']
-  ];
+  const links=buildV4Pages(cfg).filter(page=>page.nav&&page.path!=='/').map(page=>[page.path,page.title]);
   const current=normalizeV4Path(currentPath);
   return `<nav class="v4-nav"><div class="wrap">
     <a class="brand" href="/"><span class="brand-mark">온</span><span>${cfg.name}</span></a>
@@ -857,23 +1270,18 @@ function v4Nav(cfg,currentPath){
   </div></nav>`;
 }
 function v4Footer(cfg){
-  return `<footer class="v4-footer"><div class="wrap">
-    <div><h3>${cfg.name}</h3><p>${cfg.addr}<br>${v4Nl2br(cfg.hours)}</p><p><strong>${cfg.phone}</strong></p><p class="legal">SiteOn v4 static export · required pages are preserved.</p></div>
-    <div class="sitemap">
-      <a href="/about/">치과소개</a><a href="/services/">진료과목</a><a href="/doctors/">의료진</a><a href="/facility/">시설·장비</a><a href="/cases/">치료사례</a><a href="/columns/">치과칼럼</a><a href="/notice/">공지사항</a><a href="/faq/">FAQ</a><a href="/nonpayment/">비급여 고지</a><a href="/privacy/">개인정보처리방침</a><a href="/contact/">오시는 길</a>
-    </div>
-  </div></footer>`;
+  return footerHTML(cfg,'v4');
 }
 function v4JsonLd(cfg,page){
   const base=v4Domain(cfg);
   const url=base+(page.path==='/'?'':page.path);
   const graph=[{
     '@context':'https://schema.org',
-    '@type':page.kind==='service'?'MedicalProcedure':page.kind==='faq'?'FAQPage':page.kind==='home'?'Dentist':'MedicalWebPage',
+    '@type':page.kind==='service'?'MedicalProcedure':page.kind==='faq'?'FAQPage':page.kind==='home'?'MedicalClinic':'MedicalWebPage',
     name:page.title,
     url,
     isPartOf:{'@type':'WebSite',name:cfg.name,url:base},
-    publisher:{'@type':'Dentist',name:cfg.name,telephone:cfg.phone,address:cfg.addr}
+    publisher:{'@type':'MedicalClinic',name:cfg.name,telephone:cfg.phone,address:cfg.addr}
   }];
   if(page.path!=='/'){
     graph.push({'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[
@@ -964,7 +1372,8 @@ function v4BasicPage(cfg,page){
   }else if(page.kind==='privacy'){
     body=`${v4SubHero(cfg,page,'개인정보 처리 기준을 안내합니다.')}<section class="section"><div class="wrap"><div class="card"><h2>개인정보처리방침</h2><p>${cfg.name}은 상담 및 예약 응대에 필요한 최소한의 개인정보를 수집하며, 관련 법령에 따라 안전하게 관리합니다.</p><p>수집 항목: 이름, 연락처, 문의 내용. 보유 기간: 목적 달성 후 지체 없이 파기합니다.</p></div></div></section>`;
   }else{
-    body=`${v4SubHero(cfg,page,'콘텐츠를 추가하면 이 페이지에 반영됩니다.')}<section class="section"><div class="wrap"><div class="card"><h2>${page.title}</h2><p>현재 원페이지 데이터에서 생성된 v4 페이지입니다. 별도 콘텐츠는 추후 페이지 편집에서 확장할 수 있습니다.</p></div></div></section>`;
+    const text=page.content||'새로 추가한 메뉴 페이지입니다. 상세 콘텐츠 편집 기능은 이후 단계에서 확장할 수 있습니다.';
+    body=`${v4SubHero(cfg,page,text)}<section class="section"><div class="wrap"><div class="card"><h2>${page.title}</h2><p>${text}</p></div></div></section>`;
   }
   return v4Shell(cfg,page,body);
 }
@@ -1009,14 +1418,15 @@ function renderV4ResolvedPage(cfg,page,path){
 function generateV4Page(cfg,path){
   const currentPath=normalizeV4Path(path||cfg.currentPage||state.currentPage||'/');
   const page=v4FindPage(cfg,currentPath)||v4FindPage(cfg,'/')||{path:'/',title:'홈',kind:'home'};
-  return renderV4ResolvedPage(Object.assign({},cfg,{currentPage:currentPath}),page,currentPath);
+  return applyTextOverridesToHtml(renderV4ResolvedPage(Object.assign({},cfg,{currentPage:currentPath}),page,currentPath));
 }
 function generateCurrentPreview(cfg,path){
   v4Settings();
   const currentPath=normalizeV4Path(path||cfg.currentPage||state.currentPage||'/');
   const previewCfg=Object.assign({},cfg,{currentPage:currentPath});
   const page=v4FindPage(previewCfg,currentPath)||v4FindPage(previewCfg,'/')||{path:'/',title:'홈',kind:'home'};
-  return state.siteMode==='multipage'?renderV4ResolvedPage(previewCfg,page,currentPath):applyV4Output(generateSite(cfg),cfg,'/');
+  const html=state.siteMode==='multipage'?renderV4ResolvedPage(previewCfg,page,currentPath):applyV4Output(generateSite(cfg),cfg,'/');
+  return applyTextOverridesToHtml(html);
 }
 function v4PathFromHref(href){
   if(!href||href.startsWith('#')||/^(tel:|mailto:|javascript:)/i.test(href)) return null;
@@ -1038,6 +1448,7 @@ function attachV4PreviewRouter(doc){
   doc.__siteonV4Router=true;
   doc.addEventListener('click',e=>{
     if(state.siteMode!=='multipage') return;
+    if(editMode && e.target.closest && e.target.closest('[data-edx]')) return;
     const a=e.target.closest&&e.target.closest('a[href]');
     if(!a) return;
     const path=v4PathFromHref(a.getAttribute('href'));
@@ -1391,9 +1802,18 @@ function syncV4UI(){
   const list=$('#v4PageList');
   if(list){
     list.style.display=state.siteMode==='multipage'?'flex':'none';
-    list.innerHTML=pages.map(page=>`<button class="page-item ${current&&current.path===page.path?'on':''}" type="button" data-page-path="${page.path}"><span><b>${page.title}</b><small>${displayV4Path(page.path)}</small></span><span class="page-kind">${v4PageKindLabel(page.kind)}</span></button>`).join('');
-    list.querySelectorAll('[data-page-path]').forEach(btn=>btn.onclick=()=>routeV4Page(btn.dataset.pagePath));
+    list.innerHTML=pages.map(page=>`<div class="page-item ${current&&current.path===page.path?'on':''}" role="button" tabindex="0" data-page-path="${page.path}"><span><b>${page.title}</b><small>${displayV4Path(page.path)}</small></span><span class="page-actions"><span class="page-kind">${v4PageKindLabel(page.kind)}</span>${page.custom?`<button class="page-del" type="button" data-custom-path="${page.path}" aria-label="${page.title} 메뉴 삭제">×</button>`:''}</span></div>`).join('');
+    list.querySelectorAll('[data-page-path]').forEach(row=>{
+      row.onclick=e=>{ if(e.target.closest('[data-custom-path]')) return; routeV4Page(row.dataset.pagePath); };
+      row.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); routeV4Page(row.dataset.pagePath); } };
+    });
+    list.querySelectorAll('[data-custom-path]').forEach(btn=>btn.onclick=e=>{
+      e.stopPropagation();
+      removeCustomV4Page(btn.dataset.customPath);
+    });
   }
+  const form=$('#v4CustomPageForm');
+  if(form) form.style.display=state.siteMode==='multipage'?'grid':'none';
 }
 function setV4Mode(mode){
   v4Settings();
@@ -1406,6 +1826,39 @@ function setV4Mode(mode){
   syncV4UI();
   render();
   showToast(state.siteMode==='multipage'?'멀티페이지 미리보기로 전환했습니다.':'원페이지 미리보기로 전환했습니다.');
+}
+function addCustomV4Page(){
+  const titleInput=$('#v4PageTitle');
+  const pathInput=$('#v4PagePath');
+  const title=v4Plain(titleInput&&titleInput.value).trim();
+  const path=normalizeV4Path((pathInput&&pathInput.value)||title);
+  if(!title){
+    showToast('메뉴명을 입력해주세요.');
+    if(titleInput) titleInput.focus();
+    return;
+  }
+  const cfg=getConfig();
+  const basePages=buildV4Pages(Object.assign({},cfg,{customPages:[]}));
+  const custom=normalizeCustomPages(state.customPages);
+  if(basePages.concat(custom).some(page=>page.path===path)){
+    showToast('이미 있는 메뉴 주소입니다.');
+    if(pathInput) pathInput.focus();
+    return;
+  }
+  state.customPages=custom.concat({title,path,content:'',kind:'custom',nav:true,custom:true});
+  state.siteMode='multipage';
+  state.currentPage=path;
+  if(titleInput) titleInput.value='';
+  if(pathInput) pathInput.value='';
+  render();
+  showToast('메뉴를 추가했습니다.');
+}
+function removeCustomV4Page(path){
+  const target=normalizeV4Path(path);
+  state.customPages=normalizeCustomPages(state.customPages).filter(page=>page.path!==target);
+  if(state.currentPage===target) state.currentPage='/';
+  render();
+  showToast('메뉴를 삭제했습니다.');
 }
 
 // 디자인 스타일 셀렉터
@@ -1499,6 +1952,24 @@ function syncHeroDrop(){
 }
 $('#heroDrop').onclick=()=>pickImage(1400,url=>{state.heroImg=url;syncHeroDrop();render()});
 $('#heroImgClear').onclick=()=>{state.heroImg=null;syncHeroDrop();render()};
+
+function syncAboutDrop(){
+  const d=$('#aboutDrop');
+  if(!d) return;
+  if(state.aboutImg){
+    d.classList.add('has-img');
+    d.style.backgroundImage=`url(${state.aboutImg})`;
+    $('#aboutDropTxt').innerHTML='<span>사진 변경</span>';
+    $('#aboutImgClear').style.display='block';
+  }else{
+    d.classList.remove('has-img');
+    d.style.backgroundImage='';
+    $('#aboutDropTxt').innerHTML='클릭해서 소개 사진 업로드<br><small>히어로와 다른 진료실·의료진 사진 권장</small>';
+    $('#aboutImgClear').style.display='none';
+  }
+}
+$('#aboutDrop').onclick=()=>pickImage(1200,url=>{state.aboutImg=url;syncAboutDrop();render()});
+$('#aboutImgClear').onclick=()=>{state.aboutImg=null;syncAboutDrop();render()};
 $('#f_video').oninput=()=>{state.videoUrl=$('#f_video').value;renderSoon()};
 $('#f_hvideo').oninput=()=>{state.heroVideoUrl=$('#f_hvideo').value;renderSoon()};
 
@@ -1585,10 +2056,10 @@ $('#v3CopyRecipe').onclick=()=>{
 
 // 블록 라이브러리
 const BLOCK_DEFAULTS={
-  pricing:{name:'진료비 안내표', data:'임플란트(국산)|130만원~\n임플란트(수입)|180만원~\n라미네이트(개당)|45만원~\n투명교정(전악)|450만원~\n스케일링(보험)|2만원대'},
+  pricing:{name:'진료비 안내표', data:'초진 상담|상담 후 안내\n건강검진|상담 후 안내\n정밀 검사|상담 후 안내\n수액·영양치료|상담 후 안내\n제증명 수수료|병원 고시 기준'},
   transport:{name:'교통편 안내', data:'지하철|2호선 강남역 3번 출구 도보 5분\n버스|간선 146 · 740 강남역 정류장 하차\n주차|건물 내 주차장 2시간 무료\n자가용|테헤란로 진입 후 123번지'},
-  badges:{name:'인증 · 자격', data:'보건복지부 인증 의료기관\n대한치과의사협회 정회원\n서울대 치의학대학원 임상지도의\nISO 9001 멸균 시스템 인증'},
-  event:{name:'이벤트 배너', data:'첫 방문 정밀검진 이벤트|3D CT + 구강 정밀검진 패키지|이번 달 한정'},
+  badges:{name:'인증 · 자격', data:'보건복지부 인증 의료기관\n대한의사협회 정회원\n대학병원 출신 의료진\nISO 9001 관리 시스템 인증'},
+  event:{name:'이벤트 배너', data:'첫 방문 정밀검진 이벤트|기본 검사 + 전문의 상담 패키지|이번 달 한정'},
 };
 function drawBlocks(){
   const wrap=$('#blockList'); wrap.innerHTML='';
@@ -1635,7 +2106,7 @@ window.addEventListener('keydown',e=>{
 });
 
 /* ── 사진 보정 스튜디오 (크롭 · 필터) ── */
-let peSrc=null, peCb=null, peMaxW=900, peSt={b:100,c:100,s:100,sep:0,gr:0,ratio:0};
+let peSrc=null, peCb=null, peMaxW=900, peCrop=null, peView=null, peDrag=null, peSt={b:100,c:100,s:100,sep:0,gr:0,ratio:0};
 const PE_PRESETS=[
   {n:'원본',v:{b:100,c:100,s:100,sep:0,gr:0}},
   {n:'클린',v:{b:106,c:104,s:96,sep:0,gr:0}},
@@ -1645,34 +2116,96 @@ const PE_PRESETS=[
   {n:'소프트',v:{b:108,c:90,s:92,sep:6,gr:0}},
 ];
 function peFilter(){ return `brightness(${peSt.b}%) contrast(${peSt.c}%) saturate(${peSt.s}%) sepia(${peSt.sep}%) grayscale(${peSt.gr}%)`; }
-function peCropRect(iw,ih){
-  if(!peSt.ratio) return {x:0,y:0,w:iw,h:ih};
-  const r=peSt.ratio; let w=iw, h=Math.round(iw/r);
-  if(h>ih){ h=ih; w=Math.round(ih*r); }
-  return {x:Math.round((iw-w)/2), y:Math.round((ih-h)/2), w, h};
+function peClamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
+function peAspect(){ return peSt.ratio||((peSrc&&peSrc.width&&peSrc.height)?peSrc.width/peSrc.height:0); }
+function peMakeCrop(ratio,base){
+  if(!peSrc) return null;
+  const iw=peSrc.width, ih=peSrc.height, r=ratio||iw/ih;
+  const cx=base?base.x+base.w/2:iw/2, cy=base?base.y+base.h/2:ih/2;
+  let w=base?base.w:iw*.82, h=w/r;
+  if(h>ih*.82){ h=ih*.82; w=h*r; }
+  if(w>iw){ w=iw; h=w/r; }
+  if(h>ih){ h=ih; w=h*r; }
+  w=Math.max(40,w); h=Math.max(40,h);
+  return {x:peClamp(cx-w/2,0,iw-w),y:peClamp(cy-h/2,0,ih-h),w,h};
+}
+function peCropToCanvas(){
+  if(!peCrop||!peView) return null;
+  return {
+    x:peView.x+peCrop.x*peView.s,
+    y:peView.y+peCrop.y*peView.s,
+    w:peCrop.w*peView.s,
+    h:peCrop.h*peView.s
+  };
+}
+function pePoint(e){
+  const r=$('#peCanvas').getBoundingClientRect();
+  return {x:(e.clientX-r.left)*($('#peCanvas').width/r.width),y:(e.clientY-r.top)*($('#peCanvas').height/r.height)};
+}
+function peHit(p){
+  const c=peCropToCanvas(); if(!c) return '';
+  const m=14;
+  const near=(x,y)=>Math.abs(p.x-x)<=m&&Math.abs(p.y-y)<=m;
+  if(near(c.x,c.y)) return 'nw';
+  if(near(c.x+c.w,c.y)) return 'ne';
+  if(near(c.x,c.y+c.h)) return 'sw';
+  if(near(c.x+c.w,c.y+c.h)) return 'se';
+  if(p.x>=c.x&&p.x<=c.x+c.w&&p.y>=c.y&&p.y<=c.y+c.h) return 'move';
+  return '';
+}
+function peCursor(hit){
+  return {nw:'nwse-resize',se:'nwse-resize',ne:'nesw-resize',sw:'nesw-resize',move:'move'}[hit]||'crosshair';
 }
 function peDraw(){
   const img=peSrc, cv=$('#peCanvas'), ctx=cv.getContext('2d');
-  const cr=peCropRect(img.width,img.height);
-  const scale=Math.min(1, 520/cr.w, 320/cr.h);
-  cv.width=Math.round(cr.w*scale); cv.height=Math.round(cr.h*scale);
+  if(!img) return;
+  const wrap=cv.parentElement;
+  const maxW=Math.max(280,Math.min(720,wrap.clientWidth-20));
+  const maxH=window.innerWidth<760?360:480;
+  const scale=Math.min(1,maxW/img.width,maxH/img.height);
+  cv.width=Math.round(img.width*scale); cv.height=Math.round(img.height*scale);
+  peView={x:0,y:0,s:scale};
   ctx.filter=peFilter();
-  ctx.drawImage(img,cr.x,cr.y,cr.w,cr.h,0,0,cv.width,cv.height);
+  ctx.drawImage(img,0,0,cv.width,cv.height);
+  ctx.filter='none';
+  if(!peCrop) peCrop=peMakeCrop(peAspect());
+  const c=peCropToCanvas(); if(!c) return;
+  ctx.save();
+  ctx.fillStyle='rgba(0,0,0,.56)';
+  ctx.beginPath();
+  ctx.rect(0,0,cv.width,cv.height);
+  ctx.rect(c.x,c.y,c.w,c.h);
+  ctx.fill('evenodd');
+  ctx.strokeStyle='#fff';
+  ctx.lineWidth=2;
+  ctx.strokeRect(c.x,c.y,c.w,c.h);
+  ctx.strokeStyle='rgba(255,255,255,.55)';
+  ctx.lineWidth=1;
+  for(let i=1;i<3;i++){
+    ctx.beginPath(); ctx.moveTo(c.x+c.w*i/3,c.y); ctx.lineTo(c.x+c.w*i/3,c.y+c.h); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(c.x,c.y+c.h*i/3); ctx.lineTo(c.x+c.w,c.y+c.h*i/3); ctx.stroke();
+  }
+  ctx.fillStyle='#5b7cfa';
+  [[c.x,c.y],[c.x+c.w,c.y],[c.x,c.y+c.h],[c.x+c.w,c.y+c.h]].forEach(([x,y])=>{
+    ctx.fillRect(x-5,y-5,10,10);
+    ctx.strokeStyle='#fff'; ctx.strokeRect(x-5,y-5,10,10);
+  });
+  ctx.restore();
 }
 function openPhotoEditor(dataUrl, maxW, cb){
   peCb=cb; peMaxW=maxW; peSt={b:100,c:100,s:100,sep:0,gr:0,ratio:0};
   const img=new Image();
-  img.onload=()=>{ peSrc=img; $('#peModal').style.display='flex';
+  img.onload=()=>{ peSrc=img; peCrop=peMakeCrop(0); $('#peModal').style.display='flex';
     $('#pe_b').value=100; $('#pe_c').value=100; $('#pe_s').value=100;
     document.querySelectorAll('#peRatios button').forEach((b,i)=>b.classList.toggle('on',i===0));
     document.querySelectorAll('#pePresets button').forEach((b,i)=>b.classList.toggle('on',i===0));
     peDraw(); };
   img.src=dataUrl;
 }
-function peClose(){ $('#peModal').style.display='none'; peSrc=null; peCb=null; }
+function peClose(){ $('#peModal').style.display='none'; peSrc=null; peCb=null; peCrop=null; peDrag=null; }
 function peApply(){
-  const cr=peCropRect(peSrc.width,peSrc.height);
-  const sc=Math.min(1, peMaxW/cr.w);
+  const cr=peCrop||peMakeCrop(0);
+  const sc=Math.min(1, peMaxW/cr.w, 1400/cr.h);
   const cv=document.createElement('canvas');
   cv.width=Math.round(cr.w*sc); cv.height=Math.round(cr.h*sc);
   const ctx=cv.getContext('2d'); ctx.filter=peFilter();
@@ -1688,9 +2221,65 @@ PE_PRESETS.forEach((p,i)=>{
 });
 ['pe_b','pe_c','pe_s'].forEach((id,i)=>{ $('#'+id).oninput=()=>{ peSt[['b','c','s'][i]]=+$('#'+id).value; peDraw(); }; });
 document.querySelectorAll('#peRatios button').forEach(b=>{
-  b.onclick=()=>{ peSt.ratio=+b.dataset.r; document.querySelectorAll('#peRatios button').forEach(x=>x.classList.toggle('on',x===b)); peDraw(); };
+  b.onclick=()=>{ peSt.ratio=+b.dataset.r; peCrop=peMakeCrop(peAspect(),peCrop); document.querySelectorAll('#peRatios button').forEach(x=>x.classList.toggle('on',x===b)); peDraw(); };
 });
+function peReset(){
+  peSt={b:100,c:100,s:100,sep:0,gr:0,ratio:0};
+  peCrop=peMakeCrop(0);
+  $('#pe_b').value=100; $('#pe_c').value=100; $('#pe_s').value=100;
+  document.querySelectorAll('#peRatios button').forEach((b,i)=>b.classList.toggle('on',i===0));
+  document.querySelectorAll('#pePresets button').forEach((b,i)=>b.classList.toggle('on',i===0));
+  peDraw();
+}
+function peResizeCrop(hit,dx,dy,start){
+  const iw=peSrc.width, ih=peSrc.height, r=peAspect();
+  const min=Math.min(120,iw,ih);
+  let ax,ay,signX,signY;
+  if(hit==='se'){ ax=start.x; ay=start.y; signX=1; signY=1; }
+  if(hit==='nw'){ ax=start.x+start.w; ay=start.y+start.h; signX=-1; signY=-1; }
+  if(hit==='ne'){ ax=start.x; ay=start.y+start.h; signX=1; signY=-1; }
+  if(hit==='sw'){ ax=start.x+start.w; ay=start.y; signX=-1; signY=1; }
+  let rawW=signX>0?start.w+dx:start.w-dx;
+  let maxW=signX>0?iw-ax:ax;
+  let maxH=signY>0?ih-ay:ay;
+  let w=peClamp(rawW,min,maxW);
+  let h=w/r;
+  if(h>maxH){ h=maxH; w=h*r; }
+  if(h<min){ h=min; w=h*r; }
+  w=Math.min(w,maxW); h=Math.min(h,maxH);
+  peCrop={
+    x:signX>0?ax:ax-w,
+    y:signY>0?ay:ay-h,
+    w,h
+  };
+}
+$('#peCanvas').addEventListener('pointerdown',e=>{
+  if(!peSrc||!peCropToCanvas()) return;
+  const p=pePoint(e), hit=peHit(p);
+  if(!hit) return;
+  $('#peCanvas').setPointerCapture(e.pointerId);
+  peDrag={hit,start:p,crop:Object.assign({},peCrop)};
+  $('#peCanvas').style.cursor=peCursor(hit);
+});
+$('#peCanvas').addEventListener('pointermove',e=>{
+  if(!peSrc) return;
+  const p=pePoint(e);
+  if(!peDrag){ $('#peCanvas').style.cursor=peCursor(peHit(p)); return; }
+  const dx=(p.x-peDrag.start.x)/peView.s, dy=(p.y-peDrag.start.y)/peView.s;
+  const st=peDrag.crop;
+  if(peDrag.hit==='move'){
+    peCrop={x:peClamp(st.x+dx,0,peSrc.width-st.w),y:peClamp(st.y+dy,0,peSrc.height-st.h),w:st.w,h:st.h};
+  }else{
+    peResizeCrop(peDrag.hit,dx,dy,st);
+  }
+  peDraw();
+});
+['pointerup','pointercancel','pointerleave'].forEach(ev=>$('#peCanvas').addEventListener(ev,e=>{
+  if(peDrag&&e.pointerId!=null){ try{$('#peCanvas').releasePointerCapture(e.pointerId)}catch(_){} }
+  peDrag=null;
+}));
 $('#peCancel').onclick=peClose;
+$('#peReset').onclick=peReset;
 $('#peOrig').onclick=()=>{ const cb=peCb, src=peSrc.src; peClose(); cb(src); };
 $('#peOk').onclick=peApply;
 
@@ -1701,7 +2290,7 @@ function drawGallery(){
     const c=document.createElement('div'); c.className='item-card';
     c.innerHTML=`<button class="del" title="삭제">✕</button>
       <div class="mini-drop ${g.img?'has-img':''}" style="${g.img?`background-image:url(${g.img})`:''}">${g.img?'사진 변경':'+ 사진 업로드'}</div>
-      <input type="text" value="${g.caption}" placeholder="설명 (예: 임플란트 시술 후)">`;
+      <input type="text" value="${g.caption}" placeholder="설명 (예: 진료실 전경)">`;
     c.querySelector('.mini-drop').onclick=()=>pickImage(900,url=>{g.img=url;drawGallery();render()});
     c.querySelector('input').oninput=e=>{g.caption=e.target.value;renderSoon()};
     c.querySelector('.del').onclick=()=>{state.gallery.splice(i,1);drawGallery();render()};
@@ -1746,6 +2335,55 @@ function drawSectionToggles(){
 }
 drawSectionToggles();
 
+// 히어로 버튼/신뢰문구 편집
+function drawHeroControls(){
+  state.hero=normalizeHero(state.hero);
+  const h=state.hero;
+  const bind=(id,key)=>{
+    const el=$('#'+id);
+    if(!el) return;
+    el.value=h[key]||'';
+    el.oninput=e=>{
+      state.hero[key]=e.target.value;
+      renderSoon();
+    };
+  };
+  bind('heroPrimaryLabel','primaryLabel');
+  bind('heroPrimaryHref','primaryHref');
+  bind('heroSecondaryLabel','secondaryLabel');
+  bind('heroSecondaryHref','secondaryHref');
+  const wrap=$('#heroTrustList');
+  if(!wrap) return;
+  wrap.innerHTML='';
+  h.trustItems.forEach((item,i)=>{
+    const c=document.createElement('div');
+    c.className='item-card';
+    c.innerHTML=`<button class="del" type="button" title="삭제">✕</button>
+      <label class="fld">신뢰문구 ${i+1}</label>
+      <input type="text" data-k="before" value="${esc(item.before)}" placeholder="앞 문구">
+      <input type="text" data-k="strong" value="${esc(item.strong)}" placeholder="강조 문구">
+      <input type="text" data-k="after" value="${esc(item.after)}" placeholder="뒤 문구">`;
+    c.querySelectorAll('input').forEach(input=>{
+      input.oninput=e=>{
+        state.hero.trustItems[i][e.target.dataset.k]=e.target.value;
+        renderSoon();
+      };
+    });
+    c.querySelector('.del').onclick=()=>{
+      state.hero.trustItems.splice(i,1);
+      drawHeroControls();
+      render();
+    };
+    wrap.appendChild(c);
+  });
+}
+$('#addHeroTrust').onclick=()=>{
+  state.hero=normalizeHero(state.hero);
+  state.hero.trustItems.push({before:'',strong:'새 문구',after:''});
+  drawHeroControls();
+  render();
+};
+
 // 진료과목 편집
 function drawServices(){
   const wrap=$('#serviceList'); wrap.innerHTML='';
@@ -1764,6 +2402,50 @@ function drawServices(){
   });
 }
 $('#addService').onclick=()=>{state.services.push({icon:'',title:'새 진료 과목',desc:'설명을 입력하세요.'});drawServices();render()};
+
+// 통계 수치 편집
+function drawStats(){
+  const wrap=$('#statsList');
+  if(!wrap) return;
+  state.stats=normalizeStats(state.stats);
+  wrap.innerHTML='';
+  state.stats.forEach((st,i)=>{
+    const c=document.createElement('div'); c.className='item-card';
+    c.innerHTML=`<label class="fld">통계 ${i+1}</label>
+      <input type="text" data-k="value" value="${esc(st.value)}" inputmode="decimal" placeholder="숫자">
+      <input type="text" data-k="suffix" value="${esc(st.suffix)}" placeholder="단위">
+      <input type="text" data-k="label" value="${esc(st.label)}" placeholder="설명">`;
+    c.querySelectorAll('input').forEach(input=>{
+      input.oninput=e=>{
+        state.stats[i][e.target.dataset.k]=e.target.value;
+        renderSoon();
+      };
+    });
+    wrap.appendChild(c);
+  });
+}
+
+function drawFooterChoiceList(id, items, active, onPick){
+  const wrap=$('#'+id);
+  if(!wrap) return;
+  wrap.innerHTML='';
+  items.forEach(item=>{
+    const c=document.createElement('div');
+    c.className='motion-item'+(item.id===active?' on':'');
+    c.innerHTML=`<div><b>${esc(item.name)}</b><small>${esc(item.desc)}</small></div>`;
+    c.onclick=()=>{
+      onPick(item.id);
+      drawFooterOptions();
+      render();
+    };
+    wrap.appendChild(c);
+  });
+}
+function drawFooterOptions(){
+  state.footer=normalizeFooter(state.footer);
+  drawFooterChoiceList('footerLayoutList',FOOTER_LAYOUTS,state.footer.layout,id=>{state.footer.layout=id});
+  drawFooterChoiceList('footerMenuList',FOOTER_MENUS,state.footer.menu,id=>{state.footer.menu=id});
+}
 
 // 의료진 편집
 function drawDoctors(){
@@ -1806,6 +2488,11 @@ document.querySelectorAll('[data-vp]').forEach(b=>{
 
 $('#modeOnepage').onclick=()=>setV4Mode('onepage');
 $('#modeMultipage').onclick=()=>setV4Mode('multipage');
+$('#v4AddPage').onclick=addCustomV4Page;
+['v4PageTitle','v4PagePath'].forEach(id=>{
+  const el=$('#'+id);
+  if(el) el.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); addCustomV4Page(); } };
+});
 $('#v4CopySchema').onclick=()=>{
   const payload=JSON.stringify(buildV4Site(getConfig()),null,2);
   if(navigator.clipboard&&navigator.clipboard.writeText){
@@ -1860,8 +2547,163 @@ $('#btnNewTab').onclick=()=>{
 // XSS·레이아웃 안전: 모든 텍스트 입력값 이스케이프
 const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 
+function normalizeStats(stats){
+  const src=Array.isArray(stats)?stats:[];
+  return STAT_DEFAULTS.map((def,i)=>{
+    const item=src[i]||{};
+    const rawValue=String(item.value==null?def.value:item.value).replace(/[^\d.]/g,'');
+    return {
+      value:rawValue||def.value,
+      suffix:String(item.suffix==null?def.suffix:item.suffix).trim()||def.suffix,
+      label:String(item.label==null?def.label:item.label).trim()||def.label,
+    };
+  });
+}
+
+function cloneHeroDefaults(){
+  return JSON.parse(JSON.stringify(HERO_DEFAULTS));
+}
+function normalizeHero(hero, safe=false){
+  const src=hero&&typeof hero==='object'?hero:{};
+  const defs=cloneHeroDefaults();
+  const clean=v=>{
+    const text=String(v==null?'':v).trim();
+    return safe?esc(text):text;
+  };
+  const hasTrustItems=Array.isArray(src.trustItems);
+  const rawItems=hasTrustItems?src.trustItems:defs.trustItems;
+  const trustItems=rawItems.map(item=>({
+    before:clean(item&&item.before),
+    strong:clean(item&&item.strong),
+    after:clean(item&&item.after),
+  })).filter(item=>item.before||item.strong||item.after);
+  return {
+    primaryLabel:clean(src.primaryLabel||defs.primaryLabel),
+    primaryHref:clean(src.primaryHref||defs.primaryHref),
+    secondaryLabel:clean(src.secondaryLabel||defs.secondaryLabel),
+    secondaryHref:clean(src.secondaryHref||defs.secondaryHref),
+    trustItems:hasTrustItems?trustItems:defs.trustItems.map(item=>({
+      before:clean(item.before),
+      strong:clean(item.strong),
+      after:clean(item.after),
+    })),
+  };
+}
+function heroHref(cfg, raw, fallback){
+  const href=String(raw||'').trim();
+  return href || fallback || '#';
+}
+function heroCtaPrimary(cfg, cls, extra=''){
+  const hero=normalizeHero(cfg.hero,true);
+  if(!hero.primaryLabel) return '';
+  return `<a class="${cls}" href="${heroHref(cfg,hero.primaryHref,'tel:'+cfg.phone)}" ${extra}>${hero.primaryLabel}</a>`;
+}
+function heroTrustHTML(cfg){
+  const hero=normalizeHero(cfg.hero,true);
+  if(!hero.trustItems.length) return '';
+  return `<div class="trust" data-reveal style="--d:.42s">
+      ${hero.trustItems.map(item=>{
+        const before=item.before?`${item.before} `:'';
+        const strong=item.strong?`<b>${item.strong}</b>`:'';
+        const after=item.after?` ${item.after}`:'';
+        return `<span>${before}${strong}${after}</span>`;
+      }).join('')}
+    </div>`;
+}
+
+function normalizeFooter(footer){
+  const src=footer&&typeof footer==='object'?footer:{};
+  const layout=FOOTER_LAYOUTS.some(item=>item.id===src.layout)?src.layout:'reference';
+  const menu=FOOTER_MENUS.some(item=>item.id===src.menu)?src.menu:'contact';
+  return {layout,menu};
+}
+
+function statsHTML(cfg, cls){
+  return normalizeStats(cfg.stats).map(item=>`
+      <div${cls?` class="${cls}"`:''}><b><span data-count="${esc(item.value)}">0</span><small>${esc(item.suffix)}</small></b><span>${esc(item.label)}</span></div>`).join('');
+}
+
+function footerStyleCSS(){
+  return `<style data-siteon-footer-css>
+.siteon-footer{display:block!important;max-width:none!important;margin:80px 0 0!important;padding:0!important;border:0!important;text-align:left!important;font-size:14px!important;letter-spacing:0!important;line-height:1.65!important;box-sizing:border-box!important}
+.siteon-footer *{box-sizing:border-box}
+.siteon-footer a{text-decoration:none}
+.sof-inner,.sof-bottom{width:min(1200px,calc(100% - 48px));margin:0 auto}
+.sof-logo{display:flex;align-items:center;gap:14px}
+.sof-logo-img{max-width:190px;max-height:58px;object-fit:contain}
+.sof-mark{width:50px;height:50px;border:1px solid currentColor;border-radius:16px;display:grid;place-items:center;font-weight:900;font-size:24px}
+.sof-brand-name{display:block;font-size:24px;font-weight:900;line-height:1.1}
+.sof-brand-en{display:block;margin-top:5px;font-size:10px;letter-spacing:.18em;font-weight:800;opacity:.62}
+.sof-info{display:grid;gap:5px;margin-top:30px;font-weight:750}
+.sof-menu{display:grid;gap:14px;align-content:start}
+.sof-menu a{font-weight:850}
+.sof-bottom{border-top:1px solid currentColor;margin-top:34px;padding:22px 0 30px;font-size:13px;opacity:.62}
+.sof-reference{background:#143325!important;color:rgba(255,255,255,.68)!important}
+.sof-reference .sof-inner{padding:64px 0 0;display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:80px}
+.sof-reference .sof-logo,.sof-reference .sof-brand-name,.sof-reference .sof-menu a{color:rgba(255,255,255,.82)}
+.sof-reference .sof-logo-img{filter:brightness(0) invert(1);opacity:.82}
+.sof-reference .sof-mark{color:rgba(255,255,255,.8)}
+.sof-reference .sof-bottom{border-color:rgba(255,255,255,.12)}
+.sof-clean{background:#fff!important;color:#8b93a0!important;border-top:1px solid #e7ebf0!important;text-align:center!important}
+.sof-clean .sof-inner{padding:54px 0 0;display:grid;place-items:center}
+.sof-clean .sof-logo{justify-content:center;color:var(--ink,#263241)}
+.sof-clean .sof-info{margin-top:18px;font-weight:650}
+.sof-clean .sof-menu{margin-top:22px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px}
+.sof-clean .sof-menu a{color:var(--ink,#263241)}
+.sof-clean .sof-bottom{border-color:#e7ebf0;text-align:center}
+.sof-split{background:#f7f9fb!important;color:#727b88!important;border-top:1px solid #e5e9ed!important}
+.sof-split .sof-inner{padding:54px 0 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,360px);gap:48px;align-items:start}
+.sof-split .sof-logo{color:var(--ink,#263241)}
+.sof-split .sof-menu{grid-template-columns:1fr 1fr;gap:12px 20px}
+.sof-split .sof-menu a{color:var(--ink,#263241)}
+.sof-split .sof-bottom{border-color:#dfe5ec}
+@media(max-width:760px){
+  .sof-inner,.sof-bottom{width:min(100% - 32px,1200px)}
+  .sof-reference .sof-inner,.sof-split .sof-inner{grid-template-columns:1fr;gap:28px;padding-top:44px}
+  .sof-reference .sof-menu,.sof-split .sof-menu{grid-template-columns:1fr;gap:10px}
+  .sof-brand-name{font-size:21px}
+  .sof-info{margin-top:20px}
+}
+</style>`;
+}
+function footerLogoHTML(cfg){
+  if(cfg.logo){
+    return `<img class="sof-logo-img" src="${cfg.logo}" alt="${cfg.name} 로고">`;
+  }
+  const first=String(cfg.name||'S').trim().charAt(0)||'S';
+  return `<span class="sof-mark">${esc(first)}</span><span><b class="sof-brand-name">${cfg.name}</b><small class="sof-brand-en">SITEON CLINIC</small></span>`;
+}
+function footerInfoHTML(cfg){
+  const hours=String(cfg.hours||'').replace(/\n+/g,' · ');
+  return `<div class="sof-info">
+    <span>${cfg.name}</span>
+    <span>${cfg.addr}</span>
+    <span>대표전화 ${cfg.phone}</span>
+    ${hours?`<span>${hours}</span>`:''}
+  </div>`;
+}
+function footerMenuHTML(cfg, mode){
+  const footer=normalizeFooter(cfg.footer);
+  const items=FOOTER_MENU_ITEMS[footer.menu]||FOOTER_MENU_ITEMS.contact;
+  return `<nav class="sof-menu" aria-label="푸터 메뉴">${items.map(item=>`<a href="${mode==='v4'?item.v4:item.href}">${esc(item.label)}</a>`).join('')}</nav>`;
+}
+function footerHTML(cfg, mode='onepage'){
+  const footer=normalizeFooter(cfg.footer);
+  return `${footerStyleCSS()}<footer class="siteon-footer sof-${footer.layout}">
+    <div class="sof-inner">
+      <div>
+        <div class="sof-logo">${footerLogoHTML(cfg)}</div>
+        ${footerInfoHTML(cfg)}
+      </div>
+      ${footerMenuHTML(cfg,mode)}
+    </div>
+    <div class="sof-bottom">© ${new Date().getFullYear()} ${cfg.name}. All rights reserved. Made with 사이트온.</div>
+  </footer>`;
+}
+
 function getConfig(){
   v4Settings();
+  migrateComposition(state);
   const cfg = {
     name:esc($('#f_name').value||'우리 병원'),
     slogan:esc($('#f_slogan').value), desc:esc($('#f_desc').value),
@@ -1869,13 +2711,18 @@ function getConfig(){
     naverUrl:esc($('#f_naver').value.trim()),
     theme:currentTheme(), font:$('#f_font').value,
     motion:state.motion, speed:(+$('#f_speed').value)/100,
-    heroImg:state.heroImg, logo:state.logo, videoUrl:state.videoUrl, heroVideoUrl:state.heroVideoUrl,
+    heroImg:state.heroImg, aboutImg:state.aboutImg, logo:state.logo, videoUrl:state.videoUrl, heroVideoUrl:state.heroVideoUrl,
     siteMode:state.siteMode, currentPage:state.currentPage,
+    customPages:normalizeCustomPages(state.customPages),
     v3:v3Settings(), typo:state.typo, tokens:state.tokens,
+    composition:state.composition,
+    hero:normalizeHero(state.hero),
     blocks:(state.blocks||[]).map(b=>({type:b.type,data:esc(b.data)})),
     faq:(state.faq||[]).map(f=>({q:esc(f.q),a:esc(f.a)})),
     gallery:state.gallery.map(g=>({img:g.img,caption:esc(g.caption)})),
     sections:state.sections,
+    stats:normalizeStats(state.stats),
+    footer:normalizeFooter(state.footer),
     services:state.services.map(s=>({img:s.img,icon:esc(s.icon),title:esc(s.title),desc:esc(s.desc)})),
     doctors:state.doctors.map(d=>({img:d.img,name:esc(d.name),role:esc(d.role),tag:esc(d.tag)})),
   };
@@ -1896,15 +2743,22 @@ function projectData(){
 function applyProject(p){
   if(!p||!p.state)return;
   Object.assign(state,p.state);
+  state.aboutImg=state.aboutImg||null;
+  state.textEdits=(state.textEdits&&typeof state.textEdits==='object')?state.textEdits:{};
   state.sections=Object.assign({about:true,services:true,stats:true,doctors:true,gallery:true,video:true,faq:true,booking:false,location:true},state.sections||{});
   state.typo=Object.assign({headWeight:'',headLs:'',bodyLh:'',bodySize:'',btnRadius:''},state.typo||{});
   state.tokens=Object.assign({textColor:'',textOpacity:100,shadow:'',density:'',radius:''},state.tokens||{});
   state.v3=Object.assign({},V3_DEFAULTS,state.v3||{});
   state.v4=Object.assign({schema:'siteon/site-v4'},state.v4||{});
   state.export=Object.assign({},EXPORT_DEFAULTS,state.export||{});
+  state.customPages=normalizeCustomPages(state.customPages);
+  migrateComposition(state);
+  state.hero=normalizeHero(state.hero);
+  state.footer=normalizeFooter(state.footer);
   v4Settings();
   if(!Array.isArray(state.faq)) state.faq=[];
   if(!Array.isArray(state.blocks)) state.blocks=[];
+  state.stats=normalizeStats(state.stats);
   const ORDER_DEF=['about','services','stats','doctors','gallery','video','blocks','faq','booking','location'];
   if(!Array.isArray(state.sectionOrder)||!state.sectionOrder.length) state.sectionOrder=ORDER_DEF.slice();
   ORDER_DEF.forEach(id=>{ if(!state.sectionOrder.includes(id)) state.sectionOrder.push(id); });
@@ -1917,7 +2771,7 @@ function applyProject(p){
   themeGrid.querySelectorAll('.theme-card').forEach(c=>c.classList.toggle('on',c.dataset.tid===state.theme));
   styleList.querySelectorAll('.motion-item').forEach(c=>c.classList.toggle('on',c.dataset.sid===(state.style||'soft')));
   if(!state.style)state.style='soft';
-  drawServices(); drawDoctors(); drawGallery(); drawFaq(); drawBlocks(); syncHeroDrop(); syncLogoDrop(); syncTypoUI(); syncTokensUI(); syncV3UI(); syncV4UI();
+  drawHeroControls(); drawServices(); drawStats(); drawFooterOptions(); drawDoctors(); drawGallery(); drawFaq(); drawBlocks(); syncHeroDrop(); syncAboutDrop(); syncLogoDrop(); syncTypoUI(); syncTokensUI(); syncV3UI(); syncV4UI();
 }
 function showToast(msg){
   const t=$('#toast');
@@ -2004,7 +2858,9 @@ function postProcess(html, cfg){
   const order=state.sectionOrder||ORDER_DEFAULT;
   const needReorder=JSON.stringify(order)!==JSON.stringify(ORDER_DEFAULT);
   const needVariant=state.variants&&state.variants.doctors==='list';
-  if(!needReorder&&!needVariant) return applyV3Output(html,cfg);
+  const composition=normalizeComposition(cfg&&cfg.composition);
+  const needCompose=composition.mode!=='legacy';
+  if(!needReorder&&!needVariant&&!needCompose) return applyV3Output(html,cfg);
   try{
     const doc=new DOMParser().parseFromString(html,'text/html');
     if(needVariant){
@@ -2027,6 +2883,7 @@ function postProcess(html, cfg){
         ph.remove();
       }
     }
+    if(needCompose) composeLayout(doc,cfg);
     return applyV3Output('<!DOCTYPE html>\n'+doc.documentElement.outerHTML,cfg);
   }catch(e){ return applyV3Output(html,cfg); }
 }
@@ -2049,10 +2906,10 @@ function generateSiteRaw(cfg){
   return genSoft(cfg);
 }
 
-// SEO/GEO/AEO 메타 + 파비콘 + 구조화 데이터 (Dentist + FAQPage)
+// SEO/GEO/AEO 메타 + 파비콘 + 구조화 데이터 (MedicalClinic + FAQPage)
 function headMeta(cfg){
   const region=(cfg.addrRaw||'').split(' ').slice(0,2).join(' ');
-  const sd={'@context':'https://schema.org','@type':'Dentist',name:cfg.name,telephone:cfg.phone,
+  const sd={'@context':'https://schema.org','@type':'MedicalClinic',name:cfg.name,telephone:cfg.phone,
     address:{'@type':'PostalAddress',streetAddress:cfg.addr,addressCountry:'KR'},description:cfg.desc,
     areaServed:region, openingHours:(cfg.hours||'').split('\n')[0]||''};
   const faqSd = (cfg.sections.faq && cfg.faq && cfg.faq.length)
@@ -2063,15 +2920,103 @@ function headMeta(cfg){
 <meta property="og:title" content="${cfg.name} — ${cfg.slogan}">
 <meta property="og:description" content="${cfg.desc}">
 <meta property="og:site_name" content="${cfg.name}">
-<meta name="keywords" content="${region} 치과, ${cfg.name}, ${cfg.services.map(s=>s.title).join(', ')}">
+<meta name="keywords" content="${region} 병원, ${region} 의원, ${cfg.name}, ${cfg.services.map(s=>s.title).join(', ')}">
 <meta name="geo.region" content="KR">
 <meta name="geo.placename" content="${region}">
 <meta name="theme-color" content="${cfg.theme.primary}">
 <link rel="icon" href="${cfg.logo||"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' fill='%23333'%3E%E2%9C%9A%3C/text%3E%3C/svg%3E"}">
-<script type="application/ld+json">${JSON.stringify(sd)}<\/script>${faqSd}`;
+<script type="application/ld+json">${JSON.stringify(sd)}<\/script>${faqSd}${v5HeadInjection(cfg)}`;
 }
 
 // 좌상단 브랜드: 로고 이미지 우선, 없으면 텍스트
+function v5GoldenLegacy(){
+  const fails=[];
+  const prevStyle=state.style;
+  const prevComposition=JSON.parse(JSON.stringify(normalizeComposition(state.composition)));
+  STYLES.forEach(style=>{
+    state.style=style.id;
+    state.composition=undefined;
+    const legacyBefore=generateSite(getConfig());
+    state.composition=defaultComposition();
+    const legacyAfter=generateSite(getConfig());
+    if(legacyBefore!==legacyAfter) fails.push(`${style.id}: legacy output changed`);
+    if(!legacyAfter.trimStart().startsWith('<!DOCTYPE')||!legacyAfter.trimEnd().endsWith('</html>')) fails.push(`${style.id}: invalid document boundary`);
+    if(legacyAfter.includes('id="v5-base"')||legacyAfter.includes('id="v5-rhythm"')) fails.push(`${style.id}: v5 css leaked into legacy`);
+  });
+  state.style=prevStyle;
+  state.composition=prevComposition;
+  render();
+  return {pass:fails.length===0,fails};
+}
+
+function v5GoldenCompose(){
+  const fails=[];
+  const prevStyle=state.style;
+  const prevComposition=JSON.parse(JSON.stringify(normalizeComposition(state.composition)));
+  const countSections=html=>{
+    const doc=new DOMParser().parseFromString(html,'text/html');
+    return V5_SECTION_IDS.filter(id=>doc.getElementById(id)).length;
+  };
+  STYLES.forEach(style=>{
+    state.style=style.id;
+    state.composition=defaultComposition();
+    const legacyHtml=generateSite(getConfig());
+    const legacyDoc=new DOMParser().parseFromString(legacyHtml,'text/html');
+    const legacyCount=countSections(legacyHtml);
+    if(legacyDoc.documentElement.hasAttribute('data-v5')) fails.push(`${style.id}: data-v5 leaked into legacy`);
+    if(legacyDoc.getElementById('v5-compose')) fails.push(`${style.id}: v5-compose leaked into legacy`);
+    state.composition=Object.assign(defaultComposition(),{mode:'manual',rhythm:'editorial',idioms:['I1']});
+    const composedHtml=generateSite(getConfig());
+    const composedDoc=new DOMParser().parseFromString(composedHtml,'text/html');
+    const composedCount=countSections(composedHtml);
+    if(!composedHtml.trimStart().startsWith('<!DOCTYPE')||!composedHtml.trimEnd().endsWith('</html>')) fails.push(`${style.id}: invalid composed document boundary`);
+    if(composedCount!==legacyCount) fails.push(`${style.id}: section count changed ${legacyCount} -> ${composedCount}`);
+    if(!composedDoc.getElementById('v5-base')) fails.push(`${style.id}: missing v5-base`);
+    if(!composedDoc.getElementById('v5-compose')) fails.push(`${style.id}: missing v5-compose`);
+    if(composedDoc.documentElement.getAttribute('data-v5')!=='1') fails.push(`${style.id}: missing data-v5`);
+    const labels=composedDoc.querySelectorAll('.v5-vlabel').length;
+    if(labels!==composedCount) fails.push(`${style.id}: I1 labels ${labels} != sections ${composedCount}`);
+  });
+  state.style=prevStyle;
+  state.composition=prevComposition;
+  render();
+  return {pass:fails.length===0,fails};
+}
+
+function v5GoldenHero(){
+  const fails=[];
+  const prevStyle=state.style;
+  const prevComposition=JSON.parse(JSON.stringify(normalizeComposition(state.composition)));
+  const variants=['H-a','H-b','H-c','H-d','H-e'];
+  const count=(doc,selector)=>doc.querySelectorAll(selector).length;
+  STYLES.forEach(style=>{
+    state.style=style.id;
+    state.composition=defaultComposition();
+    const legacyHtml=generateSite(getConfig());
+    const legacyDoc=new DOMParser().parseFromString(legacyHtml,'text/html');
+    const navCount=count(legacyDoc,'nav');
+    const sectionCount=V5_SECTION_IDS.filter(id=>legacyDoc.getElementById(id)).length;
+    variants.forEach(variant=>{
+      const base=defaultComposition();
+      state.composition=Object.assign(base,{mode:'manual',rhythm:'calm',idioms:[],variants:Object.assign({},base.variants,{hero:variant})});
+      const html=generateSite(getConfig());
+      const doc=new DOMParser().parseFromString(html,'text/html');
+      if(!html.trimStart().startsWith('<!DOCTYPE')||!html.trimEnd().endsWith('</html>')) fails.push(`${style.id}/${variant}: invalid document boundary`);
+      if(!doc.querySelector('header.v5-hero')) fails.push(`${style.id}/${variant}: missing v5 hero`);
+      if(doc.querySelectorAll('header[class*="hero"]:not(.v5-hero)').length) fails.push(`${style.id}/${variant}: original hero remained`);
+      if(count(doc,'nav')!==navCount) fails.push(`${style.id}/${variant}: nav count changed ${navCount} -> ${count(doc,'nav')}`);
+      const composedSections=V5_SECTION_IDS.filter(id=>doc.getElementById(id)).length;
+      if(composedSections!==sectionCount) fails.push(`${style.id}/${variant}: section count changed ${sectionCount} -> ${composedSections}`);
+      if(!doc.getElementById('v5-hero')) fails.push(`${style.id}/${variant}: missing v5-hero css`);
+      if(doc.documentElement.getAttribute('data-v5-navtone')!==(V5_HERO_TONE[variant]||'light')) fails.push(`${style.id}/${variant}: nav tone mismatch`);
+    });
+  });
+  state.style=prevStyle;
+  state.composition=prevComposition;
+  render();
+  return {pass:fails.length===0,fails};
+}
+
 function logoBrand(cfg, fallbackHtml){
   if(cfg.logo) return `<a class="brand brand-img" href="#"><img src="${cfg.logo}" alt="${cfg.name}"></a>`;
   return fallbackHtml;
@@ -2160,7 +3105,7 @@ function blocksHtml(cfg){
       <span style="font-size:16px;font-weight:600;color:${INK}">${r[0]||''}</span>
       <span style="flex:1;border-bottom:1px dashed #d8dfe7"></span>
       <b style="font-size:16.5px;color:${P};letter-spacing:-.01em">${r[1]||''}</b></div>`).join('')}
-    <p data-reveal style="margin-top:18px;font-size:12.5px;color:#8b93a0;word-break:keep-all">* 비용은 구강 상태에 따라 달라질 수 있으며, 정확한 비용은 정밀 진단 후 안내드립니다. (부가세 포함 기준)</p>
+    <p data-reveal style="margin-top:18px;font-size:12.5px;color:#8b93a0;word-break:keep-all">* 비용은 진료 항목과 환자 상태에 따라 달라질 수 있으며, 정확한 비용은 상담 및 진단 후 안내드립니다. (부가세 포함 기준)</p>
   </div>
 </section>`;
     if(b.type==='transport') return `
@@ -2197,7 +3142,7 @@ function blocksHtml(cfg){
 // 모바일 햄버거 메뉴 (내비 안에 삽입)
 function mobileNav(cfg){
   const L=[];
-  if(cfg.sections.about)L.push('<a href="#about">치과소개</a>');
+  if(cfg.sections.about)L.push('<a href="#about">병원소개</a>');
   if(cfg.sections.services)L.push('<a href="#services">진료과목</a>');
   if(cfg.sections.doctors)L.push('<a href="#doctors">의료진</a>');
   if(cfg.sections.gallery)L.push('<a href="#gallery">시설안내</a>');
@@ -2254,11 +3199,11 @@ html[data-motion] [data-reveal].in img{scale:1}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}[data-reveal]{opacity:1!important;transform:none!important;filter:none!important}.wrv{opacity:1!important;transform:none!important}}
 @media(max-width:880px){.ab-grid{grid-template-columns:1fr!important}}`;
 
-// 치과 소개 섹션 (전 스타일 공용, 톤 파라미터로 적응)
+// 병원 소개 섹션 (전 스타일 공용, 톤 파라미터로 적응)
 function aboutBlock(cfg, o){
   o=o||{};
   const P=cfg.theme.primary;
-  const img = cfg.heroImg || ((cfg.gallery||[]).find(g=>g.img)||{}).img || ((cfg.doctors||[]).find(d=>d.img)||{}).img || null;
+  const img = cfg.aboutImg || ((cfg.gallery||[]).find(g=>g.img)||{}).img || ((cfg.doctors||[]).find(d=>d.img)||{}).img || null;
   const head = o.serif? "font-family:'Noto Serif KR',serif;font-weight:600;letter-spacing:0":"font-weight:800;letter-spacing:-.035em";
   const tx = o.dark?'#fff':cfg.theme.ink;
   const sub = o.dark?'rgba(255,255,255,.72)':'#5a6472';
@@ -2268,8 +3213,8 @@ function aboutBlock(cfg, o){
 <section id="about" style="${o.bg?`background:${o.bg};`:''}">
   <div class="ab-grid" style="max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(40px,5vw,80px);align-items:center">
     <div>
-      <span data-reveal style="display:block;font-size:12.5px;font-weight:700;letter-spacing:.18em;color:${P};margin-bottom:22px">ABOUT — 치과 소개</span>
-      <h2 data-reveal style="--d:.08s;${head};font-size:clamp(27px,3.4vw,42px);line-height:1.28;color:${tx};margin-bottom:20px;word-break:keep-all">치료보다 신뢰를<br>먼저 생각합니다</h2>
+      <span data-reveal style="display:block;font-size:12.5px;font-weight:700;letter-spacing:.18em;color:${P};margin-bottom:22px">ABOUT — 병원 소개</span>
+      <h2 data-reveal style="--d:.08s;${head};font-size:clamp(27px,3.4vw,42px);line-height:1.28;color:${tx};margin-bottom:20px;word-break:keep-all">진료보다 신뢰를<br>먼저 생각합니다</h2>
       <p data-reveal style="--d:.16s;font-size:16.5px;line-height:1.85;color:${sub};word-break:keep-all;margin-bottom:34px">${cfg.desc}</p>
       <ul style="list-style:none;margin:0;padding:0">
         ${principles.map((p,i)=>`<li data-reveal style="--d:${(.22+i*.07).toFixed(2)}s;display:flex;gap:16px;align-items:baseline;padding:15px 0;border-top:1px solid ${line};font-size:15.5px;font-weight:600;color:${tx};word-break:keep-all"><span style="color:${P};font-size:13px;font-weight:700;flex-shrink:0">0${i+1}</span>${p}</li>`).join('')}
@@ -2295,8 +3240,13 @@ function aboutBlock(cfg, o){
 
 // 히어로 보조 CTA: 네이버예약 우선
 function heroCta2(cfg, style){
-  if(cfg.naverUrl) return `<a class="${style.cls}" href="${cfg.naverUrl}" target="_blank" rel="noopener" style="border-color:#03c75a;color:${style.onDark?'#fff':'#03c75a'};${style.onDark?'background:#03c75a;':''}"><b style="font-family:sans-serif;font-weight:900">N</b>&nbsp;네이버 예약</a>`;
-  return `<a class="${style.cls}" href="${style.fallbackHref}">${style.fallbackText}</a>`;
+  const rawHero=normalizeHero(cfg.hero);
+  const hero=normalizeHero(cfg.hero,true);
+  if(!hero.secondaryLabel) return '';
+  const href=heroHref(cfg,hero.secondaryHref,style.fallbackHref);
+  const isDefaultSecondary=rawHero.secondaryLabel===HERO_DEFAULTS.secondaryLabel&&rawHero.secondaryHref===HERO_DEFAULTS.secondaryHref;
+  if(cfg.naverUrl&&isDefaultSecondary) return `<a class="${style.cls}" href="${cfg.naverUrl}" target="_blank" rel="noopener" style="border-color:#03c75a;color:${style.onDark?'#fff':'#03c75a'};${style.onDark?'background:#03c75a;':''}"><b style="font-family:sans-serif;font-weight:900">N</b>&nbsp;네이버 예약</a>`;
+  return `<a class="${style.cls}" href="${href}">${hero.secondaryLabel||style.fallbackText}</a>`;
 }
 
 // 한국형 플로팅 퀵바 (전화·예약·TOP)
@@ -2352,6 +3302,26 @@ function siteScript(cfg){
   }
   window.addEventListener('scroll',requestScrollTick,{passive:true});
   if(nav){ addScrollJob(function(){ nav.classList.toggle('scrolled',window.scrollY>40); }); }
+
+  document.addEventListener('click',function(ev){
+    var a=ev.target.closest&&ev.target.closest('a[href^="#"]');
+    if(!a) return;
+    var href=a.getAttribute('href');
+    if(href==='#'){
+      ev.preventDefault();
+      window.scrollTo({top:0,behavior:motion==='none'?'auto':'smooth'});
+      return;
+    }
+    var id='';
+    try{ id=decodeURIComponent(href.slice(1)); }catch(err){ id=href.slice(1); }
+    var target=id&&document.getElementById(id);
+    if(!target) return;
+    ev.preventDefault();
+    var header=document.getElementById('nav');
+    var offset=header?header.getBoundingClientRect().height+12:0;
+    var y=target.getBoundingClientRect().top+window.pageYOffset-offset;
+    window.scrollTo({top:Math.max(0,y),behavior:motion==='none'?'auto':'smooth'});
+  });
 
   var io=new IntersectionObserver(function(es){
     es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
@@ -2613,7 +3583,7 @@ nav .links a:hover::after{width:100%}
 @media(max-width:760px){nav .links{display:none}}
 
 /* ── 히어로 ── */
-.hero{min-height:100svh;display:flex;align-items:center;position:relative;background:linear-gradient(180deg,var(--soft) 0%,#fff 100%);overflow:hidden;padding:140px 24px 80px}
+.hero{min-height:clamp(680px,88svh,860px);display:flex;align-items:center;position:relative;background:linear-gradient(180deg,var(--soft) 0%,#fff 100%);overflow:hidden;padding:118px 24px 72px}
 .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
 .blob.b1{width:480px;height:480px;background:var(--primary);top:-140px;right:-100px;opacity:.09}
 .blob.b2{width:380px;height:380px;background:var(--deep);bottom:-120px;left:-120px;opacity:.06}
@@ -2621,7 +3591,7 @@ nav .links a:hover::after{width:100%}
 html[data-motion="soft"] .blob,html[data-motion="dynamic"] .blob{animation:float calc(9s*var(--spd)) ease-in-out infinite alternate}
 .blob.b2{animation-delay:-3s}.blob.b3{animation-delay:-6s}
 @keyframes float{from{transform:translateY(calc(var(--py,0px) - 18px)) scale(1)}to{transform:translateY(calc(var(--py,0px) + 22px)) scale(1.07)}}
-.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(340px,.88fr);gap:clamp(36px,5vw,60px);align-items:center;width:100%}
 @media(max-width:900px){.hero .wrap{grid-template-columns:1fr}}
 .hero h1{font-size:clamp(34px,5.2vw,58px);font-weight:800;line-height:1.22;margin:18px 0 22px}
 .hero h1 em{font-style:normal;color:var(--primary)}
@@ -2632,16 +3602,16 @@ html[data-motion="soft"] .blob,html[data-motion="dynamic"] .blob{animation:float
 .btn-xl.fill:hover{background:var(--deep);transform:translateY(-2px)}
 .btn-xl.line{border:1.5px solid color-mix(in srgb,var(--ink) 22%,transparent);color:var(--ink)}
 .btn-xl.line:hover{border-color:var(--ink);transform:translateY(-2px)}
-.hero-visual{position:relative;height:440px}
+.hero-visual{position:relative;height:clamp(360px,38vw,440px);min-width:0}
 .hv-photo{height:100%;margin:0;position:relative;overflow:hidden;border-radius:14px}
 .hv-photo img{width:100%;height:100%;object-fit:cover}
 .hv-photo figcaption{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(10,20,18,.55));color:#fff;font-size:13px;padding:34px 22px 16px;letter-spacing:.02em}
-.hv-panel{background:#fff;border:1px solid #e9edf2;border-radius:14px;padding:44px 42px;height:100%;display:flex;flex-direction:column;justify-content:center;box-shadow:0 18px 48px rgba(20,40,60,.07)}
+.hv-panel{background:#fff;border:1px solid #e9edf2;border-radius:14px;padding:clamp(32px,4vw,44px);height:100%;display:flex;flex-direction:column;justify-content:center;box-shadow:0 18px 48px rgba(20,40,60,.07);overflow:hidden}
 .hv-panel h4{font-size:13px;letter-spacing:.14em;color:var(--primary);font-weight:700;margin-bottom:20px}
-.hv-panel .hrs{font-size:16px;line-height:2.1;color:#39424f;word-break:keep-all}
+.hv-panel .hrs{font-size:clamp(15px,1.4vw,16px);line-height:1.9;color:#39424f;word-break:keep-all}
 .hv-panel .line{height:1px;background:#e9edf2;margin:26px 0 20px}
 .hv-panel .lbl{font-size:12.5px;color:#8b93a0;font-weight:600;margin-bottom:4px}
-.hv-panel .tel{font-size:30px;font-weight:800;color:var(--ink);text-decoration:none;letter-spacing:-.02em;font-family:var(--head)}
+.hv-panel .tel{font-size:clamp(24px,2.2vw,30px);font-weight:800;color:var(--ink);text-decoration:none;letter-spacing:-.02em;font-family:var(--head);white-space:nowrap;word-break:normal;overflow-wrap:normal;display:inline-block}
 .hv-panel .tel:hover{color:var(--primary)}
 @media(max-width:900px){.hero-visual{display:none}}
 .scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--primary);font-size:12px;font-weight:700;letter-spacing:.15em;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2}
@@ -2674,9 +3644,9 @@ html[data-motion="none"] .card:hover{transform:none}
 .stats{background:var(--ink);color:#fff;border-radius:14px;padding:64px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;text-align:center;position:relative;overflow:hidden}
 .stats::before{content:"";position:absolute;width:400px;height:400px;border-radius:50%;background:var(--primary);filter:blur(120px);opacity:.25;top:-150px;right:-100px}
 @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
-.stat b{font-size:clamp(34px,4vw,48px);font-weight:800;font-family:var(--head);display:block}
+.stat b{font-size:clamp(42px,5vw,64px);font-weight:800;font-family:var(--head);display:block}
 .stat b small{font-size:.6em;color:var(--primary);font-weight:800}
-.stat span{font-size:14px;opacity:.65}
+.stat span{font-size:15px;opacity:.72}
 
 /* 의료진 */
 .dr-avatar{width:86px;height:86px;border-radius:50%;background:var(--soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;font-family:var(--head);margin-bottom:20px;transition:transform .35s ease}
@@ -2770,7 +3740,7 @@ ${userCss(cfg)}
 <nav id="nav">
   ${logoBrand(cfg, `<a class="brand" href="#"><b>${cfg.name.slice(0,2)}</b>${cfg.name.slice(2)}</a>`)}
   <div class="links">
-    ${cfg.sections.about?'<a href="#about">치과소개</a>':''}
+    ${cfg.sections.about?'<a href="#about">병원소개</a>':''}
     ${cfg.sections.services?'<a href="#services">진료과목</a>':''}
     ${cfg.sections.doctors?'<a href="#doctors">의료진소개</a>':''}
     ${cfg.sections.gallery?'<a href="#gallery">시설안내</a>':''}
@@ -2785,10 +3755,10 @@ ${userCss(cfg)}
   <div class="wrap">
     <div>
       <span class="eyebrow" data-reveal>✚ ${cfg.name}</span>
-      <h1 data-reveal style="--d:.1s">${cfg.slogan.replace(/(건강한 치아|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
+      <h1 data-reveal style="--d:.1s">${cfg.slogan.replace(/(정확한 진료|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
       <p class="lead" data-reveal style="--d:.22s">${cfg.desc}</p>
       <div class="hero-ctas" data-reveal style="--d:.34s">
-        <a class="btn-xl fill" href="tel:${cfg.phone}">전화 예약</a>
+        ${heroCtaPrimary(cfg,'btn-xl fill')}
         ${heroCta2(cfg,{cls:'btn-xl line',fallbackHref:'#services',fallbackText:'진료과목 보기'})}
       </div>
     </div>
@@ -2823,10 +3793,7 @@ ${cfg.sections.stats?`
 <section id="stats" style="padding-top:0">
   <div class="wrap">
     <div class="stats" data-reveal>
-      <div class="stat"><b><span data-count="32000">0</span><small>+</small></b><span>누적 진료 환자</span></div>
-      <div class="stat"><b><span data-count="5000">0</span><small>례</small></b><span>임플란트 시술</span></div>
-      <div class="stat"><b><span data-count="15">0</span><small>년</small></b><span>진료 경력</span></div>
-      <div class="stat"><b><span data-count="98">0</span><small>%</small></b><span>재방문 의향</span></div>
+      ${statsHTML(cfg,'stat')}
     </div>
   </div>
 </section>`:''}
@@ -2913,7 +3880,7 @@ ${cfg.sections.location?`
   </div>
 </section>
 
-<footer><b>${cfg.name}</b> · ${cfg.addr} · 대표전화 ${cfg.phone}<br>© ${new Date().getFullYear()} ${cfg.name}. Made with 사이트온.</footer>
+${footerHTML(cfg)}
 
 ${quickBar(cfg)}
 ${prodExtras(cfg)}
@@ -3009,10 +3976,7 @@ function stdTail(cfg, C){
   const svcOptions = cfg.services.map(s=>`<option>${s.title}</option>`).join('');
   return `
 ${cfg.sections.stats?`<section id="stats" style="padding-top:0"><div class="wrap"><div class="x-stats" data-reveal>
-  <div><b><span data-count="32000">0</span><small>+</small></b><span>누적 진료 환자</span></div>
-  <div><b><span data-count="5000">0</span><small>례</small></b><span>임플란트 시술</span></div>
-  <div><b><span data-count="15">0</span><small>년</small></b><span>진료 경력</span></div>
-  <div><b><span data-count="98">0</span><small>%</small></b><span>재방문 의향</span></div>
+  ${statsHTML(cfg)}
 </div></div></section>`:''}
 
 ${cfg.sections.doctors?`<section id="doctors"><div class="wrap">
@@ -3067,7 +4031,7 @@ ${cfg.sections.location?`<section id="location" style="background:#f7f9fb"><div 
   ${mapEmbed(cfg,10)}
 </div></section>`:''}
 
-<footer><b>${cfg.name}</b><br>${cfg.addr} · 대표전화 ${cfg.phone}<br>© ${new Date().getFullYear()} ${cfg.name}. Made with 사이트온.</footer>`;
+${footerHTML(cfg)}`;
 }
 
 // 신규 스타일 공통 내비
@@ -3075,7 +4039,7 @@ function stdNav(cfg){
   return `<nav id="nav">
   ${logoBrand(cfg, `<a class="brand" href="#">${cfg.name}</a>`)}
   <div class="links">
-    ${cfg.sections.about?'<a href="#about">치과소개</a>':''}
+    ${cfg.sections.about?'<a href="#about">병원소개</a>':''}
     ${cfg.sections.services?'<a href="#services">진료과목</a>':''}
     ${cfg.sections.doctors?'<a href="#doctors">의료진소개</a>':''}
     ${cfg.sections.gallery?'<a href="#gallery">시설안내</a>':''}
@@ -3319,7 +4283,7 @@ ${userCss(cfg)}
 <nav id="nav">
   ${logoBrand(cfg, `<a class="brand" href="#"><b>${cfg.name.slice(0,2)}</b>${cfg.name.slice(2)}</a>`)}
   <div class="links">
-    ${cfg.sections.about?'<a href="#about">치과소개</a>':''}
+    ${cfg.sections.about?'<a href="#about">병원소개</a>':''}
     ${cfg.sections.services?'<a href="#services">진료과목</a>':''}
     ${cfg.sections.doctors?'<a href="#doctors">의료진소개</a>':''}
     ${cfg.sections.gallery?'<a href="#gallery">시설안내</a>':''}
@@ -3333,18 +4297,13 @@ ${userCss(cfg)}
   ${heroVideo(cfg)}
   <div class="wrap">
     <div class="label" data-reveal>${cfg.name.toUpperCase()}</div>
-    <h1 data-reveal style="--d:.1s">${cfg.slogan.replace(/(건강한 치아|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
+    <h1 data-reveal style="--d:.1s">${cfg.slogan.replace(/(정확한 진료|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
     <p data-reveal style="--d:.2s">${cfg.desc}</p>
     <div class="btns" data-reveal style="--d:.3s">
-      <a class="b1" href="tel:${cfg.phone}">전화 예약</a>
+      ${heroCtaPrimary(cfg,'b1')}
       ${heroCta2(cfg,{cls:'b2',onDark:true,fallbackHref:'#services',fallbackText:'진료과목 보기'})}
     </div>
-    <div class="trust" data-reveal style="--d:.42s">
-      <span><b>15년</b> 한자리 진료</span>
-      <span>대학병원 출신 <b>전문의 ${cfg.doctors.length}인</b></span>
-      <span><b>3D CT</b> 디지털 정밀 진단</span>
-      <span>1인 1기구 <b>멸균 시스템</b></span>
-    </div>
+    ${heroTrustHTML(cfg)}
   </div>
 </header>
 
@@ -3368,10 +4327,7 @@ ${cfg.sections.services?`
 ${cfg.sections.stats?`
 <div class="cl-stats" id="stats" data-reveal>
   <div class="wrap">
-    <div><b><span data-count="32000">0</span><small>+</small></b><span>누적 진료 환자</span></div>
-    <div><b><span data-count="5000">0</span><small>례</small></b><span>임플란트 시술</span></div>
-    <div><b><span data-count="15">0</span><small>년</small></b><span>진료 경력</span></div>
-    <div><b><span data-count="98">0</span><small>%</small></b><span>재방문 의향</span></div>
+    ${statsHTML(cfg)}
   </div>
 </div>`:''}
 
@@ -3444,7 +4400,7 @@ ${cfg.sections.location?`
   <a href="tel:${cfg.phone}">${cfg.phone} 전화 예약</a>
 </div>
 
-<footer><b>${cfg.name}</b><br>${cfg.addr} · 대표전화 ${cfg.phone}<br>© ${new Date().getFullYear()} ${cfg.name}. Made with 사이트온.</footer>
+${footerHTML(cfg)}
 
 ${quickBar(cfg)}
 ${prodExtras(cfg)}
@@ -3642,7 +4598,7 @@ ${userCss(cfg)}
 <nav id="nav">
   ${logoBrand(cfg, `<a class="brand" href="#">${cfg.name}</a>`)}
   <div class="links">
-    ${cfg.sections.about?'<a href="#about">치과소개</a>':''}
+    ${cfg.sections.about?'<a href="#about">병원소개</a>':''}
     ${cfg.sections.services?'<a href="#services">진료과목</a>':''}
     ${cfg.sections.doctors?'<a href="#doctors">의료진소개</a>':''}
     ${cfg.sections.gallery?'<a href="#gallery">시설안내</a>':''}
@@ -3655,11 +4611,11 @@ ${userCss(cfg)}
 <header class="hero">
   ${heroVideo(cfg)}
   <div class="eyebrow" data-reveal>${cfg.name}</div>
-  <h1 data-reveal style="--d:.15s">${cfg.slogan.replace(/(건강한 치아|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
+  <h1 data-reveal style="--d:.15s">${cfg.slogan.replace(/(정확한 진료|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
   <div class="divider" data-reveal style="--d:.3s"></div>
   <p data-reveal style="--d:.4s">${cfg.desc}</p>
   <div class="btns" data-reveal style="--d:.55s">
-    <a class="b1" href="tel:${cfg.phone}">전화 예약</a>
+    ${heroCtaPrimary(cfg,'b1')}
     ${heroCta2(cfg,{cls:'b2',onDark:true,fallbackHref:(cfg.sections.booking?'#booking':'tel:'+cfg.phone),fallbackText:'예약 문의하기'})}
   </div>
   <div class="scroll-cue">SCROLL<i></i></div>
@@ -3678,10 +4634,7 @@ ${cfg.sections.services?`
 ${cfg.sections.stats?`
 <div class="pm-stats" id="stats" data-reveal>
   <div class="wrap">
-    <div><b><span data-count="32000">0</span><small>+</small></b><span>누적 진료 환자</span></div>
-    <div><b><span data-count="5000">0</span><small>례</small></b><span>임플란트 시술</span></div>
-    <div><b><span data-count="15">0</span><small>년</small></b><span>진료 경력</span></div>
-    <div><b><span data-count="98">0</span><small>%</small></b><span>재방문 의향</span></div>
+    ${statsHTML(cfg)}
   </div>
 </div>`:''}
 
@@ -3745,7 +4698,7 @@ ${cfg.sections.location?`
   <a href="tel:${cfg.phone}">CALL ${cfg.phone}</a>
 </div>
 
-<footer><b>${cfg.name}</b>${cfg.addr} · ${cfg.phone}<br>© ${new Date().getFullYear()} ${cfg.name}. Made with 사이트온.</footer>
+${footerHTML(cfg)}
 
 ${quickBar(cfg)}
 ${prodExtras(cfg)}
@@ -3960,7 +4913,7 @@ ${userCss(cfg)}
 <nav id="nav">
   ${logoBrand(cfg, `<a class="brand" href="#">${cfg.name}</a>`)}
   <div class="links">
-    ${cfg.sections.about?'<a href="#about">치과소개</a>':''}
+    ${cfg.sections.about?'<a href="#about">병원소개</a>':''}
     ${cfg.sections.services?'<a href="#services">진료과목</a>':''}
     ${cfg.sections.doctors?'<a href="#doctors">의료진소개</a>':''}
     ${cfg.sections.gallery?'<a href="#gallery">시설안내</a>':''}
@@ -3973,10 +4926,10 @@ ${userCss(cfg)}
 <header class="hero">
   <div class="lt">
     <div class="tag" data-reveal>${cfg.name}</div>
-    <h1 data-reveal style="--d:.08s">${cfg.slogan.replace(/(건강한 치아|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
+    <h1 data-reveal style="--d:.08s">${cfg.slogan.replace(/(정확한 진료|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
     <p data-reveal style="--d:.16s">${cfg.desc}</p>
     <div class="btns" data-reveal style="--d:.24s">
-      <a class="b1" href="tel:${cfg.phone}">전화 예약</a>
+      ${heroCtaPrimary(cfg,'b1')}
       ${heroCta2(cfg,{cls:'b2',fallbackHref:(cfg.sections.booking?'#booking':'tel:'+cfg.phone),fallbackText:'상담 예약하기'})}
     </div>
     <div class="mini" data-reveal style="--d:.32s">
@@ -4003,10 +4956,7 @@ ${cfg.sections.services?`
 ${cfg.sections.stats?`
 <section id="stats" style="padding-top:0">
   <div class="wrap"><div class="sp-stats" data-reveal>
-    <div><b><span data-count="32000">0</span><small>+</small></b><span>누적 진료 환자</span></div>
-    <div><b><span data-count="5000">0</span><small>례</small></b><span>임플란트 시술</span></div>
-    <div><b><span data-count="15">0</span><small>년</small></b><span>진료 경력</span></div>
-    <div><b><span data-count="98">0</span><small>%</small></b><span>재방문 의향</span></div>
+    ${statsHTML(cfg)}
   </div></div>
 </section>`:''}
 
@@ -4073,7 +5023,7 @@ ${cfg.sections.location?`
   </div>
 </section>`:''}
 
-<footer><div><b>${cfg.name}</b><br>${cfg.addr}</div><div style="text-align:right">대표전화 ${cfg.phone}<br>© ${new Date().getFullYear()} ${cfg.name}. Made with 사이트온.</div></footer>
+${footerHTML(cfg)}
 
 ${quickBar(cfg)}
 ${prodExtras(cfg)}
@@ -4268,7 +5218,7 @@ ${userCss(cfg)}
 <nav id="nav">
   ${logoBrand(cfg, `<a class="brand" href="#">${cfg.name}</a>`)}
   <div class="links">
-    ${cfg.sections.about?'<a href="#about">치과소개</a>':''}
+    ${cfg.sections.about?'<a href="#about">병원소개</a>':''}
     ${cfg.sections.services?'<a href="#services">진료과목</a>':''}
     ${cfg.sections.doctors?'<a href="#doctors">의료진소개</a>':''}
     ${cfg.sections.gallery?'<a href="#gallery">시설안내</a>':''}
@@ -4283,10 +5233,10 @@ ${userCss(cfg)}
   <div class="wrap">
     <div>
       <span class="hello" data-reveal>안녕하세요, ${cfg.name}입니다</span>
-      <h1 data-reveal style="--d:.08s">${cfg.slogan.replace(/(건강한 치아|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
+      <h1 data-reveal style="--d:.08s">${cfg.slogan.replace(/(정확한 진료|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
       <p class="ld" data-reveal style="--d:.16s">${cfg.desc}</p>
       <div class="btns" data-reveal style="--d:.24s">
-        <a class="b1" href="tel:${cfg.phone}">전화 예약</a>
+        ${heroCtaPrimary(cfg,'b1')}
         ${heroCta2(cfg,{cls:'b2',fallbackHref:'#services',fallbackText:'진료과목 보기'})}
       </div>
     </div>
@@ -4311,10 +5261,7 @@ ${cfg.sections.services?`
 ${cfg.sections.stats?`
 <section id="stats" style="padding-top:0">
   <div class="wrap"><div class="pp-stats" data-reveal>
-    <div><b><span data-count="32000">0</span><small>+</small></b><span>누적 진료 환자</span></div>
-    <div><b><span data-count="5000">0</span><small>례</small></b><span>임플란트 시술</span></div>
-    <div><b><span data-count="15">0</span><small>년</small></b><span>진료 경력</span></div>
-    <div><b><span data-count="98">0</span><small>%</small></b><span>재방문 의향</span></div>
+    ${statsHTML(cfg)}
   </div></div>
 </section>`:''}
 
@@ -4379,7 +5326,7 @@ ${cfg.sections.location?`
   <a href="tel:${cfg.phone}">전화 예약하기</a>
 </div>
 
-<footer><b>${cfg.name}</b><br>${cfg.addr} · ${cfg.phone}<br>© ${new Date().getFullYear()} ${cfg.name}. Made with 사이트온.</footer>
+${footerHTML(cfg)}
 
 ${quickBar(cfg)}
 ${prodExtras(cfg)}
@@ -4592,7 +5539,7 @@ ${userCss(cfg)}
 <nav id="nav">
   ${logoBrand(cfg, `<a class="brand" href="#">${cfg.name}</a>`)}
   <div class="links">
-    ${cfg.sections.about?'<a href="#about">치과소개</a>':''}
+    ${cfg.sections.about?'<a href="#about">병원소개</a>':''}
     ${cfg.sections.services?'<a href="#services">진료과목</a>':''}
     ${cfg.sections.doctors?'<a href="#doctors">의료진소개</a>':''}
     ${cfg.sections.gallery?'<a href="#gallery">시설안내</a>':''}
@@ -4639,10 +5586,7 @@ ${cfg.sections.services?`
 ${cfg.sections.stats?`
 <section id="stats" style="padding-top:0">
   <div class="wrap"><div class="ph-stats" data-reveal>
-    <div><b><span data-count="32000">0</span><small>+</small></b><span>누적 진료 환자</span></div>
-    <div><b><span data-count="5000">0</span><small>례</small></b><span>임플란트 시술</span></div>
-    <div><b><span data-count="15">0</span><small>년</small></b><span>진료 경력</span></div>
-    <div><b><span data-count="98">0</span><small>%</small></b><span>재방문 의향</span></div>
+    ${statsHTML(cfg)}
   </div></div>
 </section>`:''}
 
@@ -4697,10 +5641,7 @@ ${cfg.sections.location?`
   </div>
 </section>`:''}
 
-<footer>
-  <div><div class="fb">${cfg.name}</div>${cfg.addr}</div>
-  <div class="r">대표전화 ${cfg.phone}<br>© ${new Date().getFullYear()} ${cfg.name}. Made with 사이트온.</div>
-</footer>
+${footerHTML(cfg)}
 
 ${quickBar(cfg)}
 ${prodExtras(cfg)}
@@ -4788,11 +5729,11 @@ ${cfg.heroImg?'@media(max-width:860px){nav:not(.scrolled) .burger i{background:#
 ${stdNav(cfg)}
 <header class="lx-hero">
   <div>
-    <span class="lb" data-reveal>${cfg.name.toUpperCase()} — PREMIUM DENTAL CARE</span>
+    <span class="lb" data-reveal>${cfg.name.toUpperCase()} — PREMIUM MEDICAL CARE</span>
     <h1 data-reveal style="--d:.12s">${cfg.slogan}</h1>
     <p data-reveal style="--d:.22s">${cfg.desc}</p>
     <div class="btns" data-reveal style="--d:.32s">
-      <a class="b1" href="tel:${cfg.phone}">전화 예약</a>
+      ${heroCtaPrimary(cfg,'b1')}
       ${heroCta2(cfg,{cls:'b2',onDark:!!cfg.heroImg,fallbackHref:'#services',fallbackText:'진료 안내'})}
     </div>
   </div>
@@ -4801,7 +5742,7 @@ ${cfg.sections.about?aboutBlock(cfg,{serif:true,radius:0,bg:'#fff'}):''}
 ${cfg.sections.services?`
 <section id="services">
   <div class="wrap">
-    <div class="x-shead" data-reveal><span class="lb">TREATMENT</span><h2>진료 과목</h2><p>과잉 없이, 꼭 필요한 치료만 정성껏</p></div>
+    <div class="x-shead" data-reveal><span class="lb">TREATMENT</span><h2>진료 과목</h2><p>과잉 없이, 꼭 필요한 진료만 정성껏</p></div>
     <div class="lx-list">${servicesHTML}</div>
   </div>
 </section>`:''}
@@ -4816,7 +5757,7 @@ ${siteScript(cfg)}
 function genProcess(cfg){
   const T=cfg.theme, C=siteCommon(cfg);
   const steps=[
-    {t:'정밀 진단',d:'3D CT·구강스캐너로 데이터 기반 진단'},
+    {t:'정밀 진단',d:'필요한 검사 자료를 바탕으로 상태를 정확히 확인'},
     {t:'맞춤 치료계획',d:'진단 자료를 함께 보며 계획·비용을 투명하게'},
     {t:'최소 침습 치료',d:'통증과 회복 부담을 최소화하는 시술'},
     {t:'정기 관리',d:'치료 후에도 책임지는 평생 관리 시스템'},
@@ -4883,14 +5824,14 @@ ${stdNav(cfg)}
 <header class="pr-hero">
   <div class="wrap">
     <div>
-      <div class="lb" data-reveal>DIGITAL DENTAL SYSTEM</div>
+      <div class="lb" data-reveal>DIGITAL MEDICAL SYSTEM</div>
       <h1 data-reveal style="--d:.08s">${cfg.slogan}</h1>
       <p data-reveal style="--d:.16s">${cfg.desc}</p>
       <div class="btns" data-reveal style="--d:.24s">
-        <a class="b1" href="tel:${cfg.phone}">전화 예약</a>
+        ${heroCtaPrimary(cfg,'b1')}
         ${heroCta2(cfg,{cls:'b2',fallbackHref:'#services',fallbackText:'진료과목 보기'})}
       </div>
-      <div class="certs" data-reveal style="--d:.32s"><span><b>3D CT</b> 정밀 진단</span><span><b>구강스캐너</b> 디지털 인상</span><span><b>멸균 시스템</b> 1인 1기구</span></div>
+      <div class="certs" data-reveal style="--d:.32s"><span><b>정밀 검사</b> 데이터 기반 진단</span><span><b>상담 시스템</b> 이해하기 쉬운 설명</span><span><b>감염 관리</b> 위생 프로세스</span></div>
     </div>
     <div class="vis" data-reveal style="--d:.2s"><div class="tag"><b>디지털 정밀 진료</b>데이터로 진단하고 설명합니다</div></div>
   </div>
@@ -4985,7 +5926,7 @@ ${stdNav(cfg)}
 <header class="mg-hero">
   <div class="wrap">
     <div class="top">
-      <h1 data-reveal>${cfg.slogan.replace(/(건강한 치아|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
+      <h1 data-reveal>${cfg.slogan.replace(/(정확한 진료|정직한 진료|건강|미소)/,'<em>$1</em>')}</h1>
       <div class="idx" data-reveal style="--d:.15s"><b>${cfg.name}</b><br>${(cfg.addrRaw||'').split(' ').slice(0,2).join(' ')}<br>${(cfg.hours||'').split('\n')[0]||''}</div>
     </div>
     <div class="body">
@@ -5088,11 +6029,11 @@ ${stdNav(cfg)}
 <header class="cv-hero">
   <div class="wrap">
     <div>
-      <span class="lb" data-reveal>${cfg.name} · 편안한 치과의 기준</span>
+      <span class="lb" data-reveal>${cfg.name} · 편안한 진료의 기준</span>
       <h1 data-reveal style="--d:.08s">${cfg.slogan}</h1>
       <p data-reveal style="--d:.16s">${cfg.desc}</p>
       <div class="btns" data-reveal style="--d:.24s">
-        <a class="b1" href="tel:${cfg.phone}">전화 예약</a>
+        ${heroCtaPrimary(cfg,'b1')}
         ${heroCta2(cfg,{cls:'b2',fallbackHref:'#services',fallbackText:'진료과목 보기'})}
       </div>
     </div>
@@ -5194,11 +6135,11 @@ ${stdNav(cfg)}
 <header class="bd-hero">
   ${heroVideo(cfg)}
   <div class="wrap">
-    <span class="lb" data-reveal>${cfg.name.toUpperCase()} DENTAL</span>
-    <h1 data-reveal style="--d:.1s">${cfg.slogan.replace(/(건강한 치아|정직한 진료|건강|미소)/,'<span class="ol">$1</span>')}</h1>
+    <span class="lb" data-reveal>${cfg.name.toUpperCase()} CLINIC</span>
+    <h1 data-reveal style="--d:.1s">${cfg.slogan.replace(/(정확한 진료|정직한 진료|건강|미소)/,'<span class="ol">$1</span>')}</h1>
     <p data-reveal style="--d:.2s">${cfg.desc}</p>
     <div class="btns" data-reveal style="--d:.3s">
-      <a class="b1" href="tel:${cfg.phone}">전화 예약</a>
+      ${heroCtaPrimary(cfg,'b1')}
       ${heroCta2(cfg,{cls:'b2',onDark:true,fallbackHref:'#services',fallbackText:'진료과목 ↓'})}
     </div>
   </div>
@@ -5290,7 +6231,7 @@ ${userCss(cfg)}
 <body>
 ${stdNav(cfg)}
 <div class="sc-dots" aria-hidden="true">
-  ${cfg.sections.about?'<a href="#about" title="치과소개"></a>':''}
+  ${cfg.sections.about?'<a href="#about" title="병원소개"></a>':''}
   ${cfg.sections.services?'<a href="#services" title="진료과목"></a>':''}
   ${cfg.sections.doctors?'<a href="#doctors" title="의료진"></a>':''}
   ${cfg.sections.gallery?'<a href="#gallery" title="시설"></a>':''}
@@ -5303,7 +6244,7 @@ ${stdNav(cfg)}
     <h1 data-reveal style="--d:.12s">${cfg.slogan}</h1>
     <p data-reveal style="--d:.22s">${cfg.desc}</p>
     <div class="btns" data-reveal style="--d:.32s">
-      <a class="b1" href="tel:${cfg.phone}">전화 예약</a>
+      ${heroCtaPrimary(cfg,'b1')}
       ${heroCta2(cfg,{cls:'b2',onDark:true,fallbackHref:'#services',fallbackText:'둘러보기 ↓'})}
     </div>
   </div>
@@ -5322,6 +6263,80 @@ ${siteScript(cfg)}
 let editMode = true;
 let pendingScroll = null;
 const normTxt = s => String(s==null?'':s).replace(/\s+/g,'');
+const TEXT_EDIT_SELECTOR = 'h1,h2,h3,h4,h5,h6,p,figcaption,small,b,strong,a,li,span,button,label,th,td,dt,dd';
+
+function ensureTextEdits(){
+  if(!state.textEdits||typeof state.textEdits!=='object') state.textEdits={};
+  return state.textEdits;
+}
+
+function textEditPart(el){
+  const tag=el.tagName.toLowerCase();
+  let part=tag;
+  if(el.id) part+='#'+el.id;
+  const cls=Array.from(el.classList||[])
+    .filter(c=>!/^(on|open|active|in|show|selected|focus|hover)$/.test(c) && !/^ed-/.test(c))
+    .slice(0,3);
+  if(cls.length) part+='.'+cls.join('.');
+  let idx=1;
+  let prev=el.previousElementSibling;
+  while(prev){
+    if(prev.tagName===el.tagName) idx++;
+    prev=prev.previousElementSibling;
+  }
+  return part+':nth('+idx+')';
+}
+
+function textEditKey(el){
+  const parts=[];
+  let node=el;
+  while(node&&node.nodeType===1&&node.tagName){
+    const tag=node.tagName.toLowerCase();
+    if(tag==='html') break;
+    parts.unshift(textEditPart(node));
+    if(tag==='body') break;
+    node=node.parentElement;
+  }
+  return parts.join('>');
+}
+
+function isTextEditCandidate(el){
+  if(!el||!el.textContent) return false;
+  if(el.closest('script,style,noscript,.lightbox,.sc-dots,.burger,.ed-tip,.ed-herobtn')) return false;
+  if(el.closest('[aria-hidden="true"]')) return false;
+  if(el.closest('[data-edx]') && !el.hasAttribute('data-edx') && el.closest('[data-edx]')!==el) return false;
+  if(el.querySelector('h1,h2,h3,h4,h5,h6,p,div,figcaption,ul,ol,li,table,form')) return false;
+  const t=normTxt(el.textContent);
+  return !!t&&t.length>=2;
+}
+
+function textEditElements(root){
+  if(!root) return [];
+  return Array.from(root.querySelectorAll(TEXT_EDIT_SELECTOR)).filter(isTextEditCandidate);
+}
+
+function applyTextOverridesToDoc(doc){
+  const edits=ensureTextEdits();
+  textEditElements(doc).forEach(el=>{
+    const key=textEditKey(el);
+    const edit=edits[key];
+    if(!edit||!edit.to) return;
+    const cur=normTxt(el.textContent);
+    const from=normTxt(edit.from);
+    const to=normTxt(edit.to);
+    if(cur===from||cur===to) el.textContent=edit.to;
+  });
+}
+
+function applyTextOverridesToHtml(html){
+  try{
+    const doc=new DOMParser().parseFromString(html,'text/html');
+    applyTextOverridesToDoc(doc);
+    return '<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
+  }catch(e){
+    return html;
+  }
+}
 
 function renderKeepScroll(){
   try{ pendingScroll = $('#preview').contentWindow.scrollY; }catch(e){ pendingScroll=null; }
@@ -5334,6 +6349,15 @@ function buildTextRegistry(){
   const F=(id,extra)=>{ const el=$('#'+id); if(!el||!normTxt(el.value))return;
     R.push(Object.assign({val:normTxt(el.value),save:nv=>{el.value=nv;}},extra||{})); };
   F('f_name'); F('f_slogan'); F('f_desc',{multiline:true}); F('f_phone'); F('f_addr'); F('f_hours',{multiline:true});
+  state.hero=normalizeHero(state.hero);
+  if(normTxt(state.hero.primaryLabel)) R.push({val:normTxt(state.hero.primaryLabel),save:v=>{state.hero.primaryLabel=v;drawHeroControls();}});
+  if(normTxt(state.hero.secondaryLabel)) R.push({val:normTxt(state.hero.secondaryLabel),save:v=>{state.hero.secondaryLabel=v;drawHeroControls();}});
+  state.stats=normalizeStats(state.stats);
+  state.stats.forEach(s=>{
+    if(normTxt(s.value)) R.push({val:normTxt(s.value),save:v=>{s.value=String(v).replace(/[^\d.]/g,'')||s.value;drawStats();}});
+    if(normTxt(s.suffix)) R.push({val:normTxt(s.suffix),save:v=>{s.suffix=v;drawStats();}});
+    if(normTxt(s.label)) R.push({val:normTxt(s.label),save:v=>{s.label=v;drawStats();}});
+  });
   state.services.forEach(s=>{
     if(normTxt(s.title))R.push({val:normTxt(s.title),save:v=>{s.title=v;drawServices();}});
     if(normTxt(s.desc))R.push({val:normTxt(s.desc),save:v=>{s.desc=v;drawServices();},multiline:true});
@@ -5361,7 +6385,7 @@ function attachEditLayer(doc){
 [data-edx]:focus{outline:none;box-shadow:0 0 0 2px #5b7cfa;background:rgba(91,124,250,.08)}
 .ed-media{cursor:pointer!important}
 .ed-media:hover{box-shadow:0 0 0 2px #5b7cfa,0 0 0 6px rgba(91,124,250,.3)!important}
-.ed-herobtn{position:absolute;top:96px;right:22px;z-index:45;background:#5b7cfa;color:#fff;border:none;padding:10px 16px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:Pretendard,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.ed-herobtn{position:fixed;top:96px;right:22px;z-index:45;background:#5b7cfa;color:#fff;border:none;padding:10px 16px;border-radius:6px;font-size:13px;font-weight:700;line-height:1.25;white-space:nowrap;min-width:132px;cursor:pointer;font-family:Pretendard,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 .ed-herobtn:hover{background:#3d5ef0}
 .ed-tip{position:fixed;bottom:16px;left:16px;z-index:99;background:rgba(15,17,23,.88);color:#fff;font-size:12px;padding:9px 14px;border-radius:8px;pointer-events:none;font-family:Pretendard,sans-serif}`;
   doc.head.appendChild(st);
@@ -5372,22 +6396,28 @@ function attachEditLayer(doc){
 
   // 1) 텍스트 인라인 편집
   const R=buildTextRegistry();
-  doc.querySelectorAll('h1,h2,h3,h4,p,figcaption,small,b,a,li,span').forEach(el=>{
-    if(el.closest('.qbar,.mnav,form,.lightbox,.sc-dots,.burger'))return;
-    if(el.closest('[data-edx]') && !el.hasAttribute('data-edx') && el.closest('[data-edx]')!==el)return;
-    if(el.querySelector('h1,h2,h3,p,div,figcaption'))return;
-    const t=normTxt(el.textContent); if(!t||t.length<2)return;
+  applyTextOverridesToDoc(doc);
+  textEditElements(doc).forEach(el=>{
+    const key=textEditKey(el);
+    const beforeText=(el.innerText||el.textContent||'').replace(/혻/g,' ').trim();
+    const t=normTxt(beforeText); if(!t||t.length<2)return;
     const entry=R.find(r=>r.val===t||(r.suffix&&t===r.val+normTxt(r.suffix)));
-    if(!entry)return;
     el.setAttribute('data-edx','');
+    el.dataset.edxTextKey=key;
     try{ el.contentEditable='plaintext-only'; }catch(e){ el.contentEditable='true'; }
-    el.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); });
-    el.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!entry.multiline){ e.preventDefault(); el.blur(); } });
+    el.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); },true);
+    el.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!(entry&&entry.multiline)){ e.preventDefault(); el.blur(); } });
     el.addEventListener('blur',()=>{
       let v=el.innerText.replace(/ /g,' ').trim();
-      if(entry.suffix) v=v.replace(new RegExp('\\s*'+entry.suffix+'\\s*$'),'');
-      if(!v||normTxt(v)===entry.val) return;
-      entry.save(v); autoSave(); renderKeepScroll();
+      if(entry&&entry.suffix) v=v.replace(new RegExp('\\s*'+entry.suffix+'\\s*$'),'');
+      const same=entry?normTxt(v)===entry.val:normTxt(v)===t;
+      if(!v||same) return;
+      if(entry){
+        entry.save(v);
+      }else{
+        ensureTextEdits()[key]={from:beforeText,to:v};
+      }
+      autoSave(); renderKeepScroll();
     });
   });
 
@@ -5410,6 +6440,16 @@ function attachEditLayer(doc){
   zone('#services','.card.sv,.cl-card,.pm-card,.sp-row,.pp-card,.ph-block,.lx-row,.pr-card,.mg-card,.cv-card,.bd-acc,.sc-svc',state.services,drawServices,900);
   zone('#doctors','.card.dr,.cl-dr,.pm-dr,.sp-dr,.pp-dr,.ph-dr,.x-dr',state.doctors,drawDoctors,500);
   zone('#gallery','.gal-item,.cl-gal,.pm-gal,.sp-gal,.pp-gal,.ph-gal,.x-gal',state.gallery,drawGallery,900);
+
+  const aboutImg=doc.querySelector('#about img');
+  if(aboutImg){
+    aboutImg.classList.add('ed-media');
+    aboutImg.title='클릭: 소개 사진 변경';
+    aboutImg.addEventListener('click',e=>{
+      e.preventDefault(); e.stopPropagation();
+      pickImage(1200,url=>{ state.aboutImg=url; syncAboutDrop(); autoSave(); renderKeepScroll(); });
+    },true);
+  }
 
   // 3) 히어로 배경 사진 버튼
   const hd=doc.querySelector('header');
@@ -5448,7 +6488,9 @@ $('#btnEdit').onclick=()=>{
 
 // 초기화: 자동저장 복원 → UI 구성
 try{ const saved=localStorage.getItem('siteon_project'); if(saved) applyProject(JSON.parse(saved)); }catch(e){}
-drawServices(); drawDoctors(); drawGallery(); drawFaq(); drawBlocks(); syncHeroDrop(); syncLogoDrop(); syncTypoUI(); syncTokensUI(); syncV3UI(); syncV4UI(); render();
+migrateComposition(state);
+ensureDefaultHeroImage();
+drawHeroControls(); drawServices(); drawStats(); drawFooterOptions(); drawDoctors(); drawGallery(); drawFaq(); drawBlocks(); syncHeroDrop(); syncAboutDrop(); syncLogoDrop(); syncTypoUI(); syncTokensUI(); syncV3UI(); syncV4UI(); render();
 </script>
 </body>
 </html>
