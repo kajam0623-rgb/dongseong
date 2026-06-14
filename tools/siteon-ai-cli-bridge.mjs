@@ -10,8 +10,11 @@ const rootDir = path.resolve(__dirname, '..');
 const requestDir = path.join(rootDir, 'ai-requests');
 const host = '127.0.0.1';
 const port = Number(process.env.SITEON_AI_PORT || 4627);
-const cli = (process.env.SITEON_AI_CLI || '').trim();
-const cliArgs = splitArgs(process.env.SITEON_AI_ARGS || '');
+const envCli = (process.env.SITEON_AI_CLI || '').trim();
+const cliDisabled = /^(0|false|off|none)$/i.test(envCli);
+const cli = cliDisabled ? '' : (envCli || 'codex');
+const cliAutoDetected = !envCli;
+const envCliArgs = (process.env.SITEON_AI_ARGS || '').trim();
 const promptMode = (process.env.SITEON_AI_PROMPT_MODE || 'stdin').toLowerCase();
 const timeoutMs = Number(process.env.SITEON_AI_TIMEOUT_MS || 180000);
 const maxBodyBytes = Number(process.env.SITEON_AI_MAX_BODY_MB || 80) * 1024 * 1024;
@@ -140,6 +143,25 @@ function tryParseJson(text) {
   return null;
 }
 
+function defaultCliArgs() {
+  const args = [
+    'exec',
+    '--sandbox', 'read-only',
+    '--ask-for-approval', 'never',
+    '--skip-git-repo-check',
+    '--ephemeral',
+    '-C', rootDir
+  ];
+  if (promptMode !== 'arg') args.push('-');
+  return args;
+}
+
+function effectiveCliArgs() {
+  if (envCliArgs) return splitArgs(envCliArgs);
+  if (cliAutoDetected) return defaultCliArgs();
+  return [];
+}
+
 function runCli(prompt) {
   if (!cli) {
     return Promise.resolve({
@@ -147,13 +169,14 @@ function runCli(prompt) {
       skipped: true,
       stdout: '',
       stderr: '',
-      message: 'SITEON_AI_CLI is not set. The request and prompt files were saved.'
+      message: 'SITEON_AI_CLI disabled execution. The request and prompt files were saved.'
     });
   }
 
   return new Promise(resolve => {
-    const args = promptMode === 'arg' ? [...cliArgs, prompt] : cliArgs;
-    const child = spawn(cli, args, {
+    const args = effectiveCliArgs();
+    const runArgs = promptMode === 'arg' ? [...args, prompt] : args;
+    const child = spawn(cli, runArgs, {
       cwd: rootDir,
       stdio: ['pipe', 'pipe', 'pipe'],
       windowsHide: true
@@ -212,6 +235,9 @@ async function handleAiEdit(req, res) {
   sendJson(res, cliResult.ok ? 200 : 500, {
     ok: cliResult.ok,
     cliConfigured: Boolean(cli),
+    cliAutoDetected,
+    cli,
+    cliArgs: effectiveCliArgs(),
     skipped: Boolean(cliResult.skipped),
     requestPath,
     promptPath,
@@ -230,7 +256,16 @@ const server = http.createServer(async (req, res) => {
       return;
     }
     if (req.method === 'GET' && req.url === '/health') {
-      sendJson(res, 200, { ok: true, cliConfigured: Boolean(cli), promptMode, port });
+      sendJson(res, 200, {
+        ok: true,
+        cliConfigured: Boolean(cli),
+        cliAutoDetected,
+        cli,
+        cliArgs: effectiveCliArgs(),
+        promptMode,
+        port,
+        requestDir
+      });
       return;
     }
     if (req.method === 'POST' && req.url === '/ai-edit') {
@@ -245,5 +280,5 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(port, host, () => {
   console.log(`SiteOn AI CLI bridge listening on http://${host}:${port}`);
-  console.log(cli ? `CLI: ${cli} ${cliArgs.join(' ')}` : 'CLI is not configured. Set SITEON_AI_CLI to enable execution.');
+  console.log(cli ? `CLI: ${cli} ${effectiveCliArgs().join(' ')}${cliAutoDetected ? ' (auto)' : ''}` : 'CLI execution is disabled. Requests will be saved only.');
 });

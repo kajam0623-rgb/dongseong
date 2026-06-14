@@ -1,1 +1,4 @@
 ai-requests/
+.siteon-runtime/
+projects/
+.codex-remote-attachments/
