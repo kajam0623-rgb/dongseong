@@ -38,6 +38,15 @@
           <th>V5 Base</th>
           <th>V5 Compose</th>
           <th>V5 Hero</th>
+          <th>V5 S11</th>
+          <th>V5 S12</th>
+          <th>V5 S13</th>
+          <th>V5 S15</th>
+          <th>V5 S17</th>
+          <th>V5 S18</th>
+          <th>V5 S18.1</th>
+          <th>V5 S19</th>
+          <th>Column Menu</th>
           <th>DOCTYPE</th>
           <th>Required IDs</th>
           <th>Emoji</th>
@@ -83,6 +92,15 @@
         ${cell('', result.v5Base)}
         ${cell('', result.v5Compose)}
         ${cell('', result.v5Hero)}
+        ${cell('', result.v5S11)}
+        ${cell('', result.v5S12)}
+        ${cell('', result.v5S13)}
+        ${cell('', result.v5S15)}
+        ${cell('', result.v5S17)}
+        ${cell('', result.v5S18)}
+        ${cell('', result.v5S18_1)}
+        ${cell('', result.v5S19)}
+        ${cell('', result.columnMenu)}
         ${cell('', result.doctype)}
         ${cell(result.missingIds.join(', '), result.ids)}
         ${cell(result.emoji || '', result.noEmoji)}
@@ -95,7 +113,15 @@
 
     function waitForFrameLoad(frame) {
       return new Promise(resolve => {
-        frame.onload = () => resolve();
+        let done = false;
+        const finish = () => {
+          if (done) return;
+          done = true;
+          frame.onload = null;
+          resolve();
+        };
+        frame.onload = finish;
+        setTimeout(finish, 500);
       });
     }
 
@@ -193,6 +219,15 @@
       });
       const composeGolden = win.eval('migrateComposition(state); v5GoldenCompose();');
       const heroGolden = win.eval('migrateComposition(state); v5GoldenHero();');
+      const s11Golden = win.eval('migrateComposition(state); v5GoldenS11();');
+      const s12Golden = win.eval('migrateComposition(state); v5GoldenS12();');
+      const s13Golden = win.eval('migrateComposition(state); v5GoldenS13();');
+      const s15Golden = win.eval('migrateComposition(state); v5GoldenS15();');
+      const s17Golden = win.eval('migrateComposition(state); v5GoldenS17();');
+      const s18Golden = win.eval('migrateComposition(state); v5GoldenS18();');
+      const s18_1Golden = win.eval('migrateComposition(state); v5GoldenS18_1();');
+      const s19Golden = win.eval('migrateComposition(state); v5GoldenS19();');
+      const columnGolden = win.eval('colGolden();');
 
       let passed = 0;
       for (const style of styles) {
@@ -206,6 +241,15 @@
           result.v5Base = !html.includes('data-v5-composition') && htmlV5.includes('data-v5-composition="auto"') && htmlV5.includes('data-v5-rhythm="editorial"') && htmlV5.includes('id="v5-base"');
           result.v5Compose = Boolean(composeGolden && composeGolden.pass);
           result.v5Hero = Boolean(heroGolden && heroGolden.pass);
+          result.v5S11 = Boolean(s11Golden && s11Golden.pass);
+          result.v5S12 = Boolean(s12Golden && s12Golden.pass);
+          result.v5S13 = Boolean(s13Golden && s13Golden.pass);
+          result.v5S15 = Boolean(s15Golden && s15Golden.pass);
+          result.v5S17 = Boolean(s17Golden && s17Golden.pass);
+          result.v5S18 = Boolean(s18Golden && s18Golden.pass);
+          result.v5S18_1 = Boolean(s18_1Golden && s18_1Golden.pass);
+          result.v5S19 = Boolean(s19Golden && s19Golden.pass);
+          result.columnMenu = Boolean(columnGolden && columnGolden.pass);
           Object.assign(result, validateHtml(html));
           result.preview = await renderPreview(html);
           result.consoleErrors = builderLoadConsoleErrors.concat(builderConsoleErrors, previewConsoleErrors);
@@ -214,13 +258,22 @@
           if (!result.v5Base) result.errors.push('v5 base gate failed');
           if (!result.v5Compose) result.errors.push(`v5 compose failed${composeGolden && composeGolden.fails ? ': ' + composeGolden.fails.join('; ') : ''}`);
           if (!result.v5Hero) result.errors.push(`v5 hero failed${heroGolden && heroGolden.fails ? ': ' + heroGolden.fails.join('; ') : ''}`);
+          if (!result.v5S11) result.errors.push(`v5 s11 failed${s11Golden && s11Golden.fails ? ': ' + s11Golden.fails.join('; ') : ''}`);
+          if (!result.v5S12) result.errors.push(`v5 s12 failed${s12Golden && s12Golden.fails ? ': ' + s12Golden.fails.join('; ') : ''}`);
+          if (!result.v5S13) result.errors.push(`v5 s13 failed${s13Golden && s13Golden.fails ? ': ' + s13Golden.fails.join('; ') : ''}`);
+          if (!result.v5S15) result.errors.push(`v5 s15 failed${s15Golden && s15Golden.fails ? ': ' + s15Golden.fails.join('; ') : ''}`);
+          if (!result.v5S17) result.errors.push(`v5 s17 failed${s17Golden && s17Golden.fails ? ': ' + s17Golden.fails.join('; ') : ''}`);
+          if (!result.v5S18) result.errors.push(`v5 s18 failed${s18Golden && s18Golden.fails ? ': ' + s18Golden.fails.join('; ') : ''}`);
+          if (!result.v5S18_1) result.errors.push(`v5 s18.1 failed${s18_1Golden && s18_1Golden.fails ? ': ' + s18_1Golden.fails.join('; ') : ''}`);
+          if (!result.v5S19) result.errors.push(`v5 s19 failed${s19Golden && s19Golden.fails ? ': ' + s19Golden.fails.join('; ') : ''}`);
+          if (!result.columnMenu) result.errors.push(`column menu failed${columnGolden && columnGolden.fails ? ': ' + columnGolden.fails.join('; ') : ''}`);
           if (!result.doctype) result.errors.push('invalid document boundary');
           if (!result.ids) result.errors.push('missing required ids');
           if (!result.noEmoji) result.errors.push('emoji found');
           if (!result.preview) result.errors.push('preview did not render');
           if (!result.console) result.errors.push('preview console error');
         } catch (error) {
-          Object.assign(result, { legacySnapshot:false, v5Base:false, v5Compose:false, v5Hero:false, doctype:false, ids:false, missingIds:REQUIRED_IDS, noEmoji:false, emoji:'', preview:false, console:false });
+          Object.assign(result, { legacySnapshot:false, v5Base:false, v5Compose:false, v5Hero:false, v5S11:false, v5S12:false, v5S13:false, v5S15:false, v5S17:false, v5S18:false, v5S18_1:false, v5S19:false, columnMenu:false, doctype:false, ids:false, missingIds:REQUIRED_IDS, noEmoji:false, emoji:'', preview:false, console:false });
           result.errors.push(error && error.message ? error.message : String(error));
         }
         if (result.errors.length === 0) passed += 1;
