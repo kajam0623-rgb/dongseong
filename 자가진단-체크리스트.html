@@ -1,0 +1,323 @@
+<title>우리 병원 홈페이지 자가진단</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F6F7F6; --bg-alt:#EDEFED; --surface:#FFFFFF;
+  --ink-strong:#101817; --ink-body:#3D4B49; --ink-subtle:#778583;
+  --line:#DBE1DF; --line-strong:#101817;
+  --accent:#0E6B66; --c-ok:#00907F; --c-low:#B8401C; --c-track:#E2E7E5;
+  --font-display:"Noto Serif KR", Pretendard, "Noto Sans KR", serif;
+  --font-body:Pretendard, "Pretendard Variable", "Noto Sans KR", system-ui, -apple-system, sans-serif;
+  --font-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1211; --bg-alt:#141B1A; --surface:#141B1A;
+    --ink-strong:#E9EEEC; --ink-body:#B2BFBC; --ink-subtle:#7C8B88;
+    --line:#242E2C; --line-strong:#E9EEEC;
+    --accent:#57B8AE; --c-ok:#0F9C8A; --c-low:#D2743F; --c-track:#232C2A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1211; --bg-alt:#141B1A; --surface:#141B1A;
+  --ink-strong:#E9EEEC; --ink-body:#B2BFBC; --ink-subtle:#7C8B88;
+  --line:#242E2C; --line-strong:#E9EEEC;
+  --accent:#57B8AE; --c-ok:#0F9C8A; --c-low:#D2743F; --c-track:#232C2A;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink-body); font-family:var(--font-body);
+  font-size:16.5px; line-height:1.7; word-break:keep-all; overflow-wrap:break-word; -webkit-font-smoothing:antialiased}
+.shell{max-width:760px; margin:0 auto; padding:0 clamp(20px,5vw,32px)}
+h1,h2,h3{color:var(--ink-strong); font-family:var(--font-display); text-wrap:balance; margin:0}
+h1{font-size:clamp(28px,4.4vw,42px); font-weight:700; line-height:1.2; letter-spacing:-0.035em}
+h2{font-size:clamp(20px,2.5vw,25px); font-weight:600; line-height:1.3; letter-spacing:-0.035em}
+p{margin:0 0 1em}
+strong{color:var(--ink-strong); font-weight:700}
+code{font-family:var(--font-mono); font-size:0.87em; color:var(--ink-strong); background:var(--bg-alt); padding:1px 5px; border-radius:4px}
+.lbl{font-family:var(--font-mono); font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-subtle)}
+
+header{padding:clamp(40px,6vw,68px) 0 28px; border-bottom:1px solid var(--line-strong)}
+header .lbl{display:block; margin-bottom:18px}
+header h1{margin-bottom:16px}
+header p{max-width:52ch; margin-bottom:0}
+
+/* 준비 */
+.prep{background:var(--bg-alt); border-radius:12px; padding:20px 22px; margin-top:28px}
+.prep h3{font-family:var(--font-body); font-weight:700; font-size:16px; color:var(--ink-strong); margin-bottom:10px}
+.prep ol{margin:0; padding-left:20px}
+.prep li{font-size:14.8px; margin-bottom:6px; line-height:1.6}
+.prep li:last-child{margin-bottom:0}
+
+/* 점수판 */
+#board{position:sticky; top:0; z-index:20; background:var(--bg); border-bottom:1px solid var(--line); padding:12px 0; margin-top:0}
+.board-in{display:flex; align-items:center; gap:16px; flex-wrap:wrap}
+.board-num{font-family:var(--font-display); font-weight:700; font-size:30px; line-height:1; letter-spacing:-0.04em; color:var(--ink-strong); font-variant-numeric:tabular-nums}
+.board-num em{font-style:normal; font-size:15px; font-weight:600; color:var(--ink-subtle)}
+.bar{flex:1; min-width:140px; height:9px; background:var(--c-track); border-radius:5px; overflow:hidden}
+.bar i{display:block; height:100%; width:0; background:var(--c-ok); border-radius:5px; transition:width .25s}
+.board-txt{font-size:13.5px; color:var(--ink-subtle)}
+
+section.zone{padding:34px 0 4px; border-bottom:1px solid var(--line)}
+.zone-h{display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:6px; flex-wrap:wrap}
+.zone-h h2{font-size:21px}
+.zone-h .cnt{font-family:var(--font-mono); font-size:12.5px; color:var(--ink-subtle); font-variant-numeric:tabular-nums}
+.zone-sub{font-size:14.5px; color:var(--ink-subtle); margin:0 0 4px; max-width:56ch}
+.zone-base{font-family:var(--font-mono); font-size:11.5px; color:var(--accent); letter-spacing:0.02em; margin-bottom:14px; display:block}
+
+ul.checks{list-style:none; margin:0; padding:0}
+ul.checks li{border-top:1px solid var(--line)}
+ul.checks li:first-child{border-top:0}
+label.ck{display:flex; gap:13px; padding:14px 2px; cursor:pointer; align-items:flex-start}
+label.ck input{appearance:none; width:20px; height:20px; flex:none; margin-top:2px; border:1.5px solid var(--ink-subtle);
+  border-radius:5px; cursor:pointer; position:relative; background:var(--surface)}
+label.ck input:checked{background:var(--c-ok); border-color:var(--c-ok)}
+label.ck input:checked::after{content:""; position:absolute; left:6px; top:2px; width:5px; height:10px;
+  border:solid var(--surface); border-width:0 2px 2px 0; transform:rotate(45deg)}
+label.ck input:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.ck-t{font-size:16px; color:var(--ink-strong); line-height:1.5}
+.ck-h{display:block; margin-top:5px; font-size:14px; color:var(--ink-subtle); line-height:1.55}
+label.ck input:checked ~ div .ck-t{color:var(--ink-subtle)}
+
+/* 결과 */
+#result{padding:40px 0 0}
+.rbox{border:1px solid var(--line); border-left-width:3px; border-radius:0 12px 12px 0; padding:22px 24px; background:var(--surface)}
+.rbox .lbl{display:block; margin-bottom:8px}
+.rbox h3{font-family:var(--font-body); font-weight:700; font-size:19px; color:var(--ink-strong); margin-bottom:9px}
+.rbox p{margin:0; font-size:15.5px; max-width:56ch}
+.zsum{margin-top:20px; border-top:1px solid var(--line)}
+.zrow{display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); font-size:14.5px}
+.zrow .zn{flex:none; width:150px; color:var(--ink-strong)}
+.zrow .zb{flex:1; height:8px; background:var(--c-track); border-radius:4px; overflow:hidden}
+.zrow .zb i{display:block; height:100%; border-radius:4px}
+.zrow .zv{flex:none; width:44px; text-align:right; font-variant-numeric:tabular-nums; color:var(--ink-subtle)}
+
+.notseen{margin-top:34px; padding:20px 22px; border:1px dashed var(--line); border-radius:12px}
+.notseen h3{font-family:var(--font-body); font-weight:700; font-size:16px; color:var(--ink-strong); margin-bottom:9px}
+.notseen ul{margin:0; padding-left:19px}
+.notseen li{font-size:14.5px; margin-bottom:5px; color:var(--ink-subtle)}
+.actions{display:flex; gap:10px; margin-top:26px; flex-wrap:wrap}
+button{font-family:var(--font-body); font-size:14.5px; padding:9px 16px; border-radius:6px; border:1px solid var(--line);
+  background:var(--surface); color:var(--ink-strong); cursor:pointer}
+button:hover{border-color:var(--ink-subtle)}
+button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+footer{padding:26px 0 60px; margin-top:34px; border-top:1px solid var(--line); color:var(--ink-subtle); font-size:12.5px; max-width:60ch}
+@media print{ #board{position:static} button{display:none} }
+</style>
+
+<div class="shell">
+
+<header>
+  <span class="lbl">치과 홈페이지 자가진단 · 20문항</span>
+  <h1>우리 병원 홈페이지<br>몇 점일까</h1>
+  <p>검색엔진과 AI가 우리 병원을 제대로 읽고 있는지 원장님이 직접 확인하는 목록입니다. 전문 도구 없이 15분이면 끝납니다.</p>
+  <div class="prep">
+    <h3>시작하기 전에 하나만</h3>
+    <ol>
+      <li>크롬으로 우리 병원 홈페이지를 엽니다</li>
+      <li>화면 아무 데나 <strong>마우스 오른쪽 버튼 → 페이지 소스 보기</strong></li>
+      <li>글자가 잔뜩 나오는 창이 뜹니다. 여기서 <code>Ctrl+F</code>로 단어를 찾습니다</li>
+    </ol>
+  </div>
+</header>
+
+<div id="board">
+  <div class="shell" style="padding:0">
+    <div class="board-in">
+      <div class="board-num"><span id="s-num">0</span><em> / 100점</em></div>
+      <div class="bar"><i id="s-bar"></i></div>
+      <div class="board-txt"><span id="s-cnt">0</span>개 확인</div>
+    </div>
+  </div>
+</div>
+
+<main id="zones"></main>
+
+<div id="result"></div>
+
+<div class="shell" style="padding:0">
+  <div class="notseen">
+    <h3>이 목록으로는 못 보는 것</h3>
+    <ul>
+      <li>주소 통일과 중복 색인 상태 (canonical, robots.txt)</li>
+      <li>구조화 데이터의 내용이 맞게 적혔는지 (있는지만 확인 가능)</li>
+      <li>페이지끼리 어떻게 연결돼 있는지</li>
+      <li>과거에 남은 폐기 주소가 검색에 걸려 있는지</li>
+      <li>이미지에 설명이 붙어 있는지</li>
+    </ul>
+    <p style="margin:12px 0 0; font-size:14.5px; color:var(--ink-subtle)">여기까지는 소스 전체를 봐야 알 수 있습니다. 이 자가진단은 <strong>혼자서 확인 가능한 것만</strong> 모은 목록이라, 점수가 높게 나와도 안 보이는 곳이 남아 있을 수 있습니다.</p>
+  </div>
+
+  <div class="actions">
+    <button id="btn-reset" type="button">처음부터 다시</button>
+    <button id="btn-print" type="button">인쇄 · PDF로 저장</button>
+  </div>
+
+  <footer>
+    치과 홈페이지 자가진단 v1.0 · 20문항 · 각 5점 · 구역별 참고 점수는 치과 8곳 실측 평균(2026년 8월)입니다.
+    체크한 내용은 이 브라우저에만 저장되며 어디로도 전송되지 않습니다.
+  </footer>
+</div>
+
+</div>
+
+<script>
+const ZONES = [
+  { id:"a", name:"검색 결과에 뜨는 문구", base:"치과 8곳 평균 58점",
+    sub:"검색했을 때 병원 이름 밑에 붙는 두 줄짜리 소개 문장이 어디서 나오는지 보는 항목입니다.",
+    items:[
+      { t:"소스에서 description을 찾으면 뒤에 문장이 있다",
+        h:"소스 창에서 Ctrl+F로 description 검색. 따옴표 안이 비어 있으면 체크하지 않습니다." },
+      { t:"그 문장에 진료과목이나 지역이 들어 있다",
+        h:"병원 이름만 적혀 있으면 체크하지 않습니다. 검색한 사람이 누를 이유가 그 문장에 있어야 합니다." },
+      { t:"브라우저 탭에 뜨는 이름이 병원 이름만은 아니다",
+        h:"탭 위에 뜨는 글자를 봅니다. 지역이나 진료가 같이 붙어 있으면 통과입니다." },
+      { t:"진료 페이지마다 탭 이름이 다르다",
+        h:"임플란트 페이지와 교정 페이지를 각각 열어 탭 이름을 비교합니다. 같으면 체크하지 않습니다." }
+    ]},
+  { id:"b", name:"병원 정보가 기계용으로 있나", base:"치과 8곳 평균 20점 · 가장 낮은 항목",
+    sub:"사람이 읽는 화면 말고, 검색엔진과 AI가 읽는 형식으로 병원 정보를 따로 적어뒀는지 봅니다.",
+    items:[
+      { t:"소스에서 ld+json을 찾으면 뭔가 나온다",
+        h:"Ctrl+F로 ld+json 검색. 아무것도 안 나오면 체크하지 않습니다." },
+      { t:"그 안에 Dentist 또는 MedicalClinic이 있다",
+        h:"Ctrl+F로 Dentist 검색. 병원으로 인식되게 하는 표시입니다." },
+      { t:"그 안에 원장님 이름이 있다",
+        h:"Ctrl+F로 원장님 성함 검색. 소스에 나오되 위 ld+json 부분 안에 있어야 합니다." }
+    ]},
+  { id:"c", name:"진료마다 주소가 따로 있나", base:"치과 8곳 평균 60점 · 편차 가장 큼",
+    sub:"임플란트를 검색한 사람에게 보여줄 주소가 따로 있는지 보는 항목입니다.",
+    items:[
+      { t:"메뉴에서 진료를 누르면 주소창이 바뀐다",
+        h:"주소 끝에 샵(#)만 붙고 화면만 내려가면 체크하지 않습니다." },
+      { t:"주요 진료 세 개 이상이 각각 다른 주소를 갖는다",
+        h:"임플란트, 교정, 심미 같은 것을 하나씩 눌러 주소를 비교합니다." },
+      { t:"홈페이지 주소 뒤에 /sitemap.xml을 붙이면 목록이 뜬다",
+        h:"주소창에 직접 입력합니다. 빈 화면이나 오류가 뜨면 체크하지 않습니다." }
+    ]},
+  { id:"d", name:"지역과 연락처", base:"치과 8곳 평균 73점 · 대체로 잘 갖춰짐",
+    sub:"지역으로 찾는 환자에게 잡히는지 보는 항목입니다.",
+    items:[
+      { t:"주소와 전화번호가 글자로 있다",
+        h:"화면에서 주소를 마우스로 드래그해 봅니다. 파랗게 선택되면 글자, 안 되면 이미지입니다. 이미지면 체크하지 않습니다." },
+      { t:"지하철역이나 동 이름이 본문에 있다",
+        h:"환자가 검색할 때 쓰는 말이 페이지에 글자로 들어 있어야 합니다." },
+      { t:"진료시간이 글자로 있다",
+        h:"이 역시 이미지로만 있으면 체크하지 않습니다." },
+      { t:"네이버 서치어드바이저에 등록돼 있다",
+        h:"네이버 서치어드바이저에 로그인해 사이트 목록을 봅니다. 등록된 적이 없으면 체크하지 않습니다." }
+    ]},
+  { id:"e", name:"속도", base:"치과 8곳 평균 47점",
+    sub:"구글이 무료로 재줍니다. PageSpeed Insights에 홈페이지 주소를 넣어 보십시오.",
+    items:[
+      { t:"모바일 성능 점수가 90 이상이다",
+        h:"휴대전화 탭 기준입니다. 초록색 동그라미면 통과입니다." },
+      { t:"검색엔진 최적화 점수가 90 이상이다",
+        h:"같은 화면 오른쪽에 있는 항목입니다." },
+      { t:"휴대폰에서 열었을 때 가로로 밀리지 않는다",
+        h:"실제 휴대폰으로 열어 좌우로 밀어 봅니다. 화면 밖으로 밀리면 체크하지 않습니다." }
+    ]},
+  { id:"f", name:"계속 채울 자리", base:"치과 8곳 평균 63점 · AI 대응은 35점",
+    sub:"지금 점수보다 여섯 달 뒤에 차이가 나는 항목입니다.",
+    items:[
+      { t:"칼럼이나 소식 목록 페이지가 있다",
+        h:"글을 계속 올릴 자리가 홈페이지 안에 있어야 합니다. 블로그가 외부에만 있으면 체크하지 않습니다." },
+      { t:"글을 누르면 그 글만의 주소가 생긴다",
+        h:"글 하나를 열고 주소창을 봅니다. 목록 주소 그대로면 체크하지 않습니다." },
+      { t:"진료 설명에 환자가 묻는 질문 형태의 소제목이 있다",
+        h:"임플란트 몇 번 와야 하나요 같은 소제목과, 바로 밑에 한 문단짜리 답이 있으면 통과입니다." }
+    ]}
+];
+
+const TOTAL = ZONES.reduce((a,z)=>a+z.items.length,0);
+const PER = 100 / TOTAL;
+const KEY = "dental-self-check-v1";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { state = {}; }
+
+const el = (h)=>{ const d=document.createElement("div"); d.innerHTML=h.trim(); return d.firstChild; };
+const esc = (s)=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const zonesEl = document.getElementById("zones");
+ZONES.forEach(z=>{
+  const sec = el('<section class="zone"><div class="shell" style="padding:0"></div></section>');
+  const inner = sec.firstChild;
+  inner.appendChild(el('<div class="zone-h"><h2>'+esc(z.name)+'</h2><span class="cnt" id="cnt-'+z.id+'">0 / '+z.items.length+'</span></div>'));
+  inner.appendChild(el('<p class="zone-sub">'+esc(z.sub)+'</p>'));
+  inner.appendChild(el('<span class="zone-base">'+esc(z.base)+'</span>'));
+  const ul = el('<ul class="checks"></ul>');
+  z.items.forEach((it,i)=>{
+    const id = z.id+"-"+i;
+    const li = el('<li></li>');
+    const lab = el('<label class="ck"></label>');
+    const inp = document.createElement("input");
+    inp.type="checkbox"; inp.id=id; inp.checked=!!state[id];
+    inp.addEventListener("change", ()=>{ state[id]=inp.checked; save(); render(); });
+    const box = el('<div><span class="ck-t">'+esc(it.t)+'</span><span class="ck-h">'+esc(it.h)+'</span></div>');
+    lab.appendChild(inp); lab.appendChild(box); li.appendChild(lab); ul.appendChild(li);
+  });
+  inner.appendChild(ul);
+  zonesEl.appendChild(sec);
+});
+
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+
+function render(){
+  let done = 0;
+  const zres = ZONES.map(z=>{
+    const d = z.items.filter((_,i)=>state[z.id+"-"+i]).length;
+    done += d;
+    document.getElementById("cnt-"+z.id).textContent = d + " / " + z.items.length;
+    return { name:z.name, d:d, n:z.items.length };
+  });
+  const score = Math.round(done * PER);
+  document.getElementById("s-num").textContent = score;
+  document.getElementById("s-cnt").textContent = done;
+  const bar = document.getElementById("s-bar");
+  bar.style.width = (done/TOTAL*100) + "%";
+  bar.style.background = score >= 80 ? "var(--c-ok)" : (score >= 50 ? "var(--accent)" : "var(--c-low)");
+
+  let cls, title, body;
+  if (done === 0) {
+    cls = ""; title = "확인한 항목이 아직 없습니다";
+    body = "위에서부터 하나씩 확인해 보십시오. 첫 항목은 소스 창에서 description을 찾는 것이고 30초면 됩니다.";
+  } else if (score >= 80) {
+    cls = "ok"; title = "기본기가 갖춰져 있습니다";
+    body = "이 목록으로 잡히는 것은 대부분 채워져 있습니다. 여기서 더 올리려면 이 목록이 못 보는 영역, 그러니까 소스 전체를 봐야 하는 항목들이 남습니다.";
+  } else if (score >= 50) {
+    cls = ""; title = "흔한 상태입니다";
+    body = "조사한 치과 여덟 곳도 대부분 이 구간이었습니다. 비어 있는 칸을 채우는 것만으로 오르는 자리가 남아 있습니다. 아래 구역별 결과에서 가장 낮은 곳부터 보십시오.";
+  } else {
+    cls = "warn"; title = "손볼 곳이 여러 군데입니다";
+    body = "다만 홈페이지를 잘못 만들었다는 뜻은 아닙니다. 여덟 곳을 조사했을 때도 디자인은 좋은데 이 칸들이 비어 있는 경우가 대부분이었습니다.";
+  }
+  const worst = zres.slice().sort((a,b)=> (a.d/a.n) - (b.d/b.n))[0];
+  let html = '<div class="shell" style="padding:0"><div class="rbox '+cls+'" style="border-left-color:'+
+    (score>=80?"var(--c-ok)":(score>=50?"var(--accent)":"var(--c-low)"))+'">' +
+    '<span class="lbl">20문항 중 '+done+'개 확인 · '+score+'점</span><h3>'+esc(title)+'</h3><p>'+esc(body)+'</p></div>';
+  html += '<div class="zsum">';
+  zres.forEach(z=>{
+    const pct = z.d/z.n*100;
+    html += '<div class="zrow"><span class="zn">'+esc(z.name)+'</span>' +
+      '<span class="zb"><i style="width:'+pct+'%;background:'+(pct>=80?"var(--c-ok)":(pct>=50?"var(--accent)":"var(--c-low)"))+'"></i></span>' +
+      '<span class="zv">'+z.d+' / '+z.n+'</span></div>';
+  });
+  html += '</div>';
+  if (done > 0) {
+    html += '<p style="margin-top:18px; font-size:14.5px; color:var(--ink-subtle); max-width:56ch">' +
+      '가장 비어 있는 구역은 <strong>'+esc(worst.name)+'</strong>입니다. 여기부터 보시면 됩니다.</p>';
+  }
+  html += '</div>';
+  document.getElementById("result").innerHTML = html;
+}
+
+document.getElementById("btn-reset").addEventListener("click", ()=>{
+  state = {}; save();
+  document.querySelectorAll('#zones input[type=checkbox]').forEach(i=>i.checked=false);
+  render(); window.scrollTo({top:0, behavior:"smooth"});
+});
+document.getElementById("btn-print").addEventListener("click", ()=>window.print());
+
+render();
+</script>
