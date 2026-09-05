@@ -458,5 +458,50 @@
         "a": "서울특별시 양천구 목동로 201 한성빌딩 7층입니다. 네이버 지도에서 '애니톡 목동 본원'으로 검색하시면 길찾기가 가능합니다."
       }
     ]
+  },
+  "local": {
+    "area": "목동",
+    "areaSlug": "mokdong",
+    "subjects": [
+      "manhwa",
+      "webtoon",
+      "ani",
+      "drawing",
+      "game"
+    ],
+    "nearby": [
+      {
+        "area": "화곡",
+        "slug": "hwagok",
+        "subject": "manhwa",
+        "note": "강서구 화곡동 인근에서 찾아오는 학생들이 함께 수강하고 있습니다."
+      }
+    ],
+    "nearbyAll": [
+      {
+        "area": "화곡",
+        "slug": "hwagok",
+        "subject": "manhwa",
+        "note": "강서구 화곡동 인근에서 찾아오는 학생들이 함께 수강하고 있습니다."
+      },
+      {
+        "area": "등촌",
+        "slug": "deungchon",
+        "subject": "webtoon",
+        "note": "강서구 등촌동 인근에서 목동 본원으로 다니는 학생들이 있습니다."
+      },
+      {
+        "area": "신정",
+        "slug": "sinjeong",
+        "subject": "manhwa",
+        "note": "같은 양천구 신정동 인근에서 가장 가까운 만화학원입니다."
+      },
+      {
+        "area": "양천구",
+        "slug": "yangcheon",
+        "subject": "ani",
+        "note": "양천구 전역에서 접근하기 좋은 위치의 애니메이션 입시 전문 학원입니다."
+      }
+    ]
   }
 }

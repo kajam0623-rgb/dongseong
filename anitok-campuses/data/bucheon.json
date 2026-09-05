@@ -374,5 +374,55 @@
         "a": "온라인 상담문의를 남기시거나 032-329-8685로 전화 주시면 됩니다. 평일 13:00~22:00, 토요일 13:00~18:00에 상담을 받습니다."
       }
     ]
+  },
+  "local": {
+    "area": "부천",
+    "areaSlug": "bucheon",
+    "subjects": [
+      "manhwa",
+      "webtoon",
+      "ani",
+      "drawing"
+    ],
+    "nearby": [
+      {
+        "area": "중동",
+        "slug": "jungdong",
+        "subject": "manhwa",
+        "note": "중동 인근에서 가장 가까운 만화 수업입니다."
+      },
+      {
+        "area": "부평",
+        "slug": "bupyeong",
+        "subject": "manhwa",
+        "note": "인천 부평에서 넘어오는 학생들이 꾸준히 있습니다."
+      }
+    ],
+    "nearbyAll": [
+      {
+        "area": "중동",
+        "slug": "jungdong",
+        "subject": "manhwa",
+        "note": "중동 인근에서 가장 가까운 만화 수업입니다."
+      },
+      {
+        "area": "상동",
+        "slug": "sangdong",
+        "subject": "webtoon",
+        "note": "상동 인근 학생들이 함께 수강하고 있습니다."
+      },
+      {
+        "area": "부평",
+        "slug": "bupyeong",
+        "subject": "manhwa",
+        "note": "인천 부평에서 넘어오는 학생들이 꾸준히 있습니다."
+      },
+      {
+        "area": "인천",
+        "slug": "incheon",
+        "subject": "ani",
+        "note": "인천 권역에서 부천으로 다니는 학생들이 있습니다."
+      }
+    ]
   }
 }

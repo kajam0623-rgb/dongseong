@@ -348,5 +348,55 @@
         "a": "경기도 김포시 김포한강1로 230 3층입니다. 네이버 지도에서 '김포 애니톡 만화애니학원'으로 검색하시면 길찾기가 가능합니다."
       }
     ]
+  },
+  "local": {
+    "area": "김포",
+    "areaSlug": "gimpo",
+    "subjects": [
+      "manhwa",
+      "webtoon",
+      "ani",
+      "drawing"
+    ],
+    "nearby": [
+      {
+        "area": "한강신도시",
+        "slug": "hangang",
+        "subject": "manhwa",
+        "note": "한강신도시 권역 안에 있는 만화 수업입니다."
+      },
+      {
+        "area": "구래동",
+        "slug": "gurae",
+        "subject": "webtoon",
+        "note": "구래동 인근 학생들이 함께 수강하고 있습니다."
+      }
+    ],
+    "nearbyAll": [
+      {
+        "area": "한강신도시",
+        "slug": "hangang",
+        "subject": "manhwa",
+        "note": "한강신도시 권역 안에 있는 만화 수업입니다."
+      },
+      {
+        "area": "구래동",
+        "slug": "gurae",
+        "subject": "webtoon",
+        "note": "구래동 인근 학생들이 함께 수강하고 있습니다."
+      },
+      {
+        "area": "장기동",
+        "slug": "janggi",
+        "subject": "manhwa",
+        "note": "장기동 인근에서 가까운 거리입니다."
+      },
+      {
+        "area": "운양동",
+        "slug": "unyang",
+        "subject": "ani",
+        "note": "운양동 인근에서도 다니는 학생들이 있습니다."
+      }
+    ]
   }
 }

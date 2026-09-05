@@ -14,16 +14,48 @@
  * 파일명은 data/<slug>.json 의 image.local 값과 같으면 된다.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlinkSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderPage, render404 } from './lib/render.mjs';
+import { renderPage, render404, renderLocal, localPages, siteCss, siteJs } from './lib/render.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(ROOT, 'data');
 const OUT_DIR = join(ROOT, 'sites');
 
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
+
+/** CSS: 주석과 들여쓰기·빈 줄을 걷어낸다. 선택자/값은 손대지 않는다. */
+function minCss(css) {
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, '')   // 주석
+    .replace(/\s+/g, ' ')                 // 줄바꿈·연속 공백 → 한 칸
+    .replace(/\s*([{};,])\s*/g, '$1')     // 구분자 주변 공백
+    .replace(/:\s+/g, ':')                // 값 앞 공백 (calc의 +/- 는 건드리지 않는다)
+    .replace(/;}/g, '}')                  // 마지막 세미콜론
+    .trim();
+}
+
+/**
+ * JS: 줄머리 들여쓰기와 한 줄 주석만 걷어낸다. 줄바꿈은 유지한다.
+ * (줄을 합치면 ASI·정규식 리터럴에서 사고가 난다.)
+ */
+function minJs(js) {
+  return js
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith('//'))
+    .join('\n');
+}
+
+/** HTML: 줄머리 공백과 빈 줄만. 줄바꿈은 남겨 인라인 요소 사이 공백을 보존한다. */
+function minHtml(html) {
+  return html
+    .split('\n')
+    .map((l) => l.replace(/^[\t ]+/, ''))
+    .filter((l) => l !== '')
+    .join('\n');
+}
 
 const allSlugs = readdirSync(DATA_DIR)
   .filter((f) => f.endsWith('.json') && f !== '_shared.json')
@@ -108,8 +140,22 @@ for (const slug of targets) {
   // 남아 있도록 자리를 잡아 둔다.
   writeFileSync(join(galDir, '.gitkeep'), '');
 
-  const html = renderPage(d, { present, siblings });
+  const html = minHtml(renderPage(d, { present, siblings }));
   writeFileSync(join(outDir, 'index.html'), html);
+
+  // CSS/JS는 모든 페이지가 공유한다. 페이지마다 인라인하면 20KB씩 중복된다.
+  writeFileSync(join(outDir, 's.css'), minCss(siteCss(d)));
+  writeFileSync(join(outDir, 's.js'), minJs(siteJs()));
+
+  // 지역 · 과목 랜딩페이지 (목동만화학원 / 화곡만화학원 …)
+  const pages = localPages(d);
+  const keepHtml = new Set(['index.html', '404.html', ...pages.map((p) => `${p.slug}.html`)]);
+  for (const f of readdirSync(outDir)) {
+    if (f.endsWith('.html') && !keepHtml.has(f)) unlinkSync(join(outDir, f));
+  }
+  for (const page of pages) {
+    writeFileSync(join(outDir, `${page.slug}.html`), minHtml(renderLocal(d, page, { pages })));
+  }
 
   writeFileSync(
     join(outDir, 'robots.txt'),
@@ -117,16 +163,17 @@ for (const slug of targets) {
   );
 
   const today = new Date().toISOString().slice(0, 10);
+  const urlEntry = (loc, priority) =>
+    `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n` +
+    `    <changefreq>monthly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
   writeFileSync(
     join(outDir, 'sitemap.xml'),
     `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${d.site.origin}/</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
+${[
+  urlEntry(`${d.site.origin}/`, '1.0'),
+  ...pages.map((p) => urlEntry(`${d.site.origin}/${p.slug}`, '0.8')),
+].join('\n')}
 </urlset>
 `
   );
@@ -140,6 +187,10 @@ for (const slug of targets) {
           {
             source: '/gal/(.*)',
             headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+          },
+          {
+            source: '/(s.css|s.js)',
+            headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, must-revalidate' }],
           },
           {
             source: '/index.html',
@@ -165,7 +216,7 @@ for (const slug of targets) {
   );
 
   // 404 — 기본 Vercel 페이지 대신 같은 톤으로.
-  writeFileSync(join(outDir, '404.html'), render404(d));
+  writeFileSync(join(outDir, '404.html'), minHtml(render404(d)));
 
   writeFileSync(
     join(outDir, 'README.md'),
@@ -209,6 +260,7 @@ for (const slug of targets) {
     local: slots.length - missing.length - remoteOnly.length,
     remote: remoteOnly.length,
     missing: missing.length,
+    pages: pages.length,
   });
   built++;
 }

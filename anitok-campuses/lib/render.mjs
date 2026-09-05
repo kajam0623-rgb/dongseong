@@ -35,6 +35,26 @@ function jsonld(obj) {
 
 const digits = (s) => String(s ?? '').replace(/[^0-9]/g, '');
 
+/** 앞말 받침에 맞는 조사를 고른다. 예) 조사('목동만화학원','을','를') → '을' */
+function 조사(word, withBatchim, withoutBatchim) {
+  const last = String(word || '').trim().slice(-1);
+  const code = last.charCodeAt(0);
+  if (!(code >= 0xac00 && code <= 0xd7a3)) return withoutBatchim;
+  return (code - 0xac00) % 28 ? withBatchim : withoutBatchim;
+}
+
+/**
+ * 네이버 예약 주소.
+ * data 에 links.naverBooking 이 있으면 그것을 쓰고, 없으면 네이버 플레이스 ID로
+ * 예약 탭 주소를 만든다(m.place.naver.com/place/<id>/booking). 해당 업체에
+ * 예약이 열려 있지 않으면 네이버가 플레이스 홈으로 넘겨 주므로 링크가 죽지 않는다.
+ */
+function naverBooking(d) {
+  if (d.links?.naverBooking) return d.links.naverBooking;
+  const m = /place\/(\d+)/.exec(d.links?.naverPlace || '');
+  return m ? `https://m.place.naver.com/place/${m[1]}/booking?entry=ple` : '';
+}
+
 /* ─────────────────────────────────────────────────────────────
  * 이미지 슬롯
  *
@@ -296,6 +316,108 @@ figure{margin:0}
   .hero-bg,.hero-glow,.hero .btn--solid{animation:none}
   .scroll-dot i{animation:none}
 }
+`;
+
+/* ───────────────────── 모바일 최적화 · 랜딩페이지 ─────────────────────
+ * 이 블록은 위 기본 스타일을 덮어쓴다. 순서를 바꾸지 말 것.
+ * ───────────────────────────────────────────────────────────────── */
+const CSS_MOBILE = `
+/* 터치 기기 기본기 */
+html{-webkit-text-size-adjust:100%}
+body{-webkit-tap-highlight-color:transparent}
+a,button,summary{touch-action:manipulation}
+
+/* 화면 밖 섹션은 그릴 필요가 없다. 저사양 안드로이드에서 스크롤이 확 가벼워진다. */
+.sec{content-visibility:auto;contain-intrinsic-size:auto 900px}
+.hero,.visit{content-visibility:visible}
+
+/* 히어로 — 모바일 브라우저 주소창 때문에 100vh가 잘린다. svh로 맞춘다. */
+@supports (height:100svh){.hero{height:min(94svh,1000px)}}
+
+@media (max-width:900px){
+  :root{--pad-y:clamp(68px,11vw,120px)}
+  .hero{height:auto;min-height:auto;padding-block:clamp(104px,22vw,150px) clamp(76px,16vw,110px)}
+  @supports (height:100svh){.hero{height:auto;min-height:88svh}}
+  .hero h1{font-size:clamp(29px,7.6vw,46px);line-height:1.18;letter-spacing:-.045em}
+  .hero h1 .over{font-size:.6em;margin-bottom:8px}
+  .hero-sub{font-size:clamp(14px,4vw,18px);margin-top:18px}
+  .tag{font-size:12px;padding:7px 14px;margin-bottom:18px;line-height:1.45}
+  .hero-scrim{background:linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.62) 60%,rgba(0,0,0,.42) 100%)}
+  .hero-glow{width:110vw;height:110vw}
+  .scroll-dot{display:none}
+  .cta-row{margin-top:26px;gap:10px}
+  /* 손가락으로 누르는 버튼은 화면 폭을 꽉 채우는 편이 실수가 없다. */
+  .cta-row .btn{flex:1 1 100%;justify-content:center;padding:15px 20px;font-size:15px;min-height:52px}
+}
+
+@media (max-width:760px){
+  .h2{font-size:clamp(22px,5.6vw,32px)}
+  .lede{font-size:15px;line-height:1.75}
+  .about-figs{gap:10px}
+  /* 220px 최소폭이면 375px 화면에서 1열이 된다. 사진 갤러리는 2열이 훨씬 낫다. */
+  .gal{grid-template-columns:repeat(auto-fill,minmax(min(46%,150px),1fr));gap:10px;margin-top:28px}
+  .gal figcaption{font-size:11.5px;margin-top:7px}
+  .cards{grid-template-columns:1fr;gap:12px}
+  .stats{grid-template-columns:1fr;gap:10px}
+  .pass{grid-template-columns:1fr}
+  .steps{grid-template-columns:repeat(auto-fit,minmax(min(46%,140px),1fr));gap:10px}
+  .step{padding:20px 16px}
+  .visit-grid{grid-template-columns:1fr;gap:10px}
+  .class-group{margin-top:38px}
+  .faq summary{padding:19px 40px 19px 28px;font-size:15px}
+  .faq summary::before{top:19px}
+  .faq summary::after{top:26px}
+  .faq .ans{padding:0 28px 22px;font-size:14px}
+  .social a{padding:11px 16px}
+  .foot .sites{gap:10px 16px}
+  .foot .sites a{padding:4px 0}
+}
+
+@media (max-width:400px){
+  :root{--pad-x:18px}
+  .btn{font-size:15px;padding:15px 22px}
+  .badge{font-size:12px;padding:9px 13px}
+}
+
+/* 하단 고정 바 — 3개 액션. 아이폰 홈 인디케이터를 피해서 앉힌다. */
+.qbar{grid-template-columns:repeat(3,1fr);padding-bottom:env(safe-area-inset-bottom,0px);background:var(--line)}
+.qbar a{display:flex;align-items:center;justify-content:center;min-height:54px;padding:10px 4px;font-size:13.5px;letter-spacing:-.04em;line-height:1.25}
+.qbar a .sm{font-size:12px;font-weight:700}
+@media (max-width:760px){body{padding-bottom:calc(56px + env(safe-area-inset-bottom,0px))}}
+@media (max-width:340px){.qbar a{font-size:12.5px}}
+
+/* 라이트박스 — 모바일에서 배경이 같이 스크롤되지 않게 */
+.lb{overscroll-behavior:contain;padding:16px}
+.lb-close{top:calc(12px + env(safe-area-inset-top,0px));right:12px}
+
+/* ── 지역 랜딩페이지 ── */
+.lp-head{padding-block:clamp(84px,10vw,132px) clamp(40px,5vw,64px);background:var(--hero-grad);border-bottom:1px solid var(--line)}
+.crumb{font-size:12.5px;color:var(--muted-2);margin-bottom:20px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.crumb a{color:var(--muted);border-bottom:1px solid transparent}
+.crumb a:hover{color:#fff;border-bottom-color:var(--accent-lit)}
+.crumb span[aria-hidden]{opacity:.5}
+.lp-h1{font-size:clamp(28px,4.4vw,52px);line-height:1.2;letter-spacing:-.045em}
+.lp-h1 .lit{color:var(--accent-lit)}
+.lp-sub{margin:20px 0 0;max-width:64ch;font-size:clamp(15px,1.2vw,18px);line-height:1.8;color:#D6D6D8}
+.prose p{margin:0 0 18px;font-size:clamp(15px,1.15vw,17px);line-height:1.9;color:#D6D6D8;max-width:72ch}
+.prose p:last-child{margin-bottom:0}
+.lp-points{margin:32px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.lp-points li{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+.lp-points b{display:block;font-size:15px;margin-bottom:8px;letter-spacing:-.03em}
+.lp-points span{font-size:13.5px;line-height:1.75;color:var(--muted)}
+@media (max-width:760px){.lp-points{grid-template-columns:1fr}}
+.lp-list{margin:32px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.lp-list li{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding:15px 2px;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.6}
+.lp-list .k{flex:0 0 auto;font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--accent-lit);min-width:74px}
+.lp-list .v{flex:1 1 220px;font-weight:600}
+.lp-list .m{flex:0 0 auto;font-size:13px;color:var(--muted-2)}
+.lp-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+.lp-links a{border:1px solid var(--line-2);border-radius:999px;padding:10px 18px;font-size:13.5px;font-weight:600;color:#D6D6D8;background:var(--panel-2);min-height:44px;display:inline-flex;align-items:center}
+.lp-links a:hover{border-color:var(--accent-lit);color:#fff}
+.lp-links a[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.lp-cta{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.lp-cta .cta-row{margin-top:28px}
+.lp-cta .btn{min-height:54px}
 `;
 
 /* ─────────────────────────── 테마 ───────────────────────────
@@ -572,13 +694,16 @@ const JS = `
 
 /* ─────────────────────────── 섹션 ─────────────────────────── */
 
-function header(d) {
-  const nav = (d.nav || []).map((n) => `<a href="${url(n.href)}">${esc(n.label)}</a>`).join('');
-  const mnav = (d.nav || []).map((n) => `<a href="${url(n.href)}">${esc(n.label)}</a>`).join('');
+function header(d, { base = '' } = {}) {
+  // 랜딩페이지에서는 앵커(#about)가 그 페이지에 없다. base를 붙여 홈으로 보낸다.
+  const href = (h) => (base && String(h).startsWith('#') ? base + h : h);
+  const nav = (d.nav || []).map((n) => `<a href="${url(href(n.href))}">${esc(n.label)}</a>`).join('');
+  const mnav = nav;
+  const booking = naverBooking(d);
   return `<div class="progress" data-progress></div>
 <header class="hdr">
   <div class="hdr-in">
-    <a class="brand" href="#top">
+    <a class="brand" href="${url(base || '#top')}">
       <img class="brand-logo" src="${url(d.brandLogo)}" alt="애니톡" width="98" height="26" fetchpriority="high">
       <span class="brand-div" aria-hidden="true"></span>
       <span class="brand-name">${esc(d.name)}</span>
@@ -587,9 +712,9 @@ function header(d) {
     <a class="hdr-tel" href="tel:${esc(digits(d.phone))}">${esc(d.phone)}</a>
     <button class="burger" type="button" data-burger aria-expanded="false" aria-controls="mnav" aria-label="메뉴 열기"><span></span></button>
   </div>
-  <nav class="mnav" id="mnav" data-mnav aria-label="모바일 메뉴">${mnav}<a href="tel:${esc(
-    digits(d.phone)
-  )}">전화 ${esc(d.phone)}</a></nav>
+  <nav class="mnav" id="mnav" data-mnav aria-label="모바일 메뉴">${mnav}${
+    booking ? `<a href="${url(booking)}" target="_blank" rel="noopener">네이버 예약</a>` : ''
+  }<a href="tel:${esc(digits(d.phone))}">전화 ${esc(d.phone)}</a></nav>
 </header>`;
 }
 
@@ -600,7 +725,11 @@ function hero(d, present) {
   const bgEl = bg
     ? `<div class="hero-bgw" data-parallax><img class="hero-bg" src="${url(bg.src)}" alt="" role="presentation" fetchpriority="high"></div>`
     : `<div class="hero-bgw" data-parallax><div class="hero-bg hero-bg--none" role="presentation"></div></div>`;
-  const ctas = (d.hero.ctas || [])
+  const booking = naverBooking(d);
+  // 상담 신청 → 네이버 예약 → 전화. 예약을 두 번째에 두어 가장 눈에 띄게 한다.
+  const list = [...(d.hero.ctas || [])];
+  if (booking) list.splice(1, 0, { label: '네이버 예약 →', href: booking });
+  const ctas = list
     .map(
       (c, i) =>
         `<a class="btn ${i === 0 ? 'btn--solid' : 'btn--ghost'}" href="${url(c.href)}"${
@@ -795,6 +924,7 @@ function faq(d) {
 }
 
 function visit(d, siblings) {
+  const booking = naverBooking(d);
   const social = [
     d.links.naverPlace && { label: '네이버 지도', href: d.links.naverPlace },
     d.links.blog && { label: '블로그', href: d.links.blog },
@@ -826,7 +956,16 @@ function visit(d, siblings) {
         <p>${esc(d.hours.line1)}<br>${esc(d.hours.line2)}</p>
         <a class="more" href="tel:${esc(digits(d.phone))}">바로 전화하기 &rarr;</a>
       </div>
-      <div class="vcard" data-reveal="120">
+      ${
+        booking
+          ? `<div class="vcard" data-reveal="120">
+        <h3>네이버 예약</h3>
+        <p>네이버 예약으로 상담 시간을 바로 잡을 수 있습니다. 원하는 날짜와 시간을 선택해 주세요.</p>
+        <a class="more" href="${url(booking)}" target="_blank" rel="noopener">네이버로 예약하기 &rarr;</a>
+      </div>`
+          : ''
+      }
+      <div class="vcard" data-reveal="${booking ? 180 : 120}">
         <h3>온라인 상담</h3>
         <p>${esc(d.visit.consult)}</p>
         <a class="more" href="${url(d.links.consult)}" target="_blank" rel="noopener">상담 신청하기 &rarr;</a>
@@ -852,11 +991,14 @@ function visit(d, siblings) {
 
 function quickBar(d) {
   const primary = d.hero.ctas?.[0];
+  const booking = naverBooking(d);
+  // 모바일 하단 바는 엄지 하나로 닿는 자리다. 전환되는 행동만 셋 남긴다.
   return `<div class="qbar">
-  ${primary ? `<a class="pri" href="${url(primary.href)}"${/^https?:/i.test(primary.href) ? ' target="_blank" rel="noopener"' : ''}>${esc(
+  ${booking ? `<a class="pri" href="${url(booking)}" target="_blank" rel="noopener">네이버 예약</a>` : ''}
+  <a href="tel:${esc(digits(d.phone))}">전화 문의</a>
+  ${primary ? `<a href="${url(primary.href)}"${/^https?:/i.test(primary.href) ? ' target="_blank" rel="noopener"' : ''}>${esc(
     d.quickBar?.primary || '상담 신청'
   )}</a>` : ''}
-  <a href="tel:${esc(digits(d.phone))}">전화 ${esc(d.phone)}</a>
 </div>`;
 }
 
@@ -950,7 +1092,7 @@ ${
     : ''
 }
 <meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
-<style>${CSS}${themeCss(d.theme)}</style>`;
+<link rel="stylesheet" href="/s.css">`;
 }
 
 function resolveImageForMeta(d, present) {
@@ -959,6 +1101,292 @@ function resolveImageForMeta(d, present) {
   const img = resolveImage(d.hero?.image, present);
   if (!img) return '';
   return img.kind === 'local' ? d.site.origin + img.src : img.src;
+}
+
+/* ───────────────────── 지역 · 과목 랜딩페이지 ─────────────────────
+ * data/<slug>.json 의 local 블록과 _shared.json 의 localSubjects 를 곱해
+ * "목동만화학원", "화곡만화학원" 같은 검색어 하나에 정확히 답하는 페이지를 만든다.
+ *
+ * 얇은 문지기(doorway) 페이지가 되지 않도록, 각 페이지는 과목 고유의 설명 +
+ * 그 캠퍼스의 실제 반 편성 · 합격 실적 · 주소 · 전화를 함께 싣는다.
+ * ───────────────────────────────────────────────────────────────── */
+
+/** local 설정을 실제 페이지 목록으로 펼친다. build 와 렌더러가 같은 목록을 본다. */
+export function localPages(d) {
+  const loc = d.local;
+  if (!loc || !d.localSubjects) return [];
+  const q = loc.qualifier ? `${loc.qualifier} ` : '';
+  const make = (area, areaSlug, key, note) => {
+    const sub = d.localSubjects[key];
+    if (!sub) return null;
+    return {
+      slug: `${areaSlug}-${key}`,
+      area,
+      subjectKey: key,
+      subject: sub,
+      // 검색어 그대로가 제목이 된다. 예) 목동만화학원 / 신정 취미 웹툰학원
+      keyword: q ? `${area} ${q}${sub.suffix}` : `${area}${sub.suffix}`,
+      note: note || '',
+    };
+  };
+  return [
+    ...(loc.subjects || []).map((k) => make(loc.area, loc.areaSlug, k, loc.note)),
+    ...(loc.nearby || []).map((n) => make(n.area, n.slug, n.subject, n.note)),
+  ].filter(Boolean);
+}
+
+/** 캠퍼스의 반 편성을 한 줄짜리 목록으로 압축한다(랜딩페이지용). */
+function classLines(d) {
+  const out = [];
+  for (const g of d.classes?.groups || []) {
+    for (const it of g.items || []) {
+      out.push({ k: g.name, v: it.title, m: it.eyebrow || g.range || '' });
+    }
+  }
+  return out;
+}
+
+function resultLines(d) {
+  return (d.results?.items || []).map((r) => ({
+    k: r.when || '',
+    v: `${r.label} — ${r.value}${r.unit ? ' ' + r.unit : ''}`,
+    m: (r.detail || []).join(' · '),
+  }));
+}
+
+function lpJsonLd(d, page, others) {
+  const home = d.site.origin + '/';
+  const here = `${d.site.origin}/${page.slug}`;
+  const crumbs = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: d.name, item: home },
+      { '@type': 'ListItem', position: 2, name: page.keyword, item: here },
+    ],
+  };
+  const faq = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: (page.subject.faq || []).map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
+  void others;
+  return `<script type="application/ld+json">${jsonld(crumbs)}</script>
+<script type="application/ld+json">${jsonld(faq)}</script>`;
+}
+
+function lpFoot(d) {
+  return `<section class="sec visit">
+  <div class="wrap">
+    <div class="foot">
+      <img class="foot-logo" src="${url(d.brandLogo)}" alt="애니톡" width="91" height="24" loading="lazy" decoding="async">
+      <div class="sites"><a href="/">${esc(d.name)}</a><a href="${url(
+    d.links.naverPlace
+  )}" target="_blank" rel="noopener">네이버 지도</a></div>
+      <div>${esc(d.address.line1)} ${esc(d.address.line2)} | ${esc(d.phone)}</div>
+      <div>${esc(d.company.name)} | 대표 ${esc(d.company.ceo)} | 사업자등록번호 ${esc(d.company.bizNo)}</div>
+      <div>&copy; ${new Date().getFullYear()} ANITALK. All rights reserved.</div>
+    </div>
+  </div>
+</section>`;
+}
+
+export function renderLocal(d, page, { pages = [] } = {}) {
+  const booking = naverBooking(d);
+  const canonical = `${d.site.origin}/${page.slug}`;
+  const s = page.subject;
+  const title = `${page.keyword} | ${d.name}`;
+  const 을를 = 조사(page.keyword, '을', '를');
+  const desc = `${page.keyword}${을를} 찾고 계신가요? ${s.lede} ${d.address.line1} ${
+    d.address.line2
+  } · ${d.phone}`.slice(0, 155);
+  const kw = [
+    ...new Set(
+      [
+        page.keyword,
+        ...(s.aliases || []).map((a) => `${page.area}${a}`),
+        d.name,
+        d.alternateName,
+      ].filter(Boolean)
+    ),
+  ].join(', ');
+
+  const cls = classLines(d);
+  const res = resultLines(d);
+  const others = pages.filter((p) => p.slug !== page.slug);
+
+  return `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(desc)}">
+<meta name="keywords" content="${esc(kw)}">
+<meta name="author" content="${esc(d.name)}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="${esc(canonical)}">
+<link rel="icon" href="${url(d.brandFavicon)}" type="image/png">
+<link rel="apple-touch-icon" href="${url(d.brandTouchIcon)}">
+<link rel="alternate icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="geo.region" content="${esc(d.geo.regionCode)}">
+<meta name="geo.placename" content="${esc(d.geo.placename)}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="${esc(d.name)}">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="${esc(canonical)}">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(desc)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(desc)}">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
+<link rel="stylesheet" href="/s.css">
+${lpJsonLd(d, page, others)}
+</head>
+<body>
+${header(d, { base: '/' })}
+<main>
+<section class="lp-head" id="top">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치">
+      <a href="/">${esc(d.name)}</a><span aria-hidden="true">›</span><span>${esc(page.keyword)}</span>
+    </nav>
+    <span class="kicker">${esc(s.kicker)}</span>
+    <h1 class="lp-h1">${esc(page.area)} <span class="lit">${esc(
+    page.keyword.slice(page.area.length).trim()
+  )}</span><br>${esc(d.name)}</h1>
+    <p class="lp-sub">${esc(s.lede)}</p>
+    <div class="cta-row">
+      ${booking ? `<a class="btn btn--solid" href="${url(booking)}" target="_blank" rel="noopener">네이버 예약 →</a>` : ''}
+      <a class="btn btn--ghost" href="tel:${esc(digits(d.phone))}">${esc(d.phone)}</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">About</span>
+    <h2 class="h2" data-reveal="40">${esc(page.area)}에서 ${esc(s.label)}를 배운다면</h2>
+    <div class="prose" style="margin-top:26px" data-reveal="80">
+      ${(s.intro || []).map((t) => `<p>${esc(t)}</p>`).join('')}
+      <p>${page.note ? esc(page.note) + ' ' : ''}${esc(d.name)}${조사(
+    d.name,
+    '은',
+    '는'
+  )} ${esc(d.address.line1)} ${esc(
+    d.address.line2
+  )}에 있습니다. 상담은 ${esc(d.hours.line1)}, ${esc(d.hours.line2)}에 받습니다.</p>
+    </div>
+    <ul class="lp-points" data-reveal="0">
+      ${(s.points || [])
+        .map((p) => `<li><b>${esc(p.t)}</b><span>${esc(p.d)}</span></li>`)
+        .join('')}
+    </ul>
+  </div>
+</section>
+
+${
+  cls.length
+    ? `<section class="sec sec--tint">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">Class</span>
+    <h2 class="h2" data-reveal="40">${esc(d.shortName)}에서 운영하는 반</h2>
+    <p class="lede" data-reveal="80">${esc(page.keyword)}${을를} 찾아오신 분들이 실제로 등록하는 반입니다.</p>
+    <ul class="lp-list" data-reveal="0">
+      ${cls
+        .slice(0, 6)
+        .map(
+          (c) =>
+            `<li><span class="k">${esc(c.k)}</span><span class="v">${esc(
+              c.v
+            )}</span><span class="m">${esc(c.m)}</span></li>`
+        )
+        .join('')}
+    </ul>
+    <p class="note">반 편성과 진도는 첫 상담에서 지금 실력을 보고 정합니다.</p>
+  </div>
+</section>`
+    : ''
+}
+
+<section class="sec sec--tint">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">FAQ</span>
+    <h2 class="h2" data-reveal="40">${esc(page.keyword)} 자주 묻는 질문</h2>
+    <div class="faq" data-reveal="0">
+      ${(s.faq || [])
+        .map(
+          (f) =>
+            `<details><summary>${esc(f.q)}</summary><div class="ans">${esc(f.a)}</div></details>`
+        )
+        .join('')}
+    </div>
+  </div>
+</section>
+
+<section class="sec lp-cta">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">Visit</span>
+    <h2 class="h2" data-reveal="40">상담 · 예약 안내</h2>
+    <p class="lede" data-reveal="80">${esc(d.address.line1)} ${esc(d.address.line2)}<br>${esc(
+    d.hours.line1
+  )} · ${esc(d.hours.line2)}</p>
+    <div class="cta-row" data-reveal="120">
+      ${booking ? `<a class="btn btn--solid" href="${url(booking)}" target="_blank" rel="noopener">네이버 예약 →</a>` : ''}
+      <a class="btn btn--ghost" href="tel:${esc(digits(d.phone))}">전화 ${esc(d.phone)}</a>
+      ${
+        d.links?.consult
+          ? `<a class="btn btn--ghost" href="${url(
+              d.links.consult
+            )}" target="_blank" rel="noopener">온라인 상담</a>`
+          : ''
+      }
+    </div>
+  </div>
+</section>
+
+${
+  others.length
+    ? `<section class="sec">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">More</span>
+    <h2 class="h2" data-reveal="40">다른 지역 · 과목 안내</h2>
+    <div class="lp-links" data-reveal="0">
+      <a href="/">${esc(d.shortName)} 홈</a>
+      ${others.map((p) => `<a href="/${esc(p.slug)}">${esc(p.keyword)}</a>`).join('')}
+    </div>
+  </div>
+</section>`
+    : ''
+}
+</main>
+${lpFoot(d)}
+${quickBar(d)}
+<script src="/s.js" defer></script>
+</body>
+</html>
+`;
+}
+
+/* ─────────────────── 공유 에셋 (s.css · s.js) ───────────────────
+ * 예전에는 페이지마다 CSS/JS를 통째로 인라인했다. 지역 랜딩페이지가 생기면서
+ * 같은 20KB를 페이지 수만큼 복사하게 되어, 파일 둘로 빼고 전부 공유한다.
+ * 두 번째 페이지부터는 브라우저 캐시에서 바로 나온다.
+ * ───────────────────────────────────────────────────────────── */
+
+export function siteCss(d) {
+  return `${CSS}${CSS_MOBILE}${themeCss(d.theme)}\n`;
+}
+
+export function siteJs() {
+  return `${JS}\n`;
 }
 
 /* ─────────────────────────── 404 ─────────────────────────── */
@@ -976,7 +1404,8 @@ export function render404(d) {
 <link rel="apple-touch-icon" href="${url(d.brandTouchIcon)}">
 <link rel="alternate icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<style>${CSS}${themeCss(d.theme)}
+<link rel="stylesheet" href="/s.css">
+<style>
 .nf{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;gap:20px}
 .nf .code{font-size:clamp(56px,10vw,120px);font-weight:800;letter-spacing:-.06em;color:var(--accent)}
 .nf p{margin:0;font-size:15px;line-height:1.8;color:var(--muted)}
@@ -999,6 +1428,22 @@ export function render404(d) {
 
 /* ─────────────────────────── 진입점 ─────────────────────────── */
 
+function localIndex(d) {
+  const pages = localPages(d);
+  if (!pages.length) return '';
+  const cfg = d.local || {};
+  return `<section class="sec sec--tint" id="local">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">${esc(cfg.kicker || 'Local')}</span>
+    <h2 class="h2" data-reveal="40">${esc(cfg.title || '지역별 · 과목별 안내')}</h2>
+    <p class="lede" data-reveal="80">${esc(cfg.lede || '')}</p>
+    <div class="lp-links" data-reveal="0">${pages
+      .map((p) => `<a href="/${esc(p.slug)}">${esc(p.keyword)}</a>`)
+      .join('')}</div>
+  </div>
+</section>`;
+}
+
 export function renderPage(d, { present = new Set(), siblings = [] } = {}) {
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -1017,11 +1462,12 @@ ${classes(d, present)}
 ${galleries(d, present)}
 ${process(d)}
 ${faq(d)}
+${localIndex(d)}
 </main>
 ${visit(d, siblings)}
 ${quickBar(d)}
 <div class="lb" data-lb aria-hidden="true"><button class="lb-close" type="button" aria-label="닫기">&times;</button><img alt=""></div>
-<script>${JS}</script>
+<script src="/s.js" defer></script>
 </body>
 </html>
 `;

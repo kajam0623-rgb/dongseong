@@ -6,4 +6,40 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://bucheon-anitok.vercel.app/bucheon-manhwa</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bucheon-anitok.vercel.app/bucheon-webtoon</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bucheon-anitok.vercel.app/bucheon-ani</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bucheon-anitok.vercel.app/bucheon-drawing</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bucheon-anitok.vercel.app/jungdong-manhwa</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bucheon-anitok.vercel.app/bupyeong-manhwa</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

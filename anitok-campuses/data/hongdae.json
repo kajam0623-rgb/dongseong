@@ -390,5 +390,55 @@
         "a": "서울특별시 마포구 양화로 127 첨단빌딩 6층입니다. 네이버 지도에서 '홍대 애니톡 만화애니학원'으로 검색하시면 길찾기가 가능합니다."
       }
     ]
+  },
+  "local": {
+    "area": "홍대",
+    "areaSlug": "hongdae",
+    "subjects": [
+      "manhwa",
+      "webtoon",
+      "ani",
+      "drawing"
+    ],
+    "nearby": [
+      {
+        "area": "합정",
+        "slug": "hapjeong",
+        "subject": "manhwa",
+        "note": "합정 인근에서 걸어서 오는 거리에 있습니다."
+      },
+      {
+        "area": "연남",
+        "slug": "yeonnam",
+        "subject": "webtoon",
+        "note": "연남동 인근 학생들이 함께 수강하고 있습니다."
+      }
+    ],
+    "nearbyAll": [
+      {
+        "area": "합정",
+        "slug": "hapjeong",
+        "subject": "manhwa",
+        "note": "합정 인근에서 걸어서 오는 거리에 있습니다."
+      },
+      {
+        "area": "연남",
+        "slug": "yeonnam",
+        "subject": "webtoon",
+        "note": "연남동 인근 학생들이 함께 수강하고 있습니다."
+      },
+      {
+        "area": "마포구",
+        "slug": "mapo",
+        "subject": "manhwa",
+        "note": "마포구 전역에서 접근하기 좋은 위치입니다."
+      },
+      {
+        "area": "서교동",
+        "slug": "seogyo",
+        "subject": "ani",
+        "note": "서교동 인근, 홍대 상권 안에 있습니다."
+      }
+    ]
   }
 }

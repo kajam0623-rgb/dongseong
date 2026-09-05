@@ -371,5 +371,56 @@
         "a": "서울특별시 양천구 신정중앙로 103 7층 애니톡 아카데미입니다. 네이버 지도에서 '애니톡 웹툰게임 아카데미'로 검색하시면 길찾기가 가능합니다."
       }
     ]
+  },
+  "local": {
+    "area": "신정",
+    "areaSlug": "sinjeong",
+    "qualifier": "취미",
+    "subjects": [
+      "webtoon",
+      "drawing",
+      "game",
+      "manhwa"
+    ],
+    "nearby": [
+      {
+        "area": "목동",
+        "slug": "mokdong",
+        "subject": "webtoon",
+        "note": "목동 인근에서 걸어서 오는 거리에 있습니다."
+      },
+      {
+        "area": "양천구",
+        "slug": "yangcheon",
+        "subject": "drawing",
+        "note": "양천구 전역에서 접근하기 좋은 위치입니다."
+      }
+    ],
+    "nearbyAll": [
+      {
+        "area": "목동",
+        "slug": "mokdong",
+        "subject": "webtoon",
+        "note": "목동 인근에서 걸어서 오는 거리에 있습니다."
+      },
+      {
+        "area": "양천구",
+        "slug": "yangcheon",
+        "subject": "drawing",
+        "note": "양천구 전역에서 접근하기 좋은 위치입니다."
+      },
+      {
+        "area": "화곡",
+        "slug": "hwagok",
+        "subject": "webtoon",
+        "note": "강서구 화곡 인근에서 찾아오는 수강생들이 있습니다."
+      },
+      {
+        "area": "등촌",
+        "slug": "deungchon",
+        "subject": "drawing",
+        "note": "등촌동 인근에서 다니는 수강생들이 있습니다."
+      }
+    ]
   }
 }

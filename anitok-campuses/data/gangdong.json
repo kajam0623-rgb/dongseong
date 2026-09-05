@@ -357,5 +357,55 @@
         "a": "서울특별시 강동구 양재대로 1579 한영빌딩 5층입니다. 네이버 지도에서 '강동 애니톡 만화애니학원'으로 검색하시면 길찾기가 가능합니다."
       }
     ]
+  },
+  "local": {
+    "area": "강동",
+    "areaSlug": "gangdong",
+    "subjects": [
+      "manhwa",
+      "webtoon",
+      "ani",
+      "drawing"
+    ],
+    "nearby": [
+      {
+        "area": "천호",
+        "slug": "cheonho",
+        "subject": "manhwa",
+        "note": "천호동 인근에서 다니는 학생들이 함께 수강하고 있습니다."
+      },
+      {
+        "area": "송파",
+        "slug": "songpa",
+        "subject": "manhwa",
+        "note": "송파구에서 넘어오는 학생들이 꾸준히 있습니다."
+      }
+    ],
+    "nearbyAll": [
+      {
+        "area": "천호",
+        "slug": "cheonho",
+        "subject": "manhwa",
+        "note": "천호동 인근에서 다니는 학생들이 함께 수강하고 있습니다."
+      },
+      {
+        "area": "길동",
+        "slug": "gildong",
+        "subject": "webtoon",
+        "note": "길동 인근에서 가까운 웹툰 수업입니다."
+      },
+      {
+        "area": "송파",
+        "slug": "songpa",
+        "subject": "manhwa",
+        "note": "송파구에서 넘어오는 학생들이 꾸준히 있습니다."
+      },
+      {
+        "area": "명일",
+        "slug": "myeongil",
+        "subject": "ani",
+        "note": "명일동 인근 학생들도 함께 수강하고 있습니다."
+      }
+    ]
   }
 }

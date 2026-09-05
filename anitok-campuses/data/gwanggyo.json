@@ -362,5 +362,55 @@
         "a": "경기도 수원시 영통구 에듀타운로 102 광교중앙역 SK VIEW B동 7층 704호입니다. 네이버 지도에서 '광교 애니톡 만화애니학원'으로 검색하시면 길찾기가 가능합니다."
       }
     ]
+  },
+  "local": {
+    "area": "광교",
+    "areaSlug": "gwanggyo",
+    "subjects": [
+      "manhwa",
+      "webtoon",
+      "ani",
+      "drawing"
+    ],
+    "nearby": [
+      {
+        "area": "수원",
+        "slug": "suwon",
+        "subject": "manhwa",
+        "note": "수원 전역에서 광교중앙역 캠퍼스로 다니는 학생들이 있습니다."
+      },
+      {
+        "area": "영통",
+        "slug": "yeongtong",
+        "subject": "webtoon",
+        "note": "같은 영통구 안에 있어 가장 가까운 웹툰 수업입니다."
+      }
+    ],
+    "nearbyAll": [
+      {
+        "area": "수원",
+        "slug": "suwon",
+        "subject": "manhwa",
+        "note": "수원 전역에서 광교중앙역 캠퍼스로 다니는 학생들이 있습니다."
+      },
+      {
+        "area": "영통",
+        "slug": "yeongtong",
+        "subject": "webtoon",
+        "note": "같은 영통구 안에 있어 가장 가까운 웹툰 수업입니다."
+      },
+      {
+        "area": "용인",
+        "slug": "yongin",
+        "subject": "manhwa",
+        "note": "용인 서부 권역에서도 찾아오는 학생들이 있습니다."
+      },
+      {
+        "area": "동탄",
+        "slug": "dongtan",
+        "subject": "ani",
+        "note": "동탄 권역에서 광교로 다니는 학생들이 있습니다."
+      }
+    ]
   }
 }

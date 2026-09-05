@@ -6,4 +6,40 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://academy-anitok.vercel.app/sinjeong-webtoon</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://academy-anitok.vercel.app/sinjeong-drawing</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://academy-anitok.vercel.app/sinjeong-game</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://academy-anitok.vercel.app/sinjeong-manhwa</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://academy-anitok.vercel.app/mokdong-webtoon</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://academy-anitok.vercel.app/yangcheon-drawing</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
