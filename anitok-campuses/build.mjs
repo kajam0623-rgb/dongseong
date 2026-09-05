@@ -203,17 +203,27 @@ ${[
     ) + '\n'
   );
 
-  // 파비콘 — 애니톡 레드 원 + 흰 AT. SVG 하나로 라이트/다크 탭 모두 대응된다.
+  // 파비콘 — 애니톡 로고(웃는 얼굴 마크)를 그대로 옮겼다. 글자 'AT' 대신
+  // 브랜드 마크를 쓰라는 요청. 흰 라운드 사각 바탕 + 브랜드 컬러 마크로
+  // 일산 캠퍼스 아이콘과 같은 모양이며, 벡터라 16px 탭에서도 뭉개지지 않는다.
+  const markFill = d.theme.faviconBg || d.theme.accent;
   writeFileSync(
     join(outDir, 'favicon.svg'),
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <circle cx="32" cy="32" r="32" fill="${d.theme.faviconBg || d.theme.accent}"/>
-  <text x="32" y="43" text-anchor="middle" fill="${d.theme.faviconFg || d.theme.onAccent}"
-        font-family="Pretendard, -apple-system, system-ui, sans-serif"
-        font-size="30" font-weight="800" letter-spacing="-1.5">AT</text>
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="애니톡">
+  <rect x="1.5" y="1.5" width="61" height="61" rx="15" fill="#FFFFFF" stroke="#E2E2E4" stroke-width="3"/>
+  <circle cx="17.5" cy="28.5" r="4.6" fill="${markFill}"/>
+  <circle cx="46.5" cy="28.5" r="4.6" fill="${markFill}"/>
+  <path d="M25.5 34a6.5 6.5 0 0 0 13 0" fill="none" stroke="${markFill}"
+        stroke-width="4.6" stroke-linecap="round"/>
 </svg>
 `
   );
+
+  // PNG 대체본 — SVG 파비콘을 못 읽는 브라우저와 북마크용. 애니톡 로고 원본을
+  // 그대로 복사한다(외부 CDN 은 핫링크가 막혀 탭에서 비어 보였다).
+  for (const icon of ['icon-16.png', 'icon-32.png', 'favicon.ico']) {
+    writeFileSync(join(outDir, icon), readFileSync(join(ROOT, 'assets', icon)));
+  }
 
   // 404 — 기본 Vercel 페이지 대신 같은 톤으로.
   writeFileSync(join(outDir, '404.html'), minHtml(render404(d)));

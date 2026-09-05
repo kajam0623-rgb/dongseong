@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <circle cx="32" cy="32" r="32" fill="#0B0B0C"/>
-  <text x="32" y="43" text-anchor="middle" fill="#FFFFFF"
-        font-family="Pretendard, -apple-system, system-ui, sans-serif"
-        font-size="30" font-weight="800" letter-spacing="-1.5">AT</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="애니톡">
+  <rect x="1.5" y="1.5" width="61" height="61" rx="15" fill="#FFFFFF" stroke="#E2E2E4" stroke-width="3"/>
+  <circle cx="17.5" cy="28.5" r="4.6" fill="#0B0B0C"/>
+  <circle cx="46.5" cy="28.5" r="4.6" fill="#0B0B0C"/>
+  <path d="M25.5 34a6.5 6.5 0 0 0 13 0" fill="none" stroke="#0B0B0C"
+        stroke-width="4.6" stroke-linecap="round"/>
 </svg>
