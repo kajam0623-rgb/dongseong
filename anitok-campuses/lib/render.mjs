@@ -418,6 +418,43 @@ a,button,summary{touch-action:manipulation}
 .lp-cta{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .lp-cta .cta-row{margin-top:28px}
 .lp-cta .btn{min-height:54px}
+
+/* 중앙 정렬 — 섹션 콘텐츠를 전부 가운데로 모은다.
+ * 가로폭이 정해진 요소(lede/prose 등)는 margin-inline:auto 로 블록 자체도 가운데에 둔다.
+ * flex/grid 컨테이너는 text-align 이 안 먹으므로 justify 계열을 따로 준다. */
+.sec .wrap{text-align:center}
+.lede,.note,.class-lead,.lp-sub,.prose p{margin-inline:auto}
+.hero-in{text-align:center}
+.hero .cta-row{justify-content:center}
+.hero-scrim{background:linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.32) 45%,rgba(0,0,0,.6) 100%)}
+.hero-glow{left:50%;margin-left:-35vw}
+.badges,.social,.lp-links,.crumb{justify-content:center}
+.about-copy,.about-figs figcaption{text-align:center}
+.about-grid{grid-template-columns:1fr;gap:clamp(28px,4vw,52px)}
+.about-copy p{max-width:70ch;margin-inline:auto}
+.about-figs{max-width:920px;margin-inline:auto;width:100%}
+.stat,.vcard,.card-body,.lp-points li{align-items:center;text-align:center}
+.stat-detail{align-items:center}
+.vcard a.more{align-self:center}
+.pass li,.lp-list li,.class-head{justify-content:center}
+.faq summary{padding:22px 44px;text-align:center}
+.faq .ans{padding:0 44px 26px}
+.foot .sites{justify-content:center}
+
+/* 터치 영역 — 밑줄 링크는 보이는 높이가 23px 라 손가락으로 누르기 어렵다.
+ * 레이아웃을 건드리지 않고 가상요소로 히트 영역만 44px 로 넓힌다. */
+.vcard a.more,.foot .sites a{position:relative}
+.vcard a.more::after,.foot .sites a::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+@media (max-width:760px){.faq summary{padding:19px 34px}.faq .ans{padding:0 34px 22px}}
+
+/* 카드/갤러리 그리드는 1fr 트랙이라 항목이 적으면 왼쪽으로 몰린다.
+ * 트랙 폭에 상한을 두고 justify-content 로 행 자체를 가운데 정렬한다.
+ * 모바일 1단 규칙(max-width:760px)을 덮지 않도록 min-width 로 가둔다. */
+@media (min-width:761px){
+.cards,.gal{display:flex;flex-wrap:wrap;justify-content:center}
+.cards .card{flex:0 1 290px}
+.gal .fig{flex:0 1 250px}
+}
 `;
 
 /* ─────────────────────────── 테마 ───────────────────────────
