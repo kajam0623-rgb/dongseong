@@ -60,7 +60,7 @@
     "sub": "개인별 실력과 수준에 맞춘 1:1 수업",
     "image": {
       "local": "hero.webp",
-      "remote": "https://ldb-phinf.pstatic.net/20230131_24/1675148312543K8u4K_PNG/DSC00025.png",
+      "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/793cf487c7339.jpg",
       "caption": "애니톡 웹툰게임 아카데미",
       "eager": true
     },
@@ -93,17 +93,17 @@
       {
         "local": "about-1.webp",
         "caption": "웹툰게임 아카데미 학원 공간",
-        "remote": "https://ldb-phinf.pstatic.net/20250430_297/1746004565976Pxadf_JPEG/%B1%B3%BD%C0%BA%F1_%B9%D7_%B9%DD%C8%AF_%B0%D4%BD%C3%C7%A5.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/94777ddf00ef4.jpg"
       },
       {
         "local": "about-2.webp",
         "caption": "웹툰게임 아카데미 수업 현장",
-        "remote": "https://naverbooking-phinf.pstatic.net/20231116_285/1700124422209kzaYM_JPEG/1.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/1303404290221.jpg"
       },
       {
         "local": "about-3.webp",
         "caption": "웹툰게임 아카데미 작업 공간",
-        "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjZfMjQ3%2FMDAxNzg3NzM0NzQ0MzYz.21HbzSKTAMT0lw6ZeABz_vCIV_cNJpXK2eJu8w1I4GYg.etuhs-YxaYCgODgPIhSCkxCsMgqgNeC8XjStnSu5Bx4g.JPEG%2F6.jpg%2F2379x2362"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/31e77fdfa01d0.jpg"
       }
     ]
   },
@@ -264,29 +264,22 @@
         {
           "local": "gal-1.webp",
           "caption": "웹툰게임 아카데미 학원 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjZfMTA1%2FMDAxNzg3NzM0NzQ0MzM5.57VC1Q00VkCWUZWNDqrobcd8YEP9XWLwdjR8ONU22kgg.sCuI4XaewmO0lEeX_WLkiWM8NLBr2Uki0hMUiGPu1XYg.JPEG%2F5.jpg%2F2379x2362"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/793cf487c7339.jpg"
         },
         {
           "local": "gal-2.webp",
           "caption": "웹툰게임 아카데미 수업 현장",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjZfMTQ2%2FMDAxNzg3NzM0NzQ0MzQ3.4ZJoTmELQhLcbtF7bkU7DS5YmktR0ZNMG6KPVj-khesg.qmD_vDIY4nhWJ48_C8oMtnsclrBK3VsMA09aH_oMQwsg.JPEG%2F4.jpg%2F2379x2362"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/94777ddf00ef4.jpg"
         },
         {
           "local": "gal-3.webp",
           "caption": "웹툰게임 아카데미 작업 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjZfMTQg%2FMDAxNzg3NzM0NzQ0MTE1.FzH7H73B48LFPANZ_eAovznylbkKaCH5L_1SvTBVsfEg.FlstnoR86ef3So-NpsLdgeRKjh9bmMPSxL7JKVGt9_cg.JPEG%2F1.jpg%2F2379x2362"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/1303404290221.jpg"
         },
         {
           "local": "gal-4.webp",
-          "caption": "게임 원화 포트폴리오"
-        },
-        {
-          "local": "gal-5.webp",
-          "caption": "인체드로잉 수업"
-        },
-        {
-          "local": "gal-6.webp",
-          "caption": "1:1 수업 현장"
+          "caption": "웹툰게임 아카데미 학원 내부",
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/31e77fdfa01d0.jpg"
         }
       ]
     }

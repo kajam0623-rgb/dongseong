@@ -59,7 +59,7 @@
     "sub": "광교 · 수원 · 영통 대표 만화애니 전문학원",
     "image": {
       "local": "hero.webp",
-      "remote": "https://ldb-phinf.pstatic.net/20220811_284/1660215809119BvOyE_JPEG/%BE%D6%B4%CF%C5%E5.jpg",
+      "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/01a291f009138.jpg",
       "caption": "광교 애니톡 만화애니학원",
       "eager": true
     },
@@ -92,17 +92,17 @@
       {
         "local": "about-1.webp",
         "caption": "광교 학원 공간",
-        "remote": "https://ldb-phinf.pstatic.net/20251108_116/1762585124517FhhrP_JPEG/KakaoTalk_20251108_140935918_04_%BA%B9%BB%E7.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/b55ad644e91f6.jpg"
       },
       {
         "local": "about-2.webp",
         "caption": "광교 수업 현장",
-        "remote": "https://ldb-phinf.pstatic.net/20251108_275/1762585124544b0IUh_JPEG/RR.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/0d39773cfabd9.jpg"
       },
       {
         "local": "about-3.webp",
         "caption": "광교 작업 공간",
-        "remote": "https://ldb-phinf.pstatic.net/20220811_90/1660215811701RljKT_PNG/KakaoTalk_20220720_173914662.png"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/7c1dbdcc39293.jpg"
       }
     ]
   },
@@ -245,31 +245,32 @@
         {
           "local": "gal-1.webp",
           "caption": "광교 학원 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MTlfMTUz%2FMDAxNzg3MTQzMzA2MDY3.gNlX48vBisqtLkdtrdARiSxk5GrCeaeoq06csBZUvm8g.mcrgSvAdzsvX6l_OmLXWlVtExOXz_n0DrJgJt0gxlBcg.JPEG%2FIMG_5362_%25EB%25B3%25B5%25EC%2582%25AC.jpg%2F4032x3024"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/01a291f009138.jpg"
         },
         {
           "local": "gal-2.webp",
           "caption": "광교 수업 현장",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MTlfNzkg%2FMDAxNzg3MTQyMTgzNTIz.KUXeTi4mnD7PPa7xg9Z7zXTLOhtOJKxXJL_gDG5Ttgwg.LaNaF41SY4T5jm2M-INF6TOhwKqbzqmR9t0yLJi2lcwg.JPEG%2FIMG_5352_%25EB%25B3%25B5%25EC%2582%25AC.jpg%2F4032x3024"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/b55ad644e91f6.jpg"
         },
         {
           "local": "gal-3.webp",
           "caption": "광교 작업 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MTlfMTcg%2FMDAxNzg3MTQyMzIxMjQ0.Dy9JhqacBsxFsUZ0_8owBydhS47SwLlgyMpJbWzAs5Qg.p5I9tNtS5Tr12uPDMHUrEmYF7GT9aIR8i-2ae7LsXH0g.JPEG%2FKakaoTalk_20260715_153830165_%25EB%25B3%25B5%25EC%2582%25AC.jpg%2F4032x3024"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/0d39773cfabd9.jpg"
         },
         {
           "local": "gal-4.webp",
           "caption": "광교 학원 내부",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MTlfNzIg%2FMDAxNzg3MTQzMzA2MDk4.MqdSs2pJRXvZQzcuGq2-0kXlsBZtMZNZAfycTKlusagg.cMer0pQi3nqg-rIqI8o64FipvChknxk9qePeGhAvlZ0g.JPEG%2FIMG_5358_%25EB%25B3%25B5%25EC%2582%25AC.jpg%2F3024x4032"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/7c1dbdcc39293.jpg"
         },
         {
           "local": "gal-5.webp",
           "caption": "광교 드로잉 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MTlfODAg%2FMDAxNzg3MTQzMzA2MDg5.CoD2tFcyRAC90vM8VBgqs9xbgkMiP16ATMO11N7I8pQg.H3mYwceQWZeeKI0BRi0OADJ4mS6QJmyREEkIPOV0gtkg.JPEG%2FIMG_5361_%25EB%25B3%25B5%25EC%2582%25AC.jpg%2F4032x3024"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/d7f6461055f30.jpg"
         },
         {
           "local": "gal-6.webp",
-          "caption": "채색 수업"
+          "caption": "광교 상담 공간",
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/25cdbe1af84c5.jpg"
         }
       ]
     }

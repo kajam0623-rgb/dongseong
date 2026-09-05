@@ -62,7 +62,7 @@
     "sub": "대한민국 대표 만화애니 전문학원, 애니톡의 시작점",
     "image": {
       "local": "hero.webp",
-      "remote": "https://ldb-phinf.pstatic.net/20260311_35/1773210594198N2ISl_PNG/5.png",
+      "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/1c20ac5e90497.jpg",
       "caption": "애니톡 목동 본원",
       "eager": true
     },
@@ -95,17 +95,17 @@
       {
         "local": "about-1.webp",
         "caption": "목동 본원 학원 공간",
-        "remote": "https://ldb-phinf.pstatic.net/20260409_106/17757349056618JqXl_JPEG/KakaoTalk_20260408_194749856_01.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/185c0f1d9d028.jpg"
       },
       {
         "local": "about-2.webp",
         "caption": "목동 본원 수업 현장",
-        "remote": "https://ldb-phinf.pstatic.net/20260409_145/1775734905600moH1J_JPEG/KakaoTalk_20260408_194749856_02.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/b0789bb04be3f.jpg"
       },
       {
         "local": "about-3.webp",
         "caption": "목동 본원 작업 공간",
-        "remote": "https://ldb-phinf.pstatic.net/20260409_216/1775734905693wpMQN_JPEG/KakaoTalk_20260408_194749856.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/836019c927eae.jpg"
       }
     ]
   },
@@ -342,31 +342,27 @@
         {
           "local": "gal-1.webp",
           "caption": "목동 본원 학원 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDVfNjMg%2FMDAxNzg1OTMzMTg2MDIw.8G0SRNH5eOhohVgpOaSh_-5V0_Frasf-91bfC7_NyDYg.r8ABDJRHS8e0AurWFBROAZWhtChEA58FI2QIoCQA-l0g.PNG%2F2.png%2F600x600"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/1c20ac5e90497.jpg"
         },
         {
           "local": "gal-2.webp",
           "caption": "목동 본원 수업 현장",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDVfMjA3%2FMDAxNzg1OTMzMjIxMDc0.Oqlx9WWazEA6GhbYdc4-g8V5Wh8rpaC_Od9I8a9Vdr8g.4muMf4LDgl2_OwvRhj3MJkGGAsQptgE8Pt_oKRXy9B4g.PNG%2F4.png%2F600x600"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/185c0f1d9d028.jpg"
         },
         {
           "local": "gal-3.webp",
           "caption": "목동 본원 작업 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDVfNTIg%2FMDAxNzg1OTMzMjAyNjIz.d7exqBIcUwzwhhHy0O2Z_AaKr2WnD10jYOyoPbiHdsIg.Yul3Wbw4KwHGAPj_lquuvQfGJO0JkGgE13LcTy3onQUg.PNG%2F3.png%2F600x600"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/b0789bb04be3f.jpg"
         },
         {
           "local": "gal-4.webp",
           "caption": "목동 본원 학원 내부",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDVfMTU3%2FMDAxNzg1OTMzMjM3MTkw.PW-nMcuUHOfBCvv62MSN8I4pJZWNBTOry8pYpDij9EIg.dDK70AUvyihc-vMwMrFD-LaYRFzbWQHDMjYqoDmjZIEg.PNG%2F5.png%2F600x600"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/836019c927eae.jpg"
         },
         {
           "local": "gal-5.webp",
           "caption": "목동 본원 드로잉 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDVfMjAw%2FMDAxNzg1OTMzMTQ4NzA0.xC1ofJljxwabriuLMP7DP8b3oFzEuG1libBqH5_BPvkg.blz8D-z_pTOWjgr2Mn4oHLXDUaffM_kCm1pOjVWQERMg.PNG%2F1.png%2F600x600"
-        },
-        {
-          "local": "gal-6.webp",
-          "caption": "디지털드로잉 수업"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/ceffd9b5e8bb3.jpg"
         }
       ]
     }

@@ -59,7 +59,7 @@
     "sub": "학생은 그리는 걸 배우고, 우리는 듣는 걸 배웁니다",
     "image": {
       "local": "hero.webp",
-      "remote": "https://ldb-phinf.pstatic.net/20251201_261/1764583763475jpMsG_PNG/316%C8%A3_01.png",
+      "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/9a214195ed007.jpg",
       "caption": "김포 애니톡 만화애니학원",
       "eager": true
     },
@@ -92,17 +92,17 @@
       {
         "local": "about-1.webp",
         "caption": "김포 학원 공간",
-        "remote": "https://ldb-phinf.pstatic.net/20260527_52/1779856593233Uovot_JPEG/%BE%D6%B4%CF%C5%E5_%B8%B8%C8%AD%BE%D6%B4%CF%C7%D0%BF%F8_%B1%E8%C6%F7%C4%B7%C6%DB%BD%BA.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/bf4ed526967fd.jpg"
       },
       {
         "local": "about-2.webp",
         "caption": "김포 수업 현장",
-        "remote": "https://ldb-phinf.pstatic.net/20260527_131/1779856610247eyTSu_JPEG/%BE%D6%B4%CF%C5%E5_%B8%B8%C8%AD%BE%D6%B4%CF%C7%D0%BF%F8_%B1%E8%C6%F7%C4%B7%C6%DB%BD%BA.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/35d16f24e4a7e.jpg"
       },
       {
         "local": "about-3.webp",
         "caption": "김포 작업 공간",
-        "remote": "https://ldb-phinf.pstatic.net/20260430_23/17775226149273PNRV_PNG/%BF%A4%B7%B9%BA%A3%C0%CC%C5%CD%C1%F6%B8%E9_26%B3%E2_3%BF%F9.png"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/fdf97f761d2f3.jpg"
       }
     ]
   },
@@ -235,27 +235,28 @@
       "items": [
         {
           "local": "gal-1.webp",
-          "caption": "고등 입시반 학생작품"
+          "caption": "김포 학원 공간",
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/9a214195ed007.jpg"
         },
         {
           "local": "gal-2.webp",
-          "caption": "실기 준비 수업"
+          "caption": "김포 수업 현장",
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/bf4ed526967fd.jpg"
         },
         {
           "local": "gal-3.webp",
-          "caption": "중등반 학생작품"
+          "caption": "김포 작업 공간",
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/35d16f24e4a7e.jpg"
         },
         {
           "local": "gal-4.webp",
-          "caption": "주니어반 학생작품"
+          "caption": "김포 학원 내부",
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/fdf97f761d2f3.jpg"
         },
         {
           "local": "gal-5.webp",
-          "caption": "디지털 드로잉 작업"
-        },
-        {
-          "local": "gal-6.webp",
-          "caption": "채색 수업"
+          "caption": "김포 드로잉 공간",
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/c1a630ef0230a.jpg"
         }
       ]
     }

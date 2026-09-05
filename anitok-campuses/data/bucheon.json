@@ -60,7 +60,7 @@
     "sub": "부천 · 인천 · 부평 · 중동 · 상동 대표 만화애니학원",
     "image": {
       "local": "hero.webp",
-      "remote": "https://ldb-phinf.pstatic.net/20260409_24/1775731714052eGohE_PNG/%C1%A6%B8%F1%C0%BB_%C0%D4%B7%C2%C7%D8%C1%D6%BC%BC%BF%E4._%2829%29.png",
+      "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/dcada5da1ba70.jpg",
       "caption": "부천 애니톡 만화애니학원",
       "eager": true
     },
@@ -93,17 +93,17 @@
       {
         "local": "about-1.webp",
         "caption": "부천 학원 공간",
-        "remote": "https://ldb-phinf.pstatic.net/20241226_23/1735216917119D5qEv_JPEG/KakaoTalk_20241213_173134460.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/0ed451608ff21.jpg"
       },
       {
         "local": "about-2.webp",
         "caption": "부천 수업 현장",
-        "remote": "https://ldb-phinf.pstatic.net/20250416_130/1744785979166fIAxy_JPEG/KakaoTalk_20250416_151519604.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/324cef07d5814.jpg"
       },
       {
         "local": "about-3.webp",
         "caption": "부천 작업 공간",
-        "remote": "https://naverbooking-phinf.pstatic.net/20260407_283/1775563626539i72WW_JPEG/image.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/2ff6057c6f06f.jpg"
       }
     ]
   },
@@ -257,31 +257,32 @@
         {
           "local": "gal-1.webp",
           "caption": "부천 학원 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjdfMTY2%2FMDAxNzg3ODMzMjA4ODE0.UteLfzqwXxXGMM8syXgF-IsmwdZ_LbkOJxZsbtvY6CEg.qDjumYf7ADL6k4KDjCBJJhuFLWrd5CqIlEL-9KeMgAog.PNG"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/dcada5da1ba70.jpg"
         },
         {
           "local": "gal-2.webp",
           "caption": "부천 수업 현장",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjdfMTkg%2FMDAxNzg3ODMzMjA5Nzgy.ibV9m2x4pgeTh8OxBMD-aAqqhBcMwyoVBy_7mT2VcjYg.MDRLfIpDbhm_YvQrP1DizgRPAOxNbyhnEe7JTJT3-oMg.PNG"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/0ed451608ff21.jpg"
         },
         {
           "local": "gal-3.webp",
           "caption": "부천 작업 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjdfMTc0%2FMDAxNzg3ODMzMjA5OTE4.2KF-ULgJU9wnpprSSdxdRJb5g26yZzyDJ8OpzZBoTg0g.RIVn3rLttkDD3WJP5eIqmElYBY4PgWLsI-1JuACF6hsg.PNG"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/324cef07d5814.jpg"
         },
         {
           "local": "gal-4.webp",
           "caption": "부천 학원 내부",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjdfMTc3%2FMDAxNzg3ODMzMjA5MjI1.88flE9c8qjtW1DFlBBNItv-J6OxRsJ6-9G57UGznXoQg.0gB9Vqjdc_Ys8q1CFg_v4nMHI1YZM1hlw23VmFlypV4g.PNG"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/2ff6057c6f06f.jpg"
         },
         {
           "local": "gal-5.webp",
           "caption": "부천 드로잉 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjdfMTg4%2FMDAxNzg3ODMzMjA5NjY5.XK7CwhzZyJa2F4fX_704sAinSlEH35zqHIh6_ohbS0Ew.3E-vV6ywZ_y9hTB_MtnHRtRJfStTRDuJ-Fg5I0k91Fcg.PNG"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/f45d54f58094e.jpg"
         },
         {
           "local": "gal-6.webp",
-          "caption": "디지털드로잉 수업"
+          "caption": "부천 상담 공간",
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/d60e1d75c83fd.jpg"
         }
       ]
     }

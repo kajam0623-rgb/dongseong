@@ -59,7 +59,7 @@
     "sub": "4년 연속 한국예술종합학교 애니메이션과 최종 합격",
     "image": {
       "local": "hero.webp",
-      "remote": "https://ldb-phinf.pstatic.net/20150901_157/1441073109588KnROj_JPEG/33907366_0.jpg",
+      "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/d920fd773c59d.jpg",
       "caption": "강동 애니톡 만화애니학원",
       "eager": true
     },
@@ -92,17 +92,17 @@
       {
         "local": "about-1.webp",
         "caption": "강동 학원 공간",
-        "remote": "https://ldb-phinf.pstatic.net/20220603_267/1654245816871rdKxi_JPEG/KakaoTalk_20220603_172932136.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/091465d53ff50.jpg"
       },
       {
         "local": "about-2.webp",
         "caption": "강동 수업 현장",
-        "remote": "https://ldb-phinf.pstatic.net/20220603_78/1654245816595u6goP_JPEG/KakaoTalk_20220603_172932136_01.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/4e92e18185811.jpg"
       },
       {
         "local": "about-3.webp",
         "caption": "강동 작업 공간",
-        "remote": "https://ldb-phinf.pstatic.net/20220603_15/1654245816902WkmYe_JPEG/KakaoTalk_20220603_172932136_02.jpg"
+        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/f072a43e52079.jpg"
       }
     ]
   },
@@ -245,30 +245,27 @@
         {
           "local": "gal-1.webp",
           "caption": "강동 학원 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDdfMTEw%2FMDAxNzg2MDg5NDY2MzQz._QLW9bKNHgFy3PTNtiQa1w_DUPtdp10Gtpl5K0aYfFkg.hdHSnryGgOGDuYok1FMZ7_v_ckQm5nJLuo-bZVOQ-lYg.PNG%2Fimage.png%2F1920x1080"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/d920fd773c59d.jpg"
         },
         {
           "local": "gal-2.webp",
           "caption": "강동 수업 현장",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDdfOCAg%2FMDAxNzg2MDg5NDI4Nzcz.tVyDS--QwYZZXmo7TafTQhwIuTSTHTBcESOsj3NEcn8g.QpyVPvmhOGqVWb2Syh5FN26-4gGOl4aWllny5kL5_f0g.PNG%2Fimage.png%2F1920x1080"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/091465d53ff50.jpg"
         },
         {
           "local": "gal-3.webp",
           "caption": "강동 작업 공간",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDdfMjU1%2FMDAxNzg2MDg5MzI2ODA0.KUukN56qSQBEF532JBBunmpBN4iiv819WLjcpAPpRm0g.QDk-5XzFqxjF8rdTzWCEEzqxdIfeazQLLc8YzReVl2sg.PNG%2Fimage.png%2F1920x1080"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/4e92e18185811.jpg"
         },
         {
           "local": "gal-4.webp",
           "caption": "강동 학원 내부",
-          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDdfMTc5%2FMDAxNzg2MDg4NDEzMjkz.Ve8dyasqm2YZsMKv07IfkpLz-7HFVVsehnjXkQucQt4g.oHion6JOecjWLWjyusl6_nC9sdx6Z2Aye2H2r7OY4s0g.PNG%2Fimage.png%2F1920x1080"
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/f072a43e52079.jpg"
         },
         {
           "local": "gal-5.webp",
-          "caption": "CG반 작업 화면"
-        },
-        {
-          "local": "gal-6.webp",
-          "caption": "취미반 수업"
+          "caption": "강동 드로잉 공간",
+          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/11eafedc4ab5a.jpg"
         }
       ]
     }
