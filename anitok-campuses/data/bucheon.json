@@ -1,6 +1,7 @@
 {
   "slug": "bucheon",
   "repo": "bucheon-anitok",
+  "themeName": "orange",
   "name": "부천 애니톡 만화애니학원",
   "shortName": "부천",
   "site": { "origin": "https://bucheon-anitok.vercel.app", "subdomain": "bucheon" },

@@ -1,6 +1,7 @@
 {
   "slug": "gangdong",
   "repo": "gangdong-anitok",
+  "themeName": "orange",
   "name": "강동 애니톡 만화애니학원",
   "shortName": "강동",
   "site": { "origin": "https://gangdong-anitok.vercel.app", "subdomain": "gangdong" },

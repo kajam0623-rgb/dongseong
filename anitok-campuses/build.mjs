@@ -58,10 +58,21 @@ function resolveOrigin(d) {
   return d.site.origin;
 }
 
-/** 지점 데이터를 읽고 공통값 병합 + 최종 주소 확정까지 한 번에. */
+/** 지점 데이터를 읽고 공통값 병합 + 최종 주소 · 테마 확정까지 한 번에. */
 function loadCampus(slug) {
   const d = merge(shared, readJson(join(DATA_DIR, `${slug}.json`)));
   d.site = { ...d.site, origin: resolveOrigin(d) };
+
+  // themeName 으로 _shared.json 의 테마를 찾아 붙인다. 이름이 틀리면 빌드를 멈춘다.
+  const name = d.themeName || 'red';
+  const theme = (shared.themes || {})[name];
+  if (!theme) {
+    console.error(
+      `${slug}: 알 수 없는 테마 "${name}" (가능: ${Object.keys(shared.themes || {}).join(', ')})`
+    );
+    process.exit(1);
+  }
+  d.theme = theme;
   return d;
 }
 
@@ -145,8 +156,8 @@ for (const slug of targets) {
   writeFileSync(
     join(outDir, 'favicon.svg'),
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <circle cx="32" cy="32" r="32" fill="#BD0D16"/>
-  <text x="32" y="43" text-anchor="middle" fill="#FFFFFF"
+  <circle cx="32" cy="32" r="32" fill="${d.theme.faviconBg || d.theme.accent}"/>
+  <text x="32" y="43" text-anchor="middle" fill="${d.theme.faviconFg || d.theme.onAccent}"
         font-family="Pretendard, -apple-system, system-ui, sans-serif"
         font-size="30" font-weight="800" letter-spacing="-1.5">AT</text>
 </svg>
@@ -192,6 +203,7 @@ for (const slug of targets) {
 
   report.push({
     slug,
+    theme: d.themeName || 'red',
     bytes: Buffer.byteLength(html),
     slots: slots.length,
     local: slots.length - missing.length - remoteOnly.length,
@@ -212,11 +224,11 @@ function collectSlots(d) {
 }
 
 console.log(`빌드 완료: ${built}개 지점\n`);
-console.log('지점       크기      이미지 슬롯 (로컬/원격/비어있음)');
-console.log('─'.repeat(58));
+console.log('지점       테마     크기      이미지 슬롯 (로컬/원격/비어있음)');
+console.log('─'.repeat(66));
 for (const r of report) {
   console.log(
-    `${r.slug.padEnd(10)} ${(Math.round(r.bytes / 1024) + 'KB').padEnd(9)} ` +
+    `${r.slug.padEnd(10)} ${r.theme.padEnd(8)} ${(Math.round(r.bytes / 1024) + 'KB').padEnd(9)} ` +
       `${String(r.slots).padStart(2)}개  ${r.local} / ${r.remote} / ${r.missing}`
   );
 }

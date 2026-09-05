@@ -76,5 +76,51 @@
       "label": "일산",
       "href": "https://ilsan-anitok.vercel.app"
     }
-  ]
+  ],
+  "themes": {
+    "red": {
+      "label": "애니톡 레드 (일산 사이트와 동일)",
+      "accent": "#BD0D16",
+      "accentLit": "#FF3B45",
+      "onAccent": "#FFFFFF",
+      "accentLine": "rgba(255,255,255,.5)",
+      "mnavBg": "#8E0A10",
+      "mnavLine": "rgba(255,255,255,.2)",
+      "tagBg": "rgba(189,13,22,.92)",
+      "heroGrad": "radial-gradient(120% 90% at 15% 10%,#2A0407 0%,#000 70%)",
+      "glowGrad": "radial-gradient(circle,rgba(189,13,22,.55) 0%,rgba(0,0,0,0) 66%)",
+      "btnHoverBg": "#FFFFFF",
+      "btnHoverFg": "#BD0D16"
+    },
+    "orange": {
+      "label": "애니톡 오렌지 (지점 캠퍼스 공통)",
+      "accent": "#C9480B",
+      "accentLit": "#FF7A18",
+      "onAccent": "#FFFFFF",
+      "accentLine": "rgba(255,255,255,.5)",
+      "mnavBg": "#993507",
+      "mnavLine": "rgba(255,255,255,.2)",
+      "tagBg": "rgba(201,72,11,.92)",
+      "heroGrad": "radial-gradient(120% 90% at 15% 10%,#2A1304 0%,#000 70%)",
+      "glowGrad": "radial-gradient(circle,rgba(255,122,24,.5) 0%,rgba(0,0,0,0) 66%)",
+      "btnHoverBg": "#FFFFFF",
+      "btnHoverFg": "#C9480B"
+    },
+    "mono": {
+      "label": "블랙 앤 화이트 (웹툰게임 아카데미)",
+      "accent": "#FFFFFF",
+      "accentLit": "#FFFFFF",
+      "onAccent": "#0B0B0C",
+      "accentLine": "rgba(11,11,12,.45)",
+      "mnavBg": "#E4E4E6",
+      "mnavLine": "rgba(11,11,12,.16)",
+      "tagBg": "rgba(255,255,255,.94)",
+      "heroGrad": "radial-gradient(120% 90% at 15% 10%,#17171A 0%,#000 70%)",
+      "glowGrad": "radial-gradient(circle,rgba(255,255,255,.24) 0%,rgba(0,0,0,0) 66%)",
+      "btnHoverBg": "#C4C4C8",
+      "btnHoverFg": "#0B0B0C",
+      "faviconBg": "#0B0B0C",
+      "faviconFg": "#FFFFFF"
+    }
+  }
 }

@@ -2,17 +2,38 @@
 
 `ilsan-anitok.vercel.app`(일산 캠퍼스)과 같은 형태의 정적 랜딩페이지를 나머지 7개 직영 캠퍼스에 맞춰 생성한다.
 
-| 지점 | slug | 저장소(제안) | 배포 주소(제안) | 전화 |
-|---|---|---|---|---|
-| 애니톡 목동 본원 | `mokdong` | `mokdong-anitok` | mokdong-anitok.vercel.app | 02-2644-3313 |
-| 홍대 애니톡 만화애니학원 | `hongdae` | `hongdae-anitok` | hongdae-anitok.vercel.app | 02-3143-3313 |
-| 강동 애니톡 만화애니학원 | `gangdong` | `gangdong-anitok` | gangdong-anitok.vercel.app | 02-486-2220 |
-| 부천 애니톡 만화애니학원 | `bucheon` | `bucheon-anitok` | bucheon-anitok.vercel.app | 032-329-8685 |
-| 광교 애니톡 만화애니학원 | `gwanggyo` | `gwanggyo-anitok` | gwanggyo-anitok.vercel.app | 031-211-0904 |
-| 김포 애니톡 만화애니학원 | `gimpo` | `gimpo-anitok` | gimpo-anitok.vercel.app | 031-985-5382 |
-| 애니톡 웹툰게임 아카데미 | `academy` | `academy-anitok` | academy-anitok.vercel.app | 02-2695-9514 |
+| 지점 | slug | 테마 | 저장소(제안) | 배포 주소(제안) | 전화 |
+|---|---|---|---|---|---|
+| 애니톡 목동 본원 | `mokdong` | 오렌지 | `mokdong-anitok` | mokdong-anitok.vercel.app | 02-2644-3313 |
+| 홍대 애니톡 만화애니학원 | `hongdae` | 오렌지 | `hongdae-anitok` | hongdae-anitok.vercel.app | 02-3143-3313 |
+| 강동 애니톡 만화애니학원 | `gangdong` | 오렌지 | `gangdong-anitok` | gangdong-anitok.vercel.app | 02-486-2220 |
+| 부천 애니톡 만화애니학원 | `bucheon` | 오렌지 | `bucheon-anitok` | bucheon-anitok.vercel.app | 032-329-8685 |
+| 광교 애니톡 만화애니학원 | `gwanggyo` | 오렌지 | `gwanggyo-anitok` | gwanggyo-anitok.vercel.app | 031-211-0904 |
+| 김포 애니톡 만화애니학원 | `gimpo` | 오렌지 | `gimpo-anitok` | gimpo-anitok.vercel.app | 031-985-5382 |
+| 애니톡 웹툰게임 아카데미 | `academy` | 블랙앤화이트 | `academy-anitok` | academy-anitok.vercel.app | 02-2695-9514 |
 
 일산은 이미 `kajam0623-rgb/ilsan-anitok` 에 있으므로 여기서 다시 만들지 않는다.
+
+## 포인트 컬러 (테마)
+
+색은 CSS 변수 한 곳에서만 갈린다. 마크업과 레이아웃은 7개 지점이 완전히 동일하다.
+
+| 테마 | 쓰는 곳 | 액센트 | 밝은 액센트 | 액센트 위 글자 |
+|---|---|---|---|---|
+| `orange` | 지점 캠퍼스 6곳 | `#C9480B` | `#FF7A18` | `#FFFFFF` |
+| `mono` | 웹툰게임 아카데미 | `#FFFFFF` | `#FFFFFF` | `#0B0B0C` |
+| `red` | 일산 사이트와 동일(미사용, 참고용) | `#BD0D16` | `#FF3B45` | `#FFFFFF` |
+
+- 정의: `data/_shared.json` 의 `themes`
+- 지정: 각 지점 파일의 `themeName`
+- 색을 바꾸려면 `themes` 값만 고치고 다시 빌드한다. 헤더 · 버튼 · 라벨 · 태그 ·
+  히어로 글로우 · 파비콘 · `theme-color` 메타 · 404까지 한 번에 따라간다.
+
+대비는 흰 글자 기준으로 잡았다. 오렌지 `#C9480B` 위 흰 글자 4.76:1,
+모노 흰 헤더 위 `#0B0B0C` 글자 19.7:1 로 둘 다 WCAG AA를 넘긴다.
+`themes` 값을 바꿀 때는 이 대비가 4.5:1 아래로 내려가지 않는지 확인할 것.
+
+일산 사이트(`ilsan-anitok`)는 별도 저장소라 여기서 건드리지 않았고 레드 그대로다.
 
 ## 배포
 
@@ -52,7 +73,7 @@ anitok-campuses/
 ├─ build.mjs              데이터 → 사이트 생성기
 ├─ lib/render.mjs         페이지 렌더러 (CSS·JS·전 섹션 마크업)
 ├─ data/
-│  ├─ _shared.json        전 지점 공통 (회사정보·메뉴·상담시간·진행단계)
+│  ├─ _shared.json        전 지점 공통 (회사정보·메뉴·상담시간·진행단계·테마)
 │  └─ <slug>.json         지점별 내용
 ├─ tools/fetch-images.mjs 원격 이미지를 gal/ 로 내려받는 스크립트
 └─ sites/                 빌드 결과 (배포 루트)

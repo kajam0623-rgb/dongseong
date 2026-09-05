@@ -1,6 +1,7 @@
 {
   "slug": "gimpo",
   "repo": "gimpo-anitok",
+  "themeName": "orange",
   "name": "김포 애니톡 만화애니학원",
   "shortName": "김포",
   "site": { "origin": "https://gimpo-anitok.vercel.app", "subdomain": "gimpo" },

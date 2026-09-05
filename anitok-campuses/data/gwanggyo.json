@@ -1,6 +1,7 @@
 {
   "slug": "gwanggyo",
   "repo": "gwanggyo-anitok",
+  "themeName": "orange",
   "name": "광교 애니톡 만화애니학원",
   "shortName": "광교",
   "site": { "origin": "https://gwanggyo-anitok.vercel.app", "subdomain": "gwanggyo" },

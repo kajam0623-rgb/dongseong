@@ -1,6 +1,7 @@
 {
   "slug": "academy",
   "repo": "academy-anitok",
+  "themeName": "mono",
   "name": "애니톡 웹툰게임 아카데미",
   "shortName": "웹툰게임 아카데미",
   "alternateName": "애니톡 아카데미",

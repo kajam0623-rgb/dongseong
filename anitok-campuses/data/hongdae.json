@@ -1,6 +1,7 @@
 {
   "slug": "hongdae",
   "repo": "hongdae-anitok",
+  "themeName": "orange",
   "name": "홍대 애니톡 만화애니학원",
   "shortName": "홍대",
   "site": { "origin": "https://hongdae-anitok.vercel.app", "subdomain": "hongdae" },
