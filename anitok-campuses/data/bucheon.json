@@ -171,7 +171,7 @@
             "image": {
               "local": "class-high-1.webp",
               "caption": "한예종 입시반",
-              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20241226_23%2F1735216917119D5qEv_JPEG%2FKakaoTalk_20241213_173134460.jpg"
+              "remote": "https://ilsan-anitok.vercel.app/gal/g4.webp"
             }
           },
           {
@@ -181,7 +181,7 @@
             "image": {
               "local": "class-high-2.webp",
               "caption": "청강대 입시반",
-              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250416_130%2F1744785979166fIAxy_JPEG%2FKakaoTalk_20250416_151519604.jpg"
+              "remote": "https://ilsan-anitok.vercel.app/gal/k5.webp"
             }
           },
           {
@@ -191,7 +191,7 @@
             "image": {
               "local": "class-high-3.webp",
               "caption": "미대입시반 실기",
-              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250416_263%2F17447859793724S7xy_JPEG%2FKakaoTalk_20250416_151523576.jpg"
+              "remote": "https://ilsan-anitok.vercel.app/gal/k1.webp"
             }
           },
           {
@@ -201,7 +201,7 @@
             "image": {
               "local": "class-high-4.webp",
               "caption": "대입예비반 수업",
-              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250416_191%2F1744785979559axtF1_JPEG%2FKakaoTalk_20250416_151605490.jpg"
+              "remote": "https://ilsan-anitok.vercel.app/gal/c0.webp"
             }
           }
         ]
@@ -218,7 +218,7 @@
             "image": {
               "local": "class-junior-1.webp",
               "caption": "주니어반 수업",
-              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250416_273%2F1744785978774pvuxj_JPEG%2FKakaoTalk_20250416_151605490_01.jpg"
+              "remote": "https://ilsan-anitok.vercel.app/gal/c3.webp"
             }
           },
           {
@@ -228,7 +228,7 @@
             "image": {
               "local": "class-hobby-1.webp",
               "caption": "성인취미반 수업",
-              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250416_20%2F1744785971736EkmWY_JPEG%2FKakaoTalk_20250416_151617248.jpg"
+              "remote": "https://ilsan-anitok.vercel.app/gal/h4.webp"
             }
           },
           {
@@ -238,7 +238,7 @@
             "image": {
               "local": "class-hobby-2.webp",
               "caption": "웹툰반 수업",
-              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20241226_116%2F1735216917243zMPcq_JPEG%2FKakaoTalk_20241213_173134460_01.jpg"
+              "remote": "https://ilsan-anitok.vercel.app/gal/h2.webp"
             }
           },
           {
@@ -248,7 +248,7 @@
             "image": {
               "local": "class-hobby-3.webp",
               "caption": "디지털드로잉 수업",
-              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230321_126%2F1679399234378SPRLt_JPEG%2FKakaoTalk_20230310_194205544_03.jpg"
+              "remote": "https://ilsan-anitok.vercel.app/gal/h0.webp"
             }
           }
         ]
