@@ -68,13 +68,35 @@ Import 하면 되고, 이때는 Root Directory 설정이 필요 없다.
 
 ---
 
+## 서브도메인 연결 (anitok.com)
+
+vercel.app 주소로 먼저 띄운 뒤, 준비되면 서브도메인으로 옮긴다. 사이트 쪽 작업은 한 줄이다.
+
+1. `data/_shared.json` 에서 `"baseDomain": null` → `"baseDomain": "anitok.com"`
+2. `node build.mjs` 후 커밋 · 푸시
+   (canonical · og:url · sitemap · 푸터 캠퍼스 링크가 전부 서브도메인으로 바뀐다)
+3. Vercel 각 프로젝트 → Settings → Domains → 서브도메인 추가
+4. anitok.com DNS에 Vercel이 안내하는 CNAME 추가 (보통 `cname.vercel-dns.com`)
+
+| Vercel 프로젝트 | 연결할 서브도메인 |
+|---|---|
+| `mokdong-anitok` | `mokdong.anitok.com` |
+| `hongdae-anitok` | `hongdae.anitok.com` |
+| `gangdong-anitok` | `gangdong.anitok.com` |
+| `bucheon-anitok` | `bucheon.anitok.com` |
+| `gwanggyo-anitok` | `gwanggyo.anitok.com` |
+| `gimpo-anitok` | `gimpo.anitok.com` |
+| `academy-anitok` | `academy.anitok.com` |
+
+서브도메인 이름을 바꾸려면 각 지점 데이터의 `site.subdomain` 만 고치면 된다.
+전환 후에는 검색엔진에 새 `sitemap.xml` 을 다시 제출한다.
+
 ## 배포 후
 
 1. **사진 교체** — 각 사이트의 `PHOTOS.md` 에 어떤 파일명으로 무슨 사진이 들어가야 하는지
    표로 정리해 두었다. `gal/` 에 넣고 `node build.mjs <slug>` 재실행 후 다시 푸시.
 2. **GA4** — `data/<slug>.json` 의 `analytics.ga4` 에 측정 ID를 넣으면 헤드에 태그가 붙는다.
-3. **좌표** — `geo.lat` / `geo.lng` 를 채우면 geo 메타와 JSON-LD 좌표가 붙는다. 로컬 SEO에 도움이 된다.
-4. **네이버 사이트 인증** — 도메인별로 발급받아 `seo.verification` 에 추가한다.
-5. **서치콘솔 / 네이버 서치어드바이저** — 각 도메인의 `sitemap.xml` 을 제출한다.
-6. **anitok.com 캠퍼스 안내 페이지**에서 각 지점 카드에 새 랜딩페이지 링크를 걸면
+3. **네이버 사이트 인증** — 도메인별로 발급받아 `seo.verification` 에 추가한다.
+4. **서치콘솔 / 네이버 서치어드바이저** — 각 도메인의 `sitemap.xml` 을 제출한다.
+5. **anitok.com 캠퍼스 안내 페이지**에서 각 지점 카드에 새 랜딩페이지 링크를 걸면
    내부 링크가 생겨 색인에 유리하다.

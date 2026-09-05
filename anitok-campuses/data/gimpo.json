@@ -3,7 +3,7 @@
   "repo": "gimpo-anitok",
   "name": "김포 애니톡 만화애니학원",
   "shortName": "김포",
-  "site": { "origin": "https://gimpo-anitok.vercel.app" },
+  "site": { "origin": "https://gimpo-anitok.vercel.app", "subdomain": "gimpo" },
   "phone": "031-985-5382",
   "address": {
     "street": "김포한강1로 230 3층",
@@ -15,8 +15,8 @@
     "region": "경기도",
     "locality": "김포시",
     "placename": "경기도 김포시",
-    "lat": null,
-    "lng": null
+    "lat": "37.6532353",
+    "lng": "126.6828135"
   },
   "links": {
     "naverPlace": "https://m.place.naver.com/place/1052247671/home",

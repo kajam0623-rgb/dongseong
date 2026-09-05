@@ -4,7 +4,7 @@
   "name": "애니톡 목동 본원",
   "shortName": "목동 본원",
   "alternateName": "목동애니톡학원",
-  "site": { "origin": "https://mokdong-anitok.vercel.app" },
+  "site": { "origin": "https://mokdong-anitok.vercel.app", "subdomain": "mokdong" },
   "phone": "02-2644-3313",
   "address": {
     "street": "목동로 201 한성빌딩 7층",
@@ -16,8 +16,8 @@
     "region": "서울특별시",
     "locality": "양천구",
     "placename": "서울특별시 양천구 목동",
-    "lat": null,
-    "lng": null
+    "lat": "37.5264179",
+    "lng": "126.8639255"
   },
   "links": {
     "naverPlace": "https://m.place.naver.com/place/11780719/home",

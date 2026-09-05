@@ -3,7 +3,7 @@
   "repo": "gangdong-anitok",
   "name": "강동 애니톡 만화애니학원",
   "shortName": "강동",
-  "site": { "origin": "https://gangdong-anitok.vercel.app" },
+  "site": { "origin": "https://gangdong-anitok.vercel.app", "subdomain": "gangdong" },
   "phone": "02-486-2220",
   "address": {
     "street": "양재대로 1579 한영빌딩 5층",
@@ -15,8 +15,8 @@
     "region": "서울특별시",
     "locality": "강동구",
     "placename": "서울특별시 강동구",
-    "lat": null,
-    "lng": null
+    "lat": "37.5465802",
+    "lng": "127.1429163"
   },
   "links": {
     "naverPlace": "https://m.place.naver.com/place/33907366/home",

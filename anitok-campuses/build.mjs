@@ -17,7 +17,7 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderPage } from './lib/render.mjs';
+import { renderPage, render404 } from './lib/render.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(ROOT, 'data');
@@ -45,6 +45,26 @@ function merge(base, over) {
   return out;
 }
 
+/**
+ * 최종 주소를 결정한다.
+ * _shared.json 의 site.baseDomain 이 비어 있으면 지점별 vercel.app 주소를 쓰고,
+ * "anitok.com" 처럼 채워지면 https://<subdomain>.anitok.com 으로 한 번에 바뀐다.
+ * canonical · og:url · sitemap · 형제 캠퍼스 링크가 모두 이 값을 따른다.
+ */
+function resolveOrigin(d) {
+  const base = d.site?.baseDomain;
+  const sub = d.site?.subdomain;
+  if (base && sub) return `https://${sub}.${String(base).replace(/^https?:\/\//, '').replace(/\/$/, '')}`;
+  return d.site.origin;
+}
+
+/** 지점 데이터를 읽고 공통값 병합 + 최종 주소 확정까지 한 번에. */
+function loadCampus(slug) {
+  const d = merge(shared, readJson(join(DATA_DIR, `${slug}.json`)));
+  d.site = { ...d.site, origin: resolveOrigin(d) };
+  return d;
+}
+
 const targets = process.argv.slice(2).length ? process.argv.slice(2) : allSlugs;
 
 for (const t of targets) {
@@ -55,15 +75,17 @@ for (const t of targets) {
 }
 
 // 푸터의 형제 캠퍼스 링크 — 전체 지점을 항상 읽어서 만든다.
-const siblings = allSlugs
-  .map((s) => merge(shared, readJson(join(DATA_DIR, `${s}.json`))))
-  .map((d) => ({ slug: d.slug, label: d.shortName, href: d.site.origin }));
+// otherCampuses 는 이 저장소 밖에 있는 캠퍼스(일산)를 끼워 넣기 위한 것이다.
+const siblings = [
+  ...allSlugs.map(loadCampus).map((d) => ({ slug: d.slug, label: d.shortName, href: d.site.origin })),
+  ...(shared.otherCampuses || []),
+].sort((a, b) => a.label.localeCompare(b.label, 'ko'));
 
 let built = 0;
 const report = [];
 
 for (const slug of targets) {
-  const d = merge(shared, readJson(join(DATA_DIR, `${slug}.json`)));
+  const d = loadCampus(slug);
   const outDir = join(OUT_DIR, slug);
   const galDir = join(outDir, 'gal');
   mkdirSync(galDir, { recursive: true });
@@ -118,6 +140,21 @@ for (const slug of targets) {
       2
     ) + '\n'
   );
+
+  // 파비콘 — 애니톡 레드 원 + 흰 AT. SVG 하나로 라이트/다크 탭 모두 대응된다.
+  writeFileSync(
+    join(outDir, 'favicon.svg'),
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="32" fill="#BD0D16"/>
+  <text x="32" y="43" text-anchor="middle" fill="#FFFFFF"
+        font-family="Pretendard, -apple-system, system-ui, sans-serif"
+        font-size="30" font-weight="800" letter-spacing="-1.5">AT</text>
+</svg>
+`
+  );
+
+  // 404 — 기본 Vercel 페이지 대신 같은 톤으로.
+  writeFileSync(join(outDir, '404.html'), render404(d));
 
   writeFileSync(
     join(outDir, 'README.md'),

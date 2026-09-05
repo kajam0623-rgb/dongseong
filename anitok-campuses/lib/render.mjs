@@ -742,6 +742,7 @@ function head(d) {
 <meta name="author" content="${esc(d.name)}">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="${esc(canonical)}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="geo.region" content="${esc(d.geo.regionCode)}">
 <meta name="geo.placename" content="${esc(d.geo.placename)}">
 ${geoMeta}
@@ -777,6 +778,40 @@ function resolveImageForMeta(d) {
   if (!h) return '';
   if (h.local) return d.site.origin + '/gal/' + h.local;
   return h.remote || '';
+}
+
+/* ─────────────────────────── 404 ─────────────────────────── */
+
+/** 기본 Vercel 404 대신 같은 톤의 페이지. 검색엔진에는 색인하지 않도록 막는다. */
+export function render404(d) {
+  return `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>페이지를 찾을 수 없습니다 | ${esc(d.name)}</title>
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>${CSS}
+.nf{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;gap:20px}
+.nf .code{font-size:clamp(56px,10vw,120px);font-weight:800;letter-spacing:-.06em;color:var(--accent)}
+.nf p{margin:0;font-size:15px;line-height:1.8;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="nf">
+  <span class="code">404</span>
+  <h1 class="h2">페이지를 찾을 수 없습니다</h1>
+  <p>주소가 바뀌었거나 삭제된 페이지입니다.<br>${esc(d.name)} 홈으로 돌아가 주세요.</p>
+  <div class="cta-row" style="justify-content:center">
+    <a class="btn btn--solid" href="/">홈으로 →</a>
+    <a class="btn btn--ghost" href="tel:${esc(digits(d.phone))}">${esc(d.phone)}</a>
+  </div>
+</div>
+</body>
+</html>
+`;
 }
 
 /* ─────────────────────────── 진입점 ─────────────────────────── */

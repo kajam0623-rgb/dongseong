@@ -3,7 +3,7 @@
   "repo": "gwanggyo-anitok",
   "name": "광교 애니톡 만화애니학원",
   "shortName": "광교",
-  "site": { "origin": "https://gwanggyo-anitok.vercel.app" },
+  "site": { "origin": "https://gwanggyo-anitok.vercel.app", "subdomain": "gwanggyo" },
   "phone": "031-211-0904",
   "address": {
     "street": "에듀타운로 102 광교중앙역 SK VIEW B동 7층 704호",
@@ -15,8 +15,8 @@
     "region": "경기도",
     "locality": "수원시 영통구",
     "placename": "경기도 수원시 영통구 광교",
-    "lat": null,
-    "lng": null
+    "lat": "37.2895932",
+    "lng": "127.0467405"
   },
   "links": {
     "naverPlace": "https://m.place.naver.com/place/1767979521/home",

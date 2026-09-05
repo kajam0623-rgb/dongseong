@@ -101,10 +101,13 @@ node build.mjs
 
 `data/<slug>.json` 에서 아직 비어 있거나 확인이 필요한 값:
 
+- **서브도메인** — `data/_shared.json` 의 `site.baseDomain` 만 채우면 된다.
+  `null` 이면 지점별 vercel.app 주소를 쓰고, `"anitok.com"` 으로 바꾸면 canonical ·
+  og:url · sitemap · 푸터 캠퍼스 링크가 전부 `https://<지점>.anitok.com` 으로 바뀐다.
+  (지점별 서브도메인은 각 지점 파일의 `site.subdomain` 값이다.)
+
 - `analytics.ga4` — 전부 `null`. 지점별 GA4 측정 ID를 넣으면 헤드에 태그가 붙는다.
   (일산은 `G-FT5DQ3M85P` 를 쓰고 있는데, 지점 트래픽을 섞지 않으려면 지점마다 새 속성을 만드는 편이 낫다.)
-- `geo.lat` / `geo.lng` — 전부 `null`. 값을 넣으면 `geo.position` · `ICBM` 메타와
-  JSON-LD `GeoCoordinates` 가 자동으로 붙는다. 로컬 SEO에 도움이 된다.
 - 네이버 사이트 인증 — 도메인마다 따로 발급받아야 해서 넣지 않았다. 발급 후
   `seo.verification` 배열에 `{ "name": "naver-site-verification", "content": "..." }` 를 추가한다.
 - 네이버 예약 URL — 일산은 예약 링크가 있지만 나머지 지점은 확인되지 않아
@@ -113,9 +116,31 @@ node build.mjs
 - 상담 시간 — anitok.com 대표 안내(평일 13:00-22:00, 토 13:00-18:00)를 공통으로 넣었다.
   지점별로 다르면 `_shared.json` 대신 지점 파일에서 `hours` 를 덮어쓴다.
 
+## 서브도메인으로 전환하기
+
+1. `data/_shared.json` 의 `site.baseDomain` 을 `"anitok.com"` 으로 바꾼다.
+2. `node build.mjs` 로 다시 빌드한다. 7개 사이트의 canonical · og:url · sitemap ·
+   푸터 링크가 전부 서브도메인으로 바뀐다.
+3. Vercel 각 프로젝트에서 Settings → Domains 에 해당 서브도메인을 추가한다.
+4. 도메인 등록기관(anitok.com DNS)에 Vercel이 알려 주는 CNAME 레코드를 추가한다.
+   보통 `mokdong` → `cname.vercel-dns.com` 형태다.
+
+| 지점 | 서브도메인 |
+|---|---|
+| 목동 본원 | `mokdong.anitok.com` |
+| 홍대 | `hongdae.anitok.com` |
+| 강동 | `gangdong.anitok.com` |
+| 부천 | `bucheon.anitok.com` |
+| 광교 | `gwanggyo.anitok.com` |
+| 김포 | `gimpo.anitok.com` |
+| 웹툰게임 아카데미 | `academy.anitok.com` |
+
+서브도메인 이름을 바꾸고 싶으면 각 지점 파일의 `site.subdomain` 만 고치면 된다.
+
 ## 데이터 출처
 
 지점 주소 · 전화 · 네이버 플레이스 · 블로그 · 인스타그램 · 합격 실적 · 운영 반 정보는
 전부 anitok.com 캠퍼스 안내(`https://anitok.com/locations`) 각 지점 상세 페이지에
-게시된 내용을 옮긴 것이다. 실적 수치는 지점이 스스로 밝힌 값이며, 바뀌었다면
+게시된 내용을 옮긴 것이다. 좌표(`geo.lat` / `geo.lng`)는 각 지점 네이버 플레이스
+페이지에서 확인한 값이며, 부천은 네이버 표기에 맞춰 원미구까지 넣었다. 실적 수치는 지점이 스스로 밝힌 값이며, 바뀌었다면
 `data/<slug>.json` 의 `results` · `passList` 를 고치면 된다.

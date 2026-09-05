@@ -4,7 +4,7 @@
   "name": "애니톡 웹툰게임 아카데미",
   "shortName": "웹툰게임 아카데미",
   "alternateName": "애니톡 아카데미",
-  "site": { "origin": "https://academy-anitok.vercel.app" },
+  "site": { "origin": "https://academy-anitok.vercel.app", "subdomain": "academy" },
   "phone": "02-2695-9514",
   "address": {
     "street": "신정중앙로 103 7층",
@@ -16,8 +16,8 @@
     "region": "서울특별시",
     "locality": "양천구",
     "placename": "서울특별시 양천구 신정동",
-    "lat": null,
-    "lng": null
+    "lat": "37.5265063",
+    "lng": "126.8633812"
   },
   "links": {
     "naverPlace": "https://m.place.naver.com/place/1906770465/home",

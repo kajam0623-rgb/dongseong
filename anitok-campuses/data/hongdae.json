@@ -3,7 +3,7 @@
   "repo": "hongdae-anitok",
   "name": "홍대 애니톡 만화애니학원",
   "shortName": "홍대",
-  "site": { "origin": "https://hongdae-anitok.vercel.app" },
+  "site": { "origin": "https://hongdae-anitok.vercel.app", "subdomain": "hongdae" },
   "phone": "02-3143-3313",
   "address": {
     "street": "양화로 127 첨단빌딩 6층",
@@ -15,8 +15,8 @@
     "region": "서울특별시",
     "locality": "마포구",
     "placename": "서울특별시 마포구 홍대",
-    "lat": null,
-    "lng": null
+    "lat": "37.5548834",
+    "lng": "126.9205097"
   },
   "links": {
     "naverPlace": "https://m.place.naver.com/place/33963773/home",
