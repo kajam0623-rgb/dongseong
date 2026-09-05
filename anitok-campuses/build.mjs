@@ -219,9 +219,9 @@ ${[
 `
   );
 
-  // PNG 대체본 — SVG 파비콘을 못 읽는 브라우저와 북마크용. 애니톡 로고 원본을
-  // 그대로 복사한다(외부 CDN 은 핫링크가 막혀 탭에서 비어 보였다).
-  for (const icon of ['icon-16.png', 'icon-32.png', 'favicon.ico']) {
+  // PNG 대체본 — SVG 파비콘을 못 읽는 브라우저용. 애니톡 로고 원본을 그대로
+  // 복사한다(외부 CDN 은 핫링크가 막혀 탭에서 비어 보였다).
+  for (const icon of ['icon-16.png', 'icon-32.png']) {
     writeFileSync(join(outDir, icon), readFileSync(join(ROOT, 'assets', icon)));
   }
 
