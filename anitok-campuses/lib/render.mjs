@@ -95,6 +95,7 @@ const CSS = `
   --glow-grad:radial-gradient(circle,rgba(189,13,22,.55) 0%,rgba(0,0,0,0) 66%);
   --btn-hover-bg:#FFFFFF; --btn-hover-fg:var(--accent);
   --logo-filter:brightness(0) invert(1);
+  --pulse:rgba(189,13,22,.55);
   --pad-y:clamp(96px,12vw,168px); --pad-x:clamp(20px,4vw,48px);
   --wrap:1400px;
 }
@@ -131,7 +132,7 @@ figure{margin:0}
 .brand-name{font-size:clamp(14px,1.3vw,17px);font-weight:800;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media (max-width:520px){.brand-logo{height:22px}.brand-div,.brand-name{display:none}}
 .nav{display:flex;align-items:center;gap:clamp(12px,1.6vw,26px)}
-.nav a{font-size:14px;font-weight:600;padding:4px 0;border-bottom:2px solid transparent;white-space:nowrap;transition:border-color .3s ease,opacity .3s ease}
+.nav a{font-size:14px;font-weight:600;padding:4px 0;border-bottom:2px solid transparent;white-space:nowrap;transition:border-color .34s cubic-bezier(.16,1,.3,1),opacity .34s cubic-bezier(.16,1,.3,1)}
 .nav a:hover{border-bottom-color:currentColor}
 .hdr-tel{display:inline-flex;align-items:center;gap:8px;background:var(--on-accent);color:var(--accent);font-size:14px;font-weight:800;padding:9px 18px;border-radius:999px;white-space:nowrap;transition:transform .3s cubic-bezier(.22,1.4,.36,1)}
 .hdr-tel:hover{transform:translateY(-2px)}
@@ -149,27 +150,34 @@ figure{margin:0}
 
 /* 히어로 */
 .hero{position:relative;overflow:hidden;height:min(94vh,1000px);min-height:640px;display:flex;align-items:center}
+.hero-bgw{position:absolute;inset:0;overflow:hidden;will-change:transform}
 .hero-bg{position:absolute;inset:0;width:100%;height:112%;object-fit:cover;object-position:center 30%;background:var(--hero-grad);font-size:0;animation:kenburns 26s cubic-bezier(.4,0,.6,1) infinite;will-change:transform}
 .hero-bg--none{background:var(--hero-grad)}
-.hero-glow{position:absolute;top:0;left:0;width:70vw;height:70vw;max-width:900px;max-height:900px;background:var(--glow-grad);mix-blend-mode:screen;pointer-events:none}
+.hero-glow{position:absolute;top:0;left:0;width:70vw;height:70vw;max-width:900px;max-height:900px;background:var(--glow-grad);mix-blend-mode:screen;pointer-events:none;animation:heroglow 14s ease-in-out infinite}
 .hero-scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.42) 46%,rgba(0,0,0,.12) 100%)}
 .hero-scrim-b{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2) 0%,rgba(0,0,0,0) 34%,rgba(0,0,0,.72) 100%)}
-.hero-in{position:relative;width:100%;max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,4vw,56px)}
+.hero-in{position:relative;width:100%;max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,4vw,56px);will-change:transform,opacity}
 .tag{display:inline-flex;align-items:center;gap:8px;background:var(--tag-bg);color:var(--on-accent);border-radius:999px;padding:8px 18px;font-size:13px;font-weight:700;margin-bottom:24px}
 .hero h1{font-size:clamp(34px,5.4vw,72px);line-height:1.14;letter-spacing:-.05em;text-shadow:0 6px 34px rgba(0,0,0,.8)}
 .hero h1 .over{display:block;font-size:.56em;font-weight:700;letter-spacing:-.03em;margin-bottom:10px}
 .hero h1 .lit{color:var(--accent-lit)}
+.hero h1[data-reveal]{transform:none}
+.hero h1 .w{display:inline-block;will-change:transform,opacity;opacity:0;transform:translateY(.5em);transition:opacity .42s ease-out var(--d,0ms),transform .62s cubic-bezier(.16,1,.3,1) var(--d,0ms)}
+.hero h1.is-in .w{opacity:1;transform:none}
 .hero-sub{margin:24px 0 0;font-size:clamp(15px,1.6vw,21px);font-weight:700;text-shadow:0 2px 16px rgba(0,0,0,.85)}
 .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.btn{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:800;padding:16px 32px;border-radius:999px;transition:transform .5s cubic-bezier(.22,1.4,.36,1),background .3s ease,color .3s ease}
-.btn:hover{transform:translateY(-3px)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:800;padding:16px 32px;border-radius:999px;transition:transform .52s cubic-bezier(.22,1.4,.36,1),background .32s ease,color .32s ease}
+.btn:hover{transform:translateY(-3px) scale(1.03)}
+.hero .btn--solid{animation:pulse 2.6s ease-out infinite}
 .btn--solid{background:var(--accent);color:var(--on-accent)}
 .btn--solid:hover{background:var(--btn-hover-bg);color:var(--btn-hover-fg)}
 .btn--ghost{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.4);color:#fff;font-weight:700;backdrop-filter:blur(8px)}
 .btn--ghost:hover{background:#fff;color:#111}
 .scroll-dot{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);width:22px;height:34px;border:1px solid rgba(255,255,255,.5);border-radius:999px;display:flex;justify-content:center;padding-top:7px}
 .scroll-dot i{width:3px;height:6px;border-radius:2px;background:#fff;animation:dot 1.9s cubic-bezier(.2,.8,.2,1) infinite}
-@keyframes kenburns{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.08) translateY(-1.5%)}}
+@keyframes kenburns{0%,100%{transform:scale(1.06) translate3d(0,0,0)}50%{transform:scale(1.16) translate3d(-1.6%,-1.2%,0)}}
+@keyframes heroglow{0%,100%{opacity:.25;transform:translate(-18%,-10%) scale(1)}50%{opacity:.5;transform:translate(-12%,-6%) scale(1.15)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--pulse)}70%{box-shadow:0 0 0 22px rgba(0,0,0,0)}}
 @keyframes dot{0%{opacity:0;transform:translateY(0)}40%{opacity:1}100%{opacity:0;transform:translateY(11px)}}
 
 /* about */
@@ -217,7 +225,8 @@ figure{margin:0}
 .class-range{font-size:13px;font-weight:700;color:var(--muted)}
 .class-lead{margin:14px 0 0;font-size:14px;line-height:1.8;color:var(--muted);max-width:70ch}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:26px}
-.card{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.card{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transform-style:preserve-3d}
+.card img{transform-origin:center;will-change:transform}
 .card img,.card .ph{width:100%;aspect-ratio:4/3;object-fit:cover;border:0;border-radius:0}
 .card-body{padding:20px;display:flex;flex-direction:column;gap:8px}
 .card-eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--accent-lit)}
@@ -279,11 +288,12 @@ figure{margin:0}
 .lb-close{position:absolute;top:18px;right:20px;width:44px;height:44px;border:1px solid var(--line-2);border-radius:50%;background:none;color:#fff;font-size:22px;cursor:pointer;line-height:1}
 
 /* 스크롤 리빌 */
-[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+[data-reveal]{opacity:0;transform:translateY(26px);will-change:transform,opacity;transition:opacity .38s ease-out,transform .58s cubic-bezier(.16,1,.3,1)}
 [data-reveal].is-in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   [data-reveal]{opacity:1;transform:none;transition:none}
-  .hero-bg{animation:none}
+  .hero h1 .w{opacity:1;transform:none;transition:none}
+  .hero-bg,.hero-glow,.hero .btn--solid{animation:none}
   .scroll-dot i{animation:none}
 }
 `;
@@ -306,6 +316,7 @@ const THEME_KEYS = {
   btnHoverBg: '--btn-hover-bg',
   btnHoverFg: '--btn-hover-fg',
   logoFilter: '--logo-filter',
+  pulse: '--pulse',
 };
 
 /** 지점 테마를 :root 오버라이드로 뽑는다. 값이 없는 키는 기본(레드)을 그대로 쓴다. */
@@ -359,20 +370,141 @@ const JS = `
     }, { passive: true });
   }
 
+  // 히어로 제목: 단어 단위로 쪼개 순차 등장 (80ms부터 38ms 간격)
+  var h1 = document.querySelector('.hero h1');
+  if (h1 && !rm) {
+    var n = 0;
+    var split = function(node){
+      Array.prototype.slice.call(node.childNodes).forEach(function(ch){
+        if (ch.nodeType === 3) {
+          var parts = ch.textContent.split(/(\s+)/).filter(function(t){ return t.length; });
+          if (!parts.length) return;
+          var frag = document.createDocumentFragment();
+          parts.forEach(function(p){
+            if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+            var w = document.createElement('span');
+            w.className = 'w';
+            w.textContent = p;
+            w.style.setProperty('--d', (80 + n++ * 38) + 'ms');
+            frag.appendChild(w);
+          });
+          node.replaceChild(frag, ch);
+        } else if (ch.nodeType === 1 && ch.tagName !== 'BR') {
+          split(ch);
+        }
+      });
+    };
+    split(h1);
+  }
+
   // 스크롤 리빌
+  var pending = [];
   var targets = document.querySelectorAll('[data-reveal]');
+  var play = function(el){
+    var d = parseInt(el.getAttribute('data-reveal'), 10) || 0;
+    setTimeout(function(){ el.classList.add('is-in'); }, d);
+  };
   if (rm || !('IntersectionObserver' in window)) {
     targets.forEach(function(el){ el.classList.add('is-in'); });
   } else {
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if (!e.isIntersecting) return;
-        var d = parseInt(e.target.getAttribute('data-reveal'), 10) || 0;
-        setTimeout(function(){ e.target.classList.add('is-in'); }, d);
         io.unobserve(e.target);
+        var i = pending.indexOf(e.target);
+        if (i > -1) pending.splice(i, 1);
+        play(e.target);
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.06 });
-    targets.forEach(function(el){ io.observe(el); });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.01 });
+    targets.forEach(function(el){ pending.push(el); io.observe(el); });
+  }
+
+  // 실적 숫자 카운트업 (1.2초, ease-out cubic)
+  if (!rm && 'IntersectionObserver' in window) {
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        cio.unobserve(e.target);
+        var node = e.target.firstChild;
+        var target = parseInt(node.textContent, 10);
+        var dur = 1200, t0 = performance.now();
+        var tick = function(t){
+          var p = Math.min(1, (t - t0) / dur);
+          node.textContent = String(Math.round(target * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.stat-value').forEach(function(el){
+      var f = el.firstChild;
+      if (f && f.nodeType === 3 && /^\d+$/.test(f.textContent.trim())) cio.observe(el);
+    });
+  }
+
+  // 카드 스프링 틸트 (마우스 위치 따라 기울고, 떼면 감쇠하며 복귀)
+  if (!rm && matchMedia('(hover:hover)').matches) {
+    document.querySelectorAll('.card, .stat, .vcard').forEach(function(card){
+      var img = card.querySelector('img');
+      var S = { v: 0, x: 0, tx: 0, rx: 0, ry: 0, trx: 0, try_: 0, raf: null };
+      var K = 0.13, D = 0.78;
+      var frame = function(){
+        S.v += (S.tx - S.x) * K; S.v *= D; S.x += S.v;
+        S.rx += (S.trx - S.rx) * 0.16; S.ry += (S.try_ - S.ry) * 0.16;
+        var lift = S.x;
+        card.style.transform = 'perspective(900px) translate3d(0,' + (-lift * 12).toFixed(2) + 'px,0) rotateX(' + S.rx.toFixed(3) + 'deg) rotateY(' + S.ry.toFixed(3) + 'deg) scale(' + (1 + lift * 0.022).toFixed(4) + ')';
+        card.style.boxShadow = lift > 0.004 ? '0 ' + (lift * 26).toFixed(1) + 'px ' + (lift * 52).toFixed(1) + 'px rgba(0,0,0,' + (lift * 0.5).toFixed(3) + ')' : 'none';
+        if (img) img.style.transform = 'scale(' + (1 + lift * 0.075).toFixed(4) + ')';
+        var settled = Math.abs(S.tx - S.x) < 0.0012 && Math.abs(S.v) < 0.0012 && Math.abs(S.trx - S.rx) < 0.01 && Math.abs(S.try_ - S.ry) < 0.01;
+        S.raf = settled ? null : requestAnimationFrame(frame);
+      };
+      var kick = function(){ if (S.raf == null) S.raf = requestAnimationFrame(frame); };
+      card.addEventListener('mouseenter', function(){ S.tx = 1; kick(); });
+      card.addEventListener('mousemove', function(ev){
+        var r = card.getBoundingClientRect();
+        var px = (ev.clientX - r.left) / r.width - 0.5;
+        var py = (ev.clientY - r.top) / r.height - 0.5;
+        S.try_ = px * 7; S.trx = -py * 7; kick();
+      });
+      card.addEventListener('mouseleave', function(){ S.tx = 0; S.trx = 0; S.try_ = 0; kick(); });
+    });
+  }
+
+  // 스크롤 연동 패럴랙스: 임계 감쇠로 휠을 멈춘 뒤에도 잠시 미끄러진다
+  var bgw = document.querySelector('[data-parallax]');
+  var heroIn = document.querySelector('.hero-in');
+  if (!rm && bgw) {
+    var ys = scrollY, idle = 0, raf = null;
+    var paint = function(y){
+      var vh = innerHeight || 1;
+      var p = Math.min(1, y / vh);
+      bgw.style.transform = 'translate3d(0,' + (y * 0.25).toFixed(1) + 'px,0)';
+      bgw.style.filter = 'brightness(' + (1 - p * 0.35).toFixed(3) + ')';
+      if (heroIn) {
+        heroIn.style.transform = 'translate3d(0,' + (y * 0.18).toFixed(1) + 'px,0)';
+        heroIn.style.opacity = String(Math.max(0, 1 - p * 1.3).toFixed(3));
+      }
+    };
+    var loop = function(){
+      var y = scrollY;
+      ys += (y - ys) * 0.14;
+      if (Math.abs(y - ys) < 0.15) ys = y;
+      paint(ys);
+      // 관찰자가 놓친 요소도 화면에 들어왔으면 재생한다
+      if (pending.length) {
+        var vh = innerHeight;
+        pending.slice().forEach(function(el){
+          var r = el.getBoundingClientRect();
+          if (r.top < vh * 0.94 && r.bottom > 0) { pending.splice(pending.indexOf(el), 1); play(el); }
+        });
+      }
+      idle = Math.abs(y - ys) > 0.15 ? 0 : idle + 1;
+      raf = idle > 90 ? null : requestAnimationFrame(loop);
+    };
+    var kickLoop = function(){ idle = 0; if (raf == null) raf = requestAnimationFrame(loop); };
+    addEventListener('scroll', kickLoop, { passive: true });
+    addEventListener('resize', kickLoop);
+    raf = requestAnimationFrame(loop);
   }
 
   // 모바일 메뉴
@@ -466,8 +598,8 @@ function hero(d, present) {
   // 히어로 배경은 장식 요소다. 캠퍼스 이름은 h1이 이미 말하고 있으므로 alt는 비우고,
   // 이미지가 못 뜰 때 alt 텍스트가 화면 구석에 남지 않게 한다.
   const bgEl = bg
-    ? `<img class="hero-bg" src="${url(bg.src)}" alt="" role="presentation" fetchpriority="high">`
-    : `<div class="hero-bg hero-bg--none" role="presentation"></div>`;
+    ? `<div class="hero-bgw" data-parallax><img class="hero-bg" src="${url(bg.src)}" alt="" role="presentation" fetchpriority="high"></div>`
+    : `<div class="hero-bgw" data-parallax><div class="hero-bg hero-bg--none" role="presentation"></div></div>`;
   const ctas = (d.hero.ctas || [])
     .map(
       (c, i) =>
@@ -787,7 +919,9 @@ function head(d, present) {
 <meta name="author" content="${esc(d.name)}">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="${esc(canonical)}">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="${url(d.brandFavicon)}" type="image/png">
+<link rel="apple-touch-icon" href="${url(d.brandTouchIcon)}">
+<link rel="alternate icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="geo.region" content="${esc(d.geo.regionCode)}">
 <meta name="geo.placename" content="${esc(d.geo.placename)}">
 ${geoMeta}
@@ -838,7 +972,9 @@ export function render404(d) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>페이지를 찾을 수 없습니다 | ${esc(d.name)}</title>
 <meta name="robots" content="noindex, follow">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="${url(d.brandFavicon)}" type="image/png">
+<link rel="apple-touch-icon" href="${url(d.brandTouchIcon)}">
+<link rel="alternate icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>${CSS}${themeCss(d.theme)}
 .nf{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;gap:20px}

@@ -18,6 +18,10 @@
       "href": "#gallery"
     },
     {
+      "label": "작품 갤러리",
+      "href": "#works"
+    },
+    {
       "label": "오시는 길",
       "href": "#visit"
     }
@@ -104,7 +108,8 @@
       "heroGrad": "radial-gradient(120% 90% at 15% 10%,#2A1304 0%,#000 70%)",
       "glowGrad": "radial-gradient(circle,rgba(255,122,24,.5) 0%,rgba(0,0,0,0) 66%)",
       "btnHoverBg": "#FFFFFF",
-      "btnHoverFg": "#C9480B"
+      "btnHoverFg": "#C9480B",
+      "pulse": "rgba(201,72,11,.55)"
     },
     "mono": {
       "label": "블랙 앤 화이트 (웹툰게임 아카데미)",
@@ -121,8 +126,11 @@
       "btnHoverFg": "#0B0B0C",
       "faviconBg": "#0B0B0C",
       "faviconFg": "#FFFFFF",
-      "logoFilter": "brightness(0)"
+      "logoFilter": "brightness(0)",
+      "pulse": "rgba(255,255,255,.35)"
     }
   },
-  "brandLogo": "https://cdn.imweb.me/thumbnail/20260323/40ecf7572706b.png"
+  "brandLogo": "https://cdn.imweb.me/thumbnail/20260323/40ecf7572706b.png",
+  "brandFavicon": "https://cdn.imweb.me/thumbnail/20260324/7919856d245b2.png",
+  "brandTouchIcon": "https://cdn.imweb.me/thumbnail/20260324/6d33465bd7c52.png"
 }

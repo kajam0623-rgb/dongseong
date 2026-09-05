@@ -301,6 +301,64 @@
           "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/839dc139af21b.jpg"
         }
       ]
+    },
+    {
+      "id": "works",
+      "kicker": "Student Works",
+      "title": "학생 작품 갤러리",
+      "lede": "애니톡 학생들이 수업에서 완성한 작품입니다. 상황표현 · 칸만화 · 이미지보드 · 일러스트 등 입시와 취미 과정의 결과물을 모았습니다.",
+      "items": [
+        {
+          "local": "work-1.webp",
+          "caption": "학생 우수작 · 청강대 만화과 포트폴리오",
+          "remote": "https://cdn.imweb.me/thumbnail/20260324/6776767549048.jpg"
+        },
+        {
+          "local": "work-2.webp",
+          "caption": "일러스트 · 2025 애니톡 일러스트 우수작",
+          "remote": "https://cdn.imweb.me/thumbnail/20260324/847367ad1fbad.png"
+        },
+        {
+          "local": "work-3.webp",
+          "caption": "상황표현 · 2025 애니톡 상황표현 우수작",
+          "remote": "https://cdn.imweb.me/thumbnail/20260410/2ae63a970028b.jpg"
+        },
+        {
+          "local": "work-4.webp",
+          "caption": "칸만화 · 2025 애니톡 칸만화 우수작",
+          "remote": "https://cdn.imweb.me/thumbnail/20260324/bc1588f48ff60.png"
+        },
+        {
+          "local": "work-5.webp",
+          "caption": "이미지보드 · 2025 애니톡 이미지보드 우수작",
+          "remote": "https://cdn.imweb.me/thumbnail/20260324/323e79a8097ee.png"
+        },
+        {
+          "local": "work-6.webp",
+          "caption": "학생 우수작 · 청강대 만화과 포트폴리오",
+          "remote": "https://cdn.imweb.me/thumbnail/20260324/2db76942bcf4d.jpg"
+        },
+        {
+          "local": "work-7.webp",
+          "caption": "일러스트 · 디지털드로잉 우수작",
+          "remote": "https://cdn.imweb.me/thumbnail/20260324/b8b22c4b9d295.jpg"
+        },
+        {
+          "local": "work-8.webp",
+          "caption": "상황표현 · 2025 애니톡 상황표현 우수작",
+          "remote": "https://cdn.imweb.me/thumbnail/20260324/91fa5b1550e59.png"
+        },
+        {
+          "local": "work-9.webp",
+          "caption": "칸만화 · 2025 애니톡 칸만화 우수작",
+          "remote": "https://cdn.imweb.me/thumbnail/20260324/2c129ce987f10.png"
+        },
+        {
+          "local": "work-10.webp",
+          "caption": "이미지보드 · 2025 애니톡 이미지보드 우수작",
+          "remote": "https://cdn.imweb.me/thumbnail/20260324/ea8a521683221.png"
+        }
+      ]
     }
   ],
   "faq": {
