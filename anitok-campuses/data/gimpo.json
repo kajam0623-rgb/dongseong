@@ -169,7 +169,8 @@
             "desc": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
             "image": {
               "local": "class-junior-1.webp",
-              "caption": "주니어반 수업"
+              "caption": "주니어반 수업",
+              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20231125_85%2F1700887996090lsQRU_JPEG%2FKakaoTalk_20231125_134744849_03.jpg"
             }
           }
         ]
@@ -185,7 +186,8 @@
             "desc": "인체와 명암, 투시 등 기본기를 다지며 그리는 습관을 만드는 과정입니다.",
             "image": {
               "local": "class-mid-1.webp",
-              "caption": "중등 예비반 수업"
+              "caption": "중등 예비반 수업",
+              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20231125_16%2F1700887997074Y8VcM_JPEG%2FKakaoTalk_20231125_134744849_10.jpg"
             }
           },
           {
@@ -194,7 +196,8 @@
             "desc": "애니고 · 예고 등 고교 입시를 목표로 실기와 포트폴리오를 준비합니다.",
             "image": {
               "local": "class-mid-2.webp",
-              "caption": "중등 입시반 실기"
+              "caption": "중등 입시반 실기",
+              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20231125_205%2F1700887996034bxs8Y_JPEG%2FKakaoTalk_20231125_134744849_09.jpg"
             }
           }
         ]
@@ -210,7 +213,8 @@
             "desc": "목표 대학 전형에 맞춘 수시 · 정시 실기를 단계별로 준비합니다.",
             "image": {
               "local": "class-high-1.webp",
-              "caption": "고등 입시반 실기"
+              "caption": "고등 입시반 실기",
+              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20231125_196%2F17008879960691vJw3_JPEG%2FKakaoTalk_20231125_134744849_07.jpg"
             }
           },
           {
@@ -219,7 +223,8 @@
             "desc": "태블릿으로 캐릭터 디자인과 채색, 일러스트 완성까지 다룹니다.",
             "image": {
               "local": "class-hobby-1.webp",
-              "caption": "디지털 드로잉반 수업"
+              "caption": "디지털 드로잉반 수업",
+              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20231125_23%2F1700887997452bYgvA_JPEG%2FKakaoTalk_20231125_134744849_14.jpg"
             }
           }
         ]

@@ -9,12 +9,12 @@
 | `about-1.webp` | 강동 학원 공간 | 임시(애니톡 CDN 이미지) |
 | `about-2.webp` | 강동 수업 현장 | 임시(애니톡 CDN 이미지) |
 | `about-3.webp` | 강동 작업 공간 | 임시(애니톡 CDN 이미지) |
-| `class-high-1.webp` | 미대입시반 실기 | 비어 있음 |
-| `class-high-2.webp` | 애니고 예고반 | 비어 있음 |
-| `class-junior-1.webp` | 초등반 수업 | 비어 있음 |
-| `class-junior-2.webp` | 중등반 수업 | 비어 있음 |
-| `class-hobby-1.webp` | 취미반 수업 | 비어 있음 |
-| `class-hobby-2.webp` | CG반 수업 | 비어 있음 |
+| `class-high-1.webp` | 미대입시반 실기 | 임시(애니톡 CDN 이미지) |
+| `class-high-2.webp` | 애니고 예고반 | 임시(애니톡 CDN 이미지) |
+| `class-junior-1.webp` | 초등반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-junior-2.webp` | 중등반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-hobby-1.webp` | 취미반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-hobby-2.webp` | CG반 수업 | 임시(애니톡 CDN 이미지) |
 | `gal-1.webp` | 강동 학원 공간 | 임시(애니톡 CDN 이미지) |
 | `gal-2.webp` | 강동 수업 현장 | 임시(애니톡 CDN 이미지) |
 | `gal-3.webp` | 강동 작업 공간 | 임시(애니톡 CDN 이미지) |

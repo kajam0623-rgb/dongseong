@@ -9,12 +9,12 @@
 | `about-1.webp` | 목동 본원 학원 공간 | 임시(애니톡 CDN 이미지) |
 | `about-2.webp` | 목동 본원 수업 현장 | 임시(애니톡 CDN 이미지) |
 | `about-3.webp` | 목동 본원 작업 공간 | 임시(애니톡 CDN 이미지) |
-| `class-high-1.webp` | 고1~2반 수업 | 비어 있음 |
-| `class-high-2.webp` | 미대입시반 실기 | 비어 있음 |
-| `class-mid-1.webp` | 중등반 수업 | 비어 있음 |
-| `class-mid-2.webp` | 애니고 예고반 실기 | 비어 있음 |
-| `class-junior-1.webp` | 주니어반 수업 | 비어 있음 |
-| `class-hobby-1.webp` | 디지털드로잉 수업 | 비어 있음 |
+| `class-high-1.webp` | 고1~2반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-high-2.webp` | 미대입시반 실기 | 임시(애니톡 CDN 이미지) |
+| `class-mid-1.webp` | 중등반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-mid-2.webp` | 애니고 예고반 실기 | 임시(애니톡 CDN 이미지) |
+| `class-junior-1.webp` | 주니어반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-hobby-1.webp` | 디지털드로잉 수업 | 임시(애니톡 CDN 이미지) |
 | `gal-1.webp` | 목동 본원 학원 공간 | 임시(애니톡 CDN 이미지) |
 | `gal-2.webp` | 목동 본원 수업 현장 | 임시(애니톡 CDN 이미지) |
 | `gal-3.webp` | 목동 본원 작업 공간 | 임시(애니톡 CDN 이미지) |

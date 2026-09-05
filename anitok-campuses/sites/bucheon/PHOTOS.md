@@ -9,14 +9,14 @@
 | `about-1.webp` | 부천 학원 공간 | 임시(애니톡 CDN 이미지) |
 | `about-2.webp` | 부천 수업 현장 | 임시(애니톡 CDN 이미지) |
 | `about-3.webp` | 부천 작업 공간 | 임시(애니톡 CDN 이미지) |
-| `class-high-1.webp` | 한예종 입시반 | 비어 있음 |
-| `class-high-2.webp` | 청강대 입시반 | 비어 있음 |
-| `class-high-3.webp` | 미대입시반 실기 | 비어 있음 |
-| `class-high-4.webp` | 대입예비반 수업 | 비어 있음 |
-| `class-junior-1.webp` | 주니어반 수업 | 비어 있음 |
-| `class-hobby-1.webp` | 성인취미반 수업 | 비어 있음 |
-| `class-hobby-2.webp` | 웹툰반 수업 | 비어 있음 |
-| `class-hobby-3.webp` | 디지털드로잉 수업 | 비어 있음 |
+| `class-high-1.webp` | 한예종 입시반 | 임시(애니톡 CDN 이미지) |
+| `class-high-2.webp` | 청강대 입시반 | 임시(애니톡 CDN 이미지) |
+| `class-high-3.webp` | 미대입시반 실기 | 임시(애니톡 CDN 이미지) |
+| `class-high-4.webp` | 대입예비반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-junior-1.webp` | 주니어반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-hobby-1.webp` | 성인취미반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-hobby-2.webp` | 웹툰반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-hobby-3.webp` | 디지털드로잉 수업 | 임시(애니톡 CDN 이미지) |
 | `gal-1.webp` | 부천 학원 공간 | 임시(애니톡 CDN 이미지) |
 | `gal-2.webp` | 부천 수업 현장 | 임시(애니톡 CDN 이미지) |
 | `gal-3.webp` | 부천 작업 공간 | 임시(애니톡 CDN 이미지) |

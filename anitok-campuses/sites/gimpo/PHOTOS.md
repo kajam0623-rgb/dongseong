@@ -9,11 +9,11 @@
 | `about-1.webp` | 김포 학원 공간 | 임시(애니톡 CDN 이미지) |
 | `about-2.webp` | 김포 수업 현장 | 임시(애니톡 CDN 이미지) |
 | `about-3.webp` | 김포 작업 공간 | 임시(애니톡 CDN 이미지) |
-| `class-junior-1.webp` | 주니어반 수업 | 비어 있음 |
-| `class-mid-1.webp` | 중등 예비반 수업 | 비어 있음 |
-| `class-mid-2.webp` | 중등 입시반 실기 | 비어 있음 |
-| `class-high-1.webp` | 고등 입시반 실기 | 비어 있음 |
-| `class-hobby-1.webp` | 디지털 드로잉반 수업 | 비어 있음 |
+| `class-junior-1.webp` | 주니어반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-mid-1.webp` | 중등 예비반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-mid-2.webp` | 중등 입시반 실기 | 임시(애니톡 CDN 이미지) |
+| `class-high-1.webp` | 고등 입시반 실기 | 임시(애니톡 CDN 이미지) |
+| `class-hobby-1.webp` | 디지털 드로잉반 수업 | 임시(애니톡 CDN 이미지) |
 | `gal-1.webp` | 김포 학원 공간 | 임시(애니톡 CDN 이미지) |
 | `gal-2.webp` | 김포 수업 현장 | 임시(애니톡 CDN 이미지) |
 | `gal-3.webp` | 김포 작업 공간 | 임시(애니톡 CDN 이미지) |

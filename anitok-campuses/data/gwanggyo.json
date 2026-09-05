@@ -169,7 +169,8 @@
             "desc": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
             "image": {
               "local": "class-junior-1.webp",
-              "caption": "초등반 수업"
+              "caption": "초등반 수업",
+              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20251108_275%2F1762585124544b0IUh_JPEG%2FRR.jpg"
             }
           },
           {
@@ -178,7 +179,8 @@
             "desc": "기본기를 다지며 만화 콘티와 채색까지 다루는 중등 과정입니다.",
             "image": {
               "local": "class-junior-2.webp",
-              "caption": "중등반 수업"
+              "caption": "중등반 수업",
+              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220728_127%2F1658994231431UzcE6_JPEG%2FIMG_E4606.JPG"
             }
           }
         ]
@@ -194,7 +196,8 @@
             "desc": "인체 구조와 명암, 투시를 처음부터 잡습니다. 입시 실기의 뼈대를 만드는 반입니다.",
             "image": {
               "local": "class-prep-1.webp",
-              "caption": "예비반 수업"
+              "caption": "예비반 수업",
+              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220728_50%2F1658994232595rBrFM_JPEG%2FKakaoTalk_20220627_150514285.jpg"
             }
           },
           {
@@ -203,7 +206,8 @@
             "desc": "미대입시 실기와 애니고 · 예고 실기, 면접까지 목표 전형에 맞춰 준비합니다.",
             "image": {
               "local": "class-high-1.webp",
-              "caption": "입시반 실기"
+              "caption": "입시반 실기",
+              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220728_177%2F1658994236288hhoeH_JPEG%2FKakaoTalk_20220526_174753963.jpg"
             }
           }
         ]
@@ -219,7 +223,8 @@
             "desc": "콘티부터 컷 연출, 완성 원고까지 한 편의 웹툰을 직접 만들어 봅니다.",
             "image": {
               "local": "class-hobby-1.webp",
-              "caption": "웹툰 수업"
+              "caption": "웹툰 수업",
+              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220728_298%2F16589942371583oaCk_JPEG%2FKakaoTalk_20220526_174753963_01.jpg"
             }
           },
           {
@@ -228,7 +233,8 @@
             "desc": "태블릿으로 캐릭터 디자인과 채색, 배경 연출까지 완성작으로 마무리합니다.",
             "image": {
               "local": "class-hobby-2.webp",
-              "caption": "CG 수업"
+              "caption": "CG 수업",
+              "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220728_281%2F1658994237801RR1n6_JPEG%2FKakaoTalk_20220613_170224651.jpg"
             }
           }
         ]

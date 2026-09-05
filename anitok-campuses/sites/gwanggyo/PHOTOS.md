@@ -9,12 +9,12 @@
 | `about-1.webp` | 광교 학원 공간 | 임시(애니톡 CDN 이미지) |
 | `about-2.webp` | 광교 수업 현장 | 임시(애니톡 CDN 이미지) |
 | `about-3.webp` | 광교 작업 공간 | 임시(애니톡 CDN 이미지) |
-| `class-junior-1.webp` | 초등반 수업 | 비어 있음 |
-| `class-junior-2.webp` | 중등반 수업 | 비어 있음 |
-| `class-prep-1.webp` | 예비반 수업 | 비어 있음 |
-| `class-high-1.webp` | 입시반 실기 | 비어 있음 |
-| `class-hobby-1.webp` | 웹툰 수업 | 비어 있음 |
-| `class-hobby-2.webp` | CG 수업 | 비어 있음 |
+| `class-junior-1.webp` | 초등반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-junior-2.webp` | 중등반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-prep-1.webp` | 예비반 수업 | 임시(애니톡 CDN 이미지) |
+| `class-high-1.webp` | 입시반 실기 | 임시(애니톡 CDN 이미지) |
+| `class-hobby-1.webp` | 웹툰 수업 | 임시(애니톡 CDN 이미지) |
+| `class-hobby-2.webp` | CG 수업 | 임시(애니톡 CDN 이미지) |
 | `gal-1.webp` | 광교 학원 공간 | 임시(애니톡 CDN 이미지) |
 | `gal-2.webp` | 광교 수업 현장 | 임시(애니톡 CDN 이미지) |
 | `gal-3.webp` | 광교 작업 공간 | 임시(애니톡 CDN 이미지) |
