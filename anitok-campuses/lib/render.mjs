@@ -230,11 +230,12 @@ figure{margin:0}
 .stat-detail li{font-size:13px;line-height:1.6;color:var(--muted)}
 
 /* 합격 명단 */
-.pass{margin:44px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:0 34px}
-.pass li{display:flex;align-items:baseline;gap:12px;padding:15px 2px;border-bottom:1px solid var(--line)}
-.pass .yr{flex:0 0 auto;font-size:12px;font-weight:800;color:var(--accent-lit);letter-spacing:.02em}
-.pass .what{flex:1 1 auto;font-size:14px;font-weight:600;line-height:1.5}
-.pass .who{flex:0 0 auto;font-size:13px;color:var(--muted-2)}
+.pass{margin:44px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.pass li{display:flex;align-items:center;gap:14px;padding:18px 20px;text-align:left;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;transition:background .3s ease,border-color .3s ease,transform .5s cubic-bezier(.22,1.4,.36,1),box-shadow .42s cubic-bezier(.16,1,.3,1)}
+.pass li:hover{background:#1A1A1D;border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.45)}
+.pass .yr{flex:0 0 auto;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:800;letter-spacing:.02em;padding:5px 10px;border-radius:999px}
+.pass .what{flex:1 1 auto;min-width:0;font-size:14.5px;font-weight:700;letter-spacing:-.03em;line-height:1.45;overflow-wrap:anywhere}
+.pass .who{flex:0 1 auto;min-width:0;font-size:13px;font-weight:600;color:var(--muted-2)}
 .note{margin:26px 0 0;font-size:13px;line-height:1.7;color:var(--muted-2)}
 
 /* 수업 과목 */
@@ -296,6 +297,18 @@ figure{margin:0}
 .foot .sites a:hover{color:#fff}
 
 /* 모바일 하단 고정 바 */
+/* 우측 사이드 퀵바 — 평소엔 아이콘, 올리면 글자가 펼쳐진다 */
+.rail{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:70;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.rail a{display:flex;align-items:center;height:48px;padding:0 14px;border-radius:999px;background:rgba(20,20,22,.72);backdrop-filter:blur(14px) saturate(1.3);border:1px solid rgba(255,255,255,.12);color:#fff;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.45);transition:background .32s ease,border-color .32s ease,color .32s ease,box-shadow .42s cubic-bezier(.16,1,.3,1),transform .52s cubic-bezier(.22,1.4,.36,1)}
+.rail a.pri{background:var(--accent);border-color:var(--accent);color:var(--on-accent);box-shadow:0 8px 28px var(--pulse)}
+.rail a:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent);transform:translateX(-4px)}
+.rail a.pri:hover{background:var(--btn-hover-bg);border-color:var(--btn-hover-bg);color:var(--btn-hover-fg)}
+.rail svg{flex:0 0 auto}
+.rail span{max-width:0;opacity:0;margin-left:0;white-space:nowrap;font-size:13px;font-weight:700;letter-spacing:-.02em;overflow:hidden;transition:max-width .46s cubic-bezier(.16,1,.3,1),opacity .32s ease,margin-left .46s cubic-bezier(.16,1,.3,1)}
+.rail a:hover span,.rail a:focus-visible span{max-width:120px;opacity:1;margin-left:9px}
+@media (max-width:900px){.rail{display:none}}
+@media (prefers-reduced-motion:reduce){.rail a,.rail span{transition:none}}
+
 .qbar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
 .qbar a{padding:15px 8px;text-align:center;font-size:14px;font-weight:800;background:#141416}
 .qbar a.pri{background:var(--accent);color:var(--on-accent)}
@@ -310,8 +323,12 @@ figure{margin:0}
 /* 스크롤 리빌 */
 [data-reveal]{opacity:0;transform:translateY(26px);will-change:transform,opacity;transition:opacity .38s ease-out,transform .58s cubic-bezier(.16,1,.3,1)}
 [data-reveal].is-in{opacity:1;transform:none}
+/* 카드가 아래에서 세워지듯 넘어오는 등장. 합격 명단처럼 한 줄씩
+ * 시선이 따라가야 하는 목록에 쓴다(일산 캠퍼스와 같은 모션). */
+[data-reveal][data-fx="flip"]{transform-origin:50% 100%;transform:perspective(900px) rotateX(-72deg) translateY(26px) scale(.96);transition:opacity .46s ease-out,transform .76s cubic-bezier(.2,1.25,.34,1)}
+[data-reveal][data-fx="flip"].is-in{transform:none}
 @media (prefers-reduced-motion:reduce){
-  [data-reveal]{opacity:1;transform:none;transition:none}
+  [data-reveal],[data-reveal][data-fx="flip"]{opacity:1;transform:none;transition:none}
   .hero h1 .w{opacity:1;transform:none;transition:none}
   .hero-bg,.hero-glow,.hero .btn--solid{animation:none}
   .scroll-dot i{animation:none}
@@ -363,7 +380,7 @@ a,button,summary{touch-action:manipulation}
   .steps{grid-template-columns:repeat(auto-fit,minmax(min(46%,140px),1fr));gap:10px}
   .step{padding:20px 16px}
   .visit-grid{grid-template-columns:1fr;gap:10px}
-  .class-group{margin-top:38px}
+  .class-group{margin-top:38px}.pass li{padding:15px 16px;gap:11px}.pass .what{font-size:14px}
   .faq summary{padding:19px 40px 19px 28px;font-size:15px}
   .faq summary::before{top:19px}
   .faq summary::after{top:26px}
@@ -815,11 +832,15 @@ function results(d) {
 
 function passList(d) {
   if (!d.passList?.items?.length) return '';
+  // 한 줄씩 45ms 씩 밀어 순서대로 세워지게 한다. 목록이 길어도 지루하지
+  // 않도록 지연은 540ms 에서 멈춘다.
   const rows = d.passList.items
     .map(
-      (p) => `<li><span class="yr">${esc(p.year)}</span><span class="what">${esc(
-        p.what
-      )}</span>${p.who ? `<span class="who">${esc(p.who)}</span>` : ''}</li>`
+      (p, i) => `<li data-reveal="${Math.min(i * 45, 540)}" data-fx="flip"><span class="yr">${esc(
+        p.year
+      )}</span><span class="what">${esc(p.what)}</span>${
+        p.who ? `<span class="who">${esc(p.who)}</span>` : ''
+      }</li>`
     )
     .join('');
   return `<section class="sec" id="college">
@@ -827,7 +848,7 @@ function passList(d) {
     <span class="kicker" data-reveal="0">${esc(d.passList.kicker)}</span>
     <h2 class="h2" data-reveal="40">${esc(d.passList.title)}</h2>
     ${d.passList.lede ? `<p class="lede" data-reveal="80">${esc(d.passList.lede)}</p>` : ''}
-    <ul class="pass" data-reveal="0">${rows}</ul>
+    <ul class="pass">${rows}</ul>
     ${d.passList.note ? `<p class="note">${esc(d.passList.note)}</p>` : ''}
   </div>
 </section>`;
@@ -994,6 +1015,40 @@ function visit(d, siblings) {
     </div>
   </div>
 </section>`;
+}
+
+/**
+ * 우측 사이드 퀵바 (PC 전용).
+ *
+ * 일산 캠퍼스와 같은 형태다. 평소에는 아이콘만 보이는 알약이고, 올려 두면
+ * 글자가 옆으로 펼쳐진다. 모바일에서는 하단 qbar 가 같은 역할을 하므로
+ * 900px 이하에서 숨긴다.
+ */
+function sideRail(d) {
+  const booking = naverBooking(d);
+  const I = {
+    check: '<path d="M20 6 9 17l-5-5"></path>',
+    chat: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>',
+    tel: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"></path>',
+    map: '<path d="M12 21s-7-5.4-7-11a7 7 0 1 1 14 0c0 5.6-7 11-7 11z"></path><circle cx="12" cy="10" r="2.6"></circle>',
+  };
+  const icon = (k) =>
+    `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[k]}</svg>`;
+  const item = (href, key, label, pri, blank) =>
+    `<a${pri ? ' class="pri"' : ''} href="${url(href)}"${
+      blank ? ' target="_blank" rel="noopener"' : ''
+    }>${icon(key)}<span>${esc(label)}</span></a>`;
+
+  const items = [
+    item('#results', 'check', '합격실적', false, false),
+    booking && item(booking, 'chat', '예약상담', true, true),
+    item(`tel:${digits(d.phone)}`, 'tel', '전화문의', false, false),
+    d.links?.naverPlace && item(d.links.naverPlace, 'map', '오시는 길', false, true),
+  ].filter(Boolean);
+
+  return `<aside class="rail" aria-label="빠른 메뉴">
+  ${items.join('\n  ')}
+</aside>`;
 }
 
 function quickBar(d) {
@@ -1475,6 +1530,7 @@ ${faq(d)}
 ${localIndex(d)}
 </main>
 ${visit(d, siblings)}
+${sideRail(d)}
 ${quickBar(d)}
 <div class="lb" data-lb aria-hidden="true"><button class="lb-close" type="button" aria-label="닫기">&times;</button><img alt=""></div>
 <script src="/s.js" defer></script>
