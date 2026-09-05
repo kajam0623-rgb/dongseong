@@ -14,6 +14,12 @@
 
 일산은 이미 `kajam0623-rgb/ilsan-anitok` 에 있으므로 여기서 다시 만들지 않는다.
 
+## 배포
+
+`DEPLOY.md` 참고. 새 저장소 없이 지금 바로 띄우려면 Vercel 프로젝트 7개를 만들고
+Root Directory만 `anitok-campuses/sites/<slug>` 로 지정하면 된다. 지점별 저장소로
+쪼개려면 `./tools/create-repos.sh` 를 실행한다.
+
 ## 빌드
 
 빌드 도구도 의존성도 없다. Node 18 이상이면 된다.

@@ -69,7 +69,11 @@ for (const slug of targets) {
   mkdirSync(galDir, { recursive: true });
 
   // gal/ 에 실제로 존재하는 파일만 로컬 이미지로 인정한다.
-  const present = new Set(readdirSync(galDir));
+  const present = new Set(readdirSync(galDir).filter((f) => f !== '.gitkeep'));
+
+  // git은 빈 디렉터리를 추적하지 않는다. 지점 저장소로 분리했을 때도 gal/ 이
+  // 남아 있도록 자리를 잡아 둔다.
+  writeFileSync(join(galDir, '.gitkeep'), '');
 
   const html = renderPage(d, { present, siblings });
   writeFileSync(join(outDir, 'index.html'), html);
