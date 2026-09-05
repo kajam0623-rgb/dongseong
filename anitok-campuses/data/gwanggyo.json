@@ -287,7 +287,7 @@
         },
         {
           "local": "work-2.webp",
-          "caption": "일러스트 · 024 애니톡 일러스트 우수작",
+          "caption": "일러스트 · 2024 애니톡 일러스트 우수작",
           "remote": "https://cdn.imweb.me/thumbnail/20260324/a137e2add9b7d.jpg"
         },
         {
@@ -366,26 +366,8 @@
   "local": {
     "area": "광교",
     "areaSlug": "gwanggyo",
-    "subjects": [
-      "manhwa",
-      "webtoon",
-      "ani",
-      "drawing"
-    ],
-    "nearby": [
-      {
-        "area": "수원",
-        "slug": "suwon",
-        "subject": "manhwa",
-        "note": "수원 전역에서 광교중앙역 캠퍼스로 다니는 학생들이 있습니다."
-      },
-      {
-        "area": "영통",
-        "slug": "yeongtong",
-        "subject": "webtoon",
-        "note": "같은 영통구 안에 있어 가장 가까운 웹툰 수업입니다."
-      }
-    ],
+    "subjects": [],
+    "nearby": [],
     "nearbyAll": [
       {
         "area": "수원",
@@ -397,7 +379,7 @@
         "area": "영통",
         "slug": "yeongtong",
         "subject": "webtoon",
-        "note": "같은 영통구 안에 있어 가장 가까운 웹툰 수업입니다."
+        "note": "같은 영통구 안에 있습니다."
       },
       {
         "area": "용인",
@@ -410,6 +392,26 @@
         "slug": "dongtan",
         "subject": "ani",
         "note": "동탄 권역에서 광교로 다니는 학생들이 있습니다."
+      }
+    ],
+    "pending": [
+      "manhwa",
+      "webtoon",
+      "ani",
+      "drawing"
+    ],
+    "nearbyPending": [
+      {
+        "area": "수원",
+        "slug": "suwon",
+        "subject": "manhwa",
+        "note": "수원 전역에서 광교중앙역 캠퍼스로 다니는 학생들이 있습니다."
+      },
+      {
+        "area": "영통",
+        "slug": "yeongtong",
+        "subject": "webtoon",
+        "note": "같은 영통구 안에 있습니다."
       }
     ]
   }

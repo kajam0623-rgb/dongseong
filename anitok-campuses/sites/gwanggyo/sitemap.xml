@@ -6,40 +6,4 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://gwanggyo-anitok.vercel.app/gwanggyo-manhwa</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gwanggyo-anitok.vercel.app/gwanggyo-webtoon</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gwanggyo-anitok.vercel.app/gwanggyo-ani</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gwanggyo-anitok.vercel.app/gwanggyo-drawing</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gwanggyo-anitok.vercel.app/suwon-manhwa</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gwanggyo-anitok.vercel.app/yeongtong-webtoon</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
 </urlset>
