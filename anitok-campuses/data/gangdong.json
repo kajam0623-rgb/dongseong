@@ -4,7 +4,10 @@
   "themeName": "orange",
   "name": "강동 애니톡 만화애니학원",
   "shortName": "강동",
-  "site": { "origin": "https://gangdong-anitok.vercel.app", "subdomain": "gangdong" },
+  "site": {
+    "origin": "https://gangdong-anitok.vercel.app",
+    "subdomain": "gangdong"
+  },
   "phone": "02-486-2220",
   "address": {
     "street": "양재대로 1579 한영빌딩 5층",
@@ -56,13 +59,19 @@
     "sub": "4년 연속 한국예술종합학교 애니메이션과 최종 합격",
     "image": {
       "local": "hero.webp",
-      "remote": "https://cdn.imweb.me/thumbnail/20260505/03f39bab03658.jpg",
+      "remote": "https://ldb-phinf.pstatic.net/20150901_157/1441073109588KnROj_JPEG/33907366_0.jpg",
       "caption": "강동 애니톡 만화애니학원",
       "eager": true
     },
     "ctas": [
-      { "label": "온라인 상담 신청 →", "href": "https://anitok.com/questions" },
-      { "label": "02-486-2220", "href": "tel:02-486-2220" }
+      {
+        "label": "온라인 상담 신청 →",
+        "href": "https://anitok.com/questions"
+      },
+      {
+        "label": "02-486-2220",
+        "href": "tel:02-486-2220"
+      }
     ]
   },
   "about": {
@@ -80,9 +89,21 @@
       "애니톡 8개 직영 캠퍼스"
     ],
     "figures": [
-      { "local": "about-1.webp", "caption": "강동 캠퍼스 실기실" },
-      { "local": "about-2.webp", "caption": "CG반 교실" },
-      { "local": "about-3.webp", "caption": "주니어반 교실" }
+      {
+        "local": "about-1.webp",
+        "caption": "강동 학원 공간",
+        "remote": "https://ldb-phinf.pstatic.net/20220603_267/1654245816871rdKxi_JPEG/KakaoTalk_20220603_172932136.jpg"
+      },
+      {
+        "local": "about-2.webp",
+        "caption": "강동 수업 현장",
+        "remote": "https://ldb-phinf.pstatic.net/20220603_78/1654245816595u6goP_JPEG/KakaoTalk_20220603_172932136_01.jpg"
+      },
+      {
+        "local": "about-3.webp",
+        "caption": "강동 작업 공간",
+        "remote": "https://ldb-phinf.pstatic.net/20220603_15/1654245816902WkmYe_JPEG/KakaoTalk_20220603_172932136_02.jpg"
+      }
     ]
   },
   "results": {
@@ -95,28 +116,40 @@
         "label": "한국예술종합학교 최종 합격",
         "value": "4",
         "unit": "년 연속",
-        "detail": ["한예종 애니메이션과", "최종 합격생 배출"]
+        "detail": [
+          "한예종 애니메이션과",
+          "최종 합격생 배출"
+        ]
       },
       {
         "when": "2023-2024",
         "label": "청강문화산업대학교 합격",
         "value": "14",
         "unit": "명",
-        "detail": ["애니메이션 · 웹툰만화 · 게임", "청강대 합격 전문"]
+        "detail": [
+          "애니메이션 · 웹툰만화 · 게임",
+          "청강대 합격 전문"
+        ]
       },
       {
         "when": "강동 · 송파",
         "label": "지역 만화애니 전문학원",
         "value": "100",
         "unit": "% 자체 배출",
-        "detail": ["타 캠퍼스 실적 합산 없음", "강동 애니톡 단독 실적"]
+        "detail": [
+          "타 캠퍼스 실적 합산 없음",
+          "강동 애니톡 단독 실적"
+        ]
       },
       {
         "when": "커리큘럼",
         "label": "운영 과정",
         "value": "6",
         "unit": "개 반",
-        "detail": ["미대입시 · 애니고입시 · 중등", "초등 · 취미 · CG"]
+        "detail": [
+          "미대입시 · 애니고입시 · 중등",
+          "초등 · 취미 · CG"
+        ]
       }
     ]
   },
@@ -134,13 +167,19 @@
             "eyebrow": "고3 · N수",
             "title": "미대입시반",
             "desc": "한예종, 청강대 등 목표 대학 전형에 맞춘 수시 · 정시 실기를 준비합니다.",
-            "image": { "local": "class-high-1.webp", "caption": "미대입시반 실기" }
+            "image": {
+              "local": "class-high-1.webp",
+              "caption": "미대입시반 실기"
+            }
           },
           {
             "eyebrow": "중3 예고입시",
             "title": "애니고 · 예고반",
             "desc": "애니고와 예고 실기, 포트폴리오, 면접까지 함께 준비하는 중등 입시 과정입니다.",
-            "image": { "local": "class-high-2.webp", "caption": "애니고 예고반" }
+            "image": {
+              "local": "class-high-2.webp",
+              "caption": "애니고 예고반"
+            }
           }
         ]
       },
@@ -153,13 +192,19 @@
             "eyebrow": "초등",
             "title": "초등반",
             "desc": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
-            "image": { "local": "class-junior-1.webp", "caption": "초등반 수업" }
+            "image": {
+              "local": "class-junior-1.webp",
+              "caption": "초등반 수업"
+            }
           },
           {
             "eyebrow": "중등",
             "title": "중등반",
             "desc": "기본기를 다지며 만화 콘티와 채색까지 다루는 중등 과정입니다.",
-            "image": { "local": "class-junior-2.webp", "caption": "중등반 수업" }
+            "image": {
+              "local": "class-junior-2.webp",
+              "caption": "중등반 수업"
+            }
           }
         ]
       },
@@ -172,13 +217,19 @@
             "eyebrow": "취미",
             "title": "취미반",
             "desc": "부담 없이 좋아하는 그림을 그리며 기본기를 함께 쌓는 과정입니다.",
-            "image": { "local": "class-hobby-1.webp", "caption": "취미반 수업" }
+            "image": {
+              "local": "class-hobby-1.webp",
+              "caption": "취미반 수업"
+            }
           },
           {
             "eyebrow": "디지털",
             "title": "CG반",
             "desc": "태블릿과 디지털 툴로 채색과 마무리까지 완성하는 과정입니다.",
-            "image": { "local": "class-hobby-2.webp", "caption": "CG반 수업" }
+            "image": {
+              "local": "class-hobby-2.webp",
+              "caption": "CG반 수업"
+            }
           }
         ]
       }
@@ -187,16 +238,38 @@
   "galleries": [
     {
       "id": "gallery",
-      "kicker": "Class Gallery",
-      "title": "작품 · 수업 갤러리",
-      "lede": "강동 캠퍼스 학생들의 작품과 수업 현장입니다.",
+      "kicker": "Campus",
+      "title": "캠퍼스 둘러보기",
+      "lede": "강동 애니톡 만화애니학원의 학원 공간과 수업 현장입니다.",
       "items": [
-        { "local": "gal-1.webp", "caption": "입시반 학생작품" },
-        { "local": "gal-2.webp", "caption": "실기 준비 수업" },
-        { "local": "gal-3.webp", "caption": "중등반 학생작품" },
-        { "local": "gal-4.webp", "caption": "초등반 학생작품" },
-        { "local": "gal-5.webp", "caption": "CG반 작업 화면" },
-        { "local": "gal-6.webp", "caption": "취미반 수업" }
+        {
+          "local": "gal-1.webp",
+          "caption": "강동 학원 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDdfMTEw%2FMDAxNzg2MDg5NDY2MzQz._QLW9bKNHgFy3PTNtiQa1w_DUPtdp10Gtpl5K0aYfFkg.hdHSnryGgOGDuYok1FMZ7_v_ckQm5nJLuo-bZVOQ-lYg.PNG%2Fimage.png%2F1920x1080"
+        },
+        {
+          "local": "gal-2.webp",
+          "caption": "강동 수업 현장",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDdfOCAg%2FMDAxNzg2MDg5NDI4Nzcz.tVyDS--QwYZZXmo7TafTQhwIuTSTHTBcESOsj3NEcn8g.QpyVPvmhOGqVWb2Syh5FN26-4gGOl4aWllny5kL5_f0g.PNG%2Fimage.png%2F1920x1080"
+        },
+        {
+          "local": "gal-3.webp",
+          "caption": "강동 작업 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDdfMjU1%2FMDAxNzg2MDg5MzI2ODA0.KUukN56qSQBEF532JBBunmpBN4iiv819WLjcpAPpRm0g.QDk-5XzFqxjF8rdTzWCEEzqxdIfeazQLLc8YzReVl2sg.PNG%2Fimage.png%2F1920x1080"
+        },
+        {
+          "local": "gal-4.webp",
+          "caption": "강동 학원 내부",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDdfMTc5%2FMDAxNzg2MDg4NDEzMjkz.Ve8dyasqm2YZsMKv07IfkpLz-7HFVVsehnjXkQucQt4g.oHion6JOecjWLWjyusl6_nC9sdx6Z2Aye2H2r7OY4s0g.PNG%2Fimage.png%2F1920x1080"
+        },
+        {
+          "local": "gal-5.webp",
+          "caption": "CG반 작업 화면"
+        },
+        {
+          "local": "gal-6.webp",
+          "caption": "취미반 수업"
+        }
       ]
     }
   ],

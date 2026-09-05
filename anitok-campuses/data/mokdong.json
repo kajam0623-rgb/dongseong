@@ -5,7 +5,10 @@
   "name": "애니톡 목동 본원",
   "shortName": "목동 본원",
   "alternateName": "목동애니톡학원",
-  "site": { "origin": "https://mokdong-anitok.vercel.app", "subdomain": "mokdong" },
+  "site": {
+    "origin": "https://mokdong-anitok.vercel.app",
+    "subdomain": "mokdong"
+  },
   "phone": "02-2644-3313",
   "address": {
     "street": "목동로 201 한성빌딩 7층",
@@ -59,13 +62,19 @@
     "sub": "대한민국 대표 만화애니 전문학원, 애니톡의 시작점",
     "image": {
       "local": "hero.webp",
-      "remote": "https://cdn.imweb.me/thumbnail/20260505/ea11830e1d6b8.jpg",
+      "remote": "https://ldb-phinf.pstatic.net/20260311_35/1773210594198N2ISl_PNG/5.png",
       "caption": "애니톡 목동 본원",
       "eager": true
     },
     "ctas": [
-      { "label": "온라인 상담 신청 →", "href": "https://anitok.com/questions" },
-      { "label": "02-2644-3313", "href": "tel:02-2644-3313" }
+      {
+        "label": "온라인 상담 신청 →",
+        "href": "https://anitok.com/questions"
+      },
+      {
+        "label": "02-2644-3313",
+        "href": "tel:02-2644-3313"
+      }
     ]
   },
   "about": {
@@ -83,9 +92,21 @@
       "한국애니고 17년 연속 합격"
     ],
     "figures": [
-      { "local": "about-1.webp", "caption": "목동 본원 실기실" },
-      { "local": "about-2.webp", "caption": "디지털드로잉실" },
-      { "local": "about-3.webp", "caption": "주니어반 교실" }
+      {
+        "local": "about-1.webp",
+        "caption": "목동 본원 학원 공간",
+        "remote": "https://ldb-phinf.pstatic.net/20260409_106/17757349056618JqXl_JPEG/KakaoTalk_20260408_194749856_01.jpg"
+      },
+      {
+        "local": "about-2.webp",
+        "caption": "목동 본원 수업 현장",
+        "remote": "https://ldb-phinf.pstatic.net/20260409_145/1775734905600moH1J_JPEG/KakaoTalk_20260408_194749856_02.jpg"
+      },
+      {
+        "local": "about-3.webp",
+        "caption": "목동 본원 작업 공간",
+        "remote": "https://ldb-phinf.pstatic.net/20260409_216/1775734905693wpMQN_JPEG/KakaoTalk_20260408_194749856.jpg"
+      }
     ]
   },
   "results": {
@@ -98,28 +119,40 @@
         "label": "상위권 대학 합격",
         "value": "서울대",
         "unit": "외",
-        "detail": ["서울대 1명 · 홍익대 3명 · 고려대 1명", "세종대 1명 · 건국대 6명 · 성신여대 1명"]
+        "detail": [
+          "서울대 1명 · 홍익대 3명 · 고려대 1명",
+          "세종대 1명 · 건국대 6명 · 성신여대 1명"
+        ]
       },
       {
         "when": "2023-2026",
         "label": "청강대 합격",
         "value": "31",
         "unit": "명",
-        "detail": ["청강문화산업대학교", "애니메이션 · 웹툰만화 · 게임"]
+        "detail": [
+          "청강문화산업대학교",
+          "애니메이션 · 웹툰만화 · 게임"
+        ]
       },
       {
         "when": "2023-2026",
         "label": "만화애니 주요대 합격",
         "value": "경기대",
         "unit": "6명",
-        "detail": ["상명대 9명 · 계원예대 10명", "한성대 2명 · 명지대 1명"]
+        "detail": [
+          "상명대 9명 · 계원예대 10명",
+          "한성대 2명 · 명지대 1명"
+        ]
       },
       {
         "when": "애니고 · 예고",
         "label": "한국애니고 합격",
         "value": "17",
         "unit": "년 연속",
-        "detail": ["한국애니고 10명 · 경기예술고 7명", "서울웹툰애니고 13명"]
+        "detail": [
+          "한국애니고 10명 · 경기예술고 7명",
+          "서울웹툰애니고 13명"
+        ]
       }
     ],
     "note": "예림디자인고 22명(2024~2026), 서울영상고 46명(2024~2026) 합격. 실적은 애니톡 목동 본원 단독 기준입니다."
@@ -129,23 +162,91 @@
     "title": "목동 본원 합격 대학 · 고교",
     "lede": "2023~2026학년도 목동 본원에서 배출한 합격 학교입니다.",
     "items": [
-      { "year": "대학", "what": "서울대학교", "who": "1명" },
-      { "year": "대학", "what": "홍익대학교", "who": "3명" },
-      { "year": "대학", "what": "고려대학교", "who": "1명" },
-      { "year": "대학", "what": "건국대학교", "who": "6명" },
-      { "year": "대학", "what": "경기대학교", "who": "6명" },
-      { "year": "대학", "what": "상명대학교", "who": "9명" },
-      { "year": "대학", "what": "세종대학교", "who": "1명" },
-      { "year": "대학", "what": "청강문화산업대학교", "who": "31명" },
-      { "year": "대학", "what": "계원예술대학교", "who": "10명" },
-      { "year": "대학", "what": "한성대학교", "who": "2명" },
-      { "year": "대학", "what": "성신여자대학교", "who": "1명" },
-      { "year": "대학", "what": "명지대학교", "who": "1명" },
-      { "year": "고교", "what": "한국애니메이션고등학교", "who": "10명" },
-      { "year": "고교", "what": "경기예술고등학교", "who": "7명" },
-      { "year": "고교", "what": "서울웹툰애니메이션고등학교", "who": "13명" },
-      { "year": "고교", "what": "예림디자인고등학교", "who": "22명" },
-      { "year": "고교", "what": "서울영상고등학교", "who": "46명" }
+      {
+        "year": "대학",
+        "what": "서울대학교",
+        "who": "1명"
+      },
+      {
+        "year": "대학",
+        "what": "홍익대학교",
+        "who": "3명"
+      },
+      {
+        "year": "대학",
+        "what": "고려대학교",
+        "who": "1명"
+      },
+      {
+        "year": "대학",
+        "what": "건국대학교",
+        "who": "6명"
+      },
+      {
+        "year": "대학",
+        "what": "경기대학교",
+        "who": "6명"
+      },
+      {
+        "year": "대학",
+        "what": "상명대학교",
+        "who": "9명"
+      },
+      {
+        "year": "대학",
+        "what": "세종대학교",
+        "who": "1명"
+      },
+      {
+        "year": "대학",
+        "what": "청강문화산업대학교",
+        "who": "31명"
+      },
+      {
+        "year": "대학",
+        "what": "계원예술대학교",
+        "who": "10명"
+      },
+      {
+        "year": "대학",
+        "what": "한성대학교",
+        "who": "2명"
+      },
+      {
+        "year": "대학",
+        "what": "성신여자대학교",
+        "who": "1명"
+      },
+      {
+        "year": "대학",
+        "what": "명지대학교",
+        "who": "1명"
+      },
+      {
+        "year": "고교",
+        "what": "한국애니메이션고등학교",
+        "who": "10명"
+      },
+      {
+        "year": "고교",
+        "what": "경기예술고등학교",
+        "who": "7명"
+      },
+      {
+        "year": "고교",
+        "what": "서울웹툰애니메이션고등학교",
+        "who": "13명"
+      },
+      {
+        "year": "고교",
+        "what": "예림디자인고등학교",
+        "who": "22명"
+      },
+      {
+        "year": "고교",
+        "what": "서울영상고등학교",
+        "who": "46명"
+      }
     ],
     "note": "2023~2026학년도 누적. 고교 실적 중 예림디자인고 · 서울영상고는 2024~2026학년도 기준입니다."
   },
@@ -163,13 +264,19 @@
             "eyebrow": "입시 기초 과정",
             "title": "고1~2반",
             "desc": "인체 구조와 명암, 투시를 처음부터 잡습니다. 입시 실기의 뼈대를 만드는 반입니다.",
-            "image": { "local": "class-high-1.webp", "caption": "고1~2반 수업" }
+            "image": {
+              "local": "class-high-1.webp",
+              "caption": "고1~2반 수업"
+            }
           },
           {
             "eyebrow": "고3 · N수",
             "title": "미대입시반",
             "desc": "서울대, 홍익대, 고려대, 건국대, 경기대, 청강대 등 목표 대학 전형에 맞춘 수시 · 정시 실기.",
-            "image": { "local": "class-high-2.webp", "caption": "미대입시반 실기" }
+            "image": {
+              "local": "class-high-2.webp",
+              "caption": "미대입시반 실기"
+            }
           }
         ]
       },
@@ -182,13 +289,19 @@
             "eyebrow": "중등 심화",
             "title": "중등반",
             "desc": "심화 기초와 포트폴리오, 공모전 준비까지 다룹니다. 특성화고 입시도 함께 준비합니다.",
-            "image": { "local": "class-mid-1.webp", "caption": "중등반 수업" }
+            "image": {
+              "local": "class-mid-1.webp",
+              "caption": "중등반 수업"
+            }
           },
           {
             "eyebrow": "중3 예고입시",
             "title": "애니고 · 예고반",
             "desc": "한국애니고, 경기예고, 서울웹툰애니고, 예림디자인고, 서울영상고 실기와 면접을 준비합니다.",
-            "image": { "local": "class-mid-2.webp", "caption": "애니고 예고반 실기" }
+            "image": {
+              "local": "class-mid-2.webp",
+              "caption": "애니고 예고반 실기"
+            }
           }
         ]
       },
@@ -201,13 +314,19 @@
             "eyebrow": "초등 취미",
             "title": "주니어반",
             "desc": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
-            "image": { "local": "class-junior-1.webp", "caption": "주니어반 수업" }
+            "image": {
+              "local": "class-junior-1.webp",
+              "caption": "주니어반 수업"
+            }
           },
           {
             "eyebrow": "일러스트 · CG",
             "title": "취미 · 디지털드로잉",
             "desc": "취미 미술, 일러스트, CG, 웹툰 교육. 원하는 분야만 골라 배우실 수 있습니다.",
-            "image": { "local": "class-hobby-1.webp", "caption": "디지털드로잉 수업" }
+            "image": {
+              "local": "class-hobby-1.webp",
+              "caption": "디지털드로잉 수업"
+            }
           }
         ]
       }
@@ -216,16 +335,39 @@
   "galleries": [
     {
       "id": "gallery",
-      "kicker": "Class Gallery",
-      "title": "작품 · 수업 갤러리",
-      "lede": "목동 본원 학생들의 실기 작품과 수업 현장입니다.",
+      "kicker": "Campus",
+      "title": "캠퍼스 둘러보기",
+      "lede": "애니톡 목동 본원의 학원 공간과 수업 현장입니다.",
       "items": [
-        { "local": "gal-1.webp", "caption": "고등반 학생작품" },
-        { "local": "gal-2.webp", "caption": "입시 실기 준비 수업" },
-        { "local": "gal-3.webp", "caption": "중등반 학생작품" },
-        { "local": "gal-4.webp", "caption": "상황표현 문제풀이 수업" },
-        { "local": "gal-5.webp", "caption": "주니어반 학생작품" },
-        { "local": "gal-6.webp", "caption": "디지털드로잉 수업" }
+        {
+          "local": "gal-1.webp",
+          "caption": "목동 본원 학원 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDVfNjMg%2FMDAxNzg1OTMzMTg2MDIw.8G0SRNH5eOhohVgpOaSh_-5V0_Frasf-91bfC7_NyDYg.r8ABDJRHS8e0AurWFBROAZWhtChEA58FI2QIoCQA-l0g.PNG%2F2.png%2F600x600"
+        },
+        {
+          "local": "gal-2.webp",
+          "caption": "목동 본원 수업 현장",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDVfMjA3%2FMDAxNzg1OTMzMjIxMDc0.Oqlx9WWazEA6GhbYdc4-g8V5Wh8rpaC_Od9I8a9Vdr8g.4muMf4LDgl2_OwvRhj3MJkGGAsQptgE8Pt_oKRXy9B4g.PNG%2F4.png%2F600x600"
+        },
+        {
+          "local": "gal-3.webp",
+          "caption": "목동 본원 작업 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDVfNTIg%2FMDAxNzg1OTMzMjAyNjIz.d7exqBIcUwzwhhHy0O2Z_AaKr2WnD10jYOyoPbiHdsIg.Yul3Wbw4KwHGAPj_lquuvQfGJO0JkGgE13LcTy3onQUg.PNG%2F3.png%2F600x600"
+        },
+        {
+          "local": "gal-4.webp",
+          "caption": "목동 본원 학원 내부",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDVfMTU3%2FMDAxNzg1OTMzMjM3MTkw.PW-nMcuUHOfBCvv62MSN8I4pJZWNBTOry8pYpDij9EIg.dDK70AUvyihc-vMwMrFD-LaYRFzbWQHDMjYqoDmjZIEg.PNG%2F5.png%2F600x600"
+        },
+        {
+          "local": "gal-5.webp",
+          "caption": "목동 본원 드로잉 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MDVfMjAw%2FMDAxNzg1OTMzMTQ4NzA0.xC1ofJljxwabriuLMP7DP8b3oFzEuG1libBqH5_BPvkg.blz8D-z_pTOWjgr2Mn4oHLXDUaffM_kCm1pOjVWQERMg.PNG%2F1.png%2F600x600"
+        },
+        {
+          "local": "gal-6.webp",
+          "caption": "디지털드로잉 수업"
+        }
       ]
     }
   ],

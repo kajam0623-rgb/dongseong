@@ -4,7 +4,10 @@
   "themeName": "orange",
   "name": "부천 애니톡 만화애니학원",
   "shortName": "부천",
-  "site": { "origin": "https://bucheon-anitok.vercel.app", "subdomain": "bucheon" },
+  "site": {
+    "origin": "https://bucheon-anitok.vercel.app",
+    "subdomain": "bucheon"
+  },
   "phone": "032-329-8685",
   "address": {
     "street": "길주로 219 드림빌딩 6층",
@@ -57,13 +60,19 @@
     "sub": "부천 · 인천 · 부평 · 중동 · 상동 대표 만화애니학원",
     "image": {
       "local": "hero.webp",
-      "remote": "https://cdn.imweb.me/thumbnail/20260505/06b67c2b790cc.jpg",
+      "remote": "https://ldb-phinf.pstatic.net/20260409_24/1775731714052eGohE_PNG/%C1%A6%B8%F1%C0%BB_%C0%D4%B7%C2%C7%D8%C1%D6%BC%BC%BF%E4._%2829%29.png",
       "caption": "부천 애니톡 만화애니학원",
       "eager": true
     },
     "ctas": [
-      { "label": "온라인 상담 신청 →", "href": "https://anitok.com/questions" },
-      { "label": "032-329-8685", "href": "tel:032-329-8685" }
+      {
+        "label": "온라인 상담 신청 →",
+        "href": "https://anitok.com/questions"
+      },
+      {
+        "label": "032-329-8685",
+        "href": "tel:032-329-8685"
+      }
     ]
   },
   "about": {
@@ -81,9 +90,21 @@
       "애니톡 8개 직영 캠퍼스"
     ],
     "figures": [
-      { "local": "about-1.webp", "caption": "부천 캠퍼스 실기실" },
-      { "local": "about-2.webp", "caption": "디지털드로잉실" },
-      { "local": "about-3.webp", "caption": "주니어반 교실" }
+      {
+        "local": "about-1.webp",
+        "caption": "부천 학원 공간",
+        "remote": "https://ldb-phinf.pstatic.net/20241226_23/1735216917119D5qEv_JPEG/KakaoTalk_20241213_173134460.jpg"
+      },
+      {
+        "local": "about-2.webp",
+        "caption": "부천 수업 현장",
+        "remote": "https://ldb-phinf.pstatic.net/20250416_130/1744785979166fIAxy_JPEG/KakaoTalk_20250416_151519604.jpg"
+      },
+      {
+        "local": "about-3.webp",
+        "caption": "부천 작업 공간",
+        "remote": "https://naverbooking-phinf.pstatic.net/20260407_283/1775563626539i72WW_JPEG/image.jpg"
+      }
     ]
   },
   "results": {
@@ -96,28 +117,40 @@
         "label": "명문대 합격",
         "value": "한예종",
         "unit": "외",
-        "detail": ["한국예술종합학교", "건국대학교 · 청강문화산업대학교"]
+        "detail": [
+          "한국예술종합학교",
+          "건국대학교 · 청강문화산업대학교"
+        ]
       },
       {
         "when": "애니고 · 예고",
         "label": "고교 입시 합격",
         "value": "경기예고",
         "unit": "외",
-        "detail": ["경기예술고등학교", "한국애니메이션고등학교"]
+        "detail": [
+          "경기예술고등학교",
+          "한국애니메이션고등학교"
+        ]
       },
       {
         "when": "커리큘럼",
         "label": "운영 과정",
         "value": "8",
         "unit": "개 반",
-        "detail": ["미대입시 · 한예종입시 · 청강대입시", "대입예비 · 주니어 · 성인취미 · 웹툰 · 디지털드로잉"]
+        "detail": [
+          "미대입시 · 한예종입시 · 청강대입시",
+          "대입예비 · 주니어 · 성인취미 · 웹툰 · 디지털드로잉"
+        ]
       },
       {
         "when": "지역",
         "label": "수강 권역",
         "value": "부천",
         "unit": "· 인천 · 부평",
-        "detail": ["중동 · 상동 인근", "부천시 길주로 219"]
+        "detail": [
+          "중동 · 상동 인근",
+          "부천시 길주로 219"
+        ]
       }
     ]
   },
@@ -135,25 +168,37 @@
             "eyebrow": "최상위 전형",
             "title": "한예종 입시반",
             "desc": "한국예술종합학교 전형에 맞춘 실기와 포트폴리오, 면접까지 준비합니다.",
-            "image": { "local": "class-high-1.webp", "caption": "한예종 입시반" }
+            "image": {
+              "local": "class-high-1.webp",
+              "caption": "한예종 입시반"
+            }
           },
           {
             "eyebrow": "청강대 전형",
             "title": "청강대 입시반",
             "desc": "청강문화산업대학교 애니메이션 · 웹툰만화 · 게임 전공 실기에 맞춘 과정입니다.",
-            "image": { "local": "class-high-2.webp", "caption": "청강대 입시반" }
+            "image": {
+              "local": "class-high-2.webp",
+              "caption": "청강대 입시반"
+            }
           },
           {
             "eyebrow": "수시 · 정시",
             "title": "미대입시반",
             "desc": "건국대를 비롯한 목표 대학 전형에 맞춘 수시 · 정시 실기를 준비합니다.",
-            "image": { "local": "class-high-3.webp", "caption": "미대입시반 실기" }
+            "image": {
+              "local": "class-high-3.webp",
+              "caption": "미대입시반 실기"
+            }
           },
           {
             "eyebrow": "입시 기초",
             "title": "대입예비반",
             "desc": "인체 구조와 명암, 투시를 처음부터 잡는 입시 기본기 과정입니다.",
-            "image": { "local": "class-high-4.webp", "caption": "대입예비반 수업" }
+            "image": {
+              "local": "class-high-4.webp",
+              "caption": "대입예비반 수업"
+            }
           }
         ]
       },
@@ -166,25 +211,37 @@
             "eyebrow": "초 · 중등",
             "title": "주니어반",
             "desc": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
-            "image": { "local": "class-junior-1.webp", "caption": "주니어반 수업" }
+            "image": {
+              "local": "class-junior-1.webp",
+              "caption": "주니어반 수업"
+            }
           },
           {
             "eyebrow": "성인",
             "title": "성인취미반",
             "desc": "대학생, 직장인 누구나 부담 없이 시작할 수 있는 취미 과정입니다.",
-            "image": { "local": "class-hobby-1.webp", "caption": "성인취미반 수업" }
+            "image": {
+              "local": "class-hobby-1.webp",
+              "caption": "성인취미반 수업"
+            }
           },
           {
             "eyebrow": "스토리 · 연출",
             "title": "웹툰반",
             "desc": "콘티부터 컷 연출, 완성 원고까지 한 편의 웹툰을 직접 만들어 봅니다.",
-            "image": { "local": "class-hobby-2.webp", "caption": "웹툰반 수업" }
+            "image": {
+              "local": "class-hobby-2.webp",
+              "caption": "웹툰반 수업"
+            }
           },
           {
             "eyebrow": "디지털",
             "title": "디지털드로잉 · 일러스트반",
             "desc": "태블릿으로 캐릭터 디자인과 채색, 배경 연출까지 완성작으로 마무리합니다.",
-            "image": { "local": "class-hobby-3.webp", "caption": "디지털드로잉 수업" }
+            "image": {
+              "local": "class-hobby-3.webp",
+              "caption": "디지털드로잉 수업"
+            }
           }
         ]
       }
@@ -193,16 +250,39 @@
   "galleries": [
     {
       "id": "gallery",
-      "kicker": "Class Gallery",
-      "title": "작품 · 수업 갤러리",
-      "lede": "부천 캠퍼스 학생들의 작품과 수업 현장입니다.",
+      "kicker": "Campus",
+      "title": "캠퍼스 둘러보기",
+      "lede": "부천 애니톡 만화애니학원의 학원 공간과 수업 현장입니다.",
       "items": [
-        { "local": "gal-1.webp", "caption": "입시반 학생작품" },
-        { "local": "gal-2.webp", "caption": "실기 준비 수업" },
-        { "local": "gal-3.webp", "caption": "상황표현 학생작품" },
-        { "local": "gal-4.webp", "caption": "주니어반 학생작품" },
-        { "local": "gal-5.webp", "caption": "웹툰반 작업" },
-        { "local": "gal-6.webp", "caption": "디지털드로잉 수업" }
+        {
+          "local": "gal-1.webp",
+          "caption": "부천 학원 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjdfMTY2%2FMDAxNzg3ODMzMjA4ODE0.UteLfzqwXxXGMM8syXgF-IsmwdZ_LbkOJxZsbtvY6CEg.qDjumYf7ADL6k4KDjCBJJhuFLWrd5CqIlEL-9KeMgAog.PNG"
+        },
+        {
+          "local": "gal-2.webp",
+          "caption": "부천 수업 현장",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjdfMTkg%2FMDAxNzg3ODMzMjA5Nzgy.ibV9m2x4pgeTh8OxBMD-aAqqhBcMwyoVBy_7mT2VcjYg.MDRLfIpDbhm_YvQrP1DizgRPAOxNbyhnEe7JTJT3-oMg.PNG"
+        },
+        {
+          "local": "gal-3.webp",
+          "caption": "부천 작업 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjdfMTc0%2FMDAxNzg3ODMzMjA5OTE4.2KF-ULgJU9wnpprSSdxdRJb5g26yZzyDJ8OpzZBoTg0g.RIVn3rLttkDD3WJP5eIqmElYBY4PgWLsI-1JuACF6hsg.PNG"
+        },
+        {
+          "local": "gal-4.webp",
+          "caption": "부천 학원 내부",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjdfMTc3%2FMDAxNzg3ODMzMjA5MjI1.88flE9c8qjtW1DFlBBNItv-J6OxRsJ6-9G57UGznXoQg.0gB9Vqjdc_Ys8q1CFg_v4nMHI1YZM1hlw23VmFlypV4g.PNG"
+        },
+        {
+          "local": "gal-5.webp",
+          "caption": "부천 드로잉 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjdfMTg4%2FMDAxNzg3ODMzMjA5NjY5.XK7CwhzZyJa2F4fX_704sAinSlEH35zqHIh6_ohbS0Ew.3E-vV6ywZ_y9hTB_MtnHRtRJfStTRDuJ-Fg5I0k91Fcg.PNG"
+        },
+        {
+          "local": "gal-6.webp",
+          "caption": "디지털드로잉 수업"
+        }
       ]
     }
   ],

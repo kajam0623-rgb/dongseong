@@ -5,7 +5,10 @@
   "name": "애니톡 웹툰게임 아카데미",
   "shortName": "웹툰게임 아카데미",
   "alternateName": "애니톡 아카데미",
-  "site": { "origin": "https://academy-anitok.vercel.app", "subdomain": "academy" },
+  "site": {
+    "origin": "https://academy-anitok.vercel.app",
+    "subdomain": "academy"
+  },
   "phone": "02-2695-9514",
   "address": {
     "street": "신정중앙로 103 7층",
@@ -57,13 +60,19 @@
     "sub": "개인별 실력과 수준에 맞춘 1:1 수업",
     "image": {
       "local": "hero.webp",
-      "remote": "https://cdn.imweb.me/thumbnail/20260505/eef3bbb82320c.jpg",
+      "remote": "https://ldb-phinf.pstatic.net/20230131_24/1675148312543K8u4K_PNG/DSC00025.png",
       "caption": "애니톡 웹툰게임 아카데미",
       "eager": true
     },
     "ctas": [
-      { "label": "온라인 상담 신청 →", "href": "https://anitok.com/questions" },
-      { "label": "02-2695-9514", "href": "tel:02-2695-9514" }
+      {
+        "label": "온라인 상담 신청 →",
+        "href": "https://anitok.com/questions"
+      },
+      {
+        "label": "02-2695-9514",
+        "href": "tel:02-2695-9514"
+      }
     ]
   },
   "about": {
@@ -81,9 +90,21 @@
       "애니톡 8개 직영 캠퍼스"
     ],
     "figures": [
-      { "local": "about-1.webp", "caption": "신티크 작업실" },
-      { "local": "about-2.webp", "caption": "개인별 책상" },
-      { "local": "about-3.webp", "caption": "1:1 수업 현장" }
+      {
+        "local": "about-1.webp",
+        "caption": "웹툰게임 아카데미 학원 공간",
+        "remote": "https://ldb-phinf.pstatic.net/20250430_297/1746004565976Pxadf_JPEG/%B1%B3%BD%C0%BA%F1_%B9%D7_%B9%DD%C8%AF_%B0%D4%BD%C3%C7%A5.jpg"
+      },
+      {
+        "local": "about-2.webp",
+        "caption": "웹툰게임 아카데미 수업 현장",
+        "remote": "https://naverbooking-phinf.pstatic.net/20231116_285/1700124422209kzaYM_JPEG/1.jpg"
+      },
+      {
+        "local": "about-3.webp",
+        "caption": "웹툰게임 아카데미 작업 공간",
+        "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjZfMjQ3%2FMDAxNzg3NzM0NzQ0MzYz.21HbzSKTAMT0lw6ZeABz_vCIV_cNJpXK2eJu8w1I4GYg.etuhs-YxaYCgODgPIhSCkxCsMgqgNeC8XjStnSu5Bx4g.JPEG%2F6.jpg%2F2379x2362"
+      }
     ]
   },
   "results": {
@@ -96,28 +117,40 @@
         "label": "청강문화산업대학교 합격",
         "value": "웹툰만화",
         "unit": "· 게임",
-        "detail": ["청강대 웹툰만화과 포폴전형 합격", "청강대 게임과 포폴전형 합격"]
+        "detail": [
+          "청강대 웹툰만화과 포폴전형 합격",
+          "청강대 게임과 포폴전형 합격"
+        ]
       },
       {
         "when": "전문 과정",
         "label": "서울웹툰아카데미 합격",
         "value": "SWA",
         "unit": "합격",
-        "detail": ["포트폴리오 · 면접 준비", "전문 과정 진학"]
+        "detail": [
+          "포트폴리오 · 면접 준비",
+          "전문 과정 진학"
+        ]
       },
       {
         "when": "공모전",
         "label": "웹툰 공모전 입상",
         "value": "각종",
         "unit": "입상",
-        "detail": ["웹툰 · 일러스트 공모전", "출품작 지도"]
+        "detail": [
+          "웹툰 · 일러스트 공모전",
+          "출품작 지도"
+        ]
       },
       {
         "when": "취업",
         "label": "실무 취업 성공",
         "value": "게임사",
         "unit": "· 에이전시",
-        "detail": ["게임회사 포트폴리오 취업 성공", "웹툰 에이전시 다수 취업 성공"]
+        "detail": [
+          "게임회사 포트폴리오 취업 성공",
+          "웹툰 에이전시 다수 취업 성공"
+        ]
       }
     ]
   },
@@ -135,25 +168,37 @@
             "eyebrow": "기초",
             "title": "인체드로잉",
             "desc": "인체 구조와 비율, 동세를 처음부터 잡습니다. 모든 그림의 뼈대가 되는 과정입니다.",
-            "image": { "local": "class-hobby-1.webp", "caption": "인체드로잉 수업" }
+            "image": {
+              "local": "class-hobby-1.webp",
+              "caption": "인체드로잉 수업"
+            }
           },
           {
             "eyebrow": "스토리 · 연출",
             "title": "웹툰",
             "desc": "콘티부터 컷 연출, 완성 원고까지 한 편의 웹툰을 직접 만들어 봅니다.",
-            "image": { "local": "class-hobby-2.webp", "caption": "웹툰 수업" }
+            "image": {
+              "local": "class-hobby-2.webp",
+              "caption": "웹툰 수업"
+            }
           },
           {
             "eyebrow": "캐릭터 · 채색",
             "title": "일러스트 기초",
             "desc": "캐릭터 디자인과 채색, 배경 연출까지 한 장의 완성작으로 마무리합니다.",
-            "image": { "local": "class-hobby-3.webp", "caption": "일러스트 수업" }
+            "image": {
+              "local": "class-hobby-3.webp",
+              "caption": "일러스트 수업"
+            }
           },
           {
             "eyebrow": "신티크 · 태블릿",
             "title": "디지털드로잉",
             "desc": "와콤 신티크 액정타블렛으로 디지털 작업 흐름을 처음부터 익힙니다.",
-            "image": { "local": "class-hobby-4.webp", "caption": "디지털드로잉 수업" }
+            "image": {
+              "local": "class-hobby-4.webp",
+              "caption": "디지털드로잉 수업"
+            }
           }
         ]
       },
@@ -166,13 +211,19 @@
             "eyebrow": "청강대 · 계원예대",
             "title": "포트폴리오 수업",
             "desc": "청강대, 계원예대, 서울웹툰아카데미(SWA) 등 목표 전형에 맞춘 포트폴리오를 완성합니다.",
-            "image": { "local": "class-port-1.webp", "caption": "포트폴리오 작업" }
+            "image": {
+              "local": "class-port-1.webp",
+              "caption": "포트폴리오 작업"
+            }
           },
           {
             "eyebrow": "전형 대비",
             "title": "면접 수업",
             "desc": "포트폴리오 설명과 면접 질의응답까지 함께 준비합니다.",
-            "image": { "local": "class-port-2.webp", "caption": "면접 준비 수업" }
+            "image": {
+              "local": "class-port-2.webp",
+              "caption": "면접 준비 수업"
+            }
           }
         ]
       },
@@ -185,13 +236,19 @@
             "eyebrow": "출품 준비",
             "title": "웹툰 · 일러스트 공모전",
             "desc": "공모전 요강 분석부터 출품작 완성까지 단계별로 지도합니다.",
-            "image": { "local": "class-job-1.webp", "caption": "공모전 준비" }
+            "image": {
+              "local": "class-job-1.webp",
+              "caption": "공모전 준비"
+            }
           },
           {
             "eyebrow": "실무 포트폴리오",
             "title": "게임회사 · 웹툰회사 취업준비",
             "desc": "업계 기준에 맞춘 포트폴리오를 완성해 취업과 데뷔를 준비합니다.",
-            "image": { "local": "class-job-2.webp", "caption": "취업 포트폴리오" }
+            "image": {
+              "local": "class-job-2.webp",
+              "caption": "취업 포트폴리오"
+            }
           }
         ]
       }
@@ -200,16 +257,37 @@
   "galleries": [
     {
       "id": "gallery",
-      "kicker": "Work Gallery",
-      "title": "수강생 작품 · 수업",
-      "lede": "애니톡 아카데미 수강생이 완성한 작품과 수업 현장입니다.",
+      "kicker": "Campus",
+      "title": "캠퍼스 둘러보기",
+      "lede": "애니톡 웹툰게임 아카데미의 학원 공간과 수업 현장입니다.",
       "items": [
-        { "local": "gal-1.webp", "caption": "웹툰 완성 원고" },
-        { "local": "gal-2.webp", "caption": "신티크 작업 현장" },
-        { "local": "gal-3.webp", "caption": "일러스트 수강생 작품" },
-        { "local": "gal-4.webp", "caption": "게임 원화 포트폴리오" },
-        { "local": "gal-5.webp", "caption": "인체드로잉 수업" },
-        { "local": "gal-6.webp", "caption": "1:1 수업 현장" }
+        {
+          "local": "gal-1.webp",
+          "caption": "웹툰게임 아카데미 학원 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjZfMTA1%2FMDAxNzg3NzM0NzQ0MzM5.57VC1Q00VkCWUZWNDqrobcd8YEP9XWLwdjR8ONU22kgg.sCuI4XaewmO0lEeX_WLkiWM8NLBr2Uki0hMUiGPu1XYg.JPEG%2F5.jpg%2F2379x2362"
+        },
+        {
+          "local": "gal-2.webp",
+          "caption": "웹툰게임 아카데미 수업 현장",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjZfMTQ2%2FMDAxNzg3NzM0NzQ0MzQ3.4ZJoTmELQhLcbtF7bkU7DS5YmktR0ZNMG6KPVj-khesg.qmD_vDIY4nhWJ48_C8oMtnsclrBK3VsMA09aH_oMQwsg.JPEG%2F4.jpg%2F2379x2362"
+        },
+        {
+          "local": "gal-3.webp",
+          "caption": "웹툰게임 아카데미 작업 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MjZfMTQg%2FMDAxNzg3NzM0NzQ0MTE1.FzH7H73B48LFPANZ_eAovznylbkKaCH5L_1SvTBVsfEg.FlstnoR86ef3So-NpsLdgeRKjh9bmMPSxL7JKVGt9_cg.JPEG%2F1.jpg%2F2379x2362"
+        },
+        {
+          "local": "gal-4.webp",
+          "caption": "게임 원화 포트폴리오"
+        },
+        {
+          "local": "gal-5.webp",
+          "caption": "인체드로잉 수업"
+        },
+        {
+          "local": "gal-6.webp",
+          "caption": "1:1 수업 현장"
+        }
       ]
     }
   ],

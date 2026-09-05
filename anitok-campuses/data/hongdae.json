@@ -4,7 +4,10 @@
   "themeName": "orange",
   "name": "홍대 애니톡 만화애니학원",
   "shortName": "홍대",
-  "site": { "origin": "https://hongdae-anitok.vercel.app", "subdomain": "hongdae" },
+  "site": {
+    "origin": "https://hongdae-anitok.vercel.app",
+    "subdomain": "hongdae"
+  },
   "phone": "02-3143-3313",
   "address": {
     "street": "양화로 127 첨단빌딩 6층",
@@ -56,13 +59,19 @@
     "sub": "2020~2025 한예종 24명 합격, 홍대 대표 만화애니학원",
     "image": {
       "local": "hero.webp",
-      "remote": "https://cdn.imweb.me/thumbnail/20260505/b49c9e5721c32.jpg",
+      "remote": "https://ldb-phinf.pstatic.net/20260519_135/1779180049609kYeNm_JPEG/ChatGPT_Image_2026%B3%E2_5%BF%F9_19%C0%CF_%BF%C0%C8%C4_05_39_32.jpg",
       "caption": "홍대 애니톡 만화애니학원",
       "eager": true
     },
     "ctas": [
-      { "label": "온라인 상담 신청 →", "href": "https://anitok.com/questions" },
-      { "label": "02-3143-3313", "href": "tel:02-3143-3313" }
+      {
+        "label": "온라인 상담 신청 →",
+        "href": "https://anitok.com/questions"
+      },
+      {
+        "label": "02-3143-3313",
+        "href": "tel:02-3143-3313"
+      }
     ]
   },
   "about": {
@@ -80,9 +89,21 @@
       "기초부터 시작 가능"
     ],
     "figures": [
-      { "local": "about-1.webp", "caption": "홍대 캠퍼스 실기실" },
-      { "local": "about-2.webp", "caption": "디지털드로잉실" },
-      { "local": "about-3.webp", "caption": "입시반 수업" }
+      {
+        "local": "about-1.webp",
+        "caption": "홍대 학원 공간",
+        "remote": "https://phinf.pstatic.net/tvcast/20240928_25/WA4rw_172753287528134Y9E_JPEG/PublishThumb_20240928_231422_086.jpg"
+      },
+      {
+        "local": "about-2.webp",
+        "caption": "홍대 수업 현장",
+        "remote": "https://ldb-phinf.pstatic.net/20240809_12/172320590423914T2u_PNG/%C8%AB%B4%EB%BE%D6%B4%CF%C7%D0%BF%F8.png"
+      },
+      {
+        "local": "about-3.webp",
+        "caption": "홍대 작업 공간",
+        "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA2MDFfMTgw%2FMDAxNzgwMjg2NTY2ODc4.lFWRnLrLBlQRxg5-sRBqYPOtlNXW4xZrx-SyCV9gFmgg.gFagjP0eaSoTxMpUrOlqobSQNC6bOGRUywAXKgljx3Qg.PNG%2Fimage.png%2F1080x1080"
+      }
     ]
   },
   "results": {
@@ -95,28 +116,40 @@
         "label": "한국예술종합학교 합격",
         "value": "24",
         "unit": "명",
-        "detail": ["한예종 애니메이션과", "만화애니 최상위 전형"]
+        "detail": [
+          "한예종 애니메이션과",
+          "만화애니 최상위 전형"
+        ]
       },
       {
         "when": "2020-2025",
         "label": "중앙대 · 경기대 합격",
         "value": "29",
         "unit": "명",
-        "detail": ["중앙대학교 10명", "경기대학교 19명"]
+        "detail": [
+          "중앙대학교 10명",
+          "경기대학교 19명"
+        ]
       },
       {
         "when": "2020-2025",
         "label": "상명대 · 한성대 합격",
         "value": "18",
         "unit": "명",
-        "detail": ["상명대학교 11명", "한성대학교 7명"]
+        "detail": [
+          "상명대학교 11명",
+          "한성대학교 7명"
+        ]
       },
       {
         "when": "공모전 · 실기대전",
         "label": "청강대 실기대전 대상",
         "value": "4",
         "unit": "회",
-        "detail": ["청강문화산업대학교", "전국 실기대전 대상"]
+        "detail": [
+          "청강문화산업대학교",
+          "전국 실기대전 대상"
+        ]
       }
     ],
     "note": "그 밖에 명지대, 동국대, 세종대, 홍익대 등 상위권 대학 합격생을 배출했습니다."
@@ -126,16 +159,56 @@
     "title": "홍대 캠퍼스 합격 대학",
     "lede": "2020~2025학년도 누적 합격 실적입니다.",
     "items": [
-      { "year": "대학", "what": "한국예술종합학교", "who": "24명" },
-      { "year": "대학", "what": "중앙대학교", "who": "10명" },
-      { "year": "대학", "what": "경기대학교", "who": "19명" },
-      { "year": "대학", "what": "상명대학교", "who": "11명" },
-      { "year": "대학", "what": "한성대학교", "who": "7명" },
-      { "year": "대학", "what": "명지대학교", "who": "합격" },
-      { "year": "대학", "what": "동국대학교", "who": "합격" },
-      { "year": "대학", "what": "세종대학교", "who": "합격" },
-      { "year": "대학", "what": "홍익대학교", "who": "합격" },
-      { "year": "실기대전", "what": "청강문화산업대학교 실기대전 대상", "who": "4회" }
+      {
+        "year": "대학",
+        "what": "한국예술종합학교",
+        "who": "24명"
+      },
+      {
+        "year": "대학",
+        "what": "중앙대학교",
+        "who": "10명"
+      },
+      {
+        "year": "대학",
+        "what": "경기대학교",
+        "who": "19명"
+      },
+      {
+        "year": "대학",
+        "what": "상명대학교",
+        "who": "11명"
+      },
+      {
+        "year": "대학",
+        "what": "한성대학교",
+        "who": "7명"
+      },
+      {
+        "year": "대학",
+        "what": "명지대학교",
+        "who": "합격"
+      },
+      {
+        "year": "대학",
+        "what": "동국대학교",
+        "who": "합격"
+      },
+      {
+        "year": "대학",
+        "what": "세종대학교",
+        "who": "합격"
+      },
+      {
+        "year": "대학",
+        "what": "홍익대학교",
+        "who": "합격"
+      },
+      {
+        "year": "실기대전",
+        "what": "청강문화산업대학교 실기대전 대상",
+        "who": "4회"
+      }
     ]
   },
   "classes": {
@@ -152,13 +225,19 @@
             "eyebrow": "최상위 전형",
             "title": "한예종 입시반",
             "desc": "한국예술종합학교 애니메이션과 전형에 맞춘 실기와 포트폴리오, 면접까지 준비합니다.",
-            "image": { "local": "class-high-1.webp", "caption": "한예종 입시반" }
+            "image": {
+              "local": "class-high-1.webp",
+              "caption": "한예종 입시반"
+            }
           },
           {
             "eyebrow": "수시 · 정시",
             "title": "미대입시반",
             "desc": "중앙대, 경기대, 상명대, 한성대, 세종대, 홍익대 등 목표 대학 전형별 실기.",
-            "image": { "local": "class-high-2.webp", "caption": "미대입시반 실기" }
+            "image": {
+              "local": "class-high-2.webp",
+              "caption": "미대입시반 실기"
+            }
           }
         ]
       },
@@ -171,13 +250,19 @@
             "eyebrow": "입시 기초 과정",
             "title": "예비반",
             "desc": "인체 구조와 명암, 투시를 처음부터 잡습니다. 입시 실기의 뼈대를 만드는 반입니다.",
-            "image": { "local": "class-prep-1.webp", "caption": "예비반 수업" }
+            "image": {
+              "local": "class-prep-1.webp",
+              "caption": "예비반 수업"
+            }
           },
           {
             "eyebrow": "디지털 · 취미",
             "title": "웹툰 · 디지털드로잉",
             "desc": "클립스튜디오와 태블릿으로 웹툰 연출, 일러스트, 캐릭터 채색을 익힙니다.",
-            "image": { "local": "class-hobby-1.webp", "caption": "디지털드로잉 수업" }
+            "image": {
+              "local": "class-hobby-1.webp",
+              "caption": "디지털드로잉 수업"
+            }
           }
         ]
       }
@@ -186,16 +271,37 @@
   "galleries": [
     {
       "id": "gallery",
-      "kicker": "Class Gallery",
-      "title": "작품 · 수업 갤러리",
-      "lede": "홍대 캠퍼스 학생들의 실기 작품과 수업 현장입니다.",
+      "kicker": "Campus",
+      "title": "캠퍼스 둘러보기",
+      "lede": "홍대 애니톡 만화애니학원의 학원 공간과 수업 현장입니다.",
       "items": [
-        { "local": "gal-1.webp", "caption": "입시반 학생작품" },
-        { "local": "gal-2.webp", "caption": "실기 준비 수업" },
-        { "local": "gal-3.webp", "caption": "상황표현 학생작품" },
-        { "local": "gal-4.webp", "caption": "칸만화 학생작품" },
-        { "local": "gal-5.webp", "caption": "디지털드로잉 수업" },
-        { "local": "gal-6.webp", "caption": "포트폴리오 작업" }
+        {
+          "local": "gal-1.webp",
+          "caption": "홍대 학원 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA2MDFfMjc3%2FMDAxNzgwMjg0Nzc3OTg1.qjZrpDAVrdh7mOWq50GsOyr22fXhuMviKnrdaVuuGOwg.2twy6ujVElPFuQAfdkmdMkcDo_BS-AjH3m3oz_cPF2gg.PNG%2Fimage.png%2F2480x2106"
+        },
+        {
+          "local": "gal-2.webp",
+          "caption": "홍대 수업 현장",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA2MDFfMjI1%2FMDAxNzgwMjg4NjUzNzc2.zRGonNfG0T9V6ZWSU03Zbm3f3rCSoqqaKenqYUSRW1Yg.ZJSjGBTiqDTCd_1hskkYFz-9hHkR9R51AmLV-r0m_yEg.PNG%2FChatGPT_Image_2026%25EB%2585%2584_6%25EC%259B%2594_1%25EC%259D%25BC_%25EC%2598%25A4%25ED%259B%2584_01_35_25.png%2F1254x1254"
+        },
+        {
+          "local": "gal-3.webp",
+          "caption": "홍대 작업 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA2MDRfMjQ2%2FMDAxNzgwNTc0NzA2MzA4.eyIUbGxcgRluUY7j2CrsPY6lv_r4cbeZTbZDtMc6RIog.RI8LrJoizsa7gi-Nv9b79hwtBiw2y38zbU0VteDUbSAg.PNG%2Fimage.png%2F900x675"
+        },
+        {
+          "local": "gal-4.webp",
+          "caption": "칸만화 학생작품"
+        },
+        {
+          "local": "gal-5.webp",
+          "caption": "디지털드로잉 수업"
+        },
+        {
+          "local": "gal-6.webp",
+          "caption": "포트폴리오 작업"
+        }
       ]
     }
   ],

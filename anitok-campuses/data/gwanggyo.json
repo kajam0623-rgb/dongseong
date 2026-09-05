@@ -4,7 +4,10 @@
   "themeName": "orange",
   "name": "광교 애니톡 만화애니학원",
   "shortName": "광교",
-  "site": { "origin": "https://gwanggyo-anitok.vercel.app", "subdomain": "gwanggyo" },
+  "site": {
+    "origin": "https://gwanggyo-anitok.vercel.app",
+    "subdomain": "gwanggyo"
+  },
   "phone": "031-211-0904",
   "address": {
     "street": "에듀타운로 102 광교중앙역 SK VIEW B동 7층 704호",
@@ -56,13 +59,19 @@
     "sub": "광교 · 수원 · 영통 대표 만화애니 전문학원",
     "image": {
       "local": "hero.webp",
-      "remote": "https://cdn.imweb.me/thumbnail/20260505/66f27704a4383.jpg",
+      "remote": "https://ldb-phinf.pstatic.net/20220811_284/1660215809119BvOyE_JPEG/%BE%D6%B4%CF%C5%E5.jpg",
       "caption": "광교 애니톡 만화애니학원",
       "eager": true
     },
     "ctas": [
-      { "label": "온라인 상담 신청 →", "href": "https://anitok.com/questions" },
-      { "label": "031-211-0904", "href": "tel:031-211-0904" }
+      {
+        "label": "온라인 상담 신청 →",
+        "href": "https://anitok.com/questions"
+      },
+      {
+        "label": "031-211-0904",
+        "href": "tel:031-211-0904"
+      }
     ]
   },
   "about": {
@@ -80,9 +89,21 @@
       "애니톡 8개 직영 캠퍼스"
     ],
     "figures": [
-      { "local": "about-1.webp", "caption": "광교 캠퍼스 실기실" },
-      { "local": "about-2.webp", "caption": "웹툰CG반 교실" },
-      { "local": "about-3.webp", "caption": "주니어반 교실" }
+      {
+        "local": "about-1.webp",
+        "caption": "광교 학원 공간",
+        "remote": "https://ldb-phinf.pstatic.net/20251108_116/1762585124517FhhrP_JPEG/KakaoTalk_20251108_140935918_04_%BA%B9%BB%E7.jpg"
+      },
+      {
+        "local": "about-2.webp",
+        "caption": "광교 수업 현장",
+        "remote": "https://ldb-phinf.pstatic.net/20251108_275/1762585124544b0IUh_JPEG/RR.jpg"
+      },
+      {
+        "local": "about-3.webp",
+        "caption": "광교 작업 공간",
+        "remote": "https://ldb-phinf.pstatic.net/20220811_90/1660215811701RljKT_PNG/KakaoTalk_20220720_173914662.png"
+      }
     ]
   },
   "results": {
@@ -95,28 +116,40 @@
         "label": "목동 본원 경력",
         "value": "11",
         "unit": "년",
-        "detail": ["본원에서 결과를 만들어낸", "선생님들이 직접 운영"]
+        "detail": [
+          "본원에서 결과를 만들어낸",
+          "선생님들이 직접 운영"
+        ]
       },
       {
         "when": "커리큘럼",
         "label": "운영 과정",
         "value": "4",
         "unit": "개 반",
-        "detail": ["주니어반 · 예비반", "입시반 · 웹툰CG반"]
+        "detail": [
+          "주니어반 · 예비반",
+          "입시반 · 웹툰CG반"
+        ]
       },
       {
         "when": "입시",
         "label": "준비 가능 전형",
         "value": "미대",
         "unit": "· 애니고",
-        "detail": ["미대입시 실기", "애니고 · 예고 실기와 면접"]
+        "detail": [
+          "미대입시 실기",
+          "애니고 · 예고 실기와 면접"
+        ]
       },
       {
         "when": "대상",
         "label": "수강 학년",
         "value": "초등",
         "unit": "~ 성인",
-        "detail": ["초등반 · 중등반", "입시반 · 취미CG반"]
+        "detail": [
+          "초등반 · 중등반",
+          "입시반 · 취미CG반"
+        ]
       }
     ]
   },
@@ -134,13 +167,19 @@
             "eyebrow": "초등",
             "title": "초등반",
             "desc": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
-            "image": { "local": "class-junior-1.webp", "caption": "초등반 수업" }
+            "image": {
+              "local": "class-junior-1.webp",
+              "caption": "초등반 수업"
+            }
           },
           {
             "eyebrow": "중등",
             "title": "중등반",
             "desc": "기본기를 다지며 만화 콘티와 채색까지 다루는 중등 과정입니다.",
-            "image": { "local": "class-junior-2.webp", "caption": "중등반 수업" }
+            "image": {
+              "local": "class-junior-2.webp",
+              "caption": "중등반 수업"
+            }
           }
         ]
       },
@@ -153,13 +192,19 @@
             "eyebrow": "기본기 단련",
             "title": "예비반",
             "desc": "인체 구조와 명암, 투시를 처음부터 잡습니다. 입시 실기의 뼈대를 만드는 반입니다.",
-            "image": { "local": "class-prep-1.webp", "caption": "예비반 수업" }
+            "image": {
+              "local": "class-prep-1.webp",
+              "caption": "예비반 수업"
+            }
           },
           {
             "eyebrow": "미대 · 애니고",
             "title": "입시반",
             "desc": "미대입시 실기와 애니고 · 예고 실기, 면접까지 목표 전형에 맞춰 준비합니다.",
-            "image": { "local": "class-high-1.webp", "caption": "입시반 실기" }
+            "image": {
+              "local": "class-high-1.webp",
+              "caption": "입시반 실기"
+            }
           }
         ]
       },
@@ -172,13 +217,19 @@
             "eyebrow": "스토리 · 연출",
             "title": "웹툰",
             "desc": "콘티부터 컷 연출, 완성 원고까지 한 편의 웹툰을 직접 만들어 봅니다.",
-            "image": { "local": "class-hobby-1.webp", "caption": "웹툰 수업" }
+            "image": {
+              "local": "class-hobby-1.webp",
+              "caption": "웹툰 수업"
+            }
           },
           {
             "eyebrow": "디지털",
             "title": "CG · 디지털드로잉",
             "desc": "태블릿으로 캐릭터 디자인과 채색, 배경 연출까지 완성작으로 마무리합니다.",
-            "image": { "local": "class-hobby-2.webp", "caption": "CG 수업" }
+            "image": {
+              "local": "class-hobby-2.webp",
+              "caption": "CG 수업"
+            }
           }
         ]
       }
@@ -187,16 +238,39 @@
   "galleries": [
     {
       "id": "gallery",
-      "kicker": "Class Gallery",
-      "title": "작품 · 수업 갤러리",
-      "lede": "광교 캠퍼스 학생들의 작품과 수업 현장입니다.",
+      "kicker": "Campus",
+      "title": "캠퍼스 둘러보기",
+      "lede": "광교 애니톡 만화애니학원의 학원 공간과 수업 현장입니다.",
       "items": [
-        { "local": "gal-1.webp", "caption": "입시반 학생작품" },
-        { "local": "gal-2.webp", "caption": "실기 준비 수업" },
-        { "local": "gal-3.webp", "caption": "예비반 학생작품" },
-        { "local": "gal-4.webp", "caption": "주니어반 학생작품" },
-        { "local": "gal-5.webp", "caption": "웹툰CG반 작업" },
-        { "local": "gal-6.webp", "caption": "채색 수업" }
+        {
+          "local": "gal-1.webp",
+          "caption": "광교 학원 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MTlfMTUz%2FMDAxNzg3MTQzMzA2MDY3.gNlX48vBisqtLkdtrdARiSxk5GrCeaeoq06csBZUvm8g.mcrgSvAdzsvX6l_OmLXWlVtExOXz_n0DrJgJt0gxlBcg.JPEG%2FIMG_5362_%25EB%25B3%25B5%25EC%2582%25AC.jpg%2F4032x3024"
+        },
+        {
+          "local": "gal-2.webp",
+          "caption": "광교 수업 현장",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MTlfNzkg%2FMDAxNzg3MTQyMTgzNTIz.KUXeTi4mnD7PPa7xg9Z7zXTLOhtOJKxXJL_gDG5Ttgwg.LaNaF41SY4T5jm2M-INF6TOhwKqbzqmR9t0yLJi2lcwg.JPEG%2FIMG_5352_%25EB%25B3%25B5%25EC%2582%25AC.jpg%2F4032x3024"
+        },
+        {
+          "local": "gal-3.webp",
+          "caption": "광교 작업 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MTlfMTcg%2FMDAxNzg3MTQyMzIxMjQ0.Dy9JhqacBsxFsUZ0_8owBydhS47SwLlgyMpJbWzAs5Qg.p5I9tNtS5Tr12uPDMHUrEmYF7GT9aIR8i-2ae7LsXH0g.JPEG%2FKakaoTalk_20260715_153830165_%25EB%25B3%25B5%25EC%2582%25AC.jpg%2F4032x3024"
+        },
+        {
+          "local": "gal-4.webp",
+          "caption": "광교 학원 내부",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MTlfNzIg%2FMDAxNzg3MTQzMzA2MDk4.MqdSs2pJRXvZQzcuGq2-0kXlsBZtMZNZAfycTKlusagg.cMer0pQi3nqg-rIqI8o64FipvChknxk9qePeGhAvlZ0g.JPEG%2FIMG_5358_%25EB%25B3%25B5%25EC%2582%25AC.jpg%2F3024x4032"
+        },
+        {
+          "local": "gal-5.webp",
+          "caption": "광교 드로잉 공간",
+          "remote": "https://search.pstatic.net/common/?autoRotate=true&type=w560_sharpen&src=https%3A%2F%2Fblogfiles.pstatic.net%2FMjAyNjA4MTlfODAg%2FMDAxNzg3MTQzMzA2MDg5.CoD2tFcyRAC90vM8VBgqs9xbgkMiP16ATMO11N7I8pQg.H3mYwceQWZeeKI0BRi0OADJ4mS6QJmyREEkIPOV0gtkg.JPEG%2FIMG_5361_%25EB%25B3%25B5%25EC%2582%25AC.jpg%2F4032x3024"
+        },
+        {
+          "local": "gal-6.webp",
+          "caption": "채색 수업"
+        }
       ]
     }
   ],
