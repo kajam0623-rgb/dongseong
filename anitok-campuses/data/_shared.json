@@ -1,0 +1,38 @@
+{
+  "markText": "AT",
+  "nav": [
+    { "label": "학원소개", "href": "#about" },
+    { "label": "합격실적", "href": "#results" },
+    { "label": "수업과목", "href": "#classes" },
+    { "label": "갤러리", "href": "#gallery" },
+    { "label": "오시는 길", "href": "#visit" }
+  ],
+  "company": {
+    "name": "주식회사 애니톡",
+    "ceo": "오광록",
+    "bizNo": "232-88-00167",
+    "address": "서울특별시 양천구 목동로 201 한성빌딩 7층",
+    "tel": "1566-0688"
+  },
+  "hours": {
+    "line1": "평일 13:00 - 22:00",
+    "line2": "토요일 13:00 - 18:00",
+    "schemaOrg": ["Mo-Fr 13:00-22:00", "Sa 13:00-18:00"]
+  },
+  "process": {
+    "kicker": "Process",
+    "title": "그림의 첫 시작부터 입시와 합격, 그리고 취미와 취업까지",
+    "steps": ["상담 및 등록", "기본기 수업", "드로잉 수업", "스토리 수업", "연출 수업", "합격 / 취업"]
+  },
+  "quickBar": { "primary": "온라인 상담" },
+  "analytics": { "ga4": null },
+  "seo": {
+    "verification": [
+      { "name": "google-site-verification", "content": "--lr3p3aIhgHl1b42fWM1JstdLUn1QY-4lrHvXG5Lq4" }
+    ]
+  },
+  "visit": {
+    "title": "오시는 길과 상담 안내",
+    "consult": "온라인 상담문의로 궁금한 점을 편하게 남겨 주세요."
+  }
+}
