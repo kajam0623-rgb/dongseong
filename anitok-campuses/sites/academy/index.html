@@ -20,11 +20,11 @@
 <meta property="og:url" content="https://academy-anitok.vercel.app/">
 <meta property="og:title" content="애니톡 웹툰게임 아카데미 | 취미부터 데뷔까지">
 <meta property="og:description" content="청강대 포폴전형 합격, 게임회사 · 웹툰 에이전시 취업. 와콤 신티크 개인 책상 1:1 수업. 양천구 신정중앙로 103 7층">
-<meta property="og:image" content="https://academy-anitok.vercel.app/gal/hero.webp">
+<meta property="og:image" content="https://cdn.imweb.me/upload/S202603232068c74b0c3ea/793cf487c7339.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="애니톡 웹툰게임 아카데미 | 취미부터 데뷔까지">
 <meta name="twitter:description" content="청강대 포폴전형 합격, 게임회사 · 웹툰 에이전시 취업. 와콤 신티크 개인 책상 1:1 수업. 양천구 신정중앙로 103 7층">
-<meta name="twitter:image" content="https://academy-anitok.vercel.app/gal/hero.webp">
+<meta name="twitter:image" content="https://cdn.imweb.me/upload/S202603232068c74b0c3ea/793cf487c7339.jpg">
 <meta name="google-site-verification" content="--lr3p3aIhgHl1b42fWM1JstdLUn1QY-4lrHvXG5Lq4">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -43,6 +43,7 @@
   --hero-grad:radial-gradient(120% 90% at 15% 10%,#2A0407 0%,#000 70%);
   --glow-grad:radial-gradient(circle,rgba(189,13,22,.55) 0%,rgba(0,0,0,0) 66%);
   --btn-hover-bg:#FFFFFF; --btn-hover-fg:var(--accent);
+  --logo-filter:brightness(0) invert(1);
   --pad-y:clamp(96px,12vw,168px); --pad-x:clamp(20px,4vw,48px);
   --wrap:1400px;
 }
@@ -72,9 +73,12 @@ figure{margin:0}
 .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:80}
 .hdr{position:sticky;top:0;z-index:60;background:var(--accent);color:var(--on-accent);box-shadow:0 2px 20px rgba(0,0,0,.4)}
 .hdr-in{max-width:var(--wrap);margin:0 auto;padding:0 clamp(16px,3vw,36px);height:64px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:11px;min-width:0}
-.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--on-accent);color:var(--accent);display:grid;place-items:center;font-size:15px;font-weight:800;letter-spacing:-.05em;flex:0 0 auto}
-.brand-name{font-size:clamp(15px,1.4vw,18px);font-weight:800;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+/* 원본 로고는 검정 워드마크다. 헤더 글자색에 맞춰 필터로 단색 전환한다. */
+.brand-logo{height:26px;width:auto;flex:0 0 auto;filter:var(--logo-filter)}
+.brand-div{width:1px;height:20px;background:currentColor;opacity:.4;flex:0 0 auto}
+.brand-name{font-size:clamp(14px,1.3vw,17px);font-weight:800;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:520px){.brand-logo{height:22px}.brand-div,.brand-name{display:none}}
 .nav{display:flex;align-items:center;gap:clamp(12px,1.6vw,26px)}
 .nav a{font-size:14px;font-weight:600;padding:4px 0;border-bottom:2px solid transparent;white-space:nowrap;transition:border-color .3s ease,opacity .3s ease}
 .nav a:hover{border-bottom-color:currentColor}
@@ -206,6 +210,7 @@ figure{margin:0}
 .social a{border:1px solid var(--line-2);border-radius:6px;padding:9px 15px;font-size:13px;font-weight:600;color:#D6D6D8}
 .social a:hover{border-color:var(--accent-lit);color:#fff}
 .foot{border-top:1px solid var(--line);padding-block:40px;font-size:12.5px;line-height:1.9;color:var(--muted-2)}
+.foot-logo{height:24px;width:auto;margin-bottom:24px;filter:brightness(0) invert(1);opacity:.85}
 .foot .sites{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:22px}
 .foot .sites a{font-size:13px;font-weight:600;color:var(--muted)}
 .foot .sites a:hover{color:#fff}
@@ -231,7 +236,7 @@ figure{margin:0}
   .scroll-dot i{animation:none}
 }
 
-:root{--accent:#FFFFFF;--accent-lit:#FFFFFF;--on-accent:#0B0B0C;--accent-line:rgba(11,11,12,.45);--mnav-bg:#E4E4E6;--mnav-line:rgba(11,11,12,.16);--tag-bg:rgba(255,255,255,.94);--hero-grad:radial-gradient(120% 90% at 15% 10%,#17171A 0%,#000 70%);--glow-grad:radial-gradient(circle,rgba(255,255,255,.24) 0%,rgba(0,0,0,0) 66%);--btn-hover-bg:#C4C4C8;--btn-hover-fg:#0B0B0C}</style>
+:root{--accent:#FFFFFF;--accent-lit:#FFFFFF;--on-accent:#0B0B0C;--accent-line:rgba(11,11,12,.45);--mnav-bg:#E4E4E6;--mnav-line:rgba(11,11,12,.16);--tag-bg:rgba(255,255,255,.94);--hero-grad:radial-gradient(120% 90% at 15% 10%,#17171A 0%,#000 70%);--glow-grad:radial-gradient(circle,rgba(255,255,255,.24) 0%,rgba(0,0,0,0) 66%);--btn-hover-bg:#C4C4C8;--btn-hover-fg:#0B0B0C;--logo-filter:brightness(0)}</style>
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
@@ -328,7 +333,8 @@ figure{margin:0}
 <header class="hdr">
   <div class="hdr-in">
     <a class="brand" href="#top">
-      <span class="brand-mark" aria-hidden="true">AT</span>
+      <img class="brand-logo" src="https://cdn.imweb.me/thumbnail/20260323/40ecf7572706b.png" alt="애니톡" width="98" height="26" fetchpriority="high">
+      <span class="brand-div" aria-hidden="true"></span>
       <span class="brand-name">애니톡 웹툰게임 아카데미</span>
     </a>
     <nav class="nav" aria-label="주요 메뉴"><a href="#about">학원소개</a><a href="#results">합격실적</a><a href="#classes">수업과목</a><a href="#gallery">갤러리</a><a href="#visit">오시는 길</a></nav>
@@ -550,6 +556,7 @@ figure{margin:0}
   </div>
   <div class="wrap">
     <div class="foot">
+      <img class="foot-logo" src="https://cdn.imweb.me/thumbnail/20260323/40ecf7572706b.png" alt="애니톡" width="91" height="24" loading="lazy" decoding="async">
       <div class="sites"><span style="color:#5A5A5F;font-weight:700">애니톡 캠퍼스</span><a href="https://gangdong-anitok.vercel.app" target="_blank" rel="noopener">강동</a><a href="https://gwanggyo-anitok.vercel.app" target="_blank" rel="noopener">광교</a><a href="https://gimpo-anitok.vercel.app" target="_blank" rel="noopener">김포</a><a href="https://mokdong-anitok.vercel.app" target="_blank" rel="noopener">목동 본원</a><a href="https://bucheon-anitok.vercel.app" target="_blank" rel="noopener">부천</a><a href="https://ilsan-anitok.vercel.app" target="_blank" rel="noopener">일산</a><a href="https://hongdae-anitok.vercel.app" target="_blank" rel="noopener">홍대</a></div>
       <div>주식회사 애니톡 | 대표 오광록 | 사업자등록번호 232-88-00167</div>
       <div>서울특별시 양천구 목동로 201 한성빌딩 7층 | 대표전화 1566-0688</div>

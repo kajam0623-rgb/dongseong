@@ -20,6 +20,7 @@
   --hero-grad:radial-gradient(120% 90% at 15% 10%,#2A0407 0%,#000 70%);
   --glow-grad:radial-gradient(circle,rgba(189,13,22,.55) 0%,rgba(0,0,0,0) 66%);
   --btn-hover-bg:#FFFFFF; --btn-hover-fg:var(--accent);
+  --logo-filter:brightness(0) invert(1);
   --pad-y:clamp(96px,12vw,168px); --pad-x:clamp(20px,4vw,48px);
   --wrap:1400px;
 }
@@ -49,9 +50,12 @@ figure{margin:0}
 .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:80}
 .hdr{position:sticky;top:0;z-index:60;background:var(--accent);color:var(--on-accent);box-shadow:0 2px 20px rgba(0,0,0,.4)}
 .hdr-in{max-width:var(--wrap);margin:0 auto;padding:0 clamp(16px,3vw,36px);height:64px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:11px;min-width:0}
-.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--on-accent);color:var(--accent);display:grid;place-items:center;font-size:15px;font-weight:800;letter-spacing:-.05em;flex:0 0 auto}
-.brand-name{font-size:clamp(15px,1.4vw,18px);font-weight:800;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+/* 원본 로고는 검정 워드마크다. 헤더 글자색에 맞춰 필터로 단색 전환한다. */
+.brand-logo{height:26px;width:auto;flex:0 0 auto;filter:var(--logo-filter)}
+.brand-div{width:1px;height:20px;background:currentColor;opacity:.4;flex:0 0 auto}
+.brand-name{font-size:clamp(14px,1.3vw,17px);font-weight:800;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:520px){.brand-logo{height:22px}.brand-div,.brand-name{display:none}}
 .nav{display:flex;align-items:center;gap:clamp(12px,1.6vw,26px)}
 .nav a{font-size:14px;font-weight:600;padding:4px 0;border-bottom:2px solid transparent;white-space:nowrap;transition:border-color .3s ease,opacity .3s ease}
 .nav a:hover{border-bottom-color:currentColor}
@@ -183,6 +187,7 @@ figure{margin:0}
 .social a{border:1px solid var(--line-2);border-radius:6px;padding:9px 15px;font-size:13px;font-weight:600;color:#D6D6D8}
 .social a:hover{border-color:var(--accent-lit);color:#fff}
 .foot{border-top:1px solid var(--line);padding-block:40px;font-size:12.5px;line-height:1.9;color:var(--muted-2)}
+.foot-logo{height:24px;width:auto;margin-bottom:24px;filter:brightness(0) invert(1);opacity:.85}
 .foot .sites{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:22px}
 .foot .sites a{font-size:13px;font-weight:600;color:var(--muted)}
 .foot .sites a:hover{color:#fff}
@@ -208,7 +213,7 @@ figure{margin:0}
   .scroll-dot i{animation:none}
 }
 
-:root{--accent:#FFFFFF;--accent-lit:#FFFFFF;--on-accent:#0B0B0C;--accent-line:rgba(11,11,12,.45);--mnav-bg:#E4E4E6;--mnav-line:rgba(11,11,12,.16);--tag-bg:rgba(255,255,255,.94);--hero-grad:radial-gradient(120% 90% at 15% 10%,#17171A 0%,#000 70%);--glow-grad:radial-gradient(circle,rgba(255,255,255,.24) 0%,rgba(0,0,0,0) 66%);--btn-hover-bg:#C4C4C8;--btn-hover-fg:#0B0B0C}
+:root{--accent:#FFFFFF;--accent-lit:#FFFFFF;--on-accent:#0B0B0C;--accent-line:rgba(11,11,12,.45);--mnav-bg:#E4E4E6;--mnav-line:rgba(11,11,12,.16);--tag-bg:rgba(255,255,255,.94);--hero-grad:radial-gradient(120% 90% at 15% 10%,#17171A 0%,#000 70%);--glow-grad:radial-gradient(circle,rgba(255,255,255,.24) 0%,rgba(0,0,0,0) 66%);--btn-hover-bg:#C4C4C8;--btn-hover-fg:#0B0B0C;--logo-filter:brightness(0)}
 .nf{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;gap:20px}
 .nf .code{font-size:clamp(56px,10vw,120px);font-weight:800;letter-spacing:-.06em;color:var(--accent)}
 .nf p{margin:0;font-size:15px;line-height:1.8;color:var(--muted)}

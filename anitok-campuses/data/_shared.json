@@ -120,7 +120,9 @@
       "btnHoverBg": "#C4C4C8",
       "btnHoverFg": "#0B0B0C",
       "faviconBg": "#0B0B0C",
-      "faviconFg": "#FFFFFF"
+      "faviconFg": "#FFFFFF",
+      "logoFilter": "brightness(0)"
     }
-  }
+  },
+  "brandLogo": "https://cdn.imweb.me/thumbnail/20260323/40ecf7572706b.png"
 }

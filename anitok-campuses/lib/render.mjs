@@ -94,6 +94,7 @@ const CSS = `
   --hero-grad:radial-gradient(120% 90% at 15% 10%,#2A0407 0%,#000 70%);
   --glow-grad:radial-gradient(circle,rgba(189,13,22,.55) 0%,rgba(0,0,0,0) 66%);
   --btn-hover-bg:#FFFFFF; --btn-hover-fg:var(--accent);
+  --logo-filter:brightness(0) invert(1);
   --pad-y:clamp(96px,12vw,168px); --pad-x:clamp(20px,4vw,48px);
   --wrap:1400px;
 }
@@ -123,9 +124,12 @@ figure{margin:0}
 .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:80}
 .hdr{position:sticky;top:0;z-index:60;background:var(--accent);color:var(--on-accent);box-shadow:0 2px 20px rgba(0,0,0,.4)}
 .hdr-in{max-width:var(--wrap);margin:0 auto;padding:0 clamp(16px,3vw,36px);height:64px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:11px;min-width:0}
-.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--on-accent);color:var(--accent);display:grid;place-items:center;font-size:15px;font-weight:800;letter-spacing:-.05em;flex:0 0 auto}
-.brand-name{font-size:clamp(15px,1.4vw,18px);font-weight:800;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+/* 원본 로고는 검정 워드마크다. 헤더 글자색에 맞춰 필터로 단색 전환한다. */
+.brand-logo{height:26px;width:auto;flex:0 0 auto;filter:var(--logo-filter)}
+.brand-div{width:1px;height:20px;background:currentColor;opacity:.4;flex:0 0 auto}
+.brand-name{font-size:clamp(14px,1.3vw,17px);font-weight:800;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:520px){.brand-logo{height:22px}.brand-div,.brand-name{display:none}}
 .nav{display:flex;align-items:center;gap:clamp(12px,1.6vw,26px)}
 .nav a{font-size:14px;font-weight:600;padding:4px 0;border-bottom:2px solid transparent;white-space:nowrap;transition:border-color .3s ease,opacity .3s ease}
 .nav a:hover{border-bottom-color:currentColor}
@@ -257,6 +261,7 @@ figure{margin:0}
 .social a{border:1px solid var(--line-2);border-radius:6px;padding:9px 15px;font-size:13px;font-weight:600;color:#D6D6D8}
 .social a:hover{border-color:var(--accent-lit);color:#fff}
 .foot{border-top:1px solid var(--line);padding-block:40px;font-size:12.5px;line-height:1.9;color:var(--muted-2)}
+.foot-logo{height:24px;width:auto;margin-bottom:24px;filter:brightness(0) invert(1);opacity:.85}
 .foot .sites{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:22px}
 .foot .sites a{font-size:13px;font-weight:600;color:var(--muted)}
 .foot .sites a:hover{color:#fff}
@@ -300,6 +305,7 @@ const THEME_KEYS = {
   glowGrad: '--glow-grad',
   btnHoverBg: '--btn-hover-bg',
   btnHoverFg: '--btn-hover-fg',
+  logoFilter: '--logo-filter',
 };
 
 /** 지점 테마를 :root 오버라이드로 뽑는다. 값이 없는 키는 기본(레드)을 그대로 쓴다. */
@@ -441,7 +447,8 @@ function header(d) {
 <header class="hdr">
   <div class="hdr-in">
     <a class="brand" href="#top">
-      <span class="brand-mark" aria-hidden="true">${esc(d.markText || 'AT')}</span>
+      <img class="brand-logo" src="${url(d.brandLogo)}" alt="애니톡" width="98" height="26" fetchpriority="high">
+      <span class="brand-div" aria-hidden="true"></span>
       <span class="brand-name">${esc(d.name)}</span>
     </a>
     <nav class="nav" aria-label="주요 메뉴">${nav}</nav>
@@ -699,6 +706,7 @@ function visit(d, siblings) {
   </div>
   <div class="wrap">
     <div class="foot">
+      <img class="foot-logo" src="${url(d.brandLogo)}" alt="애니톡" width="91" height="24" loading="lazy" decoding="async">
       ${sibs ? `<div class="sites"><span style="color:#5A5A5F;font-weight:700">애니톡 캠퍼스</span>${sibs}</div>` : ''}
       <div>${esc(d.company.name)} | 대표 ${esc(d.company.ceo)} | 사업자등록번호 ${esc(
     d.company.bizNo
@@ -763,9 +771,9 @@ function structuredData(d) {
     .join('\n');
 }
 
-function head(d) {
+function head(d, present) {
   const canonical = d.site.origin + '/';
-  const ogImage = resolveImageForMeta(d);
+  const ogImage = resolveImageForMeta(d, present);
   const geoMeta =
     d.geo.lat && d.geo.lng
       ? `<meta name="geo.position" content="${esc(d.geo.lat)};${esc(d.geo.lng)}">
@@ -811,11 +819,12 @@ ${
 <style>${CSS}${themeCss(d.theme)}</style>`;
 }
 
-function resolveImageForMeta(d) {
-  const h = d.hero?.image;
-  if (!h) return '';
-  if (h.local) return d.site.origin + '/gal/' + h.local;
-  return h.remote || '';
+function resolveImageForMeta(d, present) {
+  // og:image는 절대 URL이어야 한다. 내려받은 로컬 파일이 실제로 있을 때만
+  // 사이트 주소를 붙이고, 없으면 원격 CDN 주소를 그대로 쓴다.
+  const img = resolveImage(d.hero?.image, present);
+  if (!img) return '';
+  return img.kind === 'local' ? d.site.origin + img.src : img.src;
 }
 
 /* ─────────────────────────── 404 ─────────────────────────── */
@@ -858,7 +867,7 @@ export function renderPage(d, { present = new Set(), siblings = [] } = {}) {
   return `<!DOCTYPE html>
 <html lang="ko">
 <head>
-${head(d)}
+${head(d, present)}
 ${structuredData(d)}
 </head>
 <body>
