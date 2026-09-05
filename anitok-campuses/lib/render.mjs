@@ -1273,7 +1273,11 @@ ${header(d, { base: '/' })}
 <section class="sec">
   <div class="wrap">
     <span class="kicker" data-reveal="0">About</span>
-    <h2 class="h2" data-reveal="40">${esc(page.area)}에서 ${esc(s.label)}를 배운다면</h2>
+    <h2 class="h2" data-reveal="40">${esc(page.area)}에서 ${esc(s.label)}${조사(
+      s.label,
+      '을',
+      '를'
+    )} 배운다면</h2>
     <div class="prose" style="margin-top:26px" data-reveal="80">
       ${(s.intro || []).map((t) => `<p>${esc(t)}</p>`).join('')}
       <p>${page.note ? esc(page.note) + ' ' : ''}${esc(d.name)}${조사(
