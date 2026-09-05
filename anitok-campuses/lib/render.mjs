@@ -979,10 +979,6 @@ function visit(d, siblings) {
     <div class="foot">
       <img class="foot-logo" src="${url(d.brandLogo)}" alt="애니톡" width="91" height="24" loading="lazy" decoding="async">
       ${sibs ? `<div class="sites"><span style="color:#5A5A5F;font-weight:700">애니톡 캠퍼스</span>${sibs}</div>` : ''}
-      <div>${esc(d.company.name)} | 대표 ${esc(d.company.ceo)} | 사업자등록번호 ${esc(
-    d.company.bizNo
-  )}</div>
-      <div>${esc(d.company.address)} | 대표전화 ${esc(d.company.tel)}</div>
       <div>&copy; ${new Date().getFullYear()} ANITALK. All rights reserved.</div>
     </div>
   </div>
@@ -1188,7 +1184,6 @@ function lpFoot(d) {
     d.links.naverPlace
   )}" target="_blank" rel="noopener">네이버 지도</a></div>
       <div>${esc(d.address.line1)} ${esc(d.address.line2)} | ${esc(d.phone)}</div>
-      <div>${esc(d.company.name)} | 대표 ${esc(d.company.ceo)} | 사업자등록번호 ${esc(d.company.bizNo)}</div>
       <div>&copy; ${new Date().getFullYear()} ANITALK. All rights reserved.</div>
     </div>
   </div>
