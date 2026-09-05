@@ -636,11 +636,11 @@ figure{margin:0}
     var split = function(node){
       Array.prototype.slice.call(node.childNodes).forEach(function(ch){
         if (ch.nodeType === 3) {
-          var parts = ch.textContent.split(/(s+)/).filter(function(t){ return t.length; });
+          var parts = ch.textContent.split(/(\s+)/).filter(function(t){ return t.length; });
           if (!parts.length) return;
           var frag = document.createDocumentFragment();
           parts.forEach(function(p){
-            if (/^s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+            if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
             var w = document.createElement('span');
             w.className = 'w';
             w.textContent = p;
@@ -697,7 +697,7 @@ figure{margin:0}
     }, { threshold: 0.4 });
     document.querySelectorAll('.stat-value').forEach(function(el){
       var f = el.firstChild;
-      if (f && f.nodeType === 3 && /^d+$/.test(f.textContent.trim())) cio.observe(el);
+      if (f && f.nodeType === 3 && /^\d+$/.test(f.textContent.trim())) cio.observe(el);
     });
   }
 
