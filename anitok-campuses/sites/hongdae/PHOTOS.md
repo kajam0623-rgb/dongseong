@@ -6,9 +6,9 @@
 | 파일명 | 들어갈 사진 | 현재 상태 |
 |---|---|---|
 | `hero.webp` | 홍대 애니톡 만화애니학원 | 임시(애니톡 CDN 이미지) |
-| `about-1.webp` | 홍대 학원 공간 | 임시(애니톡 CDN 이미지) |
-| `about-2.webp` | 홍대 수업 현장 | 임시(애니톡 CDN 이미지) |
-| `about-3.webp` | 홍대 작업 공간 | 임시(애니톡 CDN 이미지) |
+| `about-1.webp` | 홍대 수업 현장 | 임시(애니톡 CDN 이미지) |
+| `about-2.webp` | 홍대 작업 공간 | 임시(애니톡 CDN 이미지) |
+| `about-3.webp` | 홍대 학원 내부 | 임시(애니톡 CDN 이미지) |
 | `class-high-1.webp` | 한예종 입시반 | 임시(애니톡 CDN 이미지) |
 | `class-high-2.webp` | 미대입시반 실기 | 임시(애니톡 CDN 이미지) |
 | `class-prep-1.webp` | 예비반 수업 | 임시(애니톡 CDN 이미지) |

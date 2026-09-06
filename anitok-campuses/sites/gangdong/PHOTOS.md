@@ -6,9 +6,9 @@
 | 파일명 | 들어갈 사진 | 현재 상태 |
 |---|---|---|
 | `hero.webp` | 강동 애니톡 만화애니학원 | 임시(애니톡 CDN 이미지) |
-| `about-1.webp` | 강동 학원 공간 | 임시(애니톡 CDN 이미지) |
-| `about-2.webp` | 강동 수업 현장 | 임시(애니톡 CDN 이미지) |
-| `about-3.webp` | 강동 작업 공간 | 임시(애니톡 CDN 이미지) |
+| `about-1.webp` | 강동 수업 현장 | 임시(애니톡 CDN 이미지) |
+| `about-2.webp` | 강동 작업 공간 | 임시(애니톡 CDN 이미지) |
+| `about-3.webp` | 강동 학원 내부 | 임시(애니톡 CDN 이미지) |
 | `class-high-1.webp` | 미대입시반 실기 | 임시(애니톡 CDN 이미지) |
 | `class-high-2.webp` | 애니고 예고반 | 임시(애니톡 CDN 이미지) |
 | `class-junior-1.webp` | 초등반 수업 | 임시(애니톡 CDN 이미지) |

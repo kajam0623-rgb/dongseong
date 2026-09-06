@@ -105,6 +105,33 @@ function loadCampus(slug) {
     process.exit(1);
   }
   d.theme = theme;
+
+  // 같은 사진에 서로 다른 캡션이 붙는 것을 막는다. 소개 섹션은 히어로 사진을
+  // 건너뛰고 갤러리는 건너뛰지 않아서, 캡션을 손으로 적으면 한 칸씩 밀린 채로
+  // "학원 공간"과 "수업 현장"이 같은 사진에 동시에 달리는 일이 생겼다.
+  // local 과 remote 를 따로 본다. 같은 사진이라도 about-1.webp / gal-2.webp 처럼
+  // 로컬 파일명은 다를 수 있어서, remote 까지 봐야 어긋난 캡션이 잡힌다.
+  // 히어로는 alt="" 로 나가므로 캡션이 화면에 안 보인다. 보이는 캡션만 본다.
+  const captioned = [
+    ...(d.about?.figures || []),
+    ...(d.galleries || []).flatMap((g) => g.items || []),
+  ];
+  const capOf = new Map();
+  for (const slot of captioned) {
+    if (!slot.caption) continue;
+    for (const key of [slot.local, slot.remote]) {
+      if (!key) continue;
+      const seen = capOf.get(key);
+      if (seen && seen !== slot.caption) {
+        console.error(
+          `${slug}: 같은 사진에 캡션이 두 개다 — ${key}\n  "${seen}" vs "${slot.caption}"`
+        );
+        process.exit(1);
+      }
+      capOf.set(key, slot.caption);
+    }
+  }
+
   return d;
 }
 

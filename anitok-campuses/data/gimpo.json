@@ -91,17 +91,17 @@
     "figures": [
       {
         "local": "about-1.webp",
-        "caption": "김포 학원 공간",
+        "caption": "김포 수업 현장",
         "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/bf4ed526967fd.jpg"
       },
       {
         "local": "about-2.webp",
-        "caption": "김포 수업 현장",
+        "caption": "김포 작업 공간",
         "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/35d16f24e4a7e.jpg"
       },
       {
         "local": "about-3.webp",
-        "caption": "김포 작업 공간",
+        "caption": "김포 학원 내부",
         "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/fdf97f761d2f3.jpg"
       }
     ]
