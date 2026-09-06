@@ -225,6 +225,17 @@ ${[
     writeFileSync(join(outDir, icon), readFileSync(join(ROOT, 'assets', icon)));
   }
 
+  // iOS 홈 화면 아이콘 — 애플은 SVG 를 안 읽어서 180px PNG 가 따로 필요하다.
+  // 모서리는 iOS 가 알아서 둥글리므로 흰 정사각 그대로 둔다. 마크 색만 다른
+  // 두 벌을 미리 그려 뒀고(assets/apple-touch-icon-*.png), 캠퍼스 강조색에
+  // 맞는 쪽을 고른다. 새 테마 색이 생기면 tools/make-touch-icon.py 로 추가.
+  const TOUCH = { '#C9480B': 'orange', '#0B0B0C': 'mono' };
+  const touch = TOUCH[markFill.toUpperCase()] || 'orange';
+  writeFileSync(
+    join(outDir, 'apple-touch-icon.png'),
+    readFileSync(join(ROOT, 'assets', `apple-touch-icon-${touch}.png`))
+  );
+
   // 404 — 기본 Vercel 페이지 대신 같은 톤으로.
   writeFileSync(join(outDir, '404.html'), minHtml(render404(d)));
 

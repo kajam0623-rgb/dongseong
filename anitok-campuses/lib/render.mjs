@@ -1126,7 +1126,7 @@ function head(d, present) {
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/icon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/icon-16.png" sizes="16x16" type="image/png">
-<link rel="apple-touch-icon" href="${url(d.brandTouchIcon)}">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="geo.region" content="${esc(d.geo.regionCode)}">
 <meta name="geo.placename" content="${esc(d.geo.placename)}">
 ${geoMeta}
@@ -1295,7 +1295,7 @@ export function renderLocal(d, page, { pages = [] } = {}) {
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/icon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/icon-16.png" sizes="16x16" type="image/png">
-<link rel="apple-touch-icon" href="${url(d.brandTouchIcon)}">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="geo.region" content="${esc(d.geo.regionCode)}">
 <meta name="geo.placename" content="${esc(d.geo.placename)}">
 <meta property="og:type" content="article">
@@ -1470,7 +1470,7 @@ export function render404(d) {
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/icon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/icon-16.png" sizes="16x16" type="image/png">
-<link rel="apple-touch-icon" href="${url(d.brandTouchIcon)}">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="/s.css">
 <style>
