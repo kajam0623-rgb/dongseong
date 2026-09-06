@@ -170,7 +170,7 @@
             "image": {
               "local": "class-junior-1.webp",
               "caption": "초등반 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/c3.webp"
+              "remote": "https://ilsan.anitok.com/gal/c3.webp"
             }
           },
           {
@@ -180,7 +180,7 @@
             "image": {
               "local": "class-junior-2.webp",
               "caption": "중등반 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/j1.webp"
+              "remote": "https://ilsan.anitok.com/gal/j1.webp"
             }
           }
         ]
@@ -197,7 +197,7 @@
             "image": {
               "local": "class-prep-1.webp",
               "caption": "예비반 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/c0.webp"
+              "remote": "https://ilsan.anitok.com/gal/c0.webp"
             }
           },
           {
@@ -207,7 +207,7 @@
             "image": {
               "local": "class-high-1.webp",
               "caption": "입시반 실기",
-              "remote": "https://ilsan-anitok.vercel.app/gal/g4.webp"
+              "remote": "https://ilsan.anitok.com/gal/g4.webp"
             }
           }
         ]
@@ -224,7 +224,7 @@
             "image": {
               "local": "class-hobby-1.webp",
               "caption": "웹툰 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/h2.webp"
+              "remote": "https://ilsan.anitok.com/gal/h2.webp"
             }
           },
           {
@@ -234,7 +234,7 @@
             "image": {
               "local": "class-hobby-2.webp",
               "caption": "CG 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/h0.webp"
+              "remote": "https://ilsan.anitok.com/gal/h0.webp"
             }
           }
         ]

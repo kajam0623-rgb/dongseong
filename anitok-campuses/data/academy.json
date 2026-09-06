@@ -7,7 +7,7 @@
   "alternateName": "애니톡 아카데미",
   "site": {
     "origin": "https://academy-anitok.vercel.app",
-    "subdomain": "academy"
+    "subdomain": null
   },
   "phone": "02-2695-9514",
   "address": {
@@ -174,7 +174,7 @@
             "image": {
               "local": "class-hobby-1.webp",
               "caption": "인체드로잉 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/de00e143.webp"
+              "remote": "https://ilsan.anitok.com/gal/de00e143.webp"
             }
           },
           {
@@ -184,7 +184,7 @@
             "image": {
               "local": "class-hobby-2.webp",
               "caption": "웹툰 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/h2.webp"
+              "remote": "https://ilsan.anitok.com/gal/h2.webp"
             }
           },
           {
@@ -194,7 +194,7 @@
             "image": {
               "local": "class-hobby-3.webp",
               "caption": "일러스트 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/h3.webp"
+              "remote": "https://ilsan.anitok.com/gal/h3.webp"
             }
           },
           {
@@ -204,7 +204,7 @@
             "image": {
               "local": "class-hobby-4.webp",
               "caption": "디지털드로잉 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/h0.webp"
+              "remote": "https://ilsan.anitok.com/gal/h0.webp"
             }
           }
         ]
@@ -221,7 +221,7 @@
             "image": {
               "local": "class-port-1.webp",
               "caption": "포트폴리오 작업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/h1.webp"
+              "remote": "https://ilsan.anitok.com/gal/h1.webp"
             }
           },
           {
@@ -231,7 +231,7 @@
             "image": {
               "local": "class-port-2.webp",
               "caption": "면접 준비 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/12bf9b9f.webp"
+              "remote": "https://ilsan.anitok.com/gal/12bf9b9f.webp"
             }
           }
         ]
@@ -248,7 +248,7 @@
             "image": {
               "local": "class-job-1.webp",
               "caption": "공모전 준비",
-              "remote": "https://ilsan-anitok.vercel.app/gal/k3.webp"
+              "remote": "https://ilsan.anitok.com/gal/k3.webp"
             }
           },
           {
@@ -258,7 +258,7 @@
             "image": {
               "local": "class-job-2.webp",
               "caption": "취업 포트폴리오",
-              "remote": "https://ilsan-anitok.vercel.app/gal/9c562cca.webp"
+              "remote": "https://ilsan.anitok.com/gal/9c562cca.webp"
             }
           }
         ]

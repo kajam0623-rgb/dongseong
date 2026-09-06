@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hongdae-anitok.vercel.app/sitemap.xml
+Sitemap: https://hongdae.anitok.com/sitemap.xml

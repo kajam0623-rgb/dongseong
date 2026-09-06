@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gwanggyo-anitok.vercel.app/sitemap.xml
+Sitemap: https://gwanggyo.anitok.com/sitemap.xml

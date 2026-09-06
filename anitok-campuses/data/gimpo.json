@@ -170,7 +170,7 @@
             "image": {
               "local": "class-junior-1.webp",
               "caption": "주니어반 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/c3.webp"
+              "remote": "https://ilsan.anitok.com/gal/c3.webp"
             }
           }
         ]
@@ -187,7 +187,7 @@
             "image": {
               "local": "class-mid-1.webp",
               "caption": "중등 예비반 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/j5.webp"
+              "remote": "https://ilsan.anitok.com/gal/j5.webp"
             }
           },
           {
@@ -197,7 +197,7 @@
             "image": {
               "local": "class-mid-2.webp",
               "caption": "중등 입시반 실기",
-              "remote": "https://ilsan-anitok.vercel.app/gal/g8.webp"
+              "remote": "https://ilsan.anitok.com/gal/g8.webp"
             }
           }
         ]
@@ -214,7 +214,7 @@
             "image": {
               "local": "class-high-1.webp",
               "caption": "고등 입시반 실기",
-              "remote": "https://ilsan-anitok.vercel.app/gal/c0.webp"
+              "remote": "https://ilsan.anitok.com/gal/c0.webp"
             }
           },
           {
@@ -224,7 +224,7 @@
             "image": {
               "local": "class-hobby-1.webp",
               "caption": "디지털 드로잉반 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/h0.webp"
+              "remote": "https://ilsan.anitok.com/gal/h0.webp"
             }
           }
         ]

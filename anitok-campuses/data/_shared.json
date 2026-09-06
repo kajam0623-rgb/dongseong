@@ -72,13 +72,13 @@
     "consult": "온라인 상담문의로 궁금한 점을 편하게 남겨 주세요."
   },
   "site": {
-    "baseDomain": null
+    "baseDomain": "anitok.com"
   },
   "otherCampuses": [
     {
       "slug": "ilsan",
       "label": "일산",
-      "href": "https://ilsan-anitok.vercel.app"
+      "href": "https://ilsan.anitok.com"
     }
   ],
   "themes": {

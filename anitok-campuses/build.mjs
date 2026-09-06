@@ -205,11 +205,27 @@ ${[
 `
   );
 
+  // 자체 도메인으로 옮긴 지점은 *.vercel.app 으로 들어온 요청을 301 로 넘긴다.
+  // 미리보기 주소까지 한 번에 걸리게 호스트를 정규식으로 잡았다. 색인이
+  // 두 주소로 갈라지는 것과, 예전 링크가 그대로 살아 있는 것을 같이 막는다.
+  const onVercelHost = /\.vercel\.app$/.test(new URL(d.site.origin).hostname);
+  const vercelRedirects = onVercelHost
+    ? []
+    : [
+        {
+          source: '/:path*',
+          has: [{ type: 'host', value: '(?<vhost>.*)\\.vercel\\.app' }],
+          destination: `${d.site.origin}/:path*`,
+          permanent: true,
+        },
+      ];
+
   writeFileSync(
     join(outDir, 'vercel.json'),
     JSON.stringify(
       {
         cleanUrls: true,
+        ...(vercelRedirects.length ? { redirects: vercelRedirects } : {}),
         headers: [
           {
             source: '/gal/(.*)',

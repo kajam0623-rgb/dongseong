@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mokdong-anitok.vercel.app/sitemap.xml
+Sitemap: https://mokdong.anitok.com/sitemap.xml

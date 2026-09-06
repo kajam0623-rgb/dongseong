@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bucheon-anitok.vercel.app/sitemap.xml
+Sitemap: https://bucheon.anitok.com/sitemap.xml

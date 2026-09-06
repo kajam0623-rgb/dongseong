@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://gwanggyo-anitok.vercel.app/</loc>
+    <loc>https://gwanggyo.anitok.com/</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://gwanggyo-anitok.vercel.app/gwanggyo-manhwa</loc>
+    <loc>https://gwanggyo.anitok.com/gwanggyo-manhwa</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gwanggyo-anitok.vercel.app/gwanggyo-webtoon</loc>
+    <loc>https://gwanggyo.anitok.com/gwanggyo-webtoon</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gwanggyo-anitok.vercel.app/gwanggyo-ani</loc>
+    <loc>https://gwanggyo.anitok.com/gwanggyo-ani</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gwanggyo-anitok.vercel.app/gwanggyo-drawing</loc>
+    <loc>https://gwanggyo.anitok.com/gwanggyo-drawing</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gwanggyo-anitok.vercel.app/suwon-manhwa</loc>
+    <loc>https://gwanggyo.anitok.com/suwon-manhwa</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gwanggyo-anitok.vercel.app/yeongtong-webtoon</loc>
+    <loc>https://gwanggyo.anitok.com/yeongtong-webtoon</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

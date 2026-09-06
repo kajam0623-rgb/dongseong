@@ -1,5 +1,18 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?<vhost>.*)\\.vercel\\.app"
+        }
+      ],
+      "destination": "https://bucheon.anitok.com/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/gal/(.*)",

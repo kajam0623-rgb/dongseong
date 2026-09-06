@@ -228,7 +228,7 @@
             "image": {
               "local": "class-high-1.webp",
               "caption": "한예종 입시반",
-              "remote": "https://ilsan-anitok.vercel.app/gal/g4.webp"
+              "remote": "https://ilsan.anitok.com/gal/g4.webp"
             }
           },
           {
@@ -238,7 +238,7 @@
             "image": {
               "local": "class-high-2.webp",
               "caption": "미대입시반 실기",
-              "remote": "https://ilsan-anitok.vercel.app/gal/k1.webp"
+              "remote": "https://ilsan.anitok.com/gal/k1.webp"
             }
           }
         ]
@@ -255,7 +255,7 @@
             "image": {
               "local": "class-prep-1.webp",
               "caption": "예비반 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/c0.webp"
+              "remote": "https://ilsan.anitok.com/gal/c0.webp"
             }
           },
           {
@@ -265,7 +265,7 @@
             "image": {
               "local": "class-hobby-1.webp",
               "caption": "디지털드로잉 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/h2.webp"
+              "remote": "https://ilsan.anitok.com/gal/h2.webp"
             }
           }
         ]

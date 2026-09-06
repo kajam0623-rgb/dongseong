@@ -171,7 +171,7 @@
             "image": {
               "local": "class-high-1.webp",
               "caption": "한예종 입시반",
-              "remote": "https://ilsan-anitok.vercel.app/gal/g4.webp"
+              "remote": "https://ilsan.anitok.com/gal/g4.webp"
             }
           },
           {
@@ -181,7 +181,7 @@
             "image": {
               "local": "class-high-2.webp",
               "caption": "청강대 입시반",
-              "remote": "https://ilsan-anitok.vercel.app/gal/k5.webp"
+              "remote": "https://ilsan.anitok.com/gal/k5.webp"
             }
           },
           {
@@ -191,7 +191,7 @@
             "image": {
               "local": "class-high-3.webp",
               "caption": "미대입시반 실기",
-              "remote": "https://ilsan-anitok.vercel.app/gal/k1.webp"
+              "remote": "https://ilsan.anitok.com/gal/k1.webp"
             }
           },
           {
@@ -201,7 +201,7 @@
             "image": {
               "local": "class-high-4.webp",
               "caption": "대입예비반 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/c0.webp"
+              "remote": "https://ilsan.anitok.com/gal/c0.webp"
             }
           }
         ]
@@ -218,7 +218,7 @@
             "image": {
               "local": "class-junior-1.webp",
               "caption": "주니어반 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/c3.webp"
+              "remote": "https://ilsan.anitok.com/gal/c3.webp"
             }
           },
           {
@@ -228,7 +228,7 @@
             "image": {
               "local": "class-hobby-1.webp",
               "caption": "성인취미반 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/h4.webp"
+              "remote": "https://ilsan.anitok.com/gal/h4.webp"
             }
           },
           {
@@ -238,7 +238,7 @@
             "image": {
               "local": "class-hobby-2.webp",
               "caption": "웹툰반 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/h2.webp"
+              "remote": "https://ilsan.anitok.com/gal/h2.webp"
             }
           },
           {
@@ -248,7 +248,7 @@
             "image": {
               "local": "class-hobby-3.webp",
               "caption": "디지털드로잉 수업",
-              "remote": "https://ilsan-anitok.vercel.app/gal/h0.webp"
+              "remote": "https://ilsan.anitok.com/gal/h0.webp"
             }
           }
         ]
