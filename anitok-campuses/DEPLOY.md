@@ -1,36 +1,61 @@
 # 배포 안내
 
 7개 지점 사이트는 `sites/<slug>/` 에 이미 빌드되어 있고, 폴더 하나가 그대로 배포 루트다.
-방법은 두 가지다. **A가 더 빠르고, 저장소를 새로 만들 필요가 없다.**
+**지금 필요한 것은 A 하나뿐이다.** 프로젝트와 도메인은 이미 있고, Git 연결만 빠져 있다.
+B 는 지점마다 저장소를 따로 두고 싶을 때의 대안이라 지금은 볼 필요 없다.
 
 ---
 
-## A. 지금 있는 저장소 하나로 7개 사이트 배포 (권장, 새 저장소 불필요)
+## A. 이미 있는 7개 프로젝트에 Git 연결하기 (지금 해야 할 것)
 
-Vercel은 프로젝트마다 **Root Directory**를 따로 지정할 수 있다. 저장소는 `kajam0623-rgb/dongseong`
-하나를 쓰고, 프로젝트만 7개 만들면 지점별로 도메인이 갈린다.
+7개 Vercel 프로젝트는 **이미 만들어져 있고 커스텀 도메인도 붙어 있다.** 다만 Git 저장소에
+연결돼 있지 않아 배포할 때마다 파일을 수동으로 올려야 한다. 일산(`ilsan-anitok`)만 연결돼
+있어서 푸시하면 자동 배포된다. 나머지 7곳도 같은 상태로 맞춘다.
 
-각 지점마다 한 번씩 반복한다.
+프로젝트를 새로 만들 필요는 없다. 새로 만들면 도메인을 옮겨 붙여야 해서 오히려 손해다.
+기존 프로젝트에 저장소만 연결한다.
 
-1. [vercel.com/new](https://vercel.com/new) → `kajam0623-rgb/dongseong` **Import**
-2. **Project Name**: `mokdong-anitok` (그대로 `mokdong-anitok.vercel.app` 이 된다)
-3. **Root Directory**: `Edit` 를 눌러 `anitok-campuses/sites/mokdong` 선택
+각 지점마다 한 번씩:
+
+1. Vercel → 해당 프로젝트 → **Settings → Git → Connect Git Repository**
+2. `kajam0623-rgb/dongseong` 선택
+3. **Root Directory**: `anitok-campuses/sites/<slug>` (아래 표)
 4. **Framework Preset**: `Other`, Build Command 비움, Output Directory 기본값
-5. **Branch**: `claude/ilsan-anitok-project-arpdi5`
-   (main에 머지한 뒤에는 main으로 바꿔도 된다)
-6. Deploy
+5. **Production Branch**: `claude/ilsan-anitok-project-arpdi5` — 아래 경고를 먼저 읽을 것
+6. Save 후 Deployments 탭에서 한 번 재배포
 
-| 프로젝트 이름 | Root Directory |
-|---|---|
-| `mokdong-anitok` | `anitok-campuses/sites/mokdong` |
-| `hongdae-anitok` | `anitok-campuses/sites/hongdae` |
-| `gangdong-anitok` | `anitok-campuses/sites/gangdong` |
-| `bucheon-anitok` | `anitok-campuses/sites/bucheon` |
-| `gwanggyo-anitok` | `anitok-campuses/sites/gwanggyo` |
-| `gimpo-anitok` | `anitok-campuses/sites/gimpo` |
-| `academy-anitok` | `anitok-campuses/sites/academy` |
+| Vercel 프로젝트 | Root Directory | 도메인 |
+|---|---|---|
+| `mokdong-anitok` | `anitok-campuses/sites/mokdong` | `mokdong.anitok.com` |
+| `hongdae-anitok` | `anitok-campuses/sites/hongdae` | `hongdae.anitok.com` |
+| `gangdong-anitok` | `anitok-campuses/sites/gangdong` | `gangdong.anitok.com` |
+| `gwanggyo-anitok` | `anitok-campuses/sites/gwanggyo` | `gwanggyo.anitok.com` |
+| `gimpo-anitok` | `anitok-campuses/sites/gimpo` | `gimpo.anitok.com` |
+| `bucheon-anitok` | `anitok-campuses/sites/bucheon` | `bucheon.anitok.com` |
+| `academy-anitok` | `anitok-campuses/sites/academy` | `academy-anitok.vercel.app` |
 
-Vercel CLI가 편하면 저장소를 로컬에 받은 뒤 한 줄씩:
+> **Production Branch 를 `main` 으로 두면 안 된다**
+> Vercel 은 기본값으로 저장소의 기본 브랜치(`main`)를 프로덕션으로 잡는다. 그런데 지금
+> `origin/main` 에는 구조화 데이터 개선 커밋이 아직 없다. `main` 으로 연결하면 7개 사이트가
+> 전부 예전 JSON-LD 로 되돌아간다.
+> 두 가지 중 하나를 택한다.
+> - Production Branch 를 `claude/ilsan-anitok-project-arpdi5` 로 지정한다 (머지 불필요)
+> - 먼저 그 브랜치를 `main` 에 머지한 뒤 `main` 으로 연결한다
+
+> **연결하면 지역 랜딩페이지 42개가 같이 공개된다**
+> 지금 라이브에는 지점마다 `index.html` 과 `404.html` 두 장만 올라가 있다. 저장소에는
+> 지점마다 지역 랜딩페이지 6장이 더 들어 있고(예: 김포는 `gimpo-webtoon`, `hangang-manhwa` 등),
+> `sitemap.xml` 도 7개 URL 을 담고 있다. Git 을 연결하면 이것들이 그대로 배포된다.
+> 랜딩페이지에는 BreadcrumbList 와 FAQPage 구조화 데이터가 들어 있어 본문 분량이 얇다는
+> 문제(지점 330~460자 vs 일산 4,661자)가 같이 해소된다. 원치 않으면 연결 전에 알려달라.
+
+> **왜 대신 눌러주지 못하나**
+> 이 세션의 Vercel 토큰은 배포 전용이다. `list_teams` 는 빈 배열을 주고
+> `list_projects` · `get_project` 는 `403 Forbidden` 이라, 기존 프로젝트의 Git 설정을
+> 읽거나 바꿀 방법이 없다. MCP 의 `create_git_project` 도 "이미 있는 미연결 프로젝트를
+> 다시 연결하지는 않는다"고 명시돼 있어 쓸 수 없다. 브라우저에서 직접 눌러야 한다.
+
+Vercel CLI 가 편하면 로컬에서 폴더째 올릴 수도 있다(연결 없이 1회성 배포).
 
 ```bash
 cd anitok-campuses
@@ -38,7 +63,6 @@ npx vercel deploy sites/mokdong --prod --name mokdong-anitok
 npx vercel deploy sites/hongdae --prod --name hongdae-anitok
 # ... 나머지도 동일
 ```
-
 ---
 
 ## B. 지점별 저장소로 분리
