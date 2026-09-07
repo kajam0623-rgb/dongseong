@@ -35,7 +35,13 @@
 <link rel="stylesheet" href="/s.css">
 <script type="application/ld+json">{
 "@context": "https://schema.org",
-"@type": "EducationalOrganization",
+"@graph": [
+{
+"@type": [
+"EducationalOrganization",
+"LocalBusiness"
+],
+"@id": "https://gwanggyo.anitok.com/#organization",
 "name": "광교 애니톡 만화애니학원",
 "description": "광교만화학원 · 수원웹툰학원 · 영통 애니학원 — 광교 애니톡 만화애니미술학원. 목동 본원에서 11년간 결과를 만들어낸 선생님들이 광교에 만든 학원. 주니어반 · 예비반 · 입시반 · 웹툰CG반. 수원시 영통구 에듀타운로 102 광교중앙역 SK VIEW B동 7층 · 031-211-0904",
 "url": "https://gwanggyo.anitok.com/",
@@ -48,10 +54,6 @@
 "addressLocality": "수원시 영통구",
 "streetAddress": "에듀타운로 102 광교중앙역 SK VIEW B동 7층 704호"
 },
-"openingHours": [
-"Mo-Fr 13:00-22:00",
-"Sa 13:00-18:00"
-],
 "parentOrganization": {
 "@type": "Organization",
 "name": "주식회사 애니톡",
@@ -62,15 +64,129 @@
 "https://blog.naver.com/gganitalk",
 "https://www.instagram.com/anitalk_suwon/"
 ],
+"openingHoursSpecification": [
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Monday",
+"Tuesday",
+"Wednesday",
+"Thursday",
+"Friday"
+],
+"opens": "13:00",
+"closes": "22:00"
+},
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Saturday"
+],
+"opens": "13:00",
+"closes": "18:00"
+}
+],
+"hasMap": "https://m.place.naver.com/place/1767979521/home",
+"identifier": {
+"@type": "PropertyValue",
+"name": "사업자등록번호",
+"value": "232-88-00167"
+},
 "geo": {
 "@type": "GeoCoordinates",
 "latitude": "37.2895932",
 "longitude": "127.0467405"
+},
+"areaServed": [
+{
+"@type": "City",
+"name": "수원시 영통구"
+},
+{
+"@type": "Place",
+"name": "수원"
+},
+{
+"@type": "Place",
+"name": "영통"
+},
+{
+"@type": "Place",
+"name": "용인"
+},
+{
+"@type": "Place",
+"name": "동탄"
 }
-}</script>
-<script type="application/ld+json">{
-"@context": "https://schema.org",
+],
+"hasOfferCatalog": {
+"@type": "OfferCatalog",
+"name": "수업 과목",
+"itemListElement": [
+{
+"@type": "Course",
+"name": "초등반",
+"description": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
+"provider": {
+"@id": "https://gwanggyo.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "중등반",
+"description": "기본기를 다지며 만화 콘티와 채색까지 다루는 중등 과정입니다.",
+"provider": {
+"@id": "https://gwanggyo.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "예비반",
+"description": "인체 구조와 명암, 투시를 처음부터 잡습니다. 입시 실기의 뼈대를 만드는 반입니다.",
+"provider": {
+"@id": "https://gwanggyo.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "입시반",
+"description": "미대입시 실기와 애니고 · 예고 실기, 면접까지 목표 전형에 맞춰 준비합니다.",
+"provider": {
+"@id": "https://gwanggyo.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "웹툰",
+"description": "콘티부터 컷 연출, 완성 원고까지 한 편의 웹툰을 직접 만들어 봅니다.",
+"provider": {
+"@id": "https://gwanggyo.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "CG · 디지털드로잉",
+"description": "태블릿으로 캐릭터 디자인과 채색, 배경 연출까지 완성작으로 마무리합니다.",
+"provider": {
+"@id": "https://gwanggyo.anitok.com/#organization"
+}
+}
+]
+}
+},
+{
+"@type": "WebSite",
+"@id": "https://gwanggyo.anitok.com/#website",
+"url": "https://gwanggyo.anitok.com/",
+"name": "광교 애니톡 만화애니학원",
+"inLanguage": "ko-KR",
+"publisher": {
+"@id": "https://gwanggyo.anitok.com/#organization"
+}
+},
+{
 "@type": "FAQPage",
+"@id": "https://gwanggyo.anitok.com/#faq",
 "mainEntity": [
 {
 "@type": "Question",
@@ -119,6 +235,8 @@
 "@type": "Answer",
 "text": "경기도 수원시 영통구 에듀타운로 102 광교중앙역 SK VIEW B동 7층 704호입니다. 네이버 지도에서 '광교 애니톡 만화애니학원'으로 검색하시면 길찾기가 가능합니다."
 }
+}
+]
 }
 ]
 }</script>

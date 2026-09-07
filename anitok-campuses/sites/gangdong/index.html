@@ -35,7 +35,13 @@
 <link rel="stylesheet" href="/s.css">
 <script type="application/ld+json">{
 "@context": "https://schema.org",
-"@type": "EducationalOrganization",
+"@graph": [
+{
+"@type": [
+"EducationalOrganization",
+"LocalBusiness"
+],
+"@id": "https://gangdong.anitok.com/#organization",
 "name": "강동 애니톡 만화애니학원",
 "description": "강동만화학원 · 송파웹툰학원 · 애니고입시 — 강동 애니톡 만화애니학원. 4년 연속 한국예술종합학교 애니메이션과 최종 합격, 2023~2024 청강대 14명 합격. 미대입시 · 애니고입시 · 중등 · 초등 · 취미 · CG반. 강동구 양재대로 1579 한영빌딩 5층 · 02-486-2220",
 "url": "https://gangdong.anitok.com/",
@@ -48,10 +54,6 @@
 "addressLocality": "강동구",
 "streetAddress": "양재대로 1579 한영빌딩 5층"
 },
-"openingHours": [
-"Mo-Fr 13:00-22:00",
-"Sa 13:00-18:00"
-],
 "parentOrganization": {
 "@type": "Organization",
 "name": "주식회사 애니톡",
@@ -62,15 +64,129 @@
 "https://blog.naver.com/anitalk-kd",
 "https://www.instagram.com/anitalk_kangdong/"
 ],
+"openingHoursSpecification": [
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Monday",
+"Tuesday",
+"Wednesday",
+"Thursday",
+"Friday"
+],
+"opens": "13:00",
+"closes": "22:00"
+},
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Saturday"
+],
+"opens": "13:00",
+"closes": "18:00"
+}
+],
+"hasMap": "https://m.place.naver.com/place/33907366/home",
+"identifier": {
+"@type": "PropertyValue",
+"name": "사업자등록번호",
+"value": "232-88-00167"
+},
 "geo": {
 "@type": "GeoCoordinates",
 "latitude": "37.5465802",
 "longitude": "127.1429163"
+},
+"areaServed": [
+{
+"@type": "City",
+"name": "강동구"
+},
+{
+"@type": "Place",
+"name": "천호"
+},
+{
+"@type": "Place",
+"name": "길동"
+},
+{
+"@type": "Place",
+"name": "송파"
+},
+{
+"@type": "Place",
+"name": "명일"
 }
-}</script>
-<script type="application/ld+json">{
-"@context": "https://schema.org",
+],
+"hasOfferCatalog": {
+"@type": "OfferCatalog",
+"name": "수업 과목",
+"itemListElement": [
+{
+"@type": "Course",
+"name": "미대입시반",
+"description": "한예종, 청강대 등 목표 대학 전형에 맞춘 수시 · 정시 실기를 준비합니다.",
+"provider": {
+"@id": "https://gangdong.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "애니고 · 예고반",
+"description": "애니고와 예고 실기, 포트폴리오, 면접까지 함께 준비하는 중등 입시 과정입니다.",
+"provider": {
+"@id": "https://gangdong.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "초등반",
+"description": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
+"provider": {
+"@id": "https://gangdong.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "중등반",
+"description": "기본기를 다지며 만화 콘티와 채색까지 다루는 중등 과정입니다.",
+"provider": {
+"@id": "https://gangdong.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "취미반",
+"description": "부담 없이 좋아하는 그림을 그리며 기본기를 함께 쌓는 과정입니다.",
+"provider": {
+"@id": "https://gangdong.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "CG반",
+"description": "태블릿과 디지털 툴로 채색과 마무리까지 완성하는 과정입니다.",
+"provider": {
+"@id": "https://gangdong.anitok.com/#organization"
+}
+}
+]
+}
+},
+{
+"@type": "WebSite",
+"@id": "https://gangdong.anitok.com/#website",
+"url": "https://gangdong.anitok.com/",
+"name": "강동 애니톡 만화애니학원",
+"inLanguage": "ko-KR",
+"publisher": {
+"@id": "https://gangdong.anitok.com/#organization"
+}
+},
+{
 "@type": "FAQPage",
+"@id": "https://gangdong.anitok.com/#faq",
 "mainEntity": [
 {
 "@type": "Question",
@@ -119,6 +235,8 @@
 "@type": "Answer",
 "text": "서울특별시 강동구 양재대로 1579 한영빌딩 5층입니다. 네이버 지도에서 '강동 애니톡 만화애니학원'으로 검색하시면 길찾기가 가능합니다."
 }
+}
+]
 }
 ]
 }</script>

@@ -35,7 +35,13 @@
 <link rel="stylesheet" href="/s.css">
 <script type="application/ld+json">{
 "@context": "https://schema.org",
-"@type": "EducationalOrganization",
+"@graph": [
+{
+"@type": [
+"EducationalOrganization",
+"LocalBusiness"
+],
+"@id": "https://mokdong.anitok.com/#organization",
 "name": "애니톡 목동 본원",
 "alternateName": "목동애니톡학원",
 "description": "목동만화학원 · 양천구 웹툰학원 · 애니고입시 — 애니톡 만화학원 목동 본원. 2023~2026 서울대 · 홍익대 · 고려대 · 청강대 31명 합격, 한국애니고 17년 연속 합격. 초등 취미부터 미대입시까지. 양천구 목동로 201 한성빌딩 7층 · 02-2644-3313",
@@ -49,10 +55,6 @@
 "addressLocality": "양천구",
 "streetAddress": "목동로 201 한성빌딩 7층"
 },
-"openingHours": [
-"Mo-Fr 13:00-22:00",
-"Sa 13:00-18:00"
-],
 "parentOrganization": {
 "@type": "Organization",
 "name": "주식회사 애니톡",
@@ -63,15 +65,125 @@
 "https://blog.naver.com/anitalk_mokdong",
 "https://www.instagram.com/anitalk_mokdong/"
 ],
+"openingHoursSpecification": [
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Monday",
+"Tuesday",
+"Wednesday",
+"Thursday",
+"Friday"
+],
+"opens": "13:00",
+"closes": "22:00"
+},
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Saturday"
+],
+"opens": "13:00",
+"closes": "18:00"
+}
+],
+"hasMap": "https://m.place.naver.com/place/11780719/home",
+"identifier": {
+"@type": "PropertyValue",
+"name": "사업자등록번호",
+"value": "232-88-00167"
+},
 "geo": {
 "@type": "GeoCoordinates",
 "latitude": "37.5264179",
 "longitude": "126.8639255"
+},
+"areaServed": [
+{
+"@type": "City",
+"name": "양천구"
+},
+{
+"@type": "Place",
+"name": "화곡"
+},
+{
+"@type": "Place",
+"name": "등촌"
+},
+{
+"@type": "Place",
+"name": "신정"
 }
-}</script>
-<script type="application/ld+json">{
-"@context": "https://schema.org",
+],
+"hasOfferCatalog": {
+"@type": "OfferCatalog",
+"name": "수업 과목",
+"itemListElement": [
+{
+"@type": "Course",
+"name": "고1~2반",
+"description": "인체 구조와 명암, 투시를 처음부터 잡습니다. 입시 실기의 뼈대를 만드는 반입니다.",
+"provider": {
+"@id": "https://mokdong.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "미대입시반",
+"description": "서울대, 홍익대, 고려대, 건국대, 경기대, 청강대 등 목표 대학 전형에 맞춘 수시 · 정시 실기.",
+"provider": {
+"@id": "https://mokdong.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "중등반",
+"description": "심화 기초와 포트폴리오, 공모전 준비까지 다룹니다. 특성화고 입시도 함께 준비합니다.",
+"provider": {
+"@id": "https://mokdong.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "애니고 · 예고반",
+"description": "한국애니고, 경기예고, 서울웹툰애니고, 예림디자인고, 서울영상고 실기와 면접을 준비합니다.",
+"provider": {
+"@id": "https://mokdong.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "주니어반",
+"description": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
+"provider": {
+"@id": "https://mokdong.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "취미 · 디지털드로잉",
+"description": "취미 미술, 일러스트, CG, 웹툰 교육. 원하는 분야만 골라 배우실 수 있습니다.",
+"provider": {
+"@id": "https://mokdong.anitok.com/#organization"
+}
+}
+]
+}
+},
+{
+"@type": "WebSite",
+"@id": "https://mokdong.anitok.com/#website",
+"url": "https://mokdong.anitok.com/",
+"name": "애니톡 목동 본원",
+"inLanguage": "ko-KR",
+"publisher": {
+"@id": "https://mokdong.anitok.com/#organization"
+}
+},
+{
 "@type": "FAQPage",
+"@id": "https://mokdong.anitok.com/#faq",
 "mainEntity": [
 {
 "@type": "Question",
@@ -128,6 +240,8 @@
 "@type": "Answer",
 "text": "서울특별시 양천구 목동로 201 한성빌딩 7층입니다. 네이버 지도에서 '애니톡 목동 본원'으로 검색하시면 길찾기가 가능합니다."
 }
+}
+]
 }
 ]
 }</script>

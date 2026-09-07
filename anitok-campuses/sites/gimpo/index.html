@@ -35,7 +35,13 @@
 <link rel="stylesheet" href="/s.css">
 <script type="application/ld+json">{
 "@context": "https://schema.org",
-"@type": "EducationalOrganization",
+"@graph": [
+{
+"@type": [
+"EducationalOrganization",
+"LocalBusiness"
+],
+"@id": "https://gimpo.anitok.com/#organization",
 "name": "김포 애니톡 만화애니학원",
 "description": "김포만화학원 · 김포웹툰학원 · 한강신도시 애니학원 — 김포 애니톡 만화애니학원. 15년 전통 애니톡, 한예종 · 청강대 · 세종대 합격생 배출 강사진과 목동 · 대치동 25년 경력 학원장. 주니어반 · 중등예비 · 중등입시 · 고등입시 · 디지털드로잉반. 김포시 김포한강1로 230 3층 · 031-985-5382",
 "url": "https://gimpo.anitok.com/",
@@ -48,10 +54,6 @@
 "addressLocality": "김포시",
 "streetAddress": "김포한강1로 230 3층"
 },
-"openingHours": [
-"Mo-Fr 13:00-22:00",
-"Sa 13:00-18:00"
-],
 "parentOrganization": {
 "@type": "Organization",
 "name": "주식회사 애니톡",
@@ -62,15 +64,121 @@
 "https://blog.naver.com/gimpo_anitalk",
 "https://www.instagram.com/anitalk_gimpo/"
 ],
+"openingHoursSpecification": [
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Monday",
+"Tuesday",
+"Wednesday",
+"Thursday",
+"Friday"
+],
+"opens": "13:00",
+"closes": "22:00"
+},
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Saturday"
+],
+"opens": "13:00",
+"closes": "18:00"
+}
+],
+"hasMap": "https://m.place.naver.com/place/1052247671/home",
+"identifier": {
+"@type": "PropertyValue",
+"name": "사업자등록번호",
+"value": "232-88-00167"
+},
 "geo": {
 "@type": "GeoCoordinates",
 "latitude": "37.6532353",
 "longitude": "126.6828135"
+},
+"areaServed": [
+{
+"@type": "City",
+"name": "김포시"
+},
+{
+"@type": "Place",
+"name": "한강신도시"
+},
+{
+"@type": "Place",
+"name": "구래동"
+},
+{
+"@type": "Place",
+"name": "장기동"
+},
+{
+"@type": "Place",
+"name": "운양동"
 }
-}</script>
-<script type="application/ld+json">{
-"@context": "https://schema.org",
+],
+"hasOfferCatalog": {
+"@type": "OfferCatalog",
+"name": "수업 과목",
+"itemListElement": [
+{
+"@type": "Course",
+"name": "주니어반",
+"description": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
+"provider": {
+"@id": "https://gimpo.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "중등 예비반",
+"description": "인체와 명암, 투시 등 기본기를 다지며 그리는 습관을 만드는 과정입니다.",
+"provider": {
+"@id": "https://gimpo.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "중등 입시반",
+"description": "애니고 · 예고 등 고교 입시를 목표로 실기와 포트폴리오를 준비합니다.",
+"provider": {
+"@id": "https://gimpo.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "고등 입시반",
+"description": "목표 대학 전형에 맞춘 수시 · 정시 실기를 단계별로 준비합니다.",
+"provider": {
+"@id": "https://gimpo.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "디지털 드로잉반",
+"description": "태블릿으로 캐릭터 디자인과 채색, 일러스트 완성까지 다룹니다.",
+"provider": {
+"@id": "https://gimpo.anitok.com/#organization"
+}
+}
+]
+}
+},
+{
+"@type": "WebSite",
+"@id": "https://gimpo.anitok.com/#website",
+"url": "https://gimpo.anitok.com/",
+"name": "김포 애니톡 만화애니학원",
+"inLanguage": "ko-KR",
+"publisher": {
+"@id": "https://gimpo.anitok.com/#organization"
+}
+},
+{
 "@type": "FAQPage",
+"@id": "https://gimpo.anitok.com/#faq",
 "mainEntity": [
 {
 "@type": "Question",
@@ -119,6 +227,8 @@
 "@type": "Answer",
 "text": "경기도 김포시 김포한강1로 230 3층입니다. 네이버 지도에서 '김포 애니톡 만화애니학원'으로 검색하시면 길찾기가 가능합니다."
 }
+}
+]
 }
 ]
 }</script>

@@ -35,7 +35,13 @@
 <link rel="stylesheet" href="/s.css">
 <script type="application/ld+json">{
 "@context": "https://schema.org",
-"@type": "EducationalOrganization",
+"@graph": [
+{
+"@type": [
+"EducationalOrganization",
+"LocalBusiness"
+],
+"@id": "https://academy-anitok.vercel.app/#organization",
 "name": "애니톡 웹툰게임 아카데미",
 "alternateName": "애니톡 아카데미",
 "description": "서울웹툰학원 · 서울만화학원 · 서울일러스트학원 · 서울디지털드로잉 — 애니톡 웹툰게임 아카데미. 청강대 웹툰만화과 · 게임과 포폴전형 합격, 서울웹툰아카데미 합격, 웹툰공모전 입상, 게임회사 · 웹툰 에이전시 취업. 와콤 신티크 액정 태블릿 개인 책상 1:1 수업. 양천구 신정중앙로 103 7층 · 02-2695-9514",
@@ -49,10 +55,6 @@
 "addressLocality": "양천구",
 "streetAddress": "신정중앙로 103 7층"
 },
-"openingHours": [
-"Mo-Fr 13:00-22:00",
-"Sa 13:00-18:00"
-],
 "parentOrganization": {
 "@type": "Organization",
 "name": "주식회사 애니톡",
@@ -63,15 +65,141 @@
 "https://blog.naver.com/anitalk-awga",
 "https://www.instagram.com/anitalk_academy/"
 ],
+"openingHoursSpecification": [
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Monday",
+"Tuesday",
+"Wednesday",
+"Thursday",
+"Friday"
+],
+"opens": "13:00",
+"closes": "22:00"
+},
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Saturday"
+],
+"opens": "13:00",
+"closes": "18:00"
+}
+],
+"hasMap": "https://m.place.naver.com/place/1906770465/home",
+"identifier": {
+"@type": "PropertyValue",
+"name": "사업자등록번호",
+"value": "232-88-00167"
+},
 "geo": {
 "@type": "GeoCoordinates",
 "latitude": "37.5265063",
 "longitude": "126.8633812"
+},
+"areaServed": [
+{
+"@type": "City",
+"name": "양천구"
+},
+{
+"@type": "Place",
+"name": "목동"
+},
+{
+"@type": "Place",
+"name": "화곡"
+},
+{
+"@type": "Place",
+"name": "등촌"
 }
-}</script>
-<script type="application/ld+json">{
-"@context": "https://schema.org",
+],
+"hasOfferCatalog": {
+"@type": "OfferCatalog",
+"name": "교육 과목",
+"itemListElement": [
+{
+"@type": "Course",
+"name": "인체드로잉",
+"description": "인체 구조와 비율, 동세를 처음부터 잡습니다. 모든 그림의 뼈대가 되는 과정입니다.",
+"provider": {
+"@id": "https://academy-anitok.vercel.app/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "웹툰",
+"description": "콘티부터 컷 연출, 완성 원고까지 한 편의 웹툰을 직접 만들어 봅니다.",
+"provider": {
+"@id": "https://academy-anitok.vercel.app/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "일러스트 기초",
+"description": "캐릭터 디자인과 채색, 배경 연출까지 한 장의 완성작으로 마무리합니다.",
+"provider": {
+"@id": "https://academy-anitok.vercel.app/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "디지털드로잉",
+"description": "와콤 신티크 액정 태블릿으로 디지털 작업 흐름을 처음부터 익힙니다.",
+"provider": {
+"@id": "https://academy-anitok.vercel.app/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "포트폴리오 수업",
+"description": "청강대, 계원예대, 서울웹툰아카데미(SWA) 등 목표 전형에 맞춘 포트폴리오를 완성합니다.",
+"provider": {
+"@id": "https://academy-anitok.vercel.app/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "면접 수업",
+"description": "포트폴리오 설명과 면접 질의응답까지 함께 준비합니다.",
+"provider": {
+"@id": "https://academy-anitok.vercel.app/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "웹툰 · 일러스트 공모전",
+"description": "공모전 요강 분석부터 출품작 완성까지 단계별로 지도합니다.",
+"provider": {
+"@id": "https://academy-anitok.vercel.app/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "게임회사 · 웹툰회사 취업준비",
+"description": "업계 기준에 맞춘 포트폴리오를 완성해 취업과 데뷔를 준비합니다.",
+"provider": {
+"@id": "https://academy-anitok.vercel.app/#organization"
+}
+}
+]
+}
+},
+{
+"@type": "WebSite",
+"@id": "https://academy-anitok.vercel.app/#website",
+"url": "https://academy-anitok.vercel.app/",
+"name": "애니톡 웹툰게임 아카데미",
+"inLanguage": "ko-KR",
+"publisher": {
+"@id": "https://academy-anitok.vercel.app/#organization"
+}
+},
+{
 "@type": "FAQPage",
+"@id": "https://academy-anitok.vercel.app/#faq",
 "mainEntity": [
 {
 "@type": "Question",
@@ -120,6 +248,8 @@
 "@type": "Answer",
 "text": "서울특별시 양천구 신정중앙로 103 7층 애니톡 아카데미입니다. 네이버 지도에서 '애니톡 웹툰게임 아카데미'로 검색하시면 길찾기가 가능합니다."
 }
+}
+]
 }
 ]
 }</script>

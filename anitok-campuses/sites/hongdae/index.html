@@ -35,7 +35,13 @@
 <link rel="stylesheet" href="/s.css">
 <script type="application/ld+json">{
 "@context": "https://schema.org",
-"@type": "EducationalOrganization",
+"@graph": [
+{
+"@type": [
+"EducationalOrganization",
+"LocalBusiness"
+],
+"@id": "https://hongdae.anitok.com/#organization",
 "name": "홍대 애니톡 만화애니학원",
 "description": "홍대만화학원 · 홍대웹툰학원 · 한예종입시 전문 — 홍대 애니톡 만화애니학원. 2020~2025 한예종 24명, 중앙대 10명, 경기대 19명, 상명대 11명 합격. 청강대 실기대전 대상 4회. 마포구 양화로 127 첨단빌딩 6층 · 02-3143-3313",
 "url": "https://hongdae.anitok.com/",
@@ -48,10 +54,6 @@
 "addressLocality": "마포구",
 "streetAddress": "양화로 127 첨단빌딩 6층"
 },
-"openingHours": [
-"Mo-Fr 13:00-22:00",
-"Sa 13:00-18:00"
-],
 "parentOrganization": {
 "@type": "Organization",
 "name": "주식회사 애니톡",
@@ -62,15 +64,109 @@
 "https://blog.naver.com/anitalk3313",
 "https://www.instagram.com/anitalk_hongdae/"
 ],
+"openingHoursSpecification": [
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Monday",
+"Tuesday",
+"Wednesday",
+"Thursday",
+"Friday"
+],
+"opens": "13:00",
+"closes": "22:00"
+},
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Saturday"
+],
+"opens": "13:00",
+"closes": "18:00"
+}
+],
+"hasMap": "https://m.place.naver.com/place/33963773/home",
+"identifier": {
+"@type": "PropertyValue",
+"name": "사업자등록번호",
+"value": "232-88-00167"
+},
 "geo": {
 "@type": "GeoCoordinates",
 "latitude": "37.5548834",
 "longitude": "126.9205097"
+},
+"areaServed": [
+{
+"@type": "City",
+"name": "마포구"
+},
+{
+"@type": "Place",
+"name": "합정"
+},
+{
+"@type": "Place",
+"name": "연남"
+},
+{
+"@type": "Place",
+"name": "서교동"
 }
-}</script>
-<script type="application/ld+json">{
-"@context": "https://schema.org",
+],
+"hasOfferCatalog": {
+"@type": "OfferCatalog",
+"name": "수업 과목",
+"itemListElement": [
+{
+"@type": "Course",
+"name": "한예종 입시반",
+"description": "한국예술종합학교 애니메이션과 전형에 맞춘 실기와 포트폴리오, 면접까지 준비합니다.",
+"provider": {
+"@id": "https://hongdae.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "미대입시반",
+"description": "중앙대, 경기대, 상명대, 한성대, 세종대, 홍익대 등 목표 대학 전형별 실기.",
+"provider": {
+"@id": "https://hongdae.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "예비반",
+"description": "인체 구조와 명암, 투시를 처음부터 잡습니다. 입시 실기의 뼈대를 만드는 반입니다.",
+"provider": {
+"@id": "https://hongdae.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "웹툰 · 디지털드로잉",
+"description": "클립스튜디오와 태블릿으로 웹툰 연출, 일러스트, 캐릭터 채색을 익힙니다.",
+"provider": {
+"@id": "https://hongdae.anitok.com/#organization"
+}
+}
+]
+}
+},
+{
+"@type": "WebSite",
+"@id": "https://hongdae.anitok.com/#website",
+"url": "https://hongdae.anitok.com/",
+"name": "홍대 애니톡 만화애니학원",
+"inLanguage": "ko-KR",
+"publisher": {
+"@id": "https://hongdae.anitok.com/#organization"
+}
+},
+{
 "@type": "FAQPage",
+"@id": "https://hongdae.anitok.com/#faq",
 "mainEntity": [
 {
 "@type": "Question",
@@ -119,6 +215,8 @@
 "@type": "Answer",
 "text": "서울특별시 마포구 양화로 127 첨단빌딩 6층입니다. 네이버 지도에서 '홍대 애니톡 만화애니학원'으로 검색하시면 길찾기가 가능합니다."
 }
+}
+]
 }
 ]
 }</script>

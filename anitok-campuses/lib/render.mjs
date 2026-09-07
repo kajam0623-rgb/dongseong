@@ -1066,14 +1066,49 @@ function quickBar(d) {
 
 /* ─────────────────────── 구조화 데이터 ─────────────────────── */
 
+/** "Mo-Fr 13:00-22:00" 같은 축약 표기를 OpeningHoursSpecification 으로 편다. */
+function hoursSpec(lines) {
+  const DAY = {
+    Mo: 'Monday', Tu: 'Tuesday', We: 'Wednesday', Th: 'Thursday',
+    Fr: 'Friday', Sa: 'Saturday', Su: 'Sunday',
+  };
+  const ORDER = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+  return (lines || [])
+    .map((line) => {
+      const m = /^([A-Za-z,-]+)\s+(\d{2}:\d{2})-(\d{2}:\d{2})$/.exec(String(line).trim());
+      if (!m) return null;
+      const days = [];
+      for (const part of m[1].split(',')) {
+        const range = part.split('-');
+        if (range.length === 2) {
+          // Mo-Fr 처럼 범위로 적힌 것은 요일 순서대로 펼친다.
+          const a = ORDER.indexOf(range[0]);
+          const b = ORDER.indexOf(range[1]);
+          if (a < 0 || b < 0) return null;
+          for (let i = a; i <= b; i += 1) days.push(DAY[ORDER[i]]);
+        } else if (DAY[part]) {
+          days.push(DAY[part]);
+        } else {
+          return null;
+        }
+      }
+      if (!days.length) return null;
+      return { '@type': 'OpeningHoursSpecification', dayOfWeek: days, opens: m[2], closes: m[3] };
+    })
+    .filter(Boolean);
+}
+
 function structuredData(d) {
+  const base = d.site.origin;
+  const orgId = `${base}/#organization`;
   const org = {
-    '@context': 'https://schema.org',
-    '@type': 'EducationalOrganization',
+    // LocalBusiness 를 같이 달아야 지역 검색과 AI 답변에서 "동네 학원" 으로 잡힌다.
+    '@type': ['EducationalOrganization', 'LocalBusiness'],
+    '@id': orgId,
     name: d.name,
     alternateName: d.alternateName || undefined,
     description: d.seo.description,
-    url: d.site.origin + '/',
+    url: base + '/',
     telephone: d.phone,
     image: d.hero.image?.remote || undefined,
     address: {
@@ -1083,18 +1118,68 @@ function structuredData(d) {
       addressLocality: d.geo.locality,
       streetAddress: d.address.street,
     },
-    openingHours: d.hours.schemaOrg,
     parentOrganization: { '@type': 'Organization', name: d.company.name, url: 'https://anitok.com/' },
     sameAs: [d.links.naverPlace, d.links.blog, d.links.instagram].filter(Boolean),
   };
+
+  const spec = hoursSpec(d.hours?.schemaOrg);
+  if (spec.length) org.openingHoursSpecification = spec;
+  else if (d.hours?.schemaOrg) org.openingHours = d.hours.schemaOrg;
+
+  if (d.links.naverPlace) org.hasMap = d.links.naverPlace;
+  if (d.company?.bizNo) {
+    org.identifier = { '@type': 'PropertyValue', name: '사업자등록번호', value: d.company.bizNo };
+  }
   if (d.geo.lat && d.geo.lng) {
     org.geo = { '@type': 'GeoCoordinates', latitude: d.geo.lat, longitude: d.geo.lng };
   }
-  const blocks = [org];
+
+  // 실제로 학생이 오는 동네만 areaServed 에 적는다. 없는 지역을 지어내지 않는다.
+  const served = [];
+  const seen = new Set();
+  const push = (name, type) => {
+    const key = String(name || '').trim();
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    served.push({ '@type': type, name: key });
+  };
+  push(d.geo.locality, 'City');
+  for (const n of d.local?.nearbyAll || d.local?.nearby || []) push(n.area, 'Place');
+  if (served.length) org.areaServed = served;
+
+  // 반 목록은 data 의 classes 를 그대로 옮긴다. GEO 답변에서 "무슨 반이 있냐" 에 바로 쓰인다.
+  const courses = (d.classes?.groups || []).flatMap((g) =>
+    (g.items || []).map((it) => ({
+      '@type': 'Course',
+      name: it.title,
+      description: it.desc,
+      provider: { '@id': orgId },
+    }))
+  );
+  if (courses.length) {
+    org.hasOfferCatalog = {
+      '@type': 'OfferCatalog',
+      name: d.classes?.title || '수업 과목',
+      itemListElement: courses,
+    };
+  }
+
+  const graph = [
+    org,
+    {
+      '@type': 'WebSite',
+      '@id': `${base}/#website`,
+      url: base + '/',
+      name: d.name,
+      inLanguage: 'ko-KR',
+      publisher: { '@id': orgId },
+    },
+  ];
+
   if (d.faq?.items?.length) {
-    blocks.push({
-      '@context': 'https://schema.org',
+    graph.push({
       '@type': 'FAQPage',
+      '@id': `${base}/#faq`,
       mainEntity: d.faq.items.map((f) => ({
         '@type': 'Question',
         name: f.q,
@@ -1102,9 +1187,11 @@ function structuredData(d) {
       })),
     });
   }
-  return blocks
-    .map((b) => `<script type="application/ld+json">${jsonld(b)}</script>`)
-    .join('\n');
+
+  return `<script type="application/ld+json">${jsonld({
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  })}</script>`;
 }
 
 function head(d, present) {

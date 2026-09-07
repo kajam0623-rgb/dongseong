@@ -35,7 +35,13 @@
 <link rel="stylesheet" href="/s.css">
 <script type="application/ld+json">{
 "@context": "https://schema.org",
-"@type": "EducationalOrganization",
+"@graph": [
+{
+"@type": [
+"EducationalOrganization",
+"LocalBusiness"
+],
+"@id": "https://bucheon.anitok.com/#organization",
 "name": "부천 애니톡 만화애니학원",
 "description": "부천만화학원 · 부천웹툰학원 · 중동 상동 애니학원 — 부천 애니톡 만화애니학원. 한예종 · 건국대 · 청강대 명문대 합격생과 경기예고 · 한국애니고 합격생 배출. 미대입시 · 한예종입시 · 청강대입시 · 주니어 · 성인취미 · 웹툰 · 디지털드로잉반. 부천시 원미구 길주로 219 드림빌딩 6층 · 032-329-8685",
 "url": "https://bucheon.anitok.com/",
@@ -48,10 +54,6 @@
 "addressLocality": "부천시 원미구",
 "streetAddress": "길주로 219 드림빌딩 6층"
 },
-"openingHours": [
-"Mo-Fr 13:00-22:00",
-"Sa 13:00-18:00"
-],
 "parentOrganization": {
 "@type": "Organization",
 "name": "주식회사 애니톡",
@@ -62,15 +64,145 @@
 "https://blog.naver.com/piu_piu_",
 "https://www.instagram.com/anitalk_pa/"
 ],
+"openingHoursSpecification": [
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Monday",
+"Tuesday",
+"Wednesday",
+"Thursday",
+"Friday"
+],
+"opens": "13:00",
+"closes": "22:00"
+},
+{
+"@type": "OpeningHoursSpecification",
+"dayOfWeek": [
+"Saturday"
+],
+"opens": "13:00",
+"closes": "18:00"
+}
+],
+"hasMap": "https://m.place.naver.com/place/35386928/home",
+"identifier": {
+"@type": "PropertyValue",
+"name": "사업자등록번호",
+"value": "232-88-00167"
+},
 "geo": {
 "@type": "GeoCoordinates",
 "latitude": "37.5047655",
 "longitude": "126.7666386"
+},
+"areaServed": [
+{
+"@type": "City",
+"name": "부천시 원미구"
+},
+{
+"@type": "Place",
+"name": "중동"
+},
+{
+"@type": "Place",
+"name": "상동"
+},
+{
+"@type": "Place",
+"name": "부평"
+},
+{
+"@type": "Place",
+"name": "인천"
 }
-}</script>
-<script type="application/ld+json">{
-"@context": "https://schema.org",
+],
+"hasOfferCatalog": {
+"@type": "OfferCatalog",
+"name": "수업 과목",
+"itemListElement": [
+{
+"@type": "Course",
+"name": "한예종 입시반",
+"description": "한국예술종합학교 전형에 맞춘 실기와 포트폴리오, 면접까지 준비합니다.",
+"provider": {
+"@id": "https://bucheon.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "청강대 입시반",
+"description": "청강문화산업대학교 애니메이션 · 웹툰만화 · 게임 전공 실기에 맞춘 과정입니다.",
+"provider": {
+"@id": "https://bucheon.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "미대입시반",
+"description": "건국대를 비롯한 목표 대학 전형에 맞춘 수시 · 정시 실기를 준비합니다.",
+"provider": {
+"@id": "https://bucheon.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "대입예비반",
+"description": "인체 구조와 명암, 투시를 처음부터 잡는 입시 기본기 과정입니다.",
+"provider": {
+"@id": "https://bucheon.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "주니어반",
+"description": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
+"provider": {
+"@id": "https://bucheon.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "성인취미반",
+"description": "대학생, 직장인 누구나 부담 없이 시작할 수 있는 취미 과정입니다.",
+"provider": {
+"@id": "https://bucheon.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "웹툰반",
+"description": "콘티부터 컷 연출, 완성 원고까지 한 편의 웹툰을 직접 만들어 봅니다.",
+"provider": {
+"@id": "https://bucheon.anitok.com/#organization"
+}
+},
+{
+"@type": "Course",
+"name": "디지털드로잉 · 일러스트반",
+"description": "태블릿으로 캐릭터 디자인과 채색, 배경 연출까지 완성작으로 마무리합니다.",
+"provider": {
+"@id": "https://bucheon.anitok.com/#organization"
+}
+}
+]
+}
+},
+{
+"@type": "WebSite",
+"@id": "https://bucheon.anitok.com/#website",
+"url": "https://bucheon.anitok.com/",
+"name": "부천 애니톡 만화애니학원",
+"inLanguage": "ko-KR",
+"publisher": {
+"@id": "https://bucheon.anitok.com/#organization"
+}
+},
+{
 "@type": "FAQPage",
+"@id": "https://bucheon.anitok.com/#faq",
 "mainEntity": [
 {
 "@type": "Question",
@@ -119,6 +251,8 @@
 "@type": "Answer",
 "text": "온라인 상담문의를 남기시거나 032-329-8685로 전화 주시면 됩니다. 평일 13:00~22:00, 토요일 13:00~18:00에 상담을 받습니다."
 }
+}
+]
 }
 ]
 }</script>
