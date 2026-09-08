@@ -17,7 +17,16 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlinkSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderPage, render404, renderLocal, localPages, siteCss, siteJs } from './lib/render.mjs';
+import {
+  renderPage,
+  render404,
+  renderLocal,
+  localPages,
+  renderPost,
+  renderBlogIndex,
+  siteCss,
+  siteJs,
+} from './lib/render.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(ROOT, 'data');
@@ -154,6 +163,61 @@ const siblings = [
 let built = 0;
 const report = [];
 
+/**
+ * 학원 이야기 글을 읽는다. content/<slug>/posts/*.md 하나가 글 한 편이다.
+ *
+ * 프론트매터는 일부러 좁게 잡았다. 스칼라 · 대괄호 배열 · faq 의 q/a 쌍이 전부다.
+ * 그보다 복잡한 것은 헤더가 아니라 본문에 있어야 한다.
+ */
+function loadPosts(slug) {
+  const dir = join(ROOT, 'content', slug, 'posts');
+  if (!existsSync(dir)) return [];
+  const posts = [];
+  for (const file of readdirSync(dir).filter((f) => f.endsWith('.md'))) {
+    const raw = readFileSync(join(dir, file), 'utf8');
+    const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+    if (!m) throw new Error(`${slug}/${file}: 프론트매터가 없습니다`);
+    const meta = { faq: [] };
+    let entry = null;
+    for (const line of m[1].split(/\r?\n/)) {
+      if (!line.trim()) continue;
+      let mm = line.match(/^ {2}- q:\s*"?(.*?)"?\s*$/);
+      if (mm) {
+        entry = { q: mm[1], a: '' };
+        meta.faq.push(entry);
+        continue;
+      }
+      mm = line.match(/^ {4}a:\s*"?(.*?)"?\s*$/);
+      if (mm && entry) {
+        entry.a = mm[1];
+        continue;
+      }
+      mm = line.match(/^([a-zA-Z]+):\s*(.*)$/);
+      if (!mm) continue;
+      const [, k, v] = mm;
+      if (k === 'faq') {
+        entry = null;
+        continue;
+      }
+      if (v.startsWith('[')) {
+        meta[k] = v
+          .slice(1, -1)
+          .split(',')
+          .map((x) => x.trim().replace(/^"|"$/g, ''))
+          .filter(Boolean);
+      } else {
+        meta[k] = v.replace(/^"|"$/g, '');
+      }
+    }
+    if (!meta.slug || !meta.title || !meta.date) {
+      throw new Error(`${slug}/${file}: slug · title · date 는 반드시 있어야 합니다`);
+    }
+    posts.push({ ...meta, body: m[2].trim() });
+  }
+  // 최신 글이 먼저. 목록과 사이트맵이 같은 순서를 쓴다.
+  return posts.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+}
+
 for (const slug of targets) {
   const d = loadCampus(slug);
   const outDir = join(OUT_DIR, slug);
@@ -184,6 +248,19 @@ for (const slug of targets) {
     writeFileSync(join(outDir, `${page.slug}.html`), minHtml(renderLocal(d, page, { pages })));
   }
 
+  // 학원 이야기(블로그). content/<slug>/posts/*.md 가 있는 지점만 만들어진다.
+  const posts = loadPosts(slug);
+  if (posts.length) {
+    const blogDir = join(outDir, 'blog');
+    mkdirSync(blogDir, { recursive: true });
+    writeFileSync(join(blogDir, 'index.html'), minHtml(renderBlogIndex(d, posts)));
+    for (const post of posts) {
+      const postDir = join(blogDir, post.slug);
+      mkdirSync(postDir, { recursive: true });
+      writeFileSync(join(postDir, 'index.html'), minHtml(renderPost(d, post, { posts })));
+    }
+  }
+
   writeFileSync(
     join(outDir, 'robots.txt'),
     `User-agent: *\nAllow: /\n\nSitemap: ${d.site.origin}/sitemap.xml\n`
@@ -200,6 +277,15 @@ for (const slug of targets) {
 ${[
   urlEntry(`${d.site.origin}/`, '1.0'),
   ...pages.map((p) => urlEntry(`${d.site.origin}/${p.slug}`, '0.8')),
+  ...(posts.length ? [urlEntry(`${d.site.origin}/blog/`, '0.8')] : []),
+  // 글의 lastmod 는 오늘이 아니라 글이 쓰인 날이다. 매 빌드마다 오늘로 찍으면
+  // 바뀐 것이 없는데도 전부 새 글처럼 보여 사이트맵의 신호가 무의미해진다.
+  ...posts.map(
+    (p) =>
+      `  <url>\n    <loc>${d.site.origin}/blog/${p.slug}/</loc>\n` +
+      `    <lastmod>${p.updated || p.date}</lastmod>\n` +
+      `    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`
+  ),
 ].join('\n')}
 </urlset>
 `

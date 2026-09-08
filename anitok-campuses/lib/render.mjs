@@ -1535,8 +1535,20 @@ ${quickBar(d)}
  * 두 번째 페이지부터는 브라우저 캐시에서 바로 나온다.
  * ───────────────────────────────────────────────────────────── */
 
+const CSS_POST = `
+.prose .post-h2{margin:44px 0 16px;font-size:clamp(20px,2.2vw,27px);line-height:1.35}
+.prose .post-h2:first-child{margin-top:0}
+.prose .post-list{margin:0 0 18px;padding:0 0 0 2px;list-style:none;max-width:72ch}
+.prose .post-list li{position:relative;padding-left:16px;margin-bottom:9px;font-size:clamp(15px,1.15vw,17px);line-height:1.85;color:#D6D6D8}
+.prose .post-list li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--accent-lit)}
+.post-index li{align-items:baseline}
+.post-index .k{min-width:88px;color:var(--muted-2);font-weight:700}
+.post-index .v{flex:1 1 240px;font-weight:700;color:#FFFFFF;border-bottom:1px solid transparent}
+.post-index .v:hover{border-bottom-color:var(--accent-lit)}
+`;
+
 export function siteCss(d) {
-  return `${CSS}${CSS_MOBILE}${themeCss(d.theme)}\n`;
+  return `${CSS}${CSS_MOBILE}${CSS_POST}${themeCss(d.theme)}\n`;
 }
 
 export function siteJs() {
@@ -1627,4 +1639,244 @@ ${quickBar(d)}
 </body>
 </html>
 `;
+}
+
+/* ─────────────────── 학원 이야기(블로그) ───────────────────
+ * 지점 홈은 한 장짜리라 "청강대 실기대전 주제" 같은 검색어로 들어올 자리가
+ * 없다. 네이버 블로그에 이미 쓴 글을 그대로 옮기면 원문이 먼저 색인돼 있고
+ * 네이버 도메인이 더 세서 검색엔진이 둘 중 하나만 남기는데, 남는 건 원문이다.
+ * 그래서 옮겨 적지 않고 다시 쓴 글을 여기서 렌더링한다. canonical 을 이 사이트로
+ * 거는 것도 그래서 성립한다.
+ *
+ * 디자인은 지역 랜딩페이지와 같은 클래스를 그대로 쓴다. s.css 에 새 규칙을
+ * 넣지 않으므로 여섯 지점의 CSS 파일이 지금과 같은 크기로 남는다.
+ * ───────────────────────────────────────────────────────── */
+
+/** 아주 좁은 마크다운만 읽는다. 문단 · ## 소제목 · - 목록 · **굵게** 뿐이다. */
+function mdInline(s) {
+  return esc(s)
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, t, h) =>
+      /^(https?:|\/)/.test(h) ? `<a href="${esc(h)}">${t}</a>` : m
+    );
+}
+
+function markdown(md) {
+  const out = [];
+  let list = null;
+  const flush = () => {
+    if (list) { out.push(`<ul class="post-list">${list.join('')}</ul>`); list = null; }
+  };
+  for (const raw of String(md).split(/\r?\n/)) {
+    const line = raw.trim();
+    if (!line) { flush(); continue; }
+    if (line.startsWith('## ')) { flush(); out.push(`<h2 class="h2 post-h2">${mdInline(line.slice(3))}</h2>`); continue; }
+    if (line.startsWith('- ')) { (list = list || []).push(`<li>${mdInline(line.slice(2))}</li>`); continue; }
+    flush();
+    out.push(`<p>${mdInline(line)}</p>`);
+  }
+  flush();
+  return out.join('\n');
+}
+
+function postJsonLd(d, post) {
+  const base = d.site.origin;
+  const canonical = `${base}/blog/${post.slug}/`;
+  const graph = [
+    {
+      '@type': 'BlogPosting',
+      '@id': `${canonical}#article`,
+      headline: post.title,
+      description: post.description,
+      inLanguage: 'ko-KR',
+      datePublished: post.date,
+      dateModified: post.updated || post.date,
+      mainEntityOfPage: canonical,
+      author: { '@type': 'Organization', name: d.name, url: base + '/' },
+      publisher: { '@id': `${base}/#organization` },
+      about: (post.keywords || []).join(', ') || undefined,
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: d.name, item: base + '/' },
+        { '@type': 'ListItem', position: 2, name: '학원 이야기', item: `${base}/blog/` },
+        { '@type': 'ListItem', position: 3, name: post.title, item: canonical },
+      ],
+    },
+  ];
+  if (post.faq?.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: post.faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    });
+  }
+  return `<script type="application/ld+json">${jsonld({ '@context': 'https://schema.org', '@graph': graph })}</script>`;
+}
+
+function blogShell(d, { title, description, canonical, keywords = [], jsonLd = '', body }) {
+  return `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(description)}">
+${keywords.length ? `<meta name="keywords" content="${esc(keywords.join(', '))}">` : ''}
+<meta name="author" content="${esc(d.name)}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="${esc(canonical)}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/icon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/icon-16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="${esc(d.name)}">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="${esc(canonical)}">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(description)}">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
+<link rel="stylesheet" href="/s.css">
+${jsonLd}
+</head>
+<body>
+${header(d, { base: '/' })}
+<main>
+${body}
+</main>
+${lpFoot(d)}
+${quickBar(d)}
+<script src="/s.js" defer></script>
+</body>
+</html>
+`;
+}
+
+export function renderPost(d, post, { posts = [] } = {}) {
+  const canonical = `${d.site.origin}/blog/${post.slug}/`;
+  const others = posts.filter((p) => p.slug !== post.slug).slice(0, 6);
+  const booking = naverBooking(d);
+  const body = `<section class="lp-head" id="top">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치">
+      <a href="/">${esc(d.shortName || d.name)}</a><span aria-hidden="true">›</span><a href="/blog/">학원 이야기</a><span aria-hidden="true">›</span><span>${esc(post.title)}</span>
+    </nav>
+    <span class="kicker">${esc(post.kicker || '학원 이야기')}</span>
+    <h1 class="lp-h1">${esc(post.title)}</h1>
+    <p class="lp-sub">${esc(post.description)}</p>
+  </div>
+</section>
+
+<article class="sec">
+  <div class="wrap">
+    <div class="prose" data-reveal="0">
+${markdown(post.body)}
+    </div>
+  </div>
+</article>
+${
+  post.faq?.length
+    ? `<section class="sec sec--tint">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">FAQ</span>
+    <h2 class="h2" data-reveal="40">자주 묻는 질문</h2>
+    <div class="faq" data-reveal="0">${post.faq
+      .map((f) => `<details><summary>${esc(f.q)}</summary><div class="ans">${esc(f.a)}</div></details>`)
+      .join('')}</div>
+  </div>
+</section>`
+    : ''
+}
+<section class="sec lp-cta">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">Visit</span>
+    <h2 class="h2" data-reveal="40">상담 · 예약 안내</h2>
+    <p class="lede" data-reveal="80">${esc(d.address.line1)} ${esc(d.address.line2)}<br>${esc(d.hours.line1)} · ${esc(d.hours.line2)}</p>
+    <div class="cta-row" data-reveal="120">
+      ${booking ? `<a class="btn btn--solid" href="${url(booking)}" target="_blank" rel="noopener">네이버 예약 →</a>` : ''}
+      <a class="btn btn--ghost" href="tel:${esc(digits(d.phone))}">전화 ${esc(d.phone)}</a>
+    </div>
+  </div>
+</section>
+${
+  others.length
+    ? `<section class="sec">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">More</span>
+    <h2 class="h2" data-reveal="40">다른 이야기</h2>
+    <div class="lp-links" data-reveal="0">
+      <a href="/blog/">글 전체 보기</a>
+      ${others.map((p) => `<a href="/blog/${esc(p.slug)}/">${esc(p.title)}</a>`).join('')}
+    </div>
+  </div>
+</section>`
+    : ''
+}`;
+  return blogShell(d, {
+    title: `${post.title} | ${d.name}`,
+    description: post.description,
+    canonical,
+    keywords: post.keywords || [],
+    jsonLd: postJsonLd(d, post),
+    body,
+  });
+}
+
+export function renderBlogIndex(d, posts) {
+  const canonical = `${d.site.origin}/blog/`;
+  const rows = posts
+    .map(
+      (p) =>
+        `<li><span class="k">${esc(p.date)}</span>` +
+        `<a class="v" href="/blog/${esc(p.slug)}/">${esc(p.title)}</a>` +
+        `<span class="m">${esc(p.description.slice(0, 58))}…</span></li>`
+    )
+    .join('');
+  const body = `<section class="lp-head" id="top">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치">
+      <a href="/">${esc(d.shortName || d.name)}</a><span aria-hidden="true">›</span><span>학원 이야기</span>
+    </nav>
+    <span class="kicker">Stories</span>
+    <h1 class="lp-h1">학원 이야기</h1>
+    <p class="lp-sub">입시 요강과 실기 주제, 수업에서 자주 나오는 질문을 정리했습니다.</p>
+  </div>
+</section>
+<section class="sec">
+  <div class="wrap">
+    <ul class="lp-list post-index" data-reveal="0">${rows}</ul>
+  </div>
+</section>`;
+  return blogShell(d, {
+    title: `학원 이야기 | ${d.name}`,
+    description: `${d.name}이 정리한 입시 요강 · 실기 주제 · 수업 이야기 ${posts.length}편.`,
+    canonical,
+    jsonLd: `<script type="application/ld+json">${jsonld({
+      '@context': 'https://schema.org',
+      '@type': 'Blog',
+      '@id': `${canonical}#blog`,
+      name: `${d.name} 학원 이야기`,
+      url: canonical,
+      inLanguage: 'ko-KR',
+      publisher: { '@id': `${d.site.origin}/#organization` },
+      blogPost: posts.map((p) => ({
+        '@type': 'BlogPosting',
+        headline: p.title,
+        datePublished: p.date,
+        url: `${d.site.origin}/blog/${p.slug}/`,
+      })),
+    })}</script>`,
+    body,
+  });
 }
