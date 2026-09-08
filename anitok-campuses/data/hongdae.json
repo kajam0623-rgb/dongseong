@@ -444,5 +444,35 @@
         "note": "서교동 인근, 홍대 상권 안에 있습니다."
       }
     ]
-  }
+  },
+  "nav": [
+    {
+      "label": "학원소개",
+      "href": "#about"
+    },
+    {
+      "label": "합격실적",
+      "href": "#results"
+    },
+    {
+      "label": "수업과목",
+      "href": "#classes"
+    },
+    {
+      "label": "갤러리",
+      "href": "#gallery"
+    },
+    {
+      "label": "작품 갤러리",
+      "href": "#works"
+    },
+    {
+      "label": "학원 이야기",
+      "href": "/blog/"
+    },
+    {
+      "label": "오시는 길",
+      "href": "#visit"
+    }
+  ]
 }
