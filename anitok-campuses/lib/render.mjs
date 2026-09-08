@@ -1641,7 +1641,7 @@ ${quickBar(d)}
 `;
 }
 
-/* ─────────────────── 학원 이야기(블로그) ───────────────────
+/* ─────────────────── 학원소식(블로그) ───────────────────
  * 지점 홈은 한 장짜리라 "청강대 실기대전 주제" 같은 검색어로 들어올 자리가
  * 없다. 네이버 블로그에 이미 쓴 글을 그대로 옮기면 원문이 먼저 색인돼 있고
  * 네이버 도메인이 더 세서 검색엔진이 둘 중 하나만 남기는데, 남는 건 원문이다.
@@ -1700,7 +1700,7 @@ function postJsonLd(d, post) {
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: d.name, item: base + '/' },
-        { '@type': 'ListItem', position: 2, name: '학원 이야기', item: `${base}/blog/` },
+        { '@type': 'ListItem', position: 2, name: '학원소식', item: `${base}/blog/` },
         { '@type': 'ListItem', position: 3, name: post.title, item: canonical },
       ],
     },
@@ -1770,9 +1770,9 @@ export function renderPost(d, post, { posts = [] } = {}) {
   const body = `<section class="lp-head" id="top">
   <div class="wrap">
     <nav class="crumb" aria-label="현재 위치">
-      <a href="/">${esc(d.shortName || d.name)}</a><span aria-hidden="true">›</span><a href="/blog/">학원 이야기</a><span aria-hidden="true">›</span><span>${esc(post.title)}</span>
+      <a href="/">${esc(d.shortName || d.name)}</a><span aria-hidden="true">›</span><a href="/blog/">학원소식</a><span aria-hidden="true">›</span><span>${esc(post.title)}</span>
     </nav>
-    <span class="kicker">${esc(post.kicker || '학원 이야기')}</span>
+    <span class="kicker">${esc(post.kicker || '학원소식')}</span>
     <h1 class="lp-h1">${esc(post.title)}</h1>
     <p class="lp-sub">${esc(post.description)}</p>
   </div>
@@ -1814,7 +1814,7 @@ ${
     ? `<section class="sec">
   <div class="wrap">
     <span class="kicker" data-reveal="0">More</span>
-    <h2 class="h2" data-reveal="40">다른 이야기</h2>
+    <h2 class="h2" data-reveal="40">다른 소식</h2>
     <div class="lp-links" data-reveal="0">
       <a href="/blog/">글 전체 보기</a>
       ${others.map((p) => `<a href="/blog/${esc(p.slug)}/">${esc(p.title)}</a>`).join('')}
@@ -1846,10 +1846,10 @@ export function renderBlogIndex(d, posts) {
   const body = `<section class="lp-head" id="top">
   <div class="wrap">
     <nav class="crumb" aria-label="현재 위치">
-      <a href="/">${esc(d.shortName || d.name)}</a><span aria-hidden="true">›</span><span>학원 이야기</span>
+      <a href="/">${esc(d.shortName || d.name)}</a><span aria-hidden="true">›</span><span>학원소식</span>
     </nav>
     <span class="kicker">Stories</span>
-    <h1 class="lp-h1">학원 이야기</h1>
+    <h1 class="lp-h1">학원소식</h1>
     <p class="lp-sub">입시 요강과 실기 주제, 수업에서 자주 나오는 질문을 정리했습니다.</p>
   </div>
 </section>
@@ -1859,14 +1859,14 @@ export function renderBlogIndex(d, posts) {
   </div>
 </section>`;
   return blogShell(d, {
-    title: `학원 이야기 | ${d.name}`,
+    title: `학원소식 | ${d.name}`,
     description: `${d.name}이 정리한 입시 요강 · 실기 주제 · 수업 이야기 ${posts.length}편.`,
     canonical,
     jsonLd: `<script type="application/ld+json">${jsonld({
       '@context': 'https://schema.org',
       '@type': 'Blog',
       '@id': `${canonical}#blog`,
-      name: `${d.name} 학원 이야기`,
+      name: `${d.name} 학원소식`,
       url: canonical,
       inLanguage: 'ko-KR',
       publisher: { '@id': `${d.site.origin}/#organization` },
