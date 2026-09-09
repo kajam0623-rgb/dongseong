@@ -221,12 +221,12 @@ figure{margin:0}
 
 /* 실적 카드 */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:44px}
-.stat{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:clamp(24px,2.4vw,34px);display:flex;flex-direction:column;gap:10px}
-.stat-when{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--accent-lit)}
-.stat-label{font-size:15px;font-weight:700;color:#D6D6D8}
-.stat-value{font-size:clamp(30px,3.4vw,46px);font-weight:800;letter-spacing:-.05em;line-height:1}
-.stat-value .unit{font-size:.42em;font-weight:700;margin-left:6px;letter-spacing:-.02em;color:var(--muted)}
-.stat-detail{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+.stat{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:clamp(26px,2.6vw,36px);display:flex;flex-direction:column;gap:8px}
+.stat-when{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--muted-2)}
+.stat-label{font-size:14.5px;font-weight:700;color:#D6D6D8;margin-bottom:2px}
+.stat-value{font-size:clamp(42px,4.6vw,62px);font-weight:800;letter-spacing:-.055em;line-height:1.02;color:var(--accent-lit);overflow-wrap:anywhere}
+.stat-value[data-len="mid"]{font-size:clamp(34px,3.7vw,50px)}.stat-value[data-len="long"]{font-size:clamp(27px,2.9vw,39px);letter-spacing:-.045em}.stat-value .unit{display:inline-block;white-space:nowrap;font-size:.32em;font-weight:700;margin-left:8px;letter-spacing:-.02em;color:#D6D6D8}
+.stat-detail{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
 .stat-detail li{font-size:13px;line-height:1.6;color:var(--muted)}
 
 /* 합격 명단 */
@@ -235,7 +235,7 @@ figure{margin:0}
 .pass li:hover{background:#1A1A1D;border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.45)}
 .pass .yr{flex:0 0 auto;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:800;letter-spacing:.02em;padding:5px 10px;border-radius:999px}
 .pass .what{flex:1 1 auto;min-width:0;font-size:14.5px;font-weight:700;letter-spacing:-.03em;line-height:1.45;overflow-wrap:anywhere}
-.pass .who{flex:0 1 auto;min-width:0;font-size:13px;font-weight:600;color:var(--muted-2)}
+.pass .who{flex:0 1 auto;min-width:0;font-size:14.5px;font-weight:800;letter-spacing:-.02em;color:var(--accent-lit)}
 .note{margin:26px 0 0;font-size:13px;line-height:1.7;color:var(--muted-2)}
 
 /* 수업 과목 */
@@ -808,9 +808,13 @@ function results(d) {
       (s, i) => `<article class="stat" data-reveal="${i * 60}">
       ${s.when ? `<span class="stat-when">${esc(s.when)}</span>` : ''}
       <span class="stat-label">${esc(s.label)}</span>
-      <span class="stat-value">${esc(s.value)}${
-        s.unit ? `<span class="unit">${esc(s.unit)}</span>` : ''
-      }</span>
+      <span class="stat-value"${
+        String(s.value || '').trim().length >= 4
+          ? ' data-len="long"'
+          : String(s.value || '').trim().length === 3
+            ? ' data-len="mid"'
+            : ''
+      }>${esc(s.value)}${s.unit ? `<span class="unit">${esc(s.unit)}</span>` : ''}</span>
       ${
         s.detail?.length
           ? `<ul class="stat-detail">${s.detail.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`
