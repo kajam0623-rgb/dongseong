@@ -50,10 +50,25 @@ B 는 지점마다 저장소를 따로 두고 싶을 때의 대안이라 지금�
 > 문제(지점 330~460자 vs 일산 4,661자)가 같이 해소된다. 원치 않으면 연결 전에 알려달라.
 
 > **왜 대신 눌러주지 못하나**
-> 이 세션의 Vercel 토큰은 배포 전용이다. `list_teams` 는 빈 배열을 주고
-> `list_projects` · `get_project` 는 `403 Forbidden` 이라, 기존 프로젝트의 Git 설정을
-> 읽거나 바꿀 방법이 없다. MCP 의 `create_git_project` 도 "이미 있는 미연결 프로젝트를
-> 다시 연결하지는 않는다"고 명시돼 있어 쓸 수 없다. 브라우저에서 직접 눌러야 한다.
+> 이 세션의 Vercel 토큰은 배포 전용이다. 팀 스코프 자체에 접근 권한이 없다.
+>
+> ```
+> list_teams                 → []
+> list_projects · get_project → 403 Forbidden
+> create_git_project          → 403 "Not authorized: Trying to access resource
+>                               under scope kajam0623-rgbs-projects.
+>                               You must re-authenticate to this scope."
+>                               (teamId: team_M7sXygtY8ZzpT4aG4dak7sVC)
+> ```
+>
+> 이름을 바꿔 새 프로젝트를 만드는 우회로도 같은 403 에서 막힌다. 남는 것은
+> `deploy_to_vercel` 파일 업로드 하나뿐이고, 이건 매번 사이트 전체를 한 번에
+> 올려야 한다. 홍대 기준 17개 파일 167KB 다. 게다가 이 세션에서는 올린 결과를
+> 확인할 방법이 없다 — 프록시가 `*.anitok.com` 과 `*.vercel.app` 을 막고,
+> 스크레이퍼 크레딧도 떨어졌다. 잘려 올라가도 알 수가 없다.
+>
+> 그래서 Git 연결은 브라우저에서 직접 눌러야 한다. 한 번 눌러 두면 이 문제가
+> 통째로 사라진다.
 
 Vercel CLI 가 편하면 로컬에서 폴더째 올릴 수도 있다(연결 없이 1회성 배포).
 
