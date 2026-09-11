@@ -1,5 +1,29 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?<vhost>.*)\\.vercel\\.app"
+        }
+      ],
+      "destination": "https://academy.anitok.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "acdemy.anitok.com"
+        }
+      ],
+      "destination": "https://academy.anitok.com/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/gal/(.*)",

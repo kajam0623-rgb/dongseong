@@ -41,7 +41,8 @@ outputDirectory : public
 - `vercel.json` 은 **배포 루트**에 있어야 적용된다. `public/` 안에 있으면 그냥
   정적 파일로 서빙될 뿐이다. 그래서 `build.sh` 가 사본을 지운다.
 - `academy` 만 `*.vercel.app` 리다이렉트가 없다. 커스텀 도메인이 아니라
-  `academy-anitok.vercel.app` 자체가 주소라서, 리다이렉트를 넣으면 루프가 된다.
+  academy 도 2026-09-11 부터 `academy.anitok.com` 을 쓴다. 7곳 모두 리다이렉트가 붙는다.
+  academy 에는 오타 도메인 `acdemy.anitok.com` 을 정식 주소로 넘기는 규칙이 하나 더 있다.
 - 빌드가 실패하면 프로덕션은 **그대로 유지**된다. 실패해도 사이트가 깨지지 않는다.
 - 이 방식은 배포 **시점**의 브랜치 상태를 굳혀 올린다. 자동 갱신이 아니다.
   저장소를 고친 뒤에는 다시 배포해야 한다.
@@ -79,7 +80,7 @@ outputDirectory : public
 | `gwanggyo-anitok` | `anitok-campuses/sites/gwanggyo` | `gwanggyo.anitok.com` |
 | `gimpo-anitok` | `anitok-campuses/sites/gimpo` | `gimpo.anitok.com` |
 | `bucheon-anitok` | `anitok-campuses/sites/bucheon` | `bucheon.anitok.com` |
-| `academy-anitok` | `anitok-campuses/sites/academy` | `academy-anitok.vercel.app` |
+| `academy-anitok` | `anitok-campuses/sites/academy` | `academy.anitok.com` |
 
 > **Production Branch 를 `main` 으로 두면 안 된다**
 > Vercel 은 기본값으로 저장소의 기본 브랜치(`main`)를 프로덕션으로 잡는다. 그런데 지금

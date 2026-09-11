@@ -375,6 +375,18 @@ ${[
           destination: `${d.site.origin}/:path*`,
           permanent: true,
         },
+        // 같은 내용이 뜨는 다른 호스트(오타 도메인, 예전 주소)도 정식 주소로 넘긴다.
+        // 붙어 있지 않은 호스트면 이 규칙은 그냥 걸리지 않는다. 넣어서 손해가 없다.
+        //
+        // 호스트 정규식에 부정 선행(?!...)은 쓰지 않는다. Vercel 의 라우팅 엔진은
+        // 러스트 regex 라 선행 판단을 지원하지 않아 규칙이 통째로 죽는다.
+        // 그래서 넘길 호스트를 site.altHosts 에 하나씩 적는다.
+        ...(d.site.altHosts || []).map((h) => ({
+          source: '/:path*',
+          has: [{ type: 'host', value: h }],
+          destination: `${d.site.origin}/:path*`,
+          permanent: true,
+        })),
       ];
 
   writeFileSync(

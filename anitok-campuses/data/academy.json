@@ -6,8 +6,10 @@
   "shortName": "웹툰게임 아카데미",
   "alternateName": "애니톡 아카데미",
   "site": {
-    "origin": "https://academy-anitok.vercel.app",
-    "subdomain": null
+    "subdomain": "academy",
+    "altHosts": [
+      "acdemy.anitok.com"
+    ]
   },
   "phone": "02-2695-9514",
   "address": {

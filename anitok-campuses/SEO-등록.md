@@ -42,10 +42,10 @@
    https://bucheon.anitok.com/sitemap.xml
    ```
 
-**academy 만 예외다.** 지금 주소가 `academy-anitok.vercel.app` 이라 `anitok.com`
-도메인 속성에 들어가지 않는다. URL 접두어로 따로 등록하거나, 서브도메인
-(`academy.anitok.com`)을 붙이면 같이 해결된다.
-※ 전에 말씀하신 `acdemy.anitok.com` 은 `academy` 오타인지 확인이 필요하다.
+**academy 도 이제 `anitok.com` 안에 있다.** 2026-09-11 에 `academy.anitok.com` 으로 옮겼다.
+따로 등록할 필요 없이 도메인 속성 하나로 8곳이 전부 인증된다.
+오타 도메인 `acdemy.anitok.com` 은 정식 주소로 301 넘기게 해 두었다. Vercel 에서 아예
+떼어내도 되고, 그대로 두어도 색인이 갈라지지 않는다.
 
 ---
 
@@ -62,7 +62,7 @@
    https://gwanggyo.anitok.com/
    https://gimpo.anitok.com/
    https://bucheon.anitok.com/
-   https://academy-anitok.vercel.app/
+   https://academy.anitok.com/
    ```
 3. 소유확인 방법에서 **"HTML 태그"** 를 고르면 이런 줄이 나온다:
    ```html
