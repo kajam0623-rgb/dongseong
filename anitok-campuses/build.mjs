@@ -287,6 +287,20 @@ function loadPosts(slug) {
 
 for (const slug of targets) {
   const d = loadCampus(slug);
+
+  // 학원소식 메뉴는 글이 있는 지점에만 붙인다.
+  //
+  // 지점 JSON 의 nav 를 손으로 고치는 방식이었는데, 그러면 글을 추가할 때마다
+  // nav 를 같이 고쳐야 하는 것을 잊기 쉽고, 반대로 글이 없는 지점에 메뉴만
+  // 남으면 /blog/ 가 404 가 된다. 글의 존재 여부에서 메뉴를 끌어내면 둘 다 막힌다.
+  // 이미 /blog/ 를 가리키는 항목이 있으면 그대로 둔다.
+  const postsForNav = loadPosts(slug);
+  if (postsForNav.length && !(d.nav || []).some((n) => n.href === '/blog/')) {
+    const nav = [...(d.nav || [])];
+    const visitAt = nav.findIndex((n) => n.href === '#visit');
+    nav.splice(visitAt < 0 ? nav.length : visitAt, 0, { label: '학원소식', href: '/blog/' });
+    d.nav = nav;
+  }
   const outDir = join(OUT_DIR, slug);
   const galDir = join(outDir, 'gal');
   mkdirSync(galDir, { recursive: true });
