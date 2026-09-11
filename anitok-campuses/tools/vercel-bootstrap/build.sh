@@ -9,7 +9,10 @@ REPO="https://github.com/kajam0623-rgb/dongseong.git"
 BRANCH="claude/ilsan-anitok-project-arpdi5"
 
 rm -rf .src public
-git clone --depth 1 --branch "$BRANCH" "$REPO" .src
+# 얕은 클론(--depth 1)을 쓰지 않는다. build.mjs 가 sitemap 의 lastmod 를
+# data/*.json 의 마지막 커밋일에서 뽑기 때문에 이력이 필요하다. 얕게 받으면
+# 날짜가 전부 "빌드한 날"로 떨어진다. 저장소는 1MB 미만이라 전부 받아도 된다.
+git clone --branch "$BRANCH" "$REPO" .src
 
 ( cd .src/anitok-campuses && node build.mjs "$SLUG" )
 

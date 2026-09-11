@@ -17,6 +17,7 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlinkSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
 import {
   renderPage,
   render404,
@@ -33,6 +34,52 @@ const DATA_DIR = join(ROOT, 'data');
 const OUT_DIR = join(ROOT, 'sites');
 
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
+
+/**
+ * 사이트맵의 lastmod 는 "빌드를 돌린 날"이 아니라 "내용이 바뀐 날"이어야 한다.
+ *
+ * 예전에는 new Date() 를 썼다. 그러면 아무것도 안 고치고 빌드만 다시 돌려도
+ * 전 페이지가 오늘 바뀐 것으로 찍힌다. 검색엔진은 lastmod 가 늘 오늘인 사이트맵을
+ * 신뢰하지 않고 아예 무시해 버리기 때문에, 진짜로 고쳤을 때 알릴 방법이 없어진다.
+ *
+ * 지점 페이지의 내용은 data/<slug>.json 과 data/_shared.json 에서만 나온다.
+ * 그래서 두 파일의 마지막 커밋일 중 나중 것을 쓴다. 템플릿(lib/render.mjs)이나
+ * 스타일이 바뀐 것은 "내용이 바뀐 것"이 아니라서 세지 않는다.
+ * 글(blog)은 글마다 제 날짜가 있으므로 여기를 거치지 않는다.
+ */
+const gitDateCache = new Map();
+let gitMissingWarned = false;
+
+function gitDate(relPath) {
+  if (gitDateCache.has(relPath)) return gitDateCache.get(relPath);
+  let out = '';
+  try {
+    out = execFileSync('git', ['log', '-1', '--format=%cs', '--', relPath], {
+      cwd: ROOT,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+  } catch {
+    out = '';
+  }
+  gitDateCache.set(relPath, out);
+  return out;
+}
+
+function contentDate(slug) {
+  // ISO 날짜는 문자열로 정렬해도 시간순이다.
+  const dates = [gitDate(`data/${slug}.json`), gitDate('data/_shared.json')]
+    .filter(Boolean)
+    .sort();
+  if (dates.length) return dates[dates.length - 1];
+  // git 이력을 못 읽는 환경(얕은 클론·tarball)에서는 오늘로 떨어진다.
+  // 틀린 값이지만 사이트맵이 통째로 깨지는 것보다는 낫다.
+  if (!gitMissingWarned) {
+    gitMissingWarned = true;
+    console.warn('경고: git 이력을 읽지 못해 sitemap 의 lastmod 를 오늘로 적는다.');
+  }
+  return new Date().toISOString().slice(0, 10);
+}
 
 /** CSS: 주석과 들여쓰기·빈 줄을 걷어낸다. 선택자/값은 손대지 않는다. */
 function minCss(css) {
@@ -266,9 +313,9 @@ for (const slug of targets) {
     `User-agent: *\nAllow: /\n\nSitemap: ${d.site.origin}/sitemap.xml\n`
   );
 
-  const today = new Date().toISOString().slice(0, 10);
+  const lastmod = contentDate(slug);
   const urlEntry = (loc, priority) =>
-    `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n` +
+    `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n` +
     `    <changefreq>monthly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
   writeFileSync(
     join(outDir, 'sitemap.xml'),
