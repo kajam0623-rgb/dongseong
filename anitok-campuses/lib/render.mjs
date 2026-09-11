@@ -1283,10 +1283,33 @@ export function localPages(d) {
       note: note || '',
     };
   };
-  return [
-    ...(loc.subjects || []).map((k) => make(loc.area, loc.areaSlug, k, loc.note)),
-    ...(loc.nearby || []).map((n) => make(n.area, n.slug, n.subject, n.note)),
-  ].filter(Boolean);
+  const main = (loc.subjects || [])
+    .map((k) => make(loc.area, loc.areaSlug, k, loc.note))
+    .filter(Boolean);
+
+  // 인근 동네 페이지는 같은 과목의 대표 페이지와 본문이 거의 같다. 바뀌는 것은
+  // 동네 이름과 note 한 줄뿐이라 실측하면 88~90% 가 겹친다. 구글은 이런 묶음을
+  // 도어웨이 페이지로 보고, 잘해야 하나만 남기고 나머지를 걸러낸다.
+  //
+  // 그래서 그 동네만의 내용(intro·points)이 실제로 있을 때만 독립 페이지로 두고,
+  // 없으면 canonical 을 대표 페이지로 넘긴다. 방문자에게는 그대로 보이고,
+  // 검색엔진에는 신호가 대표 페이지 하나로 모인다. nearby 항목에 intro 를
+  // 채워 넣는 순간 자동으로 제 주소를 되찾는다.
+  const bySubject = new Map(main.map((p) => [p.subjectKey, p]));
+  const near = (loc.nearby || [])
+    .map((n) => {
+      const p = make(n.area, n.slug, n.subject, n.note);
+      if (!p) return null;
+      p.intro = n.intro || null;
+      p.points = n.points || null;
+      const parent = bySubject.get(n.subject);
+      const unique = Boolean((n.intro && n.intro.length) || (n.points && n.points.length));
+      p.canonicalSlug = !unique && parent ? parent.slug : p.slug;
+      return p;
+    })
+    .filter(Boolean);
+
+  return [...main, ...near];
 }
 
 /** 캠퍼스의 반 편성을 한 줄짜리 목록으로 압축한다(랜딩페이지용). */
@@ -1350,7 +1373,7 @@ function lpFoot(d) {
 
 export function renderLocal(d, page, { pages = [] } = {}) {
   const booking = naverBooking(d);
-  const canonical = `${d.site.origin}/${page.slug}`;
+  const canonical = `${d.site.origin}/${page.canonicalSlug || page.slug}`;
   const s = page.subject;
   const title = `${page.keyword} | ${d.name}`;
   const 을를 = 조사(page.keyword, '을', '를');
@@ -1433,7 +1456,9 @@ ${header(d, { base: '/' })}
       '를'
     )} 배운다면</h2>
     <div class="prose" style="margin-top:26px" data-reveal="80">
-      ${(s.intro || []).map((t) => `<p>${esc(t)}</p>`).join('')}
+      ${(page.intro && page.intro.length ? page.intro : s.intro || [])
+        .map((t) => `<p>${esc(t)}</p>`)
+        .join('')}
       <p>${page.note ? esc(page.note) + ' ' : ''}${esc(d.name)}${조사(
     d.name,
     '은',
@@ -1443,7 +1468,7 @@ ${header(d, { base: '/' })}
   )}에 있습니다. 상담은 ${esc(d.hours.line1)}, ${esc(d.hours.line2)}에 받습니다.</p>
     </div>
     <ul class="lp-points" data-reveal="0">
-      ${(s.points || [])
+      ${(page.points && page.points.length ? page.points : s.points || [])
         .map((p) => `<li><b>${esc(p.t)}</b><span>${esc(p.d)}</span></li>`)
         .join('')}
     </ul>

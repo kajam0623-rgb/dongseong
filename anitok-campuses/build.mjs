@@ -343,7 +343,11 @@ for (const slug of targets) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${[
   urlEntry(`${d.site.origin}/`, '1.0'),
-  ...pages.map((p) => urlEntry(`${d.site.origin}/${p.slug}`, '0.8')),
+  // canonical 을 대표 페이지로 넘긴 중복 페이지는 사이트맵에 넣지 않는다.
+  // 넣으면 서치콘솔이 "제출된 URL이 대표 URL로 선택되지 않음" 으로 잡는다.
+  ...pages
+    .filter((p) => !p.canonicalSlug || p.canonicalSlug === p.slug)
+    .map((p) => urlEntry(`${d.site.origin}/${p.slug}`, '0.8')),
   ...(posts.length ? [urlEntry(`${d.site.origin}/blog/`, '0.8')] : []),
   // 글의 lastmod 는 오늘이 아니라 글이 쓰인 날이다. 매 빌드마다 오늘로 찍으면
   // 바뀐 것이 없는데도 전부 새 글처럼 보여 사이트맵의 신호가 무의미해진다.

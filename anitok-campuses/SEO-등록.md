@@ -113,3 +113,78 @@
 - 그저께까지 각 사이트는 `index.html` 과 `404.html` 두 장뿐이었다. 지금은 지점당 8장
   (홍대 13장) 이다. 구글이 마지막으로 본 것이 2장짜리 사이트라면 순위가 올라갈 수 없다.
   **다시 크롤링되어야 평가가 바뀐다.** 사이트맵 제출이 그 시작을 앞당긴다.
+
+---
+
+# 부록 — 지역 랜딩페이지 중복 정리 (2026-09-11)
+
+## 무엇이 문제였나
+
+지점마다 지역 랜딩페이지가 6장씩, 모두 42장이 있다. 그런데 **같은 과목·다른 동네** 쌍은
+본문이 거의 같았다. 실측하면 88~90% 가 겹친다.
+
+```
+gimpo-webtoon   vs  gurae-webtoon      88% 동일
+hongdae-webtoon vs  yeonnam-webtoon    88% 동일
+bucheon-manhwa  vs  bupyeong-manhwa    90% 동일
+```
+
+내용이 전부 `_shared.json` 의 `localSubjects[과목]` 에서 나오고, 바뀌는 것은 **동네 이름과
+`note` 한 줄**뿐이기 때문이다. 구글은 이런 묶음을 도어웨이 페이지로 본다. 잘해야 하나만
+남기고 나머지를 걸러내고, 나쁘면 사이트 전체 평가를 깎는다. 노출을 늘리려고 만든 페이지가
+반대로 발목을 잡는 상태였다.
+
+## 어떻게 했나
+
+그 동네만의 내용이 **실제로 있을 때만** 독립 페이지로 두고, 없으면 `canonical` 을 같은 과목
+대표 페이지로 넘긴다. 사이트맵에서도 뺀다(넣어두면 서치콘솔이 "제출된 URL이 대표 URL로
+선택되지 않음"으로 잡는다).
+
+- 방문자에게는 그대로 보인다. 페이지는 살아 있고 내용도 그대로다.
+- 검색엔진에는 신호가 대표 페이지 하나로 모인다.
+- 색인 대상끼리의 최고 유사도가 **88~90% → 29~30%** 로 떨어졌다. 템플릿이 같아서 생기는
+  정상 범위다.
+
+```
+42장 → 색인 대상 29장 + 대표 페이지로 합친 13장
+```
+
+## 합쳐진 13장 — 내용을 채우면 되살아난다
+
+`data/<지점>.json` 의 `local.nearby` 항목에 **`intro`** 를 넣으면 그 페이지는 즉시 제 주소를
+되찾고 사이트맵에도 다시 들어간다. 빌드가 알아서 판단한다.
+
+```json
+{
+  "area": "구래동",
+  "slug": "gurae",
+  "subject": "webtoon",
+  "note": "구래동 인근 학생들이 함께 수강하고 있습니다.",
+  "intro": [
+    "구래동에서 오는 학생은 주로 ○○을 타고 ○분 걸립니다. 수업이 끝나는 시간에 맞춰...",
+    "구래동 ○○중·○○고 학생들이 다니고 있습니다. 시험 기간에는..."
+  ]
+}
+```
+
+`points` 도 같은 방식으로 덮어쓸 수 있다 (`[{ "t": "제목", "d": "설명" }]`).
+
+| 지점 | 합쳐진 페이지 | 동네 | 합쳐진 대상 |
+|---|---|---|---|
+| academy | `mokdong-webtoon` | 목동 | `sinjeong-webtoon` |
+| academy | `yangcheon-drawing` | 양천구 | `sinjeong-drawing` |
+| bucheon | `jungdong-manhwa` | 중동 | `bucheon-manhwa` |
+| bucheon | `bupyeong-manhwa` | 부평 | `bucheon-manhwa` |
+| gangdong | `cheonho-manhwa` | 천호 | `gangdong-manhwa` |
+| gangdong | `songpa-manhwa` | 송파 | `gangdong-manhwa` |
+| gimpo | `hangang-manhwa` | 한강신도시 | `gimpo-manhwa` |
+| gimpo | `gurae-webtoon` | 구래동 | `gimpo-webtoon` |
+| gwanggyo | `suwon-manhwa` | 수원 | `gwanggyo-manhwa` |
+| gwanggyo | `yeongtong-webtoon` | 영통 | `gwanggyo-webtoon` |
+| hongdae | `hapjeong-manhwa` | 합정 | `hongdae-manhwa` |
+| hongdae | `yeonnam-webtoon` | 연남 | `hongdae-webtoon` |
+| mokdong | `hwagok-manhwa` | 화곡 | `mokdong-manhwa` |
+
+**무엇을 쓰면 되나.** 그 동네 학생이 실제로 어떻게 오는지(교통·소요시간), 어느 학교 학생이
+다니는지, 그 동네라서 다른 점이 무엇인지. 동네마다 두세 문단이면 충분하다.
+사실만 쓰면 된다 — 없는 정보를 지어내면 안 된다. 13개 중 급한 것부터 채워도 된다.
