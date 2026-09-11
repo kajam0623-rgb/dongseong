@@ -53,16 +53,7 @@
       "목동일러스트학원",
       "애니톡목동"
     ],
-    "verification": [
-      {
-        "name": "google-site-verification",
-        "content": "--lr3p3aIhgHl1b42fWM1JstdLUn1QY-4lrHvXG5Lq4"
-      },
-      {
-        "name": "naver-site-verification",
-        "content": "c4e31ad645f696d37195b020fb9eb53abafdef22"
-      }
-    ]
+    "naver": "c4e31ad645f696d37195b020fb9eb53abafdef22"
   },
   "hero": {
     "tag": "강서양천교육지원청 등록 제5103호 · 제5115호",

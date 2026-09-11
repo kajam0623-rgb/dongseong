@@ -151,6 +151,26 @@ function loadCampus(slug) {
   const d = merge(shared, readJson(join(DATA_DIR, `${slug}.json`)));
   d.site = { ...d.site, origin: resolveOrigin(d) };
 
+  // 네이버 소유확인 코드는 지점마다 다르다. 그런데 seo.verification 은 배열이고
+  // merge() 는 배열을 병합하지 않고 통째로 갈아끼운다. 지점 JSON 에 네이버 항목만
+  // 적으면 _shared.json 의 구글 태그가 조용히 사라진다. 실제로 눈에 띄지도 않는다.
+  //
+  // 그래서 코드 한 줄만 seo.naver 에 적게 하고, 공통 배열에 얹는 일은 여기서 한다.
+  // seo.verification 에 직접 적는 예전 방식도 계속 동작하되, 같은 name 이 겹치면
+  // 지점 값이 이긴다.
+  if (d.seo?.naver) {
+    const list = (d.seo.verification || []).filter(
+      (v) => v.name !== 'naver-site-verification'
+    );
+    d.seo = {
+      ...d.seo,
+      verification: [
+        ...list,
+        { name: 'naver-site-verification', content: d.seo.naver },
+      ],
+    };
+  }
+
   // themeName 으로 _shared.json 의 테마를 찾아 붙인다. 이름이 틀리면 빌드를 멈춘다.
   const name = d.themeName || 'red';
   const theme = (shared.themes || {})[name];
