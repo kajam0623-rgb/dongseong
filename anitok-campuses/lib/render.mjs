@@ -1371,9 +1371,10 @@ function lpFoot(d) {
 </section>`;
 }
 
-export function renderLocal(d, page, { pages = [] } = {}) {
+export function renderLocal(d, page, { pages = [], present = new Set() } = {}) {
   const booking = naverBooking(d);
   const canonical = `${d.site.origin}/${page.canonicalSlug || page.slug}`;
+  const ogImage = resolveImageForMeta(d, present);
   const s = page.subject;
   const title = `${page.keyword} | ${d.name}`;
   const 을를 = 조사(page.keyword, '을', '를');
@@ -1418,9 +1419,11 @@ export function renderLocal(d, page, { pages = [] } = {}) {
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
+${ogImage ? `<meta property="og:image" content="${esc(ogImage)}">` : ''}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(desc)}">
+${ogImage ? `<meta name="twitter:image" content="${esc(ogImage)}">` : ''}
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
@@ -1748,7 +1751,7 @@ function postJsonLd(d, post) {
   return `<script type="application/ld+json">${jsonld({ '@context': 'https://schema.org', '@graph': graph })}</script>`;
 }
 
-function blogShell(d, { title, description, canonical, keywords = [], jsonLd = '', body }) {
+function blogShell(d, { title, description, canonical, keywords = [], jsonLd = '', image = '', body }) {
   return `<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -1770,9 +1773,11 @@ ${keywords.length ? `<meta name="keywords" content="${esc(keywords.join(', '))}"
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
+${image ? `<meta property="og:image" content="${esc(image)}">` : ''}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">
+${image ? `<meta name="twitter:image" content="${esc(image)}">` : ''}
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
@@ -1792,7 +1797,7 @@ ${quickBar(d)}
 `;
 }
 
-export function renderPost(d, post, { posts = [] } = {}) {
+export function renderPost(d, post, { posts = [], present = new Set() } = {}) {
   const canonical = `${d.site.origin}/blog/${post.slug}/`;
   const others = posts.filter((p) => p.slug !== post.slug).slice(0, 6);
   const booking = naverBooking(d);
@@ -1858,11 +1863,12 @@ ${
     canonical,
     keywords: post.keywords || [],
     jsonLd: postJsonLd(d, post),
+    image: resolveImageForMeta(d, present),
     body,
   });
 }
 
-export function renderBlogIndex(d, posts) {
+export function renderBlogIndex(d, posts, { present = new Set() } = {}) {
   const canonical = `${d.site.origin}/blog/`;
   const rows = posts
     .map(
@@ -1891,6 +1897,7 @@ export function renderBlogIndex(d, posts) {
     title: `학원소식 | ${d.name}`,
     description: `${d.name}이 정리한 입시 요강 · 실기 주제 · 수업 이야기 ${posts.length}편.`,
     canonical,
+    image: resolveImageForMeta(d, present),
     jsonLd: `<script type="application/ld+json">${jsonld({
       '@context': 'https://schema.org',
       '@type': 'Blog',

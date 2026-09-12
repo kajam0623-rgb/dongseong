@@ -326,7 +326,7 @@ for (const slug of targets) {
     if (f.endsWith('.html') && !keepHtml.has(f)) unlinkSync(join(outDir, f));
   }
   for (const page of pages) {
-    writeFileSync(join(outDir, `${page.slug}.html`), minHtml(renderLocal(d, page, { pages })));
+    writeFileSync(join(outDir, `${page.slug}.html`), minHtml(renderLocal(d, page, { pages, present })));
   }
 
   // 학원 이야기(블로그). content/<slug>/posts/*.md 가 있는 지점만 만들어진다.
@@ -334,11 +334,11 @@ for (const slug of targets) {
   if (posts.length) {
     const blogDir = join(outDir, 'blog');
     mkdirSync(blogDir, { recursive: true });
-    writeFileSync(join(blogDir, 'index.html'), minHtml(renderBlogIndex(d, posts)));
+    writeFileSync(join(blogDir, 'index.html'), minHtml(renderBlogIndex(d, posts, { present })));
     for (const post of posts) {
       const postDir = join(blogDir, post.slug);
       mkdirSync(postDir, { recursive: true });
-      writeFileSync(join(postDir, 'index.html'), minHtml(renderPost(d, post, { posts })));
+      writeFileSync(join(postDir, 'index.html'), minHtml(renderPost(d, post, { posts, present })));
     }
   }
 
