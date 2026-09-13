@@ -441,6 +441,38 @@ body.nav-open{overflow:hidden}
 @media(max-width:620px){.dx-grid{grid-template-columns:1fr}}
 
 
+
+/* =========================================================
+   Why now 논증 · FAQ 밀도 · 기간/예산 밴드
+   기존 .grid-3 + .step 을 재사용한다. 새 컴포넌트를 만들지 않고
+   수치 줄(.stat)만 얹는다.
+   ========================================================= */
+.step .t{font-size:clamp(17px,1.9vw,19px);line-height:1.45}
+.step .stat{margin-top:16px;padding-top:13px;border-top:1px solid rgba(18,18,18,.12);
+  font-family:Archivo,'Arial Black',sans-serif;font-weight:900;font-size:clamp(26px,2.6vw,34px);
+  letter-spacing:-.025em;color:var(--pt);font-variant-numeric:tabular-nums;line-height:1.1}
+.step .stat small{display:block;margin-top:6px;font-family:'Pretendard Variable',Pretendard,sans-serif;
+  font-size:12.5px;font-weight:400;letter-spacing:0;color:rgba(18,18,18,.55);line-height:1.55}
+
+/* FAQ 답변이 여러 문단이 되므로 감싸는 컨테이너가 필요하다.
+   감싸지 않으면 두 번째 문단이 2단 그리드의 첫 칸으로 넘어간다. */
+.faq-a{display:flex;flex-direction:column;gap:12px}
+
+/* 기간·예산 밴드 */
+.bands{margin-top:6px;border-top:1px solid rgba(18,18,18,.14)}
+.band{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px 18px;align-items:baseline;
+  padding:12px 0;border-bottom:1px solid rgba(18,18,18,.14)}
+.band-t{font-size:14.5px;font-weight:500;line-height:1.5}
+.band-d,.band-p{font-family:Archivo,sans-serif;font-size:13px;font-weight:800;color:var(--pt);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.band-p{min-width:104px;text-align:right}
+.band-todo{color:#9B1B30;background:rgba(155,27,48,.08);padding:2px 7px;border-radius:4px;font-weight:700}
+@media(max-width:560px){
+  .band{grid-template-columns:1fr;gap:3px}
+  .band-p{text-align:left;min-width:0}
+}
+
+
 /* 화면 밖 섹션은 렌더링을 건너뛴다 (긴 페이지 초기 렌더 비용 절감).
    contain-intrinsic-size 의 auto 키워드가 실제 높이를 기억하므로
    스크롤바 점프가 생기지 않는다. */
