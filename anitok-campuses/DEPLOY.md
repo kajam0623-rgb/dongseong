@@ -47,9 +47,24 @@ outputDirectory : public
 - 이 방식은 배포 **시점**의 브랜치 상태를 굳혀 올린다. 자동 갱신이 아니다.
   저장소를 고친 뒤에는 다시 배포해야 한다.
 
-이 세션에서는 결과를 확인하지 못한다. 컨테이너 프록시가 `*.anitok.com` 과
-`*.vercel.app` 을 막고, Vercel 읽기 API(`get_deployment`, 빌드 로그)는 403 이다.
-배포 성공 여부는 Vercel 대시보드나 브라우저로 직접 봐야 한다.
+**`deploy_to_vercel` 에 `teamId` 를 넘기면 안 된다 (2026-09-13 확인).**
+`teamId: team_M7sXygtY8ZzpT4aG4dak7sVC` 를 붙이면 403 `forbidden` 이 난다.
+**생략하면 그대로 통과한다.** 프로젝트는 같은 스코프(`kajam0623-rgbs-projects`)에
+정상적으로 올라간다. 읽기 API(`get_deployment`, 빌드 로그)는 teamId 가 필수라
+여전히 403 이다 — 즉 올릴 수는 있어도 Vercel API 로는 결과를 못 본다.
+
+**결과 확인은 firecrawl 로 한다 (2026-09-13 확인).** 컨테이너 프록시는
+`*.anitok.com` 을 막지만 firecrawl 은 닿는다. 배포 1~2분 뒤:
+
+```
+firecrawl_scrape  url: https://<지점>.anitok.com/
+                  formats: ["summary"]   ← metadata 만 받아 출력이 짧다
+                  maxAge: 0              ← 캐시 금지. 안 하면 이전 배포를 본다
+```
+
+`metadata.title` · `description` · `keywords` · `naver-site-verification` 이
+의도한 값인지 보면 배포가 실제로 반영됐는지 알 수 있다. `formats: ["rawHtml"]`
+은 페이지 전체가 와서 출력이 매우 길다 — 본문까지 봐야 할 때만 쓴다.
 
 ---
 
