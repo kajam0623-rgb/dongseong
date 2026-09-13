@@ -550,6 +550,18 @@ body.nav-open{overflow:hidden}
 .psi-v small{display:block;margin-top:4px;font-size:11px;line-height:1.3;color:rgba(18,18,18,.5)}
 @media(max-width:900px){.res-cards{grid-template-columns:1fr 1fr}.psi-cards{grid-template-columns:1fr}}
 @media(max-width:620px){.res-cards{grid-template-columns:1fr}.psi-vitals{grid-template-columns:repeat(3,1fr);gap:12px 8px}}
+/* PSI 실제 캡처 — 재현 표(.psi-cards) 대신 도구 화면을 그대로 싣는 경우.
+   캡처는 흰 배경이라 크림 지면 위에서 뜨므로 얇은 테두리로 눌러 준다.
+   img 에 width/height 를 박고 여기서 height:auto 로 풀어 비율만 유지한다(CLS 0). */
+.psi-shots{margin-top:clamp(18px,2.2vw,26px);display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(18px,2.4vw,30px)}
+.psi-shot{margin:0}
+.psi-shot img{display:block;width:100%;height:auto;background:#fff;
+  border:1px solid rgba(18,18,18,.14);border-radius:6px}
+.psi-shot figcaption{margin-top:12px;font-size:13px;line-height:1.65;color:rgba(18,18,18,.55);
+  font-variant-numeric:tabular-nums}
+.psi-shot figcaption b{font-weight:700;color:rgba(18,18,18,.8)}
+@media(max-width:860px){.psi-shots{grid-template-columns:1fr}}
 
 /* ── About / Contact 보강 ────────────────────────────────────────── */
 /* 사명 풀이처럼 영문 한 줄이 주인공인 제목. 인라인 font-size 대신 이 클래스를 쓴다. */

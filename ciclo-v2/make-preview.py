@@ -45,6 +45,9 @@ TPL = u"""<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
 names = sys.argv[1:] or ['Home']
 for name in names:
     page = read('pages/%s.html' % name)
+    # 워드프레스 업로드 경로를 로컬 파일로 돌려 미리보기에서도 이미지가 뜨게 한다
+    page = page.replace('/wp-content/uploads/ciclo/',
+                        'file://' + os.path.join(HERE, 'images') + '/')
     out = TPL % dict(name=name, head=head, css=css, js=js,
                      header=header, footer=footer, page=page)
     dst = os.path.join(SCRATCH, 'pv-%s.html' % name)
