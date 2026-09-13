@@ -1,0 +1,14 @@
+{
+  "note": "ac.search.naver.com 자동완성을 firecrawl 로 한 건씩 직접 조회한 결과다. suggested = 자동완성 개수, selfRank = 자기 자신이 뜬 순위(null = 안 뜸 = 수요 없음). 검색량이 아니라 '수요의 존재'를 재는 값이다.",
+  "measuredAt": "2026-09-13",
+  "method": "firecrawl_scrape / ac.search.naver.com/nx/ac (rawHtml, maxAge 0)",
+  "results": [
+    { "term": "김포미술학원",     "suggested": 3, "selfRank": 1, "siblings": ["김포 미술학원", "김포 미술학원 성인", "김포 미술학원 추천"] },
+    { "term": "구래동미술학원",   "suggested": 2, "selfRank": 1, "siblings": ["구래동 미술학원", "구래동 미술학원 비용"] },
+    { "term": "김포만화학원",     "suggested": 1, "selfRank": 1, "siblings": ["김포 만화학원"] },
+    { "term": "장기동미술학원",   "suggested": 1, "selfRank": 1, "siblings": ["장기동 미술학원"] },
+    { "term": "운양동미술학원",   "suggested": 1, "selfRank": 1, "siblings": ["운양동 미술학원"] },
+    { "term": "김포웹툰학원",     "suggested": 0, "selfRank": null, "siblings": [] },
+    { "term": "한강신도시미술학원", "suggested": 0, "selfRank": null, "siblings": [], "note": "행정동(구래·장기·운양)은 뜨는데 '한강신도시' 라는 통칭은 안 뜬다." }
+  ]
+}

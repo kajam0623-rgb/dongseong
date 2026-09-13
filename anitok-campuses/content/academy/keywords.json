@@ -1,0 +1,13 @@
+{
+  "note": "ac.search.naver.com 자동완성을 firecrawl 로 한 건씩 직접 조회한 결과다. suggested = 자동완성 개수, selfRank = 자기 자신이 뜬 순위(null = 안 뜸). 검색량이 아니라 '수요의 존재'를 재는 값이다.",
+  "measuredAt": "2026-09-13",
+  "method": "firecrawl_scrape / ac.search.naver.com/nx/ac (rawHtml, maxAge 0)",
+  "results": [
+    { "term": "게임원화학원",   "suggested": 2, "selfRank": 1, "siblings": ["게임원화학원", "부산게임원화학원"] },
+    { "term": "서울웹툰학원",   "suggested": 1, "selfRank": 1, "siblings": ["서울 웹툰 학원"] },
+    { "term": "서울만화학원",   "suggested": 0, "selfRank": null, "siblings": [], "note": "현재 title 의 앞머리인데 수요가 잡히지 않는다. '서울웹툰학원' 쪽이 낫다." },
+    { "term": "서울드로잉학원", "suggested": 0, "selfRank": null, "siblings": [] },
+    { "term": "성인드로잉학원", "suggested": 0, "selfRank": null, "siblings": [] },
+    { "term": "웹툰과외",       "suggested": 0, "selfRank": null, "siblings": [] }
+  ]
+}
