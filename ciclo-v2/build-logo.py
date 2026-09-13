@@ -23,17 +23,18 @@ print(f"CSS: {before:,} → {len(s):,} chars  ({before-len(s):,} 절감)")
 
 # ── 2)+3) 마크업 ────────────────────────────────────────────────
 # 실제 로고 비율 488x566. CSS 가 height 를 정하고 width:auto 이므로 고유 치수를 준다.
+# ★ 정규식을 <img ...> 태그 안으로 한정한다.
+#   처음엔 width="20" height="20" 를 전역 치환했다가 카카오 아이콘 <svg> 까지
+#   488x566 으로 바꿔 버튼이 594px 높이로 부풀었다. 태그 단위로 좁혔다.
 fixes = [
   (r'src="/wp-content/uploads/mark-ciclo-white\.png"', f'src="{PX}"'),
-  (r'width="20" height="20"',   'width="488" height="566"'),
-  (r'width="22" height="22"',   'width="488" height="566"'),
-  (r'width="600" height="600"', 'width="488" height="566"'),
-  (r'width="620" height="620"', 'width="488" height="566"'),
 ]
+IMG_DIM = re.compile(r'(<img\b[^>]*?)width="\d+" height="\d+"')
 total=0
 for f in glob.glob('pages/*.html'):
     t=open(f,encoding='utf-8').read(); n0=t
     for pat,rep in fixes: t=re.sub(pat,rep,t)
+    t = IMG_DIM.sub(r'\1width="488" height="566"', t)   # <img> 안에서만
     if t!=n0:
         open(f,'w',encoding='utf-8').write(t)
         c=sum(len(re.findall(pat,n0)) for pat,_ in fixes)
