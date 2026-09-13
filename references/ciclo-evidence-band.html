@@ -1,0 +1,857 @@
+<title>81점, 그리고 20점</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+
+<style>
+/* ============================================================
+   씨클로 홈 — 증거 밴드 시안
+   히어로 직후, #services 앞에 들어가는 섹션.
+   컬러/폰트는 ciclo.kr 실측 토큰을 그대로 씀.
+   실서비스에는 Pretendard가 이미 로드돼 있으므로 스택 첫 항목이 적용되고,
+   이 시안에서는 Noto Sans KR로 폴백된다.
+   ============================================================ */
+
+:root {
+  --cream:        #F4F1EA;
+  --cream-2:      #E8E3D7;   /* 크림 위 구분선 */
+  --navy:         #111E6C;   /* 밴드 바탕 */
+  --navy-deep:    #0C1650;   /* 차트 트랙 · 인셋 패널 */
+  --navy-line:    #2C3A8C;   /* 네이비 위 헤어라인 */
+  --yellow:       #FAE100;   /* 발견 강조 — 이 섹션에서 단 한 용도 */
+  --on-navy:      #F4F1EA;
+  --on-navy-dim:  rgba(244, 241, 234, .58);
+  --on-navy-dim2: rgba(244, 241, 234, .34);
+
+  --kr: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system,
+        BlinkMacSystemFont, system-ui, sans-serif;
+  --en: Archivo, "Pretendard Variable", Pretendard, "Noto Sans KR", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+          "Liberation Mono", monospace;
+
+  --shell: 1200px;
+  --gutter: clamp(20px, 5vw, 64px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--navy);
+  font-family: var(--kr);
+  font-size: 16px;
+  line-height: 1.7;
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell {
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- 시안 페이지 안내 (실제 섹션 아님) ---------- */
+
+.note {
+  padding-block: clamp(28px, 5vw, 44px);
+  border-bottom: 1px solid var(--cream-2);
+}
+.note p {
+  margin: 0;
+  max-width: 62ch;
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(17, 30, 108, .68);
+}
+.note strong { color: var(--navy); font-weight: 700; }
+
+/* ---------- 앞뒤 문맥 (히어로 꼬리 / 다음 섹션 머리) ---------- */
+
+.context {
+  padding-block: clamp(44px, 7vw, 84px);
+  text-align: center;
+}
+.context span {
+  display: block;
+  font-family: var(--en);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  color: rgba(17, 30, 108, .38);
+}
+.context span + span { margin-top: 10px; }
+
+/* ============================================================
+   ▼▼▼ 여기서부터가 실제 이식 대상 ▼▼▼
+   ============================================================ */
+
+.band {
+  background: var(--navy);
+  color: var(--on-navy);
+  padding-block: clamp(76px, 9vw, 124px);
+}
+
+/* ---------- 눈썹 ---------- */
+
+.band-eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 18px;
+  margin: 0 0 clamp(38px, 5vw, 60px);
+  font-family: var(--en);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .17em;
+  color: var(--on-navy-dim);
+}
+.band-eyebrow b {
+  color: var(--on-navy);
+  font-weight: 700;
+}
+
+/* ---------- 본문 2단 ---------- */
+
+.band-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(48px, 6vw, 92px);
+  align-items: start;
+}
+
+/* ---------- 좌: 81 → 20 ---------- */
+
+.thesis-h {
+  margin: 0 0 clamp(26px, 3vw, 38px);
+  font-size: clamp(21px, 2.2vw, 27px);
+  font-weight: 700;
+  line-height: 1.42;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+
+.figures {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(14px, 2vw, 26px);
+}
+
+.fig { flex: 0 0 auto; }
+
+.fig-num {
+  display: block;
+  font-family: var(--en);
+  font-size: clamp(58px, 7.6vw, 116px);
+  font-weight: 800;
+  line-height: .86;
+  letter-spacing: -.045em;
+  font-variant-numeric: tabular-nums;
+}
+.fig-num sup {
+  font-size: .3em;
+  font-weight: 600;
+  letter-spacing: 0;
+  vertical-align: super;
+  margin-left: .1em;
+  color: var(--on-navy-dim);
+}
+.fig--low .fig-num { color: var(--yellow); }
+.fig--low .fig-num sup { color: rgba(250, 225, 0, .6); }
+
+.fig-cap {
+  display: block;
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: .01em;
+  color: var(--on-navy-dim);
+}
+.fig--low .fig-cap { color: var(--on-navy); }
+
+/* 낙차 표시 */
+.drop {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  padding-top: clamp(12px, 1.8vw, 26px);
+  text-align: center;
+}
+.drop-val {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--on-navy-dim);
+}
+.drop svg { display: block; }
+
+.thesis-p {
+  margin: clamp(28px, 3.4vw, 42px) 0 0;
+  max-width: 34ch;
+  font-size: 16px;
+  line-height: 1.78;
+  color: var(--on-navy-dim);
+}
+.thesis-p b { color: var(--on-navy); font-weight: 500; }
+
+/* ---------- 좌: 30초 자가 점검 인셋 ---------- */
+
+.selfcheck {
+  margin-top: clamp(30px, 3.6vw, 44px);
+  padding: 20px 22px;
+  background: var(--navy-deep);
+  border-left: 2px solid var(--yellow);
+}
+.selfcheck-h {
+  margin: 0 0 10px;
+  font-family: var(--en);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  color: var(--on-navy-dim);
+}
+.selfcheck-steps {
+  margin: 0 0 10px;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--on-navy);
+}
+.selfcheck-steps i {
+  font-style: normal;
+  color: var(--on-navy-dim2);
+  padding-inline: 6px;
+}
+.selfcheck-steps code {
+  font-family: inherit;
+  background: rgba(250, 225, 0, .14);
+  color: var(--yellow);
+  padding: 1px 6px;
+}
+.selfcheck p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--on-navy-dim);
+}
+
+/* ---------- 우: 10항목 막대 ---------- */
+
+.chart-h {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px 16px;
+  margin: 0 0 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--navy-line);
+}
+.chart-h h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+.chart-h span {
+  font-size: 12.5px;
+  color: var(--on-navy-dim);
+}
+
+.chart { position: relative; }
+
+/* 눈금 — 채점 단위가 20점이라 20점 간격으로만 끊는다 */
+.grid-lines {
+  position: absolute;
+  left: var(--label-w);
+  right: var(--val-w);
+  top: 0;
+  bottom: 26px;
+  pointer-events: none;
+}
+.grid-lines i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--navy-line);
+  opacity: .5;
+}
+.grid-lines i:first-child { opacity: .9; }
+
+.chart {
+  --label-w: 116px;
+  --val-w: 42px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: var(--label-w) minmax(0, 1fr) var(--val-w);
+  align-items: center;
+  gap: 12px;
+  height: 32px;
+  position: relative;
+}
+.row-label {
+  font-size: 13.5px;
+  line-height: 1.3;
+  color: var(--on-navy-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row-track { height: 12px; }
+.row-bar {
+  height: 100%;
+  width: var(--w);
+  background: rgba(244, 241, 234, .82);
+}
+.row-val {
+  font-family: var(--en);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--on-navy);
+}
+
+.row--key .row-label { color: var(--on-navy); font-weight: 500; }
+.row--key .row-bar   { background: var(--yellow); }
+.row--key .row-val   { color: var(--yellow); }
+
+.axis {
+  display: grid;
+  grid-template-columns: var(--label-w) minmax(0, 1fr) var(--val-w);
+  gap: 12px;
+  margin-top: 8px;
+}
+.axis-scale {
+  grid-column: 2;
+  position: relative;
+  height: 18px;
+}
+.axis-scale span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-family: var(--en);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: var(--on-navy-dim2);
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-foot {
+  margin: 18px 0 0;
+  padding-left: calc(var(--label-w) + 12px);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--on-navy-dim);
+}
+.chart-foot b { color: var(--yellow); font-weight: 500; }
+
+/* ---------- 하단 스트립: 7곳 실측 ---------- */
+
+.strip {
+  margin-top: clamp(48px, 5.5vw, 76px);
+  padding-top: clamp(32px, 3.6vw, 44px);
+  border-top: 1px solid var(--navy-line);
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(36px, 5vw, 72px);
+  align-items: start;
+}
+
+.dots-h {
+  margin: 0 0 20px;
+  font-size: 13.5px;
+  color: var(--on-navy-dim);
+}
+.dots-h b { color: var(--on-navy); font-weight: 700; }
+
+.plot {
+  position: relative;
+  height: 62px;
+  border-bottom: 1px solid var(--navy-line);
+}
+/* 임계선 — 일곱 곳 모두 이 아래 */
+.threshold {
+  position: absolute;
+  left: 30%;
+  top: -4px;
+  bottom: 0;
+  width: 1px;
+  background: rgba(250, 225, 0, .45);
+}
+.threshold span {
+  position: absolute;
+  top: -6px;
+  left: 9px;
+  white-space: nowrap;
+  font-family: var(--en);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  color: rgba(250, 225, 0, .8);
+}
+.dot {
+  position: absolute;
+  left: var(--x);
+  bottom: var(--y, 12px);
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  background: var(--yellow);
+}
+.dot b {
+  position: absolute;
+  left: 50%;
+  bottom: 15px;
+  transform: translateX(-50%);
+  font-family: var(--en);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--on-navy-dim);
+  font-variant-numeric: tabular-nums;
+}
+.plot-axis {
+  position: relative;
+  height: 18px;
+  margin-top: 7px;
+}
+.plot-axis span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-family: var(--en);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  color: var(--on-navy-dim2);
+  font-variant-numeric: tabular-nums;
+}
+.dots-foot {
+  margin: 16px 0 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--on-navy-dim);
+}
+
+/* ---------- 하단 스트립: 행동 ---------- */
+
+.acts-h {
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -.015em;
+}
+.acts-p {
+  margin: 0 0 22px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--on-navy-dim);
+}
+.acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 20px;
+  border-radius: 4px;
+  font-family: var(--kr);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.btn svg { flex: 0 0 auto; }
+.btn--fill {
+  background: var(--cream);
+  color: var(--navy);
+}
+.btn--fill:hover { background: #fff; }
+.btn--line {
+  border-color: rgba(244, 241, 234, .34);
+  color: var(--on-navy);
+}
+.btn--line:hover {
+  border-color: var(--cream);
+  background: rgba(244, 241, 234, .07);
+}
+.btn:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+.source {
+  margin: 20px 0 0;
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--on-navy-dim2);
+}
+
+/* ============================================================
+   ▲▲▲ 이식 대상 끝 ▲▲▲
+   ============================================================ */
+
+/* ---------- 시안 페이지 하단 스펙 ---------- */
+
+.spec { padding-block: clamp(56px, 7vw, 96px); }
+.spec h2 {
+  margin: 0 0 28px;
+  font-family: var(--en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: rgba(17, 30, 108, .45);
+}
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
+  gap: 1px;
+  background: var(--cream-2);
+  border: 1px solid var(--cream-2);
+}
+.spec-cell { background: var(--cream); padding: 22px 24px; }
+.spec-cell h3 {
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+.spec-cell p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.72;
+  color: rgba(17, 30, 108, .68);
+}
+.spec-cell p + p { margin-top: 9px; }
+.spec-cell code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: rgba(17, 30, 108, .07);
+  padding: 1px 5px;
+}
+.spec-cell em {
+  font-style: normal;
+  display: inline-block;
+  width: 13px; height: 13px;
+  vertical-align: -2px;
+  margin-right: 5px;
+  border: 1px solid rgba(17, 30, 108, .22);
+}
+
+/* ---------- 반응형 ---------- */
+
+@media (max-width: 940px) {
+  .band-grid { grid-template-columns: 1fr; gap: 52px; }
+  .strip { grid-template-columns: 1fr; gap: 44px; }
+  .chart { --label-w: 104px; }
+  .chart-foot { padding-left: 0; }
+}
+
+@media (max-width: 560px) {
+  .chart { --label-w: 92px; --val-w: 36px; }
+  .row { height: 30px; gap: 9px; }
+  .row-label { font-size: 12.5px; }
+  .axis { gap: 9px; }
+  .figures { gap: 12px; }
+  .fig-cap { font-size: 12px; }
+  .thesis-p { max-width: none; }
+  .acts { flex-direction: column; align-items: stretch; }
+  .btn { justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: .01ms !important; }
+}
+</style>
+
+<div class="shell note">
+  <p><strong>씨클로 홈 증거 밴드 시안.</strong> 히어로 바로 아래, <code>What we do</code> 앞에 들어가는 섹션입니다.
+  수치는 전부 씨클로가 직접 채점한 <em></em>실측값이고, 지어낸 숫자는 없습니다.
+  위아래 회색 텍스트는 앞뒤 문맥 표시용이라 이식 대상이 아닙니다.</p>
+</div>
+
+<div class="context">
+  <span>↑ HERO — CREATIVE CLICKS.</span>
+</div>
+
+<!-- ══════════ 이식 대상 시작 ══════════ -->
+<section class="band" id="evidence" aria-labelledby="evidence-h">
+  <div class="shell">
+
+    <p class="band-eyebrow">
+      <span>/FIELD RESEARCH</span>
+      <b>치과 홈페이지 실태조사</b>
+      <span>표본 8곳 · 10항목 · 50체크포인트 · 2026.08</span>
+    </p>
+
+    <div class="band-grid">
+
+      <!-- 좌 : 81 → 20 -->
+      <div>
+        <h2 class="thesis-h" id="evidence-h">
+          원장님 이력은 잘 적혀 있었습니다.<br>
+          기계가 읽는 자리에는 없었습니다.
+        </h2>
+
+        <div class="figures">
+          <div class="fig">
+            <span class="fig-num">81<sup>점</sup></span>
+            <span class="fig-cap">사람이 보는 화면</span>
+          </div>
+
+          <div class="drop" aria-hidden="true">
+            <span class="drop-val">−61</span>
+            <svg width="46" height="14" viewBox="0 0 46 14" fill="none">
+              <path d="M0 4h38" stroke="rgba(244,241,234,.34)" stroke-width="1.5"/>
+              <path d="M33 1l6 3-6 3" stroke="rgba(244,241,234,.34)" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+
+          <div class="fig fig--low">
+            <span class="fig-num">20<sup>점</sup></span>
+            <span class="fig-cap">기계가 읽는 자리</span>
+          </div>
+        </div>
+
+        <p class="thesis-p">
+          <b>같은 원장님 이력입니다.</b> 전문의 자격도, 수련 병원도, 학회 경력도
+          홈페이지에는 다 적혀 있었습니다. 다만 검색엔진과 AI가 알아볼 형식으로는
+          옮겨져 있지 않았습니다. 가진 게 없어서 생긴 격차가 아니라,
+          가진 것이 전달되지 않아서 생긴 격차입니다.
+        </p>
+
+        <div class="selfcheck">
+          <p class="selfcheck-h">30초 자가 점검</p>
+          <p class="selfcheck-steps">
+            페이지 소스 보기 <i>→</i> Ctrl+F <i>→</i> <code>ld+json</code>
+          </p>
+          <p>아무것도 안 나오면 0점입니다. 병원 이름과 주소만 나오면 20점 근처, 조사 표본의 중앙값 자리입니다.</p>
+        </div>
+      </div>
+
+      <!-- 우 : 10항목 실측 -->
+      <div>
+        <div class="chart-h">
+          <h3>열 항목 평균 점수</h3>
+          <span>여덟 곳 평균 · 항목당 100점</span>
+        </div>
+
+        <div class="chart">
+          <div class="grid-lines" aria-hidden="true">
+            <i style="left:0%"></i><i style="left:20%"></i><i style="left:40%"></i>
+            <i style="left:60%"></i><i style="left:80%"></i><i style="left:100%"></i>
+          </div>
+
+          <div class="row">
+            <div class="row-label">의료진 신뢰정보</div>
+            <div class="row-track"><div class="row-bar" style="--w:81%"></div></div>
+            <div class="row-val">81</div>
+          </div>
+          <div class="row">
+            <div class="row-label">지역 검색</div>
+            <div class="row-track"><div class="row-bar" style="--w:73%"></div></div>
+            <div class="row-val">73</div>
+          </div>
+          <div class="row">
+            <div class="row-label">콘텐츠 품질</div>
+            <div class="row-track"><div class="row-bar" style="--w:73%"></div></div>
+            <div class="row-val">73</div>
+          </div>
+          <div class="row">
+            <div class="row-label">콘텐츠 확장성</div>
+            <div class="row-track"><div class="row-bar" style="--w:63%"></div></div>
+            <div class="row-val">63</div>
+          </div>
+          <div class="row">
+            <div class="row-label">사이트 구조</div>
+            <div class="row-track"><div class="row-bar" style="--w:60%"></div></div>
+            <div class="row-val">60</div>
+          </div>
+          <div class="row">
+            <div class="row-label">페이지 기본 세팅</div>
+            <div class="row-track"><div class="row-bar" style="--w:58%"></div></div>
+            <div class="row-val">58</div>
+          </div>
+          <div class="row">
+            <div class="row-label">도메인 위생</div>
+            <div class="row-track"><div class="row-bar" style="--w:51%"></div></div>
+            <div class="row-val">51</div>
+          </div>
+          <div class="row">
+            <div class="row-label">기술·성능</div>
+            <div class="row-track"><div class="row-bar" style="--w:47%"></div></div>
+            <div class="row-val">47</div>
+          </div>
+          <div class="row row--key">
+            <div class="row-label">AI 검색 대응</div>
+            <div class="row-track"><div class="row-bar" style="--w:35%"></div></div>
+            <div class="row-val">35</div>
+          </div>
+          <div class="row row--key">
+            <div class="row-label">기계용 정보 표기</div>
+            <div class="row-track"><div class="row-bar" style="--w:20%"></div></div>
+            <div class="row-val">20</div>
+          </div>
+
+          <div class="axis" aria-hidden="true">
+            <div class="axis-scale">
+              <span style="left:0%">0</span><span style="left:20%">20</span>
+              <span style="left:40%">40</span><span style="left:60%">60</span>
+              <span style="left:80%">80</span><span style="left:100%">100</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="chart-foot">
+          <b>노란 두 항목</b>이 AI 검색 노출을 결정합니다.
+          나머지 여덟 항목을 올려도 이 두 칸이 비어 있으면 AI 답변에는 잡히지 않습니다.
+        </p>
+      </div>
+    </div>
+
+    <!-- 하단 스트립 -->
+    <div class="strip">
+      <div>
+        <p class="dots-h">
+          <b>기계용 정보 표기, 일곱 곳 개별 점수</b> — 12 · 15 · 15 · 20 · 20 · 28 · 30
+        </p>
+
+        <div class="plot">
+          <div class="threshold" aria-hidden="true"><span>30점</span></div>
+          <div class="dot" style="--x:12%; --y:12px"><b>12</b></div>
+          <div class="dot" style="--x:15%; --y:30px"><b>15</b></div>
+          <div class="dot" style="--x:15%; --y:12px"></div>
+          <div class="dot" style="--x:20%; --y:30px"><b>20</b></div>
+          <div class="dot" style="--x:20%; --y:12px"></div>
+          <div class="dot" style="--x:28%; --y:12px"><b>28</b></div>
+          <div class="dot" style="--x:30%; --y:30px"><b>30</b></div>
+        </div>
+        <div class="plot-axis" aria-hidden="true">
+          <span style="left:0%">0</span><span style="left:20%">20</span>
+          <span style="left:40%">40</span><span style="left:60%">60</span>
+          <span style="left:80%">80</span><span style="left:100%">100</span>
+        </div>
+
+        <p class="dots-foot">
+          중앙값 20점, <b>30점을 넘긴 곳은 없습니다.</b>
+          SEO 종합에서 84점으로 가장 높았던 곳도 이 항목만은 28점이었습니다.
+          잘 만든 집과 그렇지 않은 집이 갈리는 항목이 아니라, 아직 아무도 손대지 않은 항목입니다.
+        </p>
+      </div>
+
+      <div>
+        <p class="acts-h">점수만 말하고 근거를 숨기지 않습니다.</p>
+        <p class="acts-p">
+          채점 기준 50개와 여덟 곳 결과를 그대로 열어 뒀습니다.
+          다른 업체 견적서를 받으셨을 때 항목을 짚어 보실 수 있습니다.
+        </p>
+
+        <div class="acts">
+          <a class="btn btn--fill" href="https://dental-seo-report.vercel.app/">
+            채점 기준·8곳 결과 전부 보기
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+              <path d="M0 5h12M8.5 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="btn btn--line" href="/contact/">
+            우리 병원 점수 받기
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+              <path d="M0 5h12M8.5 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <p class="source">
+          공개된 HTML 소스만 확인했습니다. 병원명은 A–H로 익명 처리했으며,
+          이 점수는 검색 순위나 매출을 예측하지 않습니다.
+          표본이 스무 곳을 넘으면 기준을 다시 맞추고 갱신합니다.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ══════════ 이식 대상 끝 ══════════ -->
+
+<div class="context">
+  <span>↓ /SERVICES — WHAT WE DO</span>
+</div>
+
+<div class="shell spec">
+  <h2>구현 메모</h2>
+  <div class="spec-grid">
+
+    <div class="spec-cell">
+      <h3>넣을 자리</h3>
+      <p>히어로 직후, <code>#services</code> 앞. 지금 그 사이에 600px 넘게 비어 있는 구간이 이 자리입니다.</p>
+      <p>네이비 밴드가 2번 위치로 오면 <code>HOW WE WORK</code> 블록과 같은 색이 두 번 반복됩니다. 그쪽을 크림+헤어라인으로 바꾸면 리듬이 살아납니다.</p>
+    </div>
+
+    <div class="spec-cell">
+      <h3>컬러</h3>
+      <p><em style="background:#111E6C"></em><code>#111E6C</code> 밴드 바탕<br>
+         <em style="background:#0C1650"></em><code>#0C1650</code> 인셋 패널<br>
+         <em style="background:#F4F1EA"></em><code>#F4F1EA</code> 잉크·채운 버튼<br>
+         <em style="background:#FAE100"></em><code>#FAE100</code> 발견 강조</p>
+      <p>옐로는 이 섹션에서 <b>단 한 용도</b>입니다 — AI 노출을 결정하는 두 항목. 버튼에는 쓰지 않았습니다. 두 곳에 쓰면 어느 쪽도 안 보입니다.</p>
+    </div>
+
+    <div class="spec-cell">
+      <h3>타이포</h3>
+      <p>숫자·영문 라벨은 Archivo 800, 본문은 Pretendard. 사이트에 이미 둘 다 있습니다.</p>
+      <p>이 시안은 Pretendard를 못 불러와 Noto Sans KR로 폴백됩니다. 실제 사이트에 붙이면 스택 첫 항목인 Pretendard가 잡힙니다.</p>
+      <p>점수는 전부 <code>tabular-nums</code>라 자릿수가 흔들리지 않습니다.</p>
+    </div>
+
+    <div class="spec-cell">
+      <h3>눈금을 20으로 끊은 이유</h3>
+      <p>채점이 항목당 체크포인트 5개, 하나 충족에 20점입니다. 그래서 실제 점수가 20점 단위로만 떨어집니다.</p>
+      <p>축을 25나 10으로 끊으면 데이터에 없는 정밀도를 암시하게 됩니다.</p>
+    </div>
+
+    <div class="spec-cell">
+      <h3>알약 배지 없음</h3>
+      <p>현재 홈 서비스 섹션의 라운드 999 태그는 이 밴드에 쓰지 않았습니다. 라운드는 버튼 4px 한 단계뿐입니다.</p>
+      <p>데이터 블록에서 알약은 값을 라벨처럼 보이게 만듭니다.</p>
+    </div>
+
+    <div class="spec-cell">
+      <h3>문구 원칙</h3>
+      <p>효과 보장 표현 없음. 병원명 익명. 한계 고지를 밴드 안에 같이 넣었습니다.</p>
+      <p>한계를 적는 게 신뢰를 깎지 않습니다. 238LAB이 "노출 보장은 하지 않는다"를 FAQ에 적어 두는 것과 같은 장치입니다.</p>
+    </div>
+
+    <div class="spec-cell">
+      <h3>출처</h3>
+      <p>10항목 평균 — <code>/dental-homepage-10-items-score</code></p>
+      <p>7곳 개별 점수 — <code>/seven-clinics-real-scores</code></p>
+      <p>원본 리포트 — <code>dental-seo-report.vercel.app</code></p>
+    </div>
+
+    <div class="spec-cell">
+      <h3>아직 안 쓴 재료</h3>
+      <p>리포트에 <b>E병원 개선 사례</b>가 있습니다. 구조화 데이터만 15→78로 올려 GEO 종합이 32→46이 된 건입니다.</p>
+      <p>이건 밴드에 넣지 않고 사례 카드나 서비스 페이지에 쓰는 편이 낫습니다. 밴드는 진단, 그쪽은 처방입니다.</p>
+    </div>
+
+  </div>
+</div>
