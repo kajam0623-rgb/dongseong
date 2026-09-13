@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<!-- Pretendard 는 사이트 헤드 스니펫이 이미 로드한다 (dynamic-subset). 중복 링크 제거. -->
 <style>
 
   #ciclo-dental{
@@ -19,7 +19,7 @@
     --line:#e6e3dc;
     --red:#e8453c;
     --W:860px;
-    --P:64px;
+    --P:clamp(20px,5.4vw,64px);
   }
   #ciclo-dental,#ciclo-dental *{margin:0;padding:0;box-sizing:border-box;}
   #ciclo-dental{
@@ -27,17 +27,20 @@
     background:#fff;color:var(--ink);
     -webkit-font-smoothing:antialiased;word-break:keep-all;
   }
-  #ciclo-dental .page{width:var(--W);margin:0 auto;overflow:hidden;}
+  #ciclo-dental .page{width:min(var(--W),100%);margin:0 auto;overflow:hidden;}
 
   #ciclo-dental /* ══════ 화면 단위 블록 ══════ */
-  .scr{padding:120px var(--P);text-align:center;}
+  .scr{padding:clamp(72px,11vw,120px) var(--P);text-align:center;}
   #ciclo-dental .scr.lft{text-align:left;}
-  #ciclo-dental .scr.sm{padding:88px var(--P);}
+  #ciclo-dental .scr.sm{padding:clamp(56px,8vw,88px) var(--P);}
 
-  #ciclo-dental /* 핵심 장면 = 한 스크롤에 하나씩 (스냅) */
-  html{scroll-snap-type:y proximity;scroll-behavior:smooth;}
+  /* 스크롤 스냅 제거 — 원래 `#ciclo-dental html{...}` 로 쓰여 있었는데
+     html 은 div 의 자손이 될 수 없어 한 번도 적용된 적이 없다(실측 확인).
+     되살리는 대신 걷어낸다. 20개 장면짜리 긴 랜딩에서 스냅은 모바일에서
+     스크롤을 뺏는다. .scr.snap 의 min-height 는 그대로 살려 장면감을 유지한다. */
   #ciclo-dental .scr.snap{
     min-height:100vh;
+    min-height:100svh;
     display:flex;flex-direction:column;justify-content:center;
     scroll-snap-align:center;scroll-snap-stop:always;
     padding-top:80px;padding-bottom:80px;
@@ -50,11 +53,11 @@
   #ciclo-dental .b-white{background:#fff;}
 
   #ciclo-dental /* ══════ 타이포: 와디즈 스케일 ══════ */
-  .xxl{font-size:88px;line-height:1.14;font-weight:800;letter-spacing:-.05em;}
-  #ciclo-dental .xl{font-size:66px;line-height:1.22;font-weight:800;letter-spacing:-.045em;}
-  #ciclo-dental .lg{font-size:48px;line-height:1.32;font-weight:800;letter-spacing:-.038em;}
-  #ciclo-dental .md{font-size:32px;line-height:1.5;font-weight:700;letter-spacing:-.028em;}
-  #ciclo-dental .bd{font-size:19px;line-height:1.9;font-weight:500;}
+  .xxl{font-size:clamp(38px,8.4vw,88px);line-height:1.14;font-weight:800;letter-spacing:-.05em;}
+  #ciclo-dental .xl{font-size:clamp(32px,6.4vw,66px);line-height:1.22;font-weight:800;letter-spacing:-.045em;}
+  #ciclo-dental .lg{font-size:clamp(26px,4.8vw,48px);line-height:1.32;font-weight:800;letter-spacing:-.038em;}
+  #ciclo-dental .md{font-size:clamp(21px,3.2vw,32px);line-height:1.5;font-weight:700;letter-spacing:-.028em;}
+  #ciclo-dental .bd{font-size:clamp(16.5px,1.9vw,19px);line-height:1.9;font-weight:500;}
   #ciclo-dental .cap{font-size:14px;line-height:1.75;font-weight:500;}
 
   #ciclo-dental .b-dark .bd,#ciclo-dental .b-dark2 .bd,#ciclo-dental .b-navy .bd{color:rgba(255,255,255,.72);}
@@ -95,8 +98,11 @@
   #ciclo-dental .chev svg{width:100%;}
 
   #ciclo-dental /* ══════ 상단 요약 ══════ */
-  .top{padding:32px var(--P) 36px;border-bottom:1px solid var(--line);}
+  /* 사이트 고정 네비(헤더 스니펫)와 겹치지 않게 위쪽을 비운다.
+     단독 페이지 시절의 자기 브랜드 줄은 네비와 중복이라 감춘다. */
+  .top{padding:clamp(96px,12vw,132px) var(--P) clamp(24px,3.4vw,36px);border-bottom:1px solid var(--line);}
   #ciclo-dental .top .id{display:flex;align-items:center;gap:11px;margin-bottom:24px;}
+  #ciclo-dental .top .id{display:none;}  /* 사이트 네비와 중복 — 뒤에서 덮는다 */
   #ciclo-dental .top .id .m{width:30px;height:30px;border-radius:7px;background:var(--navy2);
     display:flex;align-items:center;justify-content:center;}
   #ciclo-dental .top .id .m svg{width:19px;height:19px;}
@@ -433,8 +439,8 @@
                filter .8s ease;}
   #ciclo-dental .rv-pop.on{opacity:1;transform:none;filter:blur(0);}
 
-  #ciclo-dental /* 스냅 장면 전용: 진입 시 배경도 살짝 확대 */
-  .scr.snap > *{will-change:transform,opacity;}
+  /* .scr.snap > *{will-change:transform,opacity} 제거 — 상시 합성 레이어 33개였다.
+     리빌은 한 번 끝나면 다시 안 일어나므로 미리 레이어를 잡아둘 이유가 없다. */
 
   #ciclo-dental /* 헤드라인: 글자가 아래에서 밀려 올라옴 (마스크) */
   .rv-mask{overflow:hidden;display:block;}
@@ -496,9 +502,7 @@
   #ciclo-dental /* 숫자 카운트업 자리 고정 */
   .cnt{font-variant-numeric:tabular-nums;}
 
-  /* 화살표 통통 */
-  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
-  #ciclo-dental .chev{animation:bob 1.9s ease-in-out infinite;}
+  /* 화살표 — bob 무한 애니메이션 제거 (v2: 모션은 빼기). 위치만 남긴다. */
 
   #ciclo-dental /* 하이라이트 박스: 왼→오른쪽으로 칠해짐 */
   .box{position:relative;}
@@ -517,12 +521,9 @@
   }
   #ciclo-dental .swipe.on::after{transform:scaleX(1);}
 
-  /* 게이지 펄스 */
-  @keyframes pulse{
-    0%,100%{box-shadow:0 0 0 0 rgba(232,69,60,.5)}
-    50%{box-shadow:0 0 0 7px rgba(232,69,60,0)}
-  }
-  #ciclo-dental .pip{animation:pulse 1.8s ease-out infinite;}
+  /* 게이지 펄스 제거 — box-shadow 애니메이션은 합성이 아니라 매 프레임 페인트를
+     유발한다. 무한 반복이라 페이지를 열어 두는 내내 돈다. 정적 링으로 대체. */
+  #ciclo-dental .pip{box-shadow:0 0 0 4px rgba(232,69,60,.18);}
 
   /* 견적서 흔들림 강조 */
   @keyframes shake{
@@ -540,12 +541,10 @@
   }
   #ciclo-dental .serp.on .rw.me{animation:flash .7s ease-in-out 3.8s 2;}
 
-  /* 배경 원 천천히 회전 */
-  @keyframes spin{to{transform:rotate(360deg)}}
+  /* 배경 원 — spin 46s 무한 회전 제거. 점선 원은 그대로 두되 돌지 않는다. */
   #ciclo-dental .orb{
     position:absolute;border-radius:50%;pointer-events:none;
     border:1px dashed rgba(255,212,0,.22);
-    animation:spin 46s linear infinite;
   }
 
   #ciclo-dental /* 형광펜 긋기 — 노란 띠 위에 글자를 얹음 */
@@ -577,9 +576,9 @@
 
   #ciclo-dental /* ══════ 브랜드 마크 ══════ */
   .brandmark{display:flex;flex-direction:column;align-items:center;}
-  #ciclo-dental .brandmark svg{width:112px;height:112px;}
+  #ciclo-dental .brandmark svg{width:clamp(76px,11vw,112px);height:auto;aspect-ratio:1}
   #ciclo-dental .brandmark .bn{
-    font-size:44px;font-weight:800;letter-spacing:.22em;color:#fff;
+    font-size:clamp(28px,4.4vw,44px);font-weight:800;letter-spacing:.22em;color:#fff;
     margin-top:26px;padding-left:.22em;
   }
   #ciclo-dental .brandmark .bt{
@@ -588,12 +587,6 @@
   }
 
 
-#ciclo-dental .kko-fab{position:fixed;right:20px;bottom:20px;z-index:9999;display:flex;align-items:center;gap:8px;
-  padding:13px 20px;border-radius:999px;background:#FEE500;color:#191600;text-decoration:none;
-  font:700 15px/1 'Pretendard',sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.28);transition:transform .18s ease}
-#ciclo-dental .kko-fab:hover{transform:translateY(-2px)}
-#ciclo-dental .kko-fab svg{width:20px;height:20px;flex:none}
-@media(max-width:640px){#ciclo-dental .kko-fab{right:14px;bottom:14px;padding:12px 16px;font-size:14px}}
 
 </style>
 <div id="ciclo-dental">
@@ -1239,25 +1232,17 @@
 
   <div class="ft">
     <div><b>CICLO</b> &nbsp;·&nbsp; 치과 전문 디지털 에이전시</div>
-    <div>kajam0623@gmail.com &nbsp;·&nbsp; 010-8817-2001</div>
+    <div><a href="mailto:kajam0623@naver.com">kajam0623@naver.com</a> &nbsp;·&nbsp; <a href="tel:010-8017-2001">010-8017-2001</a></div>
   </div>
 
 </div>
 
 
 
-<a class="kko-fab" href="https://open.kakao.com/o/s8oziiEi" target="_blank" rel="noopener" aria-label="카카오톡 문의">
-  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#3C1E1E" d="M12 3C6.9 3 2.8 6.2 2.8 10.2c0 2.5 1.7 4.7 4.2 6L6.2 20c-.1.3.2.5.5.4l4.1-2.4c.4 0 .8.1 1.2.1 5.1 0 9.2-3.2 9.2-7.2S17.1 3 12 3z"/></svg>
-  <span>카톡 문의</span>
-</a>
-<style>
-.kko-fab{position:fixed;right:20px;bottom:20px;z-index:9999;display:flex;align-items:center;gap:8px;
-  padding:13px 20px;border-radius:999px;background:#FEE500;color:#191600;text-decoration:none;
-  font:700 15px/1 'Pretendard',sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.28);transition:transform .18s ease}
-.kko-fab:hover{transform:translateY(-2px)}
-.kko-fab svg{width:20px;height:20px;flex:none}
-@media(max-width:640px){.kko-fab{right:14px;bottom:14px;padding:12px 16px;font-size:14px}}
-</style>
+<!-- 페이지 전용 카카오 버튼 제거 — 헤더 스니펫의 .kakao-float 와 겹쳐서
+     모바일 우하단에 같은 버튼이 두 개 떴다. 전역 버튼 하나만 남긴다. -->
+<!-- 스코프 없는 .kko-fab 스타일 한 벌 제거 — 위 #ciclo-dental .kko-fab 와 완전 중복이고,
+     스코프가 없어 다른 페이지까지 영향을 줄 수 있었다. -->
 
 </div>
 <script>
