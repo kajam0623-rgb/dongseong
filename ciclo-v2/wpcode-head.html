@@ -1,0 +1,34 @@
+<!-- ==========================================================================
+     CICLO — 폰트 로딩 (WPCode > HTML Snippet > Site Wide **Header**)
+     ==========================================================================
+     global.css v2 에서 @import 2개를 제거하고 이리로 옮겼다.
+
+     왜 옮겼나
+       @import 는 요청이 직렬로 쌓인다:
+         global.css 다운로드 → 파싱 → 폰트 CSS 2개 요청 → 파싱 → 폰트 파일 요청
+       왕복 3번이 끝나야 글자가 제 폰트로 그려진다. FCP·LCP 를 직접 깎는다.
+       head 의 <link> 는 HTML 파싱 시점에 바로 병렬로 나간다.
+
+     ★ 이 스니펫을 넣지 않으면 폰트가 적용되지 않는다. CSS 교체와 세트다.
+
+     Archivo 웨이트 변경: 500;700;800;900 → 700;800;900
+       - 500 은 CSS 어디에서도 쓰이지 않는데 로드되고 있었다 (파일 1개 낭비)
+       - 600 은 .overline 이 쓰는데 로드가 안 돼서 브라우저가 700 으로 대체하고
+         있었다. v2 에서 .overline 을 700 으로 명시했으므로 600 도 불필요하다.
+     ========================================================================== -->
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&display=swap">
+
+<!-- 더 밀어붙이려면(선택)
+     두 폰트를 자체 호스팅하면 서드파티 오리진 2개(DNS+TLS)가 사라져
+     PageSpeed 에서 확실한 추가 점수가 된다. Pretendard dynamic-subset 은
+     유니코드 범위별로 woff2 가 쪼개져 있어 파일 수가 많지만, 한글 사이트에서는
+     그 방식이 오히려 전송량이 작다. 미디어에 올리고 이 두 <link> 의 href 만
+     내부 경로로 바꾸면 된다. -->
