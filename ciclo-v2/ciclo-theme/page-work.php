@@ -43,7 +43,7 @@ get_header();
 
   <div class="res-block">
     <div class="res-head">
-      <h3>페이지 속도 — PageSpeed Insights 네 항목 100점</h3>
+      <h3>페이지 속도 — PageSpeed Insights 5개 항목 만점</h3>
       <span class="res-src">치과 ④ 모바일 측정 · 치과 ⑤ 데스크톱 측정</span>
     </div>
     <div class="psi-cards">
@@ -80,7 +80,7 @@ get_header();
         </div>
       </article>
     </div>
-    <p class="sec-caption">모바일 측정은 느린 4G · 저사양 기기 조건이라 데스크톱보다 낮게 나오는 것이 정상입니다. 네 항목 100점은 빠르다는 뜻이고, 검색 순위를 보장하는 값이 아닙니다.</p>
+    <p class="sec-caption">모바일 측정은 느린 4G · 저사양 기기 조건이라 데스크톱보다 낮게 나오는 것이 정상입니다. 5개 항목 만점은 빠르다는 뜻이고, 검색 순위를 보장하는 값이 아닙니다.</p>
   </div>
 </section>
 
@@ -145,7 +145,7 @@ get_header();
     <div class="fit"><span class="arrow">→</span><p>표본이 8곳입니다. 지역과 규모를 고르게 뽑은 게 아니라 소스를 열어볼 수 있었던 곳들입니다. 업계 전체를 대표한다고 말할 수 없습니다.</p></div>
     <div class="fit"><span class="arrow">→</span><p>이 점수는 검색 순위나 매출을 예측하지 않습니다. 검색엔진과 AI가 읽을 수 있는 상태인지만 잰 값입니다.</p></div>
     <div class="fit"><span class="arrow">→</span><p>디자인 평가가 아닙니다. 점수가 낮게 나온 곳들도 화면은 대부분 좋았습니다.</p></div>
-    <div class="fit"><span class="arrow">→</span><p>표본이 스무 곳을 넘으면 기준을 다시 맞추고 이 표도 갱신합니다.</p></div>
+    <div class="fit"><span class="arrow">→</span><p>표본이 20곳을 넘으면 기준을 다시 맞추고 이 표도 갱신합니다.</p></div>
     <div class="fit"><span class="arrow">→</span><p>위 실적 표의 세 곳도 표본입니다. 같은 작업을 해도 지역·경쟁 상황에 따라 다르게 나옵니다. 같은 결과를 약속드리지 않습니다.</p></div>
   </div>
 </div></section>

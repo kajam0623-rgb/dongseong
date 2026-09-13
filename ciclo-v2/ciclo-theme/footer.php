@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 ?>
 </main>
 <footer class="footer">
-  <img class="footer-mark" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="488" height="566" loading="lazy" decoding="async">
+  <img class="footer-mark" src="data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==" alt="" width="488" height="566" loading="lazy" decoding="async">
   <div class="inner">
     <div class="overline light">/CONTACT · LET'S TALK</div>
     <h2>무엇부터 손봐야 할지, <br>하루 안에 답을 드립니다</h2>
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
       <a href="/contact/">Contact</a>
     </nav>
     <div class="footer-bar">
-      <div class="footer-brand"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="CICLO" width="488" height="566" loading="lazy" decoding="async"><span class="nm">CICLO</span><span class="tg">CREATIVE IDEAS · CLICK LOGIC</span></div>
+      <div class="footer-brand"><img src="data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==" alt="CICLO" width="488" height="566" loading="lazy" decoding="async"><span class="nm">CICLO</span><span class="tg">CREATIVE IDEAS · CLICK LOGIC</span></div>
       <div class="footer-copy">© 2026 CICLO. All rights reserved.</div>
     </div>
   </div>

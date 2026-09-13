@@ -221,6 +221,146 @@
       setTimeout(onScroll, 1200);
     })();
 
+    /* ── 제목 줄 단위 등장 ─────────────────────────────────────────
+     * h2 를 통째로 띄우지 않고 줄마다 아래에서 밀어 올린다.
+     * 제목에는 이미 <br> 로 줄이 나뉘어 있다. 그 자리를 그대로 쓴다 —
+     * 글자를 쪼개지 않고 기존 줄바꿈을 감싸기만 하므로, 이 코드가 안 돌아도
+     * h2 는 원문 그대로 남고 읽는 데 아무 문제가 없다.
+     */
+    document.querySelectorAll('.sec-h2').forEach(function (h) {
+      if (h.querySelector('.ln')) return;
+      var html = h.innerHTML;
+      if (!/<br\s*\/?>/i.test(html)) return;          // 한 줄짜리는 둘 필요가 없다
+      var lines = html.split(/<br\s*\/?>/i);
+      h.innerHTML = lines.map(function (l, i) {
+        return '<span class="ln" style="--ld:' + (i * 90) + 'ms"><i>' + l + '</i></span>';
+      }).join('');
+    });
+
+    /* ── 숫자 카운트업 ─────────────────────────────────────────────
+     * 데이터를 파는 페이지에서 숫자가 올라가는 건 장식이 아니라 읽는 순서를
+     * 만든다. 정수만 올린다 — "3/3", "−61", "1.0초" 같은 건 손대지 않는다.
+     * 자릿수가 늘면 폭이 변해 옆 글자가 밀리므로, 최종 자릿수만큼 min-width 를
+     * 미리 잡고 tabular-nums 로 자폭을 고정한다. 그래서 CLS 가 0 으로 남는다.
+     */
+    (function () {
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var SEL = '.ev-num,.ev-val,.hp-i b,.res-big b,.psi-ring,.dx-bar b,.ev-dot b';
+      var jobs = [];
+
+      document.querySelectorAll(SEL).forEach(function (el) {
+        // 숫자 노드만 고른다. 뒤에 붙은 단위(<i>점</i>)는 건드리지 않는다.
+        var node = null;
+        for (var i = 0; i < el.childNodes.length; i++) {
+          var c = el.childNodes[i];
+          if (c.nodeType === 3 && /^\s*\d+\s*$/.test(c.textContent)) { node = c; break; }
+        }
+        if (!node) return;
+        var target = parseInt(node.textContent, 10);
+        if (!(target > 0)) return;
+
+        var span = document.createElement('span');
+        span.className = 'cnt';
+        span.style.setProperty('--dg', String(target).length);
+        span.textContent = '0';
+        node.parentNode.replaceChild(span, node);
+        jobs.push({ el: el, span: span, to: target, done: false });
+      });
+
+      if (!jobs.length) return;
+
+      var EASE = function (t) { return 1 - Math.pow(1 - t, 3); };   // 감속
+
+      function run(j) {
+        if (j.done) return;
+        j.done = true;
+        var t0 = 0, DUR = 900;
+        function step(ts) {
+          if (!t0) t0 = ts;
+          var k = Math.min(1, (ts - t0) / DUR);
+          j.span.textContent = Math.round(EASE(k) * j.to);
+          if (k < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      /* 무엇을 보고 발화시키나 — 숫자 자신이 아니라 그 숫자가 든 섹션이다.
+       * .section 에는 content-visibility:auto 가 걸려 있어서, 화면 밖이면
+       * 안쪽 요소의 rect 가 전부 0 으로 나온다. 숫자 rect 로 판정했더니
+       * bottom>0 을 못 넘겨 증거 밴드 숫자가 전부 0 에 멈춰 있었다.
+       * 섹션 상자는 contain-intrinsic-size 로 늘 레이아웃되므로 안전하다.
+       * 위 등장 효과가 같은 이유로 섹션 단위인 것과 같은 판단이다. */
+      jobs.forEach(function (j) { j.host = j.el.closest('[data-mo]'); });
+
+      function sweep() {
+        var vh = window.innerHeight || 800, live = 0;
+        jobs.forEach(function (j) {
+          if (j.done) return;
+          live++;
+          // 히어로처럼 섹션 밖에 있는 숫자는 첫 화면이라 바로 올린다
+          if (!j.host) { run(j); return; }
+          var r = j.host.getBoundingClientRect();
+          if (r.top < vh * 0.9 && r.bottom > 0) run(j);
+        });
+        if (!live) off();
+      }
+
+      var tick = false;
+      function onScroll() {
+        if (tick) return;
+        tick = true;
+        requestAnimationFrame(function () { tick = false; try { sweep(); } catch (e) { off(); } });
+      }
+      function off() {
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onScroll);
+      }
+
+      sweep();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      window.addEventListener('load', onScroll);
+      // 지연 로드가 레이아웃을 바꿨을 수 있다. 한 번 더 훑는다.
+      setTimeout(onScroll, 1200);
+    })();
+
+    /* ── 히어로 마크 시차 · 내비 스크롤 반응 ───────────────────────── */
+    (function () {
+      var root = document.documentElement;
+
+      // 내비 — 히어로를 지나면 그림자가 짙어지고 아주 조금 작아진다
+      var t = false;
+      function nav() {
+        if (t) return;
+        t = true;
+        requestAnimationFrame(function () {
+          t = false;
+          root.classList.toggle('scrolled', (window.scrollY || 0) > 80);
+        });
+      }
+      nav();
+      window.addEventListener('scroll', nav, { passive: true });
+
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (window.matchMedia && !matchMedia('(pointer:fine)').matches) return;   // 터치 기기 제외
+
+      var mark = document.querySelector('.hero-mark');
+      if (!mark) return;
+      var f = false;
+      window.addEventListener('mousemove', function (e) {
+        if (f) return;
+        f = true;
+        requestAnimationFrame(function () {
+          f = false;
+          var x = (e.clientX / window.innerWidth - .5) * 24;    // ±12px
+          var y = (e.clientY / window.innerHeight - .5) * 24;
+          mark.style.setProperty('--mx', x.toFixed(1) + 'px');
+          mark.style.setProperty('--my', y.toFixed(1) + 'px');
+        });
+      }, { passive: true });
+    })();
+
     // 구버전 잔재 정리 — 이전 스니펫이 캐시에 남아 .reveal 을 붙였을 경우 대비.
     // global.css v2 가 .reveal 을 무해화하지만 인라인 transitionDelay 는 CSS 로 못 지운다.
     document.querySelectorAll('.reveal').forEach(function (el) {

@@ -1005,3 +1005,58 @@ html.mo [data-mo].mo-in .mo-i .ev-dot:nth-of-type(7){transition-delay:.70s}
 @media(prefers-reduced-motion:reduce){
   .hb-scroll span,.marquee-track{animation:none}
 }
+
+
+/* =========================================================
+   모션 2차 — 제목 줄 등장 · 숫자 카운트업 · 마크 시차 · 내비 · 버튼
+   전부 transform / opacity / clip-path / background-size 만 쓴다.
+   레이아웃을 건드리지 않으므로 CLS 는 0 그대로다.
+   ========================================================= */
+
+/* ── A. 제목 줄 단위 마스크 등장 ──
+   h2 는 블록째 페이드하지 않고 줄마다 밀어 올린다. 두 효과가 겹치면
+   글자가 두 번 움직여 보이므로 블록 페이드를 끈다. */
+html.mo .mo-i.sec-h2,
+html.mo .mo-i .sec-h2{opacity:1;transform:none}
+.sec-h2 .ln{display:block;overflow:hidden;
+  /* 한글 ㅇ·ㅍ 과 괄호는 기준선 아래로 내려간다. 잘리지 않게 아래를 넓히고
+     같은 크기의 음수 마진으로 줄 간격을 원래대로 되돌린다. */
+  padding-bottom:.12em;margin-bottom:-.12em}
+.sec-h2 .ln>i{display:block;font-style:normal}
+html.mo .sec-h2 .ln>i{transform:translateY(104%)}
+html.mo [data-mo].mo-in .sec-h2 .ln>i{transform:none;
+  transition:transform .86s cubic-bezier(.22,1,.36,1) var(--ld,0ms)}
+html.mo [data-mo].mo-now .sec-h2 .ln>i{transition:none!important}
+
+/* ── B. 숫자 카운트업 ──
+   자릿수가 늘면 폭이 변한다. 최종 자릿수만큼 미리 자리를 잡아 둔다. */
+.cnt{display:inline-block;font-variant-numeric:tabular-nums;
+  min-width:calc(var(--dg,2)*1ch)}
+.ev-num .cnt,.psi-ring .cnt{text-align:center}
+
+/* ── C. 히어로 마크 시차 ── */
+.hero-mark{transform:translateY(-50%) translate3d(var(--mx,0px),var(--my,0px),0);
+  transition:transform .9s cubic-bezier(.22,1,.36,1)}
+
+/* ── D. 내비 스크롤 반응 ──
+   padding 으로 줄이면 고정 요소라도 안쪽이 흔들린다. transform 으로만. */
+.nav{transform-origin:50% 0;
+  transition:transform .42s cubic-bezier(.22,1,.36,1),box-shadow .42s cubic-bezier(.22,1,.36,1)}
+html.scrolled .nav{transform:scale(.965);box-shadow:0 6px 20px rgba(17,30,108,.34)}
+
+/* ── E. 버튼 채움 ──
+   가상요소 대신 background-size. z-index 다툼이 없고 단색이라
+   그라데이션으로 보이지 않는다. */
+.btn-primary{background-image:linear-gradient(var(--pt2),var(--pt2));
+  background-repeat:no-repeat;background-size:0% 100%;
+  transition:background-size .44s cubic-bezier(.22,1,.36,1),color .15s cubic-bezier(.4,0,.2,1)}
+.btn-primary:hover{background-size:100% 100%}
+.btn-white{background-image:linear-gradient(#E8E4D8,#E8E4D8);
+  background-repeat:no-repeat;background-size:0% 100%;
+  transition:background-size .44s cubic-bezier(.22,1,.36,1),color .15s cubic-bezier(.4,0,.2,1)}
+.btn-white:hover{background-size:100% 100%}
+
+@media(prefers-reduced-motion:reduce){
+  .sec-h2 .ln>i{transform:none!important}
+  .hero-mark{transition:none}
+}
