@@ -1,0 +1,64 @@
+<?php
+/**
+ * 사이트 헤더 — 고정 네비 · 사이드바 · 카카오 플로팅 버튼
+ *
+ * 마크업은 pages/CICLO_Header.html 을 그대로 옮긴 것입니다.
+ * 브라우저 실측으로 검증된 마크업이라 손대지 않았습니다.
+ * 현재 페이지 표시(aria-current)는 assets/js/ciclo-effects.js 가 붙입니다.
+ */
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+<meta charset="<?php bloginfo( 'charset' ); ?>">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<?php wp_head(); ?>
+</head>
+<body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
+<a class="skip" href="#content">본문 바로가기</a>
+<div class="nav-fixed"><nav class="nav" aria-label="주 메뉴">
+  <a class="nav-logo" href="/"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="CICLO" width="488" height="566" fetchpriority="high" decoding="async"><span>CICLO</span></a>
+  <div class="nav-links">
+    <a href="/#services">Services</a>
+    <a href="/work/">Work</a>
+    <a href="/column/">칼럼</a>
+    <a href="/about/">About</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <a class="nav-cta" href="/contact/">문의하기</a>
+  <button class="nav-burger" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="ciclo-sidebar"><span></span><span></span></button>
+</nav></div>
+<div class="scrim" hidden></div>
+<aside class="sidebar" id="ciclo-sidebar" role="dialog" aria-modal="true" aria-label="사이트 메뉴">
+  <div class="sidebar-top">
+    <div class="sidebar-brand"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="488" height="566" loading="lazy" decoding="async"><span>CICLO</span></div>
+    <button class="sidebar-close" type="button" aria-label="메뉴 닫기">×</button>
+  </div>
+  <div class="overline light" style="margin-top:36px">/MENU</div>
+  <div class="sidebar-menu">
+    <a href="/"><span class="lab">Home</span><span class="ko">홈</span></a>
+  </div>
+  <div class="sidebar-group">/SERVICES</div>
+  <div class="sidebar-menu">
+    <a href="/website-design/"><span class="lab lab-sub">Website Design</span><span class="ko">웹사이트 디자인</span></a>
+    <a href="/geo/"><span class="lab lab-sub">GEO</span><span class="ko">생성형 검색 최적화</span></a>
+    <a href="/blog-content/"><span class="lab lab-sub">Blog Content</span><span class="ko">블로그 콘텐츠</span></a>
+    <a href="/digital-marketing/"><span class="lab lab-sub">Digital Marketing</span><span class="ko">디지털 마케팅</span></a>
+  </div>
+  <div class="sidebar-group">/PAGES</div>
+  <div class="sidebar-menu">
+    <a href="/work/"><span class="lab">Work</span><span class="ko">작업 사례</span></a>
+    <a href="/column/"><span class="lab">칼럼</span><span class="ko">네이버 칼럼</span></a>
+    <a href="/about/"><span class="lab">About</span><span class="ko">회사 소개</span></a>
+    <a href="/contact/"><span class="lab">Contact</span><span class="ko">문의</span></a>
+  </div>
+  <div class="sidebar-foot">
+    <a class="kakao-btn" href="https://open.kakao.com/o/s8oziiEi" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 3C6.9 3 3 6.2 3 10.1c0 2.5 1.6 4.7 4.1 6l-.9 3.4c-.1.3.3.6.6.4l4-2.7c.4 0 .8.1 1.2.1 5.1 0 9-3.2 9-7.2S17.1 3 12 3Z" fill="#191919"/></svg>카카오톡 문의</a>
+    <div class="sidebar-contact"><a href="mailto:kajam0623@naver.com">kajam0623@naver.com</a><br><a href="tel:010-8017-2001">010-8017-2001</a></div>
+    <div class="sidebar-tag">CREATIVE IDEAS · CLICK LOGIC</div>
+  </div>
+</aside>
+<a class="kakao-float" href="https://open.kakao.com/o/s8oziiEi" target="_blank" rel="noopener" title="카카오톡 문의"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.9 3 3 6.2 3 10.1c0 2.5 1.6 4.7 4.1 6l-.9 3.4c-.1.3.3.6.6.4l4-2.7c.4 0 .8.1 1.2.1 5.1 0 9-3.2 9-7.2S17.1 3 12 3Z" fill="#191919"/></svg>카톡 문의</a>
+<main id="content" class="site-main">

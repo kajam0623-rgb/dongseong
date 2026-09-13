@@ -1,0 +1,59 @@
+<?php
+/**
+ * 페이지 /digital-marketing/
+ *
+ * 마크업은 pages/Digital_Marketing.html 를 그대로 옮긴 것입니다.
+ * 브라우저 실측(1440 / 768 / 390 / 360px)으로 검증된 마크업이라 손대지
+ * 않았습니다. 내용을 고치려면 이 파일을 고치면 됩니다.
+ */
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+get_header();
+?>
+<div class="ciclo-page" id="ciclo-digital-marketing">
+<header class="page-hero">
+  <div class="overline">/SERVICE — 04</div>
+  <h1 class="display">Digital <br><span class="blue">Marketing</span></h1>
+  <p class="lead">감이 아니라 데이터로 운영합니다. 씨클로는 네이버·구글·메타 광고와 SNS 채널을 통합 운영하며, 클릭이 실제 예약과 상담으로 이어지게 만듭니다.</p>
+  <div class="chips"><span class="chip">퍼포먼스 광고</span><span class="chip">네이버 · 구글 · 메타</span><span class="chip">SNS 운영</span><span class="chip">데이터 리포트</span></div>
+</header>
+<section class="section" style="padding-top:0">
+  <div class="overline">/WHAT'S INCLUDED</div>
+  <h2 class="sec-h2">광고비를 늘리기 전에, <br>여섯 가지를 먼저 봅니다</h2>
+  <p class="sec-lead">검색 구조가 잡히지 않은 상태에서 광고비부터 올리면, 클릭은 늘어도 그 클릭이 도착하는 페이지가 여전히 읽히지 않습니다.</p>
+  <div class="grid-3" style="margin-top:clamp(32px,4vw,48px)">
+    <div class="card"><div class="num">01</div><h3>광고 전략 설계</h3><p>타깃·지역·예산에 맞춰 채널별 광고 구조를 설계합니다.</p></div>
+    <div class="card"><div class="num">02</div><h3>검색 광고</h3><p>네이버·구글 검색 광고로 지금 찾는 고객을 데려옵니다.</p></div>
+    <div class="card"><div class="num">03</div><h3>SNS 광고 · 운영</h3><p>메타·인스타그램 광고와 채널 운영으로 브랜드 접점을 넓힙니다.</p></div>
+    <div class="card"><div class="num">04</div><h3>랜딩 최적화</h3><p>광고와 연결되는 페이지를 전환 중심으로 개선합니다.</p></div>
+    <div class="card"><div class="num">05</div><h3>전환 추적</h3><p>전화·예약·상담 신청까지 전환 데이터를 정확히 측정합니다.</p></div>
+    <div class="card"><div class="num">06</div><h3>월간 리포트</h3><p>성과와 다음 달 개선 방향을 리포트로 투명하게 공유합니다.</p></div>
+  </div>
+</section>
+<section class="section panel"><div class="wrap">
+  <div class="overline">/HOW IT WORKS</div>
+  <h2 class="sec-h2">설계부터 리포트까지, <br>네 단계로 운영합니다</h2>
+  <div class="grid-4">
+    <div class="step"><div class="num">01</div><div class="t">진단 · 목표</div><p>현재 광고 성과와 목표 지표를 정의합니다.</p></div>
+    <div class="step"><div class="num">02</div><div class="t">세팅 · 론칭</div><p>추적 설치 후 캠페인을 론칭합니다.</p></div>
+    <div class="step"><div class="num">03</div><div class="t">운영 · 최적화</div><p>데이터를 보며 소재와 입찰을 조정합니다.</p></div>
+    <div class="step"><div class="num">04</div><div class="t">리포트 · 확장</div><p>검증된 캠페인을 중심으로 확장합니다.</p></div>
+  </div>
+</div></section>
+<section class="section">
+  <div class="overline">/FOR YOU</div>
+  <h2 class="sec-h2">클릭은 나오는데 <br>문의가 안 온다면</h2>
+  <div class="fit-list">
+    <div class="fit"><span class="arrow">→</span><p>광고비는 쓰는데 문의가 늘지 않는 경우</p></div>
+    <div class="fit"><span class="arrow">→</span><p>어떤 채널이 효과 있는지 데이터로 확인하고 싶은 경우</p></div>
+    <div class="fit"><span class="arrow">→</span><p>대행사 리포트가 불투명하다고 느꼈던 경우</p></div>
+    <div class="fit"><span class="arrow">→</span><p>개원·오픈 초기, 빠르게 인지도를 만들어야 하는 경우</p></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="overline dim">/OTHER SERVICES</div>
+  <div class="other-pills"><a class="other-pill" href="/website-design/">Website Design →</a><a class="other-pill" href="/geo/">GEO →</a><a class="other-pill" href="/blog-content/">Blog Content →</a></div>
+</section>
+</div>
+<?php
+get_footer();

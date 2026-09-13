@@ -1,0 +1,428 @@
+<?php
+/**
+ * 홈 (front-page)
+ *
+ * 마크업은 pages/Home.html 를 그대로 옮긴 것입니다.
+ * 브라우저 실측(1440 / 768 / 390 / 360px)으로 검증된 마크업이라 손대지
+ * 않았습니다. 내용을 고치려면 이 파일을 고치면 됩니다.
+ */
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+get_header();
+?>
+<div class="ciclo-page" id="ciclo-home">
+<header class="hero">
+  <div class="hero-mark" aria-hidden="true"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="488" height="566" fetchpriority="low" decoding="async"></div>
+  <div class="overline dim">/DIGITAL AGENCY — SEOUL</div>
+  <h1 class="display hero-name">CICLO<span class="blue">.</span></h1>
+  <p class="lead hero-claim"><b>GEO 웹사이트, 랜딩페이지 제작</b><br>검색엔진과 AI가 읽을 수 있는 구조로 만듭니다. <br>병원·법률·전문직 브랜드를 맡습니다.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="/contact/">프로젝트 문의 →</a>
+    <a class="btn btn-ghost" href="/work/">작업 보기</a>
+  </div>
+  <a class="scroll-badge" href="#services" title="스크롤">
+    <svg viewBox="0 0 120 120"><defs><path id="ring" d="M 60,60 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0"/></defs><text style="font-family:'Pretendard Variable',Pretendard,sans-serif;font-weight:800;font-size:11px;fill:currentColor"><textPath href="#ring" textLength="286" lengthAdjust="spacing">GEO · WEBSITE · LANDING PAGE ·</textPath></text></svg>
+    <span class="down">↓</span>
+  </a>
+  <div class="corner l">©2026</div>
+</header>
+<div class="marquee"><div class="marquee-track"><div><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span></div><div><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span></div></div></div>
+<section class="section navy evidence" id="evidence"><div class="wrap">
+  <div class="overline light">/FIELD RESEARCH · 치과 홈페이지 실태조사</div>
+  <h2 class="sec-h2" style="color:#fff">원장님 이력은 잘 적혀 있었습니다. <br>기계가 읽는 자리에는 없었습니다</h2>
+  <p class="sec-lead">치과 홈페이지 여덟 곳을 열 항목·쉰 개 체크포인트로 채점했습니다. 가장 높은 칸과 가장 낮은 칸이 같은 정보를 다룹니다.</p>
+
+  <div class="ev-grid">
+    <div>
+      <div class="ev-figures">
+        <div class="ev-fig">
+          <span class="ev-num">81<i>점</i></span>
+          <span class="ev-cap">사람이 보는 화면</span>
+        </div>
+        <div class="ev-drop" aria-hidden="true">
+          <span class="ev-drop-v">−61</span>
+          <svg width="46" height="10" viewBox="0 0 46 10" fill="none" role="presentation">
+            <path d="M0 5h38" stroke="rgba(255,255,255,.32)" stroke-width="1.5"/>
+            <path d="M33 2l6 3-6 3" stroke="rgba(255,255,255,.32)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="ev-fig ev-fig-low">
+          <span class="ev-num">20<i>점</i></span>
+          <span class="ev-cap">기계가 읽는 자리</span>
+        </div>
+      </div>
+
+      <p class="ev-note"><b>같은 원장님 이력입니다.</b> 전문의 자격도, 수련 병원도, 학회 경력도 홈페이지에는 다 적혀 있었습니다. 다만 검색엔진과 AI가 알아볼 형식으로는 옮겨져 있지 않았습니다. 가진 게 없어서 생긴 격차가 아니라, 가진 것이 전달되지 않아서 생긴 격차입니다.</p>
+
+      <div class="ev-check">
+        <p class="ev-check-h">30초 자가 점검</p>
+        <p class="ev-check-s">페이지 소스 보기 <i>→</i> Ctrl+F <i>→</i> <code>ld+json</code></p>
+        <p class="ev-check-p">아무것도 안 나오면 0점입니다. 병원 이름과 주소만 나오면 20점 근처, 조사 표본의 중앙값 자리입니다.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="ev-chart-h">
+        <h3>열 항목 평균 점수</h3>
+        <span>여덟 곳 평균 · 항목당 100점</span>
+      </div>
+      <div class="ev-chart">
+        <div class="ev-lines" aria-hidden="true"><i style="left:0%"></i><i style="left:20%"></i><i style="left:40%"></i><i style="left:60%"></i><i style="left:80%"></i><i style="left:100%"></i></div>
+        <div class="ev-row"><div class="ev-lab">의료진 신뢰정보</div><div class="ev-track"><div class="ev-bar" style="--w:81%"></div></div><div class="ev-val">81</div></div>
+        <div class="ev-row"><div class="ev-lab">지역 검색</div><div class="ev-track"><div class="ev-bar" style="--w:73%"></div></div><div class="ev-val">73</div></div>
+        <div class="ev-row"><div class="ev-lab">콘텐츠 품질</div><div class="ev-track"><div class="ev-bar" style="--w:73%"></div></div><div class="ev-val">73</div></div>
+        <div class="ev-row"><div class="ev-lab">콘텐츠 확장성</div><div class="ev-track"><div class="ev-bar" style="--w:63%"></div></div><div class="ev-val">63</div></div>
+        <div class="ev-row"><div class="ev-lab">사이트 구조</div><div class="ev-track"><div class="ev-bar" style="--w:60%"></div></div><div class="ev-val">60</div></div>
+        <div class="ev-row"><div class="ev-lab">페이지 기본 세팅</div><div class="ev-track"><div class="ev-bar" style="--w:58%"></div></div><div class="ev-val">58</div></div>
+        <div class="ev-row"><div class="ev-lab">도메인 위생</div><div class="ev-track"><div class="ev-bar" style="--w:51%"></div></div><div class="ev-val">51</div></div>
+        <div class="ev-row"><div class="ev-lab">기술·성능</div><div class="ev-track"><div class="ev-bar" style="--w:47%"></div></div><div class="ev-val">47</div></div>
+        <div class="ev-row ev-row-key"><div class="ev-lab">AI 검색 대응</div><div class="ev-track"><div class="ev-bar" style="--w:35%"></div></div><div class="ev-val">35</div></div>
+        <div class="ev-row ev-row-key"><div class="ev-lab">기계용 정보 표기</div><div class="ev-track"><div class="ev-bar" style="--w:20%"></div></div><div class="ev-val">20</div></div>
+        <div class="ev-axis" aria-hidden="true"><div class="ev-scale"><span style="left:0%">0</span><span style="left:20%">20</span><span style="left:40%">40</span><span style="left:60%">60</span><span style="left:80%">80</span><span style="left:100%">100</span></div></div>
+      </div>
+      <p class="ev-foot"><b>노란 두 항목</b>이 AI 검색 노출을 결정합니다. 나머지 여덟 항목을 올려도 이 두 칸이 비어 있으면 AI 답변에는 잡히지 않습니다.</p>
+    </div>
+  </div>
+
+  <div class="ev-strip">
+    <div>
+      <p class="ev-dots-h"><b>기계용 정보 표기, 일곱 곳 개별 점수</b> — 12 · 15 · 15 · 20 · 20 · 28 · 30</p>
+      <div class="ev-plot">
+        <div class="ev-thr" aria-hidden="true"><span>30점</span></div>
+        <div class="ev-dot" style="--x:12%;--y:10px"><b>12</b></div>
+        <div class="ev-dot" style="--x:15%;--y:28px"><b>15</b></div>
+        <div class="ev-dot" style="--x:15%;--y:10px"></div>
+        <div class="ev-dot" style="--x:20%;--y:28px"><b>20</b></div>
+        <div class="ev-dot" style="--x:20%;--y:10px"></div>
+        <div class="ev-dot" style="--x:28%;--y:10px"><b>28</b></div>
+        <div class="ev-dot" style="--x:30%;--y:28px"><b>30</b></div>
+      </div>
+      <div class="ev-plot-axis" aria-hidden="true"><span style="left:0%">0</span><span style="left:20%">20</span><span style="left:40%">40</span><span style="left:60%">60</span><span style="left:80%">80</span><span style="left:100%">100</span></div>
+      <p class="ev-dots-foot">중앙값 20점, <b>30점을 넘긴 곳은 없습니다.</b> SEO 종합에서 84점으로 가장 높았던 곳도 이 항목만은 28점이었습니다. 잘 만든 집과 그렇지 않은 집이 갈리는 항목이 아니라, 아직 아무도 손대지 않은 항목입니다.</p>
+    </div>
+    <div>
+      <p class="ev-acts-h">점수만 말하고 근거를 숨기지 않습니다.</p>
+      <p class="ev-acts-p">채점 기준 쉰 개와 여덟 곳 결과를 그대로 열어 뒀습니다. 다른 업체 견적서를 받으셨을 때 항목을 짚어 보실 수 있습니다.</p>
+      <div class="ev-acts">
+        <a class="btn btn-white" href="https://dental-seo-report.vercel.app/" target="_blank" rel="noopener">채점 기준·8곳 결과 보기 →</a>
+        <a class="btn btn-outline-light" href="/contact/">우리 병원 점수 받기 →</a>
+      </div>
+      <p class="ev-src">공개된 HTML 소스만 확인했습니다. 병원명은 A–H로 익명 처리했으며, 이 점수는 검색 순위나 매출을 예측하지 않습니다. 표본이 스무 곳을 넘으면 기준을 다시 맞추고 갱신합니다.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="section" id="services">
+  <div class="overline">/SERVICES · WHAT WE DO</div>
+  <h2 class="sec-h2">예쁘게 만드는 일과 검색되게 만드는 일을, <br>따로 맡기지 않으셔도 됩니다</h2>
+  <p class="sec-lead">나눠 맡기면 각자 자기 영역만 최적화합니다. 디자인 업체는 화면을, 광고 업체는 클릭 단가를 봅니다. 그 사이에서 검색엔진과 AI가 이 페이지를 읽을 수 있는지는 아무도 보지 않습니다.</p>
+  <div class="svc-list">
+    <a class="svc-row" href="/website-design/">
+      <div class="num">01</div>
+      <h3>Website Design</h3>
+      <div><p>브랜드의 신뢰를 첫 화면에서 증명하는 웹사이트. 기획·디자인·구축까지 반응형으로 완성합니다.</p><div class="chips"><span class="chip">반응형 웹</span><span class="chip">브랜드 사이트</span><span class="chip">랜딩 페이지</span><span class="chip">워드프레스</span></div><div class="more">자세히 보기 →</div></div>
+    </a>
+    <a class="svc-row" href="/geo/">
+      <div class="num">02</div>
+      <h3>GEO</h3>
+      <div><p>ChatGPT·구글이 원장님을 먼저 추천하도록. 생성형 검색 시대의 노출 전략을 설계합니다.</p><div class="chips"><span class="chip">생성형 검색 최적화</span><span class="chip">SEO</span><span class="chip">검색 노출</span></div><div class="more">자세히 보기 →</div></div>
+    </a>
+    <a class="svc-row" href="/blog-content/">
+      <div class="num">03</div>
+      <h3>Blog Content</h3>
+      <div><p>전문성이 보이는 콘텐츠가 문의를 만듭니다. 검색 의도에 맞춘 블로그를 기획하고 발행합니다.</p><div class="chips"><span class="chip">콘텐츠 기획</span><span class="chip">네이버 블로그</span><span class="chip">칼럼 제작</span></div><div class="more">자세히 보기 →</div></div>
+    </a>
+    <a class="svc-row" href="/digital-marketing/">
+      <div class="num">04</div>
+      <h3>Digital Marketing</h3>
+      <div><p>데이터로 검증하며 키우는 광고 운영. 클릭이 실제 예약과 상담으로 이어지게 만듭니다.</p><div class="chips"><span class="chip">퍼포먼스 광고</span><span class="chip">SNS 운영</span><span class="chip">데이터 리포트</span></div><div class="more">자세히 보기 →</div></div>
+    </a>
+  </div>
+</section>
+<section class="section" id="work">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+    <div><div class="overline">/WORK · SELECTED WORK</div><h2 class="sec-h2">치과 여덟 곳을 직접 채점하고, <br>고칠 자리를 숫자로 짚었습니다</h2></div>
+    <a href="/work/" style="font-size:14px;font-weight:700">전체 작업 보기 →</a>
+  </div>
+  <p class="sec-lead">여덟 곳의 공개된 HTML 소스만 열어 열 항목으로 채점했습니다. 검색 점수는 39점에서 84점까지 벌어졌는데, AI 답변 점수는 31점에서 56점 사이에 몰려 있었습니다.</p>
+  <a class="sec-link" href="https://dental-seo-report.vercel.app/" target="_blank" rel="noopener">채점 기준 쉰 개 전부 보기 →</a>
+
+  <div class="dx-grid">
+    <article class="dx">
+      <div class="dx-top"><span class="dx-id">치과 H</span><span class="dx-type">진료별 분리</span></div>
+      <div class="dx-bars">
+        <div class="dx-bar"><span class="dx-lab">검색</span><div class="dx-track"><i style="--w:84%"></i></div><b>84</b></div>
+        <div class="dx-bar dx-geo"><span class="dx-lab">AI 답변</span><div class="dx-track"><i style="--w:56%"></i></div><b>56</b></div>
+      </div>
+      <p class="dx-note">표본에서 검색 점수가 가장 높았습니다. 사이트 구조도 91점. <b>그런데 기계용 정보 표기만은 28점</b>으로, 나머지 일곱 곳과 같은 구간에 있었습니다.</p>
+      <div class="dx-meta"><span>구조화 28</span><span>사이트 구조 91</span><span>격차 28</span></div>
+    </article>
+
+    <article class="dx">
+      <div class="dx-top"><span class="dx-id">치과 G</span><span class="dx-type">진료별 분리</span></div>
+      <div class="dx-bars">
+        <div class="dx-bar"><span class="dx-lab">검색</span><div class="dx-track"><i style="--w:72%"></i></div><b>72</b></div>
+        <div class="dx-bar dx-geo"><span class="dx-lab">AI 답변</span><div class="dx-track"><i style="--w:42%"></i></div><b>42</b></div>
+      </div>
+      <p class="dx-note">사이트 구조 90점으로 진료과목이 잘 나뉘어 있는데, <b>기계용 정보 표기는 12점으로 표본 최저</b>였습니다. 잘 만든 것과 읽히는 것이 별개라는 걸 가장 분명하게 보여준 곳입니다.</p>
+      <div class="dx-meta"><span>구조화 12</span><span>사이트 구조 90</span><span>격차 30</span></div>
+    </article>
+
+    <article class="dx">
+      <div class="dx-top"><span class="dx-id">치과 F</span><span class="dx-type">진료별 분리</span></div>
+      <div class="dx-bars">
+        <div class="dx-bar"><span class="dx-lab">검색</span><div class="dx-track"><i style="--w:64%"></i></div><b>64</b></div>
+        <div class="dx-bar dx-geo"><span class="dx-lab">AI 답변</span><div class="dx-track"><i style="--w:35%"></i></div><b>35</b></div>
+      </div>
+      <p class="dx-note">진료과목이 주소로 나뉘어 있고 사이트 구조 84점. 검색은 64점인데 AI 답변 기준은 35점이었습니다. 페이지는 나눴지만 그 안이 기계용으로 정리되지 않은 상태입니다.</p>
+      <div class="dx-meta"><span>구조화 20</span><span>사이트 구조 84</span><span>격차 29</span></div>
+    </article>
+
+    <article class="dx">
+      <div class="dx-top"><span class="dx-id">치과 E</span><span class="dx-type">일부 분리</span></div>
+      <div class="dx-bars">
+        <div class="dx-bar"><span class="dx-lab">검색</span><div class="dx-track"><i style="--w:63%"></i></div><b>63</b></div>
+        <div class="dx-bar dx-geo"><span class="dx-lab">AI 답변</span><div class="dx-track"><i style="--w:32%"></i></div><b>32</b></div>
+      </div>
+      <p class="dx-note">격차 31점으로 표본에서 가장 컸습니다. <b>기계용 정보 표기만 15점에서 78점으로 올린 뒤 AI 종합이 32점에서 46점이 됐습니다.</b> 다른 항목은 거의 건드리지 않았습니다.</p>
+      <div class="dx-meta"><span>구조화 15 → 78</span><span class="up">AI 32 → 46</span><span>격차 31</span></div>
+    </article>
+
+    <article class="dx">
+      <div class="dx-top"><span class="dx-id">치과 D</span><span class="dx-type">원페이지</span></div>
+      <div class="dx-bars">
+        <div class="dx-bar"><span class="dx-lab">검색</span><div class="dx-track"><i style="--w:60%"></i></div><b>60</b></div>
+        <div class="dx-bar dx-geo"><span class="dx-lab">AI 답변</span><div class="dx-track"><i style="--w:39%"></i></div><b>39</b></div>
+      </div>
+      <p class="dx-note">원페이지 구성 중 검색 점수가 가장 높았습니다. 기계용 정보 표기 30점도 표본 최고였지만, <b>그래도 절반을 넘지 못했습니다.</b></p>
+      <div class="dx-meta"><span>구조화 30</span><span>사이트 구조 39</span><span>격차 21</span></div>
+    </article>
+
+    <article class="dx">
+      <div class="dx-top"><span class="dx-id">치과 B</span><span class="dx-type">원페이지</span></div>
+      <div class="dx-bars">
+        <div class="dx-bar"><span class="dx-lab">검색</span><div class="dx-track"><i style="--w:39%"></i></div><b>39</b></div>
+        <div class="dx-bar dx-geo"><span class="dx-lab">AI 답변</span><div class="dx-track"><i style="--w:37%"></i></div><b>37</b></div>
+      </div>
+      <p class="dx-note">격차가 2점으로 가장 작았습니다. <b>AI 대응이 좋아서가 아니라 검색도 39점으로 같이 낮았기 때문입니다.</b> 격차가 작다고 좋은 게 아닙니다.</p>
+      <div class="dx-meta"><span>구조화 15</span><span>사이트 구조 28</span><span>격차 2</span></div>
+    </article>
+  </div>
+  <p class="sec-caption">2026년 8월 측정 · 표본 8곳 · 병원명은 A–H로 익명 처리했습니다 · 이 점수는 검색 순위나 매출을 예측하지 않습니다</p>
+
+  <div class="work-grid" style="margin-top:clamp(48px,5vw,72px)">
+    <a class="work-feature" href="/dental/">
+      <div class="wf-copy">
+        <div class="wf-ov">/Featured · Dental</div>
+        <h3>환자분이 검색으로 찾아오는<br><em>치과 홈페이지</em>를 만듭니다</h3>
+        <p class="wf-p">진료과목마다 페이지를 나누고, 환자분이 실제로 던지는 질문을 제목으로 씁니다. 검색엔진과 AI가 읽을 수 있는 구조까지 제작 단계에서 함께 설계합니다.</p>
+        <div class="wf-tags"><span>워드프레스 제작</span><span>SEO · GEO</span><span>콘텐츠 구조 설계</span></div>
+        <div class="wf-go">자세히 보기 <i>→</i></div>
+      </div>
+      <div class="wf-vis" aria-hidden="true">
+        <div class="wf-search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21" stroke-linecap="round"/></svg>
+          <span>○○동 임플란트 치과</span>
+        </div>
+        <div class="wf-rows">
+          <div class="wf-row"><b>광고</b><span>○○동 임플란트 · 당일 식립</span></div>
+          <div class="wf-row"><b>플레이스</b><span>○○○치과의원 · 리뷰 284</span></div>
+          <div class="wf-row"><b>카페</b><span>○○동 치과 추천 부탁드려요</span></div>
+          <div class="wf-skip"><i></i><span>38건 더</span><i></i></div>
+          <div class="wf-row up"><b>홈페이지</b><span>여기 있던 우리 치과를, 위로</span></div>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+<section class="section panel" id="results"><div class="wrap">
+  <div class="overline">/RESULT · 저희가 맡은 사이트</div>
+  <h2 class="sec-h2">진단에서 멈추지 않았습니다, <br>고친 뒤 숫자가 어디로 갔는지도 엽니다</h2>
+  <p class="sec-lead">네이버 서치어드바이저와 PageSpeed Insights가 매긴 값을 그대로 옮겼습니다. 저희가 계산한 수치가 아니라 두 도구의 화면에 찍힌 값입니다. 병원명과 주소는 가렸습니다.</p>
+
+  <div class="res-block">
+    <div class="res-head">
+      <h3>검색 유입 — 최근 90일</h3>
+      <span class="res-src">출처: 네이버 서치어드바이저 · 직전 90일 대비</span>
+    </div>
+    <div class="res-cards">
+      <article class="res-card">
+        <div class="res-top"><span class="res-id">치과 ①</span><span class="res-tag">수도권 · 종합진료</span></div>
+        <div class="res-big"><b>740</b><span>클릭</span></div>
+        <div class="res-delta"><i>↑</i>직전 90일 대비 +12,300%</div>
+        <dl class="res-rows">
+          <div class="res-row"><dt>노출</dt><dd>6.4만</dd></div>
+          <div class="res-row"><dt>클릭률</dt><dd>1.2%</dd></div>
+          <div class="res-row"><dt>직전 90일 클릭</dt><dd>약 6</dd></div>
+        </dl>
+      </article>
+      <article class="res-card">
+        <div class="res-top"><span class="res-id">치과 ②</span><span class="res-tag">인천 · 사랑니 중심</span></div>
+        <div class="res-big"><b>110</b><span>클릭</span></div>
+        <div class="res-delta"><i>↑</i>직전 90일 대비 +1,733%</div>
+        <dl class="res-rows">
+          <div class="res-row"><dt>노출</dt><dd>1.9만</dd></div>
+          <div class="res-row"><dt>클릭률</dt><dd>0.6%</dd></div>
+          <div class="res-row"><dt>직전 90일 클릭</dt><dd>약 6</dd></div>
+        </dl>
+      </article>
+      <article class="res-card">
+        <div class="res-top"><span class="res-id">치과 ③</span><span class="res-tag">수도권 · 개원 초기</span></div>
+        <div class="res-big"><b>74</b><span>클릭</span></div>
+        <div class="res-delta"><i>↑</i>직전 90일 대비 +7,300%</div>
+        <dl class="res-rows">
+          <div class="res-row"><dt>노출</dt><dd>1.4만</dd></div>
+          <div class="res-row"><dt>클릭률</dt><dd>0.5%</dd></div>
+          <div class="res-row"><dt>직전 90일 클릭</dt><dd>약 1</dd></div>
+        </dl>
+      </article>
+    </div>
+    <p class="res-note">증가율이 세 자리·네 자리로 보이는 이유를 같이 적습니다. <b>세 곳 모두 직전 90일 클릭이 한 자리였습니다.</b> 740클릭은 6클릭에서 온 값이고, 74클릭은 1클릭에서 온 값입니다. 배수만 보시면 실제 크기를 잘못 읽게 됩니다. 저희가 말할 수 있는 것은 "없던 유입이 생겼다"까지이고, 이 숫자로 매출이나 내원 건수를 말하지는 않겠습니다.</p>
+  </div>
+
+  <div class="res-block">
+    <div class="res-head">
+      <h3>페이지 속도 — 저희가 만든 사이트 실측</h3>
+      <span class="res-src">출처: PageSpeed Insights (Lighthouse) · 실제 URL 측정</span>
+    </div>
+    <div class="psi-cards">
+      <article class="psi-card">
+        <div class="res-top"><span class="res-id">치과 ④</span><span class="res-tag">모바일 측정</span></div>
+        <div class="psi-scores">
+          <div class="psi-s"><div class="psi-ring">100</div><small>성능</small></div>
+          <div class="psi-s"><div class="psi-ring">100</div><small>접근성</small></div>
+          <div class="psi-s"><div class="psi-ring">100</div><small>권장사항</small></div>
+          <div class="psi-s"><div class="psi-ring">100</div><small>검색엔진<br>최적화</small></div>
+        </div>
+        <div class="psi-vitals">
+          <div class="psi-v"><b>1.0초</b><small>첫 콘텐츠</small></div>
+          <div class="psi-v"><b>1.7초</b><small>최대 콘텐츠</small></div>
+          <div class="psi-v"><b>0ms</b><small>차단 시간</small></div>
+          <div class="psi-v"><b>0.003</b><small>레이아웃 이동</small></div>
+          <div class="psi-v"><b>1.8초</b><small>속도 지수</small></div>
+        </div>
+      </article>
+      <article class="psi-card">
+        <div class="res-top"><span class="res-id">치과 ⑤</span><span class="res-tag">데스크톱 측정</span></div>
+        <div class="psi-scores">
+          <div class="psi-s"><div class="psi-ring">100</div><small>성능</small></div>
+          <div class="psi-s"><div class="psi-ring">100</div><small>접근성</small></div>
+          <div class="psi-s"><div class="psi-ring">100</div><small>권장사항</small></div>
+          <div class="psi-s"><div class="psi-ring">100</div><small>검색엔진<br>최적화</small></div>
+        </div>
+        <div class="psi-vitals">
+          <div class="psi-v"><b>0.4초</b><small>첫 콘텐츠</small></div>
+          <div class="psi-v"><b>0.6초</b><small>최대 콘텐츠</small></div>
+          <div class="psi-v"><b>10ms</b><small>차단 시간</small></div>
+          <div class="psi-v"><b>0.006</b><small>레이아웃 이동</small></div>
+          <div class="psi-v"><b>0.6초</b><small>속도 지수</small></div>
+        </div>
+      </article>
+    </div>
+    <p class="res-note">네 항목 100점은 <b>빠르다는 뜻이지 잘 팔린다는 뜻이 아닙니다.</b> 다만 앞의 실태조사에서 본 대로, 기계가 읽는 자리가 비어 있으면 속도만 좋아도 검색과 AI 답변에서는 불리합니다. 저희는 이 두 가지를 같은 단계에서 맞춥니다.</p>
+  </div>
+
+  <p class="sec-caption">네이버 서치어드바이저 최근 90일 기준(2026년 9월 측정) · PageSpeed Insights 실측 · 병원명·주소·도메인은 가렸습니다 · 클릭률 1.2%는 업계 평균을 넘는 값이 아닙니다. 이 표는 유입이 늘었다는 사실까지만 말합니다 · 같은 조건에서 같은 결과를 보장하지 않습니다</p>
+  <a class="sec-link" href="/contact/">우리 사이트는 지금 몇 점인지 무료로 진단받기 →</a>
+</div></section>
+<section class="section navy" id="process"><div class="wrap">
+  <div class="overline light">/PROCESS · HOW WE WORK</div>
+  <h2 class="sec-h2" style="color:#fff">진단부터 성장까지, <br>한 팀이 네 단계로 책임집니다</h2>
+  <p class="sec-lead">순서가 있습니다. 진단 없이 제작부터 시작하면 두 번 만들게 됩니다. 상담과 진단은 무료입니다.</p>
+  <div class="grid-4" style="margin-top:clamp(40px,5vw,72px)">
+    <div class="proc-card"><div class="num">01</div><div><h3>Discover</h3><div class="ko">진단</div><p>현재 사이트·검색 노출·경쟁사를 분석해 문제를 정확히 짚습니다.</p></div></div>
+    <div class="proc-card"><div class="num">02</div><div><h3>Design</h3><div class="ko">설계</div><p>타깃 고객의 여정에 맞춰 구조와 메시지, 화면을 설계합니다.</p></div></div>
+    <div class="proc-card"><div class="num">03</div><div><h3>Build</h3><div class="ko">제작</div><p>웹사이트와 콘텐츠를 제작하고 검색 노출 기반을 세팅합니다.</p></div></div>
+    <div class="proc-card"><div class="num">04</div><div><h3>Grow</h3><div class="ko">성장</div><p>데이터를 보며 광고와 콘텐츠를 개선해 문의를 늘려갑니다.</p></div></div>
+  </div>
+</div></section>
+<section class="section" id="why">
+  <div class="overline">/WHY NOW · 지금인 이유</div>
+  <h2 class="sec-h2">검색은 이미 갈렸고, <br>AI 답변은 아직 갈리지 않았습니다</h2>
+  <p class="sec-lead">저희가 채점한 여덟 곳에서 나온 세 가지입니다. 업계 전망이 아니라 실측값이라 확인하실 수 있습니다.</p>
+
+  <div class="grid-3" style="margin-top:clamp(40px,5vw,64px)">
+    <div class="step">
+      <div class="num">01</div>
+      <div class="t">아직 아무도 손대지 않았습니다</div>
+      <p>기계용 정보 표기 항목에서 30점을 넘긴 곳이 한 곳도 없었습니다. SEO 종합 84점으로 가장 잘 만든 곳도 이 항목만은 28점이었습니다. 잘하는 집과 못하는 집이 갈리는 항목이 아닙니다.</p>
+      <div class="stat">0<small>일곱 곳 중 30점을 넘긴 병원 수</small></div>
+    </div>
+    <div class="step">
+      <div class="num">02</div>
+      <div class="t">검색은 벌어졌고 AI는 몰려 있습니다</div>
+      <p>검색 점수는 39점에서 84점까지 45점 폭으로 벌어졌습니다. 그런데 AI 답변 점수는 31점에서 56점, 25점 폭 안에 몰려 있었습니다. 검색은 이미 승부가 났고 AI는 아직 출발선입니다.</p>
+      <div class="stat">45 : 25<small>검색 점수 분포 폭 대 AI 점수 분포 폭</small></div>
+    </div>
+    <div class="step">
+      <div class="num">03</div>
+      <div class="t">한 항목만 고쳐도 움직입니다</div>
+      <p>한 곳에서 기계용 정보 표기만 15점에서 78점으로 올렸습니다. 다른 항목은 거의 건드리지 않았는데 AI 종합이 32점에서 46점이 됐습니다. 사이트를 새로 만들지 않고 나온 결과입니다.</p>
+      <div class="stat">32 → 46<small>구조화 데이터만 고친 뒤 AI 종합 점수</small></div>
+    </div>
+  </div>
+
+  <p class="sec-caption">2026년 8월 측정 · 표본 8곳 · 열 항목 쉰 개 체크포인트 · 공개된 HTML 소스만 확인 · 이 점수는 검색 순위나 매출을 예측하지 않습니다</p>
+  <a class="sec-link" href="https://dental-seo-report.vercel.app/" target="_blank" rel="noopener">채점 기준과 여덟 곳 결과 전부 보기 →</a>
+</section>
+
+<section class="section" id="about">
+  <div class="about-grid">
+    <div><div class="overline">/ABOUT · CICLO</div><h2 class="sec-h2">예쁘기만 한 사이트가 아니라, <br>문의로 이어지는 사이트를 만듭니다</h2></div>
+    <div>
+      <p class="about-lead">보이는 것이 곧 신뢰입니다.<br>씨클로는 병원·법률·전문직처럼 <span class="blue">신뢰가 매출인 분야</span>의 디지털을 만듭니다.</p>
+      <p class="about-body">웹사이트 디자인부터 검색 노출(GEO), 블로그 콘텐츠, 광고 운영까지 — 한 팀이 처음부터 끝까지 책임집니다.</p>
+    </div>
+  </div>
+</section>
+<section class="section" id="faq">
+  <div class="overline">/FAQ · QUESTIONS</div>
+  <h2 class="sec-h2">견적서를 받으셨을 때, <br>항목을 짚으실 수 있게 적었습니다</h2>
+  <p class="sec-lead">보장할 수 없는 것은 보장할 수 없다고 씁니다. 저희가 겪은 것도 같이 적었습니다.</p>
+  <div class="faq">
+    <div class="faq-row"><h3>씨클로는 어떤 회사인가요?</h3><div class="faq-a">
+      <p>병원·법률·전문직처럼 신뢰가 곧 매출인 분야의 디지털을 만듭니다. 웹사이트 디자인, GEO, 블로그 콘텐츠, 광고 운영을 한 팀이 맡습니다.</p>
+      <p>한 팀으로 가는 이유가 있습니다. 나눠 맡기면 각자 자기 영역만 최적화합니다. 디자인 업체는 화면을, 광고 업체는 클릭 단가를 봅니다. 그 사이에서 &ldquo;검색엔진과 AI가 이 페이지를 읽을 수 있는가&rdquo;는 아무도 보지 않습니다. 저희가 치과 여덟 곳을 채점했을 때 가장 낮게 나온 항목이 정확히 그 자리였습니다.</p>
+    </div></div>
+    <div class="faq-row"><h3>GEO(생성형 검색 최적화)가 무엇인가요?</h3><div class="faq-a">
+      <p>ChatGPT·Gemini·네이버 AI가 답변할 때 인용되도록 만드는 작업입니다. SEO가 검색 순위라면 GEO는 AI 답변 안에 들어가는 것입니다.</p>
+      <p>다만 둘은 분리된 기술이 아닙니다. AI는 검색 지면에서 만들어진 데이터를 근거로 답을 씁니다. SEO 기반이 없는 상태에서 GEO만 따로 하는 건 성립하지 않습니다.</p>
+      <p>지금은 격차가 크지 않습니다. 저희 조사에서 검색 점수는 39점에서 84점까지 벌어졌는데, AI 점수는 31점에서 56점 사이에 몰려 있었습니다. 검색은 신경 쓴 곳과 안 쓴 곳이 갈렸고, AI는 아직 다 같이 낮습니다.</p>
+    </div></div>
+    <div class="faq-row"><h3>제작 기간과 비용은 어떻게 되나요?</h3><div class="faq-a">
+      <p>범위에 따라 세 구간입니다. 아래는 정상가이고, 상담과 진단은 무료입니다.</p>
+      <div class="bands">
+        <div class="band"><span class="band-t">STANDARD · 단일 페이지 — 진료·의료진·오시는길을 한 화면에, 검색 기본 세팅까지</span><span class="band-d">2주 · 1페이지 · 무상수정 2회</span><span class="band-p">150만원</span></div>
+        <div class="band"><span class="band-t">DELUXE · 진료과목 분리 — 과목마다 주소를 나누고 구조화 데이터와 문답형 구조를 얹습니다</span><span class="band-d">3주 · 7페이지 · 무상수정 3회</span><span class="band-p">200만원</span></div>
+        <div class="band"><span class="band-t">PREMIUM · 콘텐츠 구조까지 — 과목별 랜딩과 칼럼 주제 30개, 예약 폼 연동과 운영 교육</span><span class="band-d">4주 · 15페이지 · 무상수정 5회</span><span class="band-p">320만원</span></div>
+      </div>
+      <p>구간을 공개하는 이유는 단순합니다. 금액을 알려주지 않는 곳과 비교하실 때 기준이 있어야 하기 때문입니다. 범위·일정·비용을 담은 제안서는 문의 후에 보내드립니다.</p>
+      <p><b>이후에 저희에게 나가는 월 이용료는 없습니다.</b> 도메인 연장비와 서버 사용료만 실비로 들고 규모에 따라 연 20~40만원 선인데, 이것도 병원 명의로 직접 결제하십니다. 오픈 후 3개월은 오류 수정과 색인 상태 점검을 무상으로 봅니다.</p>
+      <p class="sec-caption" style="margin-top:14px">지금은 런칭 기념으로 선착순 열 팀까지 할인가가 적용되고 있습니다. 마감되면 위 정상가로 돌아갑니다. <a href="/dental/">치과 홈페이지 제작 페이지</a>에서 확인하실 수 있습니다.</p>
+    </div></div>
+    <div class="faq-row"><h3>노출 성과를 보장해 주시나요?</h3><div class="faq-a">
+      <p>아니요. 보장한다는 표현은 쓰지 않습니다.</p>
+      <p>검색 순위는 경쟁 상황과 콘텐츠 축적에 따라 달라지고, 알고리즘은 공개돼 있지 않습니다. 저희가 채점한 열 항목도 읽을 수 있는 상태인지를 잰 것이지 순위를 예측하는 값이 아닙니다.</p>
+      <p>대신 착수 전에 목표를 숫자로 합의하고 계약서에 적습니다. 색인률이나 구조화 데이터 점수처럼 나중에 직접 확인하실 수 있는 항목으로만 잡습니다.</p>
+      <p>&ldquo;몇 위 보장&rdquo;을 말하는 곳은 한 번 더 확인해 보시길 권합니다. 순위를 보장하려면 알고리즘을 알아야 하는데, 아는 사람은 없습니다.</p>
+    </div></div>
+
+    <div class="faq-row"><h3>지금 홈페이지를 새로 만들어야 하나요?</h3><div class="faq-a">
+      <p>대부분은 아닙니다.</p>
+      <p>저희가 채점한 여덟 곳 중 디자인이 문제였던 곳은 없었습니다. 점수가 낮게 나온 곳도 화면은 대부분 좋았습니다. 무너진 자리는 기계가 읽는 층이었고, 그건 대개 지금 사이트 위에서 고칠 수 있습니다.</p>
+      <p>다시 만들지 여부를 가르는 건 사이트 구조 한 항목입니다. 진료과목이 각각 주소를 갖고 있으면 고쳐 쓰는 쪽이 빠르고, 전부 한 페이지에 얹혀 있으면 새로 만드는 편이 결국 쌉니다.</p>
+      <p>진단은 무료입니다. 고쳐 쓸 수 있는데 새로 만들자고 하지는 않습니다.</p>
+    </div></div>
+
+    <div class="faq-row"><h3>병원·법률 등 규정이 까다로운 분야도 가능한가요?</h3><div class="faq-a">
+      <p>네. 의료광고·법률광고의 문법을 전제로 씁니다.</p>
+      <p>치료 전후 비교 사진, 환자 후기, 효과 보장 문구는 애초에 만들지 않습니다. 심의 대상인지를 먼저 가르고, 규정을 피해 가는 게 아니라 규정 안에서 신뢰가 보이도록 씁니다.</p>
+    </div></div>
+    <div class="faq-row"><h3>웹사이트만 제작하고 마케팅은 따로 맡길 수 있나요?</h3><div class="faq-a">
+      <p>가능합니다. 각 서비스를 개별로도 진행합니다.</p>
+      <p>다만 순서는 말씀드립니다. 검색 구조가 잡히지 않은 상태에서 광고비부터 올리면, 클릭은 늘어도 그 클릭이 도착하는 페이지가 여전히 읽히지 않습니다. 저희가 채점한 곳들에서 가장 흔했던 순서 착오가 그것이었습니다.</p>
+    </div></div>
+  </div>
+</section>
+</div>
+<?php
+get_footer();

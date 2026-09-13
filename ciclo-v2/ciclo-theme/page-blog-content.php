@@ -1,0 +1,59 @@
+<?php
+/**
+ * 페이지 /blog-content/
+ *
+ * 마크업은 pages/Blog_Content.html 를 그대로 옮긴 것입니다.
+ * 브라우저 실측(1440 / 768 / 390 / 360px)으로 검증된 마크업이라 손대지
+ * 않았습니다. 내용을 고치려면 이 파일을 고치면 됩니다.
+ */
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+get_header();
+?>
+<div class="ciclo-page" id="ciclo-blog-content">
+<header class="page-hero">
+  <div class="overline">/SERVICE — 03</div>
+  <h1 class="display">Blog <br><span class="blue">Content</span></h1>
+  <p class="lead">전문성은 쌓일 때 신뢰가 됩니다. 씨클로는 검색 의도에 맞춘 블로그 콘텐츠를 기획·제작·발행까지 대행해, 잠재 고객이 스스로 찾아오게 만듭니다.</p>
+  <div class="chips"><span class="chip">콘텐츠 기획</span><span class="chip">네이버 블로그</span><span class="chip">칼럼 제작</span><span class="chip">발행 대행</span></div>
+</header>
+<section class="section" style="padding-top:0">
+  <div class="overline">/WHAT'S INCLUDED</div>
+  <h2 class="sec-h2">쓰는 일부터 발행까지, <br>여섯 가지를 대행합니다</h2>
+  <p class="sec-lead">전문성은 한 편으로 증명되지 않습니다. 검색 의도에 맞는 글이 쌓여야 신뢰가 됩니다.</p>
+  <div class="grid-3" style="margin-top:clamp(32px,4vw,48px)">
+    <div class="card"><div class="num">01</div><h3>키워드 기획</h3><p>잠재 고객이 실제로 검색하는 질문을 찾아 월간 콘텐츠 캘린더를 만듭니다.</p></div>
+    <div class="card"><div class="num">02</div><h3>전문 원고 제작</h3><p>의료·법률 등 전문 분야의 톤과 규정을 지키는 원고를 작성합니다.</p></div>
+    <div class="card"><div class="num">03</div><h3>비주얼 제작</h3><p>썸네일·인포그래픽 등 글의 신뢰를 높이는 이미지를 함께 제작합니다.</p></div>
+    <div class="card"><div class="num">04</div><h3>발행 · 운영</h3><p>네이버 블로그·홈페이지 칼럼에 정기 발행하고 채널을 관리합니다.</p></div>
+    <div class="card"><div class="num">05</div><h3>검색 최적화</h3><p>제목·구조·태그를 검색 노출에 맞게 최적화해 발행합니다.</p></div>
+    <div class="card"><div class="num">06</div><h3>성과 리포트</h3><p>조회·유입·문의 전환을 매월 리포트로 정리해 드립니다.</p></div>
+  </div>
+</section>
+<section class="section panel"><div class="wrap">
+  <div class="overline">/HOW IT WORKS</div>
+  <h2 class="sec-h2">키워드부터 리포트까지, <br>네 단계로 돌립니다</h2>
+  <div class="grid-4">
+    <div class="step"><div class="num">01</div><div class="t">주제 설계</div><p>진료·업무 분야별 핵심 주제를 함께 정합니다.</p></div>
+    <div class="step"><div class="num">02</div><div class="t">원고 제작</div><p>초안 확인 후 수정을 거쳐 완성합니다.</p></div>
+    <div class="step"><div class="num">03</div><div class="t">발행 · 확산</div><p>최적의 시점에 발행하고 채널에 확산합니다.</p></div>
+    <div class="step"><div class="num">04</div><div class="t">분석 · 개선</div><p>반응 데이터로 다음 콘텐츠를 개선합니다.</p></div>
+  </div>
+</div></section>
+<section class="section">
+  <div class="overline">/FOR YOU</div>
+  <h2 class="sec-h2">쓸 말은 있는데 <br>쓸 시간이 없다면</h2>
+  <div class="fit-list">
+    <div class="fit"><span class="arrow">→</span><p>블로그를 시작했지만 꾸준히 운영할 시간이 없는 경우</p></div>
+    <div class="fit"><span class="arrow">→</span><p>전문 지식은 많은데 글로 풀어낼 사람이 없는 경우</p></div>
+    <div class="fit"><span class="arrow">→</span><p>검색했을 때 경쟁사 글만 보이는 경우</p></div>
+    <div class="fit"><span class="arrow">→</span><p>광고가 아닌 콘텐츠로 신뢰를 쌓고 싶은 경우</p></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="overline dim">/OTHER SERVICES</div>
+  <div class="other-pills"><a class="other-pill" href="/website-design/">Website Design →</a><a class="other-pill" href="/geo/">GEO →</a><a class="other-pill" href="/digital-marketing/">Digital Marketing →</a></div>
+</section>
+</div>
+<?php
+get_footer();

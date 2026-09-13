@@ -1,0 +1,33 @@
+<?php
+/**
+ * 사이트 푸터 — pages/CICLO_Footer.html 을 그대로 옮긴 것입니다.
+ */
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+?>
+</main>
+<footer class="footer">
+  <img class="footer-mark" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="488" height="566" loading="lazy" decoding="async">
+  <div class="inner">
+    <div class="overline light">/CONTACT · LET'S TALK</div>
+    <h2>무엇부터 손봐야 할지, <br>하루 안에 답을 드립니다</h2>
+    <p class="lead">프로젝트가 있으신가요? 하루 안에 답변드립니다.</p>
+    <div class="cta-row">
+      <a class="btn btn-white" href="mailto:kajam0623@naver.com">kajam0623@naver.com</a>
+      <a class="btn btn-outline-light" href="tel:010-8017-2001">010-8017-2001</a>
+    </div>
+    <nav class="footer-nav">
+      <a href="/#services">Services</a>
+      <a href="/work/">Work</a>
+      <a href="/column/">칼럼</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <div class="footer-bar">
+      <div class="footer-brand"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="CICLO" width="488" height="566" loading="lazy" decoding="async"><span class="nm">CICLO</span><span class="tg">CREATIVE IDEAS · CLICK LOGIC</span></div>
+      <div class="footer-copy">© 2026 CICLO. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+<?php wp_footer(); ?>
+</body>
+</html>
