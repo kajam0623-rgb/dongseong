@@ -37,19 +37,28 @@ OUTDIR = os.path.join(HERE, 'images')
 
 # 가릴 영역 (x, y, w, h — 0~1 비율). PSI 리포트는 상단에 측정 URL 이 찍힌다.
 # --grid 로 확인한 뒤 맞추면 된다. 비워 두면 모자이크 없이 변환만 한다.
+# --grid 로 실측한 값이다(2026-09-13). 두 곳을 가린다.
+#   1) 주소창의 도메인 글자 — 주소창 틀은 남긴다. 틀이 남아야 진짜 리포트
+#      화면이라는 게 보이고, 그게 캡처를 싣는 이유다.
+#   2) 우측 사이트 썸네일 — 병원 로고와 원장님 사진이 그대로 들어 있다.
+#      도메인보다 이쪽이 더 직접적인 식별 정보인데 놓치기 쉽다.
 MASKS = {
-    'mobile':  ['0.012,0.02,0.30,0.085'],
-    'desktop': ['0.012,0.02,0.30,0.085'],
+    'mobile':  ['0.033,0.060,0.200,0.048',    # https://...  (1200x1269 기준)
+                '0.648,0.482,0.140,0.245'],   # 사이트 썸네일
+    'desktop': ['0.033,0.052,0.190,0.046',    # https://...  (1200x1288 기준)
+                '0.582,0.498,0.340,0.225'],   # 사이트 썸네일
 }
 
 # 캡션·alt 에 들어갈 실측값 (대화로 받은 캡처 수치)
 DATA = {
     'mobile': dict(
         id='치과 ④', cond='모바일 측정',
-        vitals='FCP 1.0초 · LCP 1.7초 · TBT 0ms · CLS 0.003 · SI 1.8초'),
+        when='2026년 8월 31일 22:00 · 주소와 사이트 미리보기는 가렸습니다',
+        vitals='FCP 1.0초 · LCP 1.7초 · TBT 0ms · CLS 0.003 · SI 1.8초 · 에이전트형 브라우징 3/3'),
     'desktop': dict(
         id='치과 ⑤', cond='데스크톱 측정',
-        vitals='FCP 0.4초 · LCP 0.6초 · TBT 10ms · CLS 0.006 · SI 0.6초'),
+        when='2026년 8월 31일 12:39 · 주소와 사이트 미리보기는 가렸습니다',
+        vitals='FCP 0.4초 · LCP 0.6초 · TBT 10ms · CLS 0.006 · SI 0.6초 · 에이전트형 브라우징 2/2'),
 }
 
 WP_PATH = '/wp-content/uploads/ciclo/'   # 워드프레스 업로드 경로
@@ -119,23 +128,25 @@ def figure(stem, w, h):
         '      <figure class="psi-shot">\n'
         '        <img src="%spsi-%s.webp" alt="%s"\n'
         '             width="%d" height="%d" loading="lazy" decoding="async">\n'
-        '        <figcaption><b>%s · %s</b> — 네 항목 모두 100점 · %s</figcaption>\n'
-        '      </figure>\n' % (WP_PATH, stem, alt, w, h, d['id'], d['cond'], d['vitals']))
+        '        <figcaption><b>%s · %s</b> · %s</figcaption>\n'
+        '      </figure>\n' % (WP_PATH, stem, alt, w, h, d['id'], d['cond'], d['when']))
 
 
-# 교체 대상: 기존 링 카드 두 장을 감싼 .psi-cards 블록
-CARDS_RE = re.compile(
-    r'[ \t]*<div class="psi-cards">.*?</div>\n(?=[ \t]*<p class="(?:res-note|sec-caption)")',
-    re.S)
+# 캡처는 표를 대신하지 않고 표 위에 얹는다.
+# 캡처는 "도구가 찍은 화면"이고 표는 "기계가 읽는 값"이라 하는 일이 다르다.
+# 검색엔진과 AI 는 이미지 속 숫자를 못 읽는다. GEO 를 파는 회사가 자기 근거를
+# 기계가 못 읽는 형식으로만 두면 앞뒤가 안 맞는다. 둘 다 둔다.
+ANCHOR = '    <div class="psi-cards">'
 
 
 def patch(path, block):
     p = os.path.join(HERE, path)
     s = io.open(p, encoding='utf-8').read()
-    n = len(CARDS_RE.findall(s))
-    if n != 1:
-        sys.exit('FAIL %s: .psi-cards 블록 %d개 (1개여야 함)' % (path, n))
-    s = CARDS_RE.sub(block, s)
+    if '<figure class="psi-shot">' in s:
+        print('..  %s — 이미 캡처가 들어 있음' % path); return
+    if s.count(ANCHOR) != 1:
+        print('..  %s — .psi-cards 없음, 건너뜀' % path); return
+    s = s.replace(ANCHOR, '    <div class="psi-shots">\n' + block + '    </div>\n' + ANCHOR, 1)
     io.open(p, 'w', encoding='utf-8').write(s)
     print('ok  %s' % path)
 
@@ -165,12 +176,12 @@ def main():
         w, h = convert(stem)
         figs.append(figure(stem, w, h))
 
-    block = '      <div class="psi-shots">\n' + ''.join(figs) + '      </div>\n'
+    block = ''.join(figs)
     patch('pages/Home.html', block)
-    patch('pages/Work.html', block.replace('      ', '    ', 1))
+    patch('pages/Work.html', block)
     print()
-    print('※ images/psi-mobile.webp · psi-desktop.webp 를 워드프레스')
-    print('   %s 에 업로드해야 화면에 뜹니다.' % WP_PATH)
+    print('※ build-theme.py 가 webp 를 테마 안으로 복사하고 경로를 바꿉니다.')
+    print('   워드프레스 미디어에 따로 올리실 필요 없습니다.')
     return 0
 
 

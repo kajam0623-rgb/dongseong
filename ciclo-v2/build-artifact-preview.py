@@ -76,10 +76,15 @@ def relink(s):
     return s
 
 def strip_images(s):
-    # 미리보기에서는 워드프레스 업로드 경로를 비운다(아티팩트에 그 파일이 없다)
+    # 워드프레스 업로드 경로를 상대 경로로. 캡처 webp 는 번들에 같이 발행한다.
     return s.replace('/wp-content/uploads/ciclo/', '')
 
 os.path.isdir(OUT) or os.makedirs(OUT)
+
+# 캡처 webp 를 번들에 같이 넣는다. 마크업이 상대 경로로 참조한다.
+import shutil, glob
+for p in glob.glob(os.path.join(HERE, 'images', 'psi-*.webp')):
+    shutil.copy(p, os.path.join(OUT, os.path.basename(p)))
 hdr, ftr = relink(header), relink(footer)
 
 BODY = u"""<main class="site-main">

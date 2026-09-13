@@ -267,6 +267,14 @@ get_footer();
 made = []
 for slug, src, url in PAGES:
     body = read('pages/' + src).rstrip('\n')
+    # 캡처 이미지 경로를 테마 안 경로로 바꾼다. 정적 HTML 에서는 워드프레스
+    # 업로드 경로(/wp-content/uploads/ciclo/)를 쓰지만, 테마가 이미지를 들고
+    # 있으므로 미디어에 따로 올릴 필요가 없다.
+    body = re.sub(
+        r'src="/wp-content/uploads/ciclo/([A-Za-z0-9._-]+)"',
+        lambda m: ('src="<?php echo esc_url( get_theme_file_uri( \'assets/img/%s\' ) ); ?>"'
+                   % m.group(1)),
+        body)
     pid = 'ciclo-home' if slug == 'front-page' else 'ciclo-' + slug.replace('page-', '')
     txt = TPL % dict(
         title=('홈 (front-page)' if url is None else '페이지 ' + url),
@@ -530,10 +538,20 @@ get_header(); ?>
 # 설치 안내 — 빌더가 테마 폴더를 통째로 다시 만들기 때문에 소스는 바깥에 둔다
 shutil.copy(os.path.join(HERE, 'theme-README.md'), os.path.join(OUT, 'README.md'))
 
+os.makedirs(os.path.join(OUT, 'assets', 'img'), exist_ok=True)
 os.makedirs(os.path.join(OUT, 'assets', 'css'), exist_ok=True)
 os.makedirs(os.path.join(OUT, 'assets', 'js'), exist_ok=True)
 shutil.copy(os.path.join(HERE, 'css', 'global.css'), os.path.join(OUT, 'assets', 'css', 'global.css'))
 shutil.copy(os.path.join(HERE, 'js', 'ciclo-effects.js'), os.path.join(OUT, 'assets', 'js', 'ciclo-effects.js'))
+
+# 캡처 WebP — 테마 안으로 넣는다. 워드프레스 미디어에 따로 올릴 필요가 없고,
+# 테마를 지웠다 다시 켜도 이미지가 같이 따라온다.
+import glob as _glob
+_shots = sorted(_glob.glob(os.path.join(HERE, 'images', 'psi-*.webp')))
+for _p in _shots:
+    shutil.copy(_p, os.path.join(OUT, 'assets', 'img', os.path.basename(_p)))
+if _shots:
+    print('캡처  %d장 → assets/img/' % len(_shots))
 
 print('생성한 템플릿')
 for name, size in made:
