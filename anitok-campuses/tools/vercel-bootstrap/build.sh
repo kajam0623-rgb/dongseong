@@ -18,6 +18,9 @@ git clone --branch "$BRANCH" "$REPO" .src
 
 SRC=".src/anitok-campuses/sites/$SLUG"
 test -f "$SRC/index.html"
+# 네이버 소유확인 메타태그가 빠지면 서치어드바이저 등록이 풀린다. seo.verification
+# 배열이 통째로 덮이는 사고가 한 번 있었으므로 올리기 전에 확인한다.
+grep -q 'naver-site-verification' "$SRC/index.html"
 
 cp -r "$SRC" public
 # 배포 루트의 vercel.json 이 이미 적용되므로 사본은 지운다. 문서 파일도 공개하지 않는다.
