@@ -18,7 +18,7 @@ get_header();
 </header>
 <section class="section" style="padding-top:0">
   <div class="overline">/WHAT'S INCLUDED</div>
-  <h2 class="sec-h2">기획부터 유지보수까지, <br>여섯 가지를 한 번에 맡습니다</h2>
+  <h2 class="sec-h2">기획·디자인·구축·유지보수 <br>여섯 가지를 맡습니다</h2>
   <p class="sec-lead">나눠 맡기면 이음새에서 빠집니다. 디자인과 검색 기본기를 같은 단계에서 설계해야 나중에 다시 뜯을 일이 없습니다.</p>
   <div class="grid-3" style="margin-top:clamp(32px,4vw,48px)">
     <div class="card"><div class="num">01</div><h3>기획 · 정보 구조</h3><p>타깃 고객의 방문 목적을 분석해 페이지 구조와 핵심 메시지를 설계합니다.</p></div>
@@ -31,7 +31,7 @@ get_header();
 </section>
 <section class="section panel"><div class="wrap">
   <div class="overline">/HOW IT WORKS</div>
-  <h2 class="sec-h2">네 단계로 진행하고, <br>단계마다 확인받습니다</h2>
+  <h2 class="sec-h2">네 단계로 진행하고 <br>단계마다 확인받습니다</h2>
   <div class="grid-4">
     <div class="step"><div class="num">01</div><div class="t">상담 · 진단</div><p>현재 사이트와 목표를 파악하고 방향을 제안드립니다.</p></div>
     <div class="step"><div class="num">02</div><div class="t">기획 · 디자인</div><p>구조 설계 후 시안을 확인하며 함께 다듬습니다.</p></div>
@@ -41,7 +41,7 @@ get_header();
 </div></section>
 <section class="section">
   <div class="overline">/FOR YOU</div>
-  <h2 class="sec-h2">이런 상태라면, <br>지금이 고칠 때입니다</h2>
+  <h2 class="sec-h2">이런 상태라면 <br>고칠 때입니다</h2>
   <div class="fit-list">
     <div class="fit"><span class="arrow">→</span><p>사이트가 오래되어 모바일에서 잘 보이지 않는 병원·사무소</p></div>
     <div class="fit"><span class="arrow">→</span><p>광고를 해도 사이트에서 문의로 이어지지 않는 경우</p></div>

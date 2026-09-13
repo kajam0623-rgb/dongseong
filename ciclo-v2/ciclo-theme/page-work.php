@@ -19,7 +19,7 @@ get_header();
 
 <section class="section" style="padding-top:clamp(48px,6vw,80px)">
   <div class="overline">/RESULT · 저희가 맡은 사이트</div>
-  <h2 class="sec-h2">맡은 뒤 숫자가 어디로 갔는지, <br>도구 화면에 찍힌 값으로 엽니다</h2>
+  <h2 class="sec-h2">저희가 맡은 사이트의 <br>도구 화면 실측값입니다</h2>
   <p class="sec-lead">네이버 서치어드바이저와 PageSpeed Insights가 매긴 값입니다. 저희가 계산하거나 보정한 수치가 아닙니다. 병원명·주소·도메인은 가렸습니다.</p>
 
   <div class="dtable-wrap">
@@ -86,7 +86,7 @@ get_header();
 
 <section class="section panel"><div class="wrap">
   <div class="overline">/SURVEY · 치과 여덟 곳 실태조사</div>
-  <h2 class="sec-h2">점수만 말하고 <br>근거를 숨기지 않습니다</h2>
+  <h2 class="sec-h2">채점 기준 쉰 개를 <br>전부 공개했습니다</h2>
   <p class="sec-lead">검색 점수는 39점에서 84점까지 벌어졌습니다. 그런데 AI 답변 점수는 31점에서 56점 사이에 몰려 있고, 여덟 곳 전부 검색보다 AI 쪽이 낮습니다.</p>
 
   <div class="dtable-wrap">
@@ -121,7 +121,7 @@ get_header();
 
 <section class="section">
   <div class="overline">/METHOD · 어떻게 쟀나</div>
-  <h2 class="sec-h2">다른 사람이 다시 재도, <br>같은 점수가 나오게 짰습니다</h2>
+  <h2 class="sec-h2">같은 기준으로 다시 재면 <br>같은 점수가 나옵니다</h2>
   <div class="grid-3" style="margin-top:clamp(32px,4vw,48px)">
     <div class="card">
       <div class="num">01</div><h3>열 항목 · 쉰 개</h3>
@@ -140,7 +140,7 @@ get_header();
 
 <section class="section panel"><div class="wrap">
   <div class="overline">/LIMITS · 말하지 못하는 것</div>
-  <h2 class="sec-h2">이 조사로 알 수 없는 것도 <br>같이 적습니다</h2>
+  <h2 class="sec-h2">이 조사로 알 수 없는 것을 <br>적어 둡니다</h2>
   <div class="fit-list">
     <div class="fit"><span class="arrow">→</span><p>표본이 여덟 곳입니다. 지역과 규모를 고르게 뽑은 게 아니라 소스를 열어볼 수 있었던 곳들입니다. 업계 전체를 대표한다고 말할 수 없습니다.</p></div>
     <div class="fit"><span class="arrow">→</span><p>이 점수는 검색 순위나 매출을 예측하지 않습니다. 검색엔진과 AI가 읽을 수 있는 상태인지만 잰 값입니다.</p></div>

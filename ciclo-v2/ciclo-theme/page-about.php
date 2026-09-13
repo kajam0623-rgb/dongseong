@@ -26,10 +26,10 @@ get_header();
 </div></section>
 <section class="section">
   <div class="overline">/VALUES</div>
-  <h2 class="sec-h2">일하는 기준을 셋으로 좁혔고, <br>나머지는 다 여기서 나옵니다</h2>
+  <h2 class="sec-h2">씨클로가 일하는 기준은 <br>세 가지입니다</h2>
   <p class="sec-lead">여러 개를 적으면 하나도 안 지키게 됩니다. 제안서를 쓸 때도 이 셋으로 먼저 걸러냅니다.</p>
   <div class="grid-3" style="margin-top:clamp(32px,4vw,48px)">
-    <div class="card"><div class="num">01</div><h3>증거로 말합니다</h3><p>"잘하고 있다"가 아니라 채점표로 보여드립니다. 치과 여덟 곳을 열 항목·쉰 개 체크포인트로 직접 재서 공개한 것도 같은 이유입니다. 재현되지 않는 숫자는 쓰지 않습니다.</p></div>
+    <div class="card"><div class="num">01</div><h3>증거로 말합니다</h3><p>진행 상황은 채점표로 보여드립니다. 치과 여덟 곳을 열 항목·쉰 개 체크포인트로 직접 재서 공개한 것도 같은 이유입니다. 재현되지 않는 숫자는 쓰지 않습니다.</p></div>
     <div class="card"><div class="num">02</div><h3>한 팀이 끝까지</h3><p>디자인 따로, 광고 따로 맡길 필요 없습니다. 전 과정을 한 팀이 맡아 메시지가 흐트러지지 않습니다.</p></div>
     <div class="card"><div class="num">03</div><h3>전문 분야의 언어</h3><p>병원·법률처럼 규정과 톤이 중요한 분야의 문법을 이해하고, 신뢰를 해치지 않는 방식으로 알립니다. 의료광고 심의에 걸릴 표현은 초안 단계에서 걸러냅니다.</p></div>
   </div>
@@ -37,8 +37,8 @@ get_header();
 
 <section class="section panel"><div class="wrap">
   <div class="overline">/WHAT WE DON'T DO · 하지 않는 일</div>
-  <h2 class="sec-h2">할 수 있는 것보다, <br>하지 않는 것을 먼저 적습니다</h2>
-  <p class="sec-lead">고를 때 필요한 건 잘한다는 말이 아니라 무엇을 안 하는지입니다. 아래 네 가지가 필요하시면 저희는 맞지 않습니다.</p>
+  <h2 class="sec-h2">저희가 하지 않는 일을 <br>먼저 적습니다</h2>
+  <p class="sec-lead">에이전시를 고를 때는 그 회사가 무엇을 안 하는지를 보셔야 합니다. 아래 네 가지가 필요하시면 저희는 맞지 않습니다.</p>
   <div class="dont">
     <div>
       <h3>검색 순위를 보장하지 않습니다</h3>
@@ -61,8 +61,8 @@ get_header();
 
 <section class="section">
   <div class="overline">/RECORD · 공개해 둔 것</div>
-  <h2 class="sec-h2">말로 하는 대신, <br>채점표를 먼저 공개했습니다</h2>
-  <p class="sec-lead">에이전시를 고를 때 확인할 것은 포트폴리오 화면이 아니라 판단 기준입니다. 저희 기준은 전부 열려 있습니다.</p>
+  <h2 class="sec-h2">실력은 채점표로 <br>공개했습니다</h2>
+  <p class="sec-lead">포트폴리오 화면보다 판단 기준을 보셔야 합니다. 저희 기준은 전부 열려 있습니다.</p>
   <div class="fit-list">
     <div class="fit"><span class="arrow">→</span><p><b>채점 기준 쉰 개.</b> 열 항목마다 확인할 것을 다섯 개씩, 전부 있다·없다로만 답할 수 있게 정해 두고 공개했습니다. 다른 사람이 다시 재도 같은 점수가 나옵니다.</p></div>
     <div class="fit"><span class="arrow">→</span><p><b>치과 여덟 곳 실태조사.</b> 저희가 직접 채점한 결과를 익명 처리해서 숫자 그대로 열었습니다. 좋게 나온 곳도 나쁘게 나온 곳도 그대로 있습니다.</p></div>

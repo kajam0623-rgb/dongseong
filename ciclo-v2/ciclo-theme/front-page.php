@@ -16,8 +16,8 @@ get_header();
   <div class="hero-grid">
     <div class="hero-copy">
       <div class="overline dim">/GEO, AEO, SEO AGENCY</div>
-      <h1 class="hero-h1"><span class="hn display">CICLO<span class="blue">.</span></span><span class="hs">GEO 웹사이트, 랜딩페이지 제작</span></h1>
-      <p class="hero-claim">검색엔진과 AI가 읽을 수 있는 구조로 만듭니다.<br>병원·법률·전문직 브랜드를 맡습니다.</p>
+      <h1 class="hero-h1"><span class="hn display">CICLO<span class="blue">.</span></span><span class="hs">검색엔진과 AI가 읽는 웹사이트를 만듭니다</span></h1>
+      <p class="hero-claim">병원·법률·전문직 브랜드의 GEO 웹사이트와 랜딩페이지를 제작합니다.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="/contact/">프로젝트 문의 <i class="ar" aria-hidden="true">→</i></a>
         <a class="btn btn-ghost" href="/work/">작업 보기</a>
@@ -25,7 +25,7 @@ get_header();
     </div>
 
     <div class="hero-proof">
-      <p class="hp-h">근거는 아래에 전부 엽니다</p>
+      <p class="hp-h">실측 데이터</p>
       <a class="hp-i" href="#evidence">
         <b>81<i>점</i><em>→</em><span class="hp-low">20</span><i class="hp-lowi">점</i></b>
         <span class="hp-c">사람이 보는 화면과 기계가 읽는 자리 — 치과 여덟 곳 평균</span>
@@ -55,8 +55,8 @@ get_header();
 <div class="marquee"><div class="marquee-track"><div><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span></div><div><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span></div></div></div>
 <section class="section navy evidence" id="evidence"><div class="wrap">
   <div class="overline light">/FIELD RESEARCH · 치과 홈페이지 실태조사</div>
-  <h2 class="sec-h2" style="color:#fff">원장님 이력은 잘 적혀 있었습니다. <br>기계가 읽는 자리에는 없었습니다</h2>
-  <p class="sec-lead">치과 홈페이지 여덟 곳을 열 항목·쉰 개 체크포인트로 채점했습니다. 가장 높은 칸과 가장 낮은 칸이 같은 정보를 다룹니다.</p>
+  <h2 class="sec-h2" style="color:#fff">치과 홈페이지 여덟 곳의 기계용 정보 표기는 <br>평균 20점이었습니다</h2>
+  <p class="sec-lead">2026년 8월, 치과 홈페이지 여덟 곳의 공개 HTML 소스를 열 항목 쉰 개 체크포인트로 채점한 결과입니다. 가장 높은 칸과 가장 낮은 칸이 같은 정보를 다룹니다.</p>
 
   <div class="ev-grid">
     <div>
@@ -78,7 +78,7 @@ get_header();
         </div>
       </div>
 
-      <p class="ev-note"><b>같은 원장님 이력입니다.</b> 전문의 자격도, 수련 병원도, 학회 경력도 홈페이지에는 다 적혀 있었습니다. 다만 검색엔진과 AI가 알아볼 형식으로는 옮겨져 있지 않았습니다. 가진 게 없어서 생긴 격차가 아니라, 가진 것이 전달되지 않아서 생긴 격차입니다.</p>
+      <p class="ev-note"><b>두 점수는 같은 원장님 이력을 가리킵니다.</b> 전문의 자격도, 수련 병원도, 학회 경력도 홈페이지에는 적혀 있었습니다. 검색엔진과 AI가 읽는 형식으로 옮겨져 있지 않았을 뿐입니다.</p>
 
       <div class="ev-check">
         <p class="ev-check-h">30초 자가 점검</p>
@@ -124,7 +124,7 @@ get_header();
         <div class="ev-dot" style="--x:30%;--y:28px"><b>30</b></div>
       </div>
       <div class="ev-plot-axis" aria-hidden="true"><span style="left:0%">0</span><span style="left:20%">20</span><span style="left:40%">40</span><span style="left:60%">60</span><span style="left:80%">80</span><span style="left:100%">100</span></div>
-      <p class="ev-dots-foot">중앙값 20점, <b>30점을 넘긴 곳은 없습니다.</b> SEO 종합에서 84점으로 가장 높았던 곳도 이 항목만은 28점이었습니다. 잘 만든 집과 그렇지 않은 집이 갈리는 항목이 아니라, 아직 아무도 손대지 않은 항목입니다.</p>
+      <p class="ev-dots-foot">중앙값 20점, <b>30점을 넘긴 곳은 없습니다.</b> SEO 종합에서 84점으로 가장 높았던 곳도 이 항목만은 28점이었습니다. 표본 여덟 곳 모두가 아직 손대지 않은 항목입니다.</p>
     </div>
     <div>
       <p class="ev-acts-h">점수만 말하고 근거를 숨기지 않습니다.</p>
@@ -140,8 +140,8 @@ get_header();
 
 <section class="section" id="services">
   <div class="overline">/SERVICES · WHAT WE DO</div>
-  <h2 class="sec-h2">예쁘게 만드는 일과 검색되게 만드는 일을, <br>따로 맡기지 않으셔도 됩니다</h2>
-  <p class="sec-lead">나눠 맡기면 각자 자기 영역만 최적화합니다. 디자인 업체는 화면을, 광고 업체는 클릭 단가를 봅니다. 그 사이에서 검색엔진과 AI가 이 페이지를 읽을 수 있는지는 아무도 보지 않습니다.</p>
+  <h2 class="sec-h2">제작과 검색 노출을 한 팀이 <br>같은 단계에서 설계합니다</h2>
+  <p class="sec-lead">디자인 업체는 화면을 보고 광고 업체는 클릭 단가를 봅니다. 검색엔진과 AI가 이 페이지를 읽을 수 있는지는 어느 쪽도 확인하지 않습니다.</p>
   <div class="svc-list">
     <a class="svc-row" href="/website-design/">
       <div class="num">01</div>
@@ -167,10 +167,10 @@ get_header();
 </section>
 <section class="section" id="work">
   <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
-    <div><div class="overline">/WORK · SELECTED WORK</div><h2 class="sec-h2">치과 여덟 곳을 직접 채점하고, <br>고칠 자리를 숫자로 짚었습니다</h2></div>
+    <div><div class="overline">/WORK · SELECTED WORK</div><h2 class="sec-h2">치과 여덟 곳을 열 항목 쉰 개 기준으로 <br>직접 채점했습니다</h2></div>
     <a href="/work/" style="font-size:14px;font-weight:700">전체 작업 보기 →</a>
   </div>
-  <p class="sec-lead">여덟 곳의 공개된 HTML 소스만 열어 열 항목으로 채점했습니다. 검색 점수는 39점에서 84점까지 벌어졌는데, AI 답변 점수는 31점에서 56점 사이에 몰려 있었습니다.</p>
+  <p class="sec-lead">검색 점수는 39점에서 84점까지 벌어졌고, AI 답변 점수는 31점에서 56점에 몰려 있었습니다. 공개된 HTML 소스만 열어 채점했습니다.</p>
   <a class="sec-link" href="https://dental-seo-report.vercel.app/" target="_blank" rel="noopener">채점 기준 쉰 개 전부 보기 →</a>
 
   <div class="dx-grid">
@@ -230,7 +230,7 @@ get_header();
         <div class="dx-bar"><span class="dx-lab">검색</span><div class="dx-track"><i style="--w:39%"></i></div><b>39</b></div>
         <div class="dx-bar dx-geo"><span class="dx-lab">AI 답변</span><div class="dx-track"><i style="--w:37%"></i></div><b>37</b></div>
       </div>
-      <p class="dx-note">격차가 2점으로 가장 작았습니다. <b>AI 대응이 좋아서가 아니라 검색도 39점으로 같이 낮았기 때문입니다.</b> 격차가 작다고 좋은 게 아닙니다.</p>
+      <p class="dx-note">격차가 2점으로 가장 작았습니다. <b>검색 점수도 39점으로 같이 낮았기 때문입니다.</b> 격차가 작다고 좋은 게 아닙니다.</p>
       <div class="dx-meta"><span>구조화 15</span><span>사이트 구조 28</span><span>격차 2</span></div>
     </article>
   </div>
@@ -263,8 +263,8 @@ get_header();
 </section>
 <section class="section panel" id="results"><div class="wrap">
   <div class="overline">/RESULT · 저희가 맡은 사이트</div>
-  <h2 class="sec-h2">진단에서 멈추지 않았습니다, <br>고친 뒤 숫자가 어디로 갔는지도 엽니다</h2>
-  <p class="sec-lead">네이버 서치어드바이저와 PageSpeed Insights가 매긴 값을 그대로 옮겼습니다. 저희가 계산한 수치가 아니라 두 도구의 화면에 찍힌 값입니다. 병원명과 주소는 가렸습니다.</p>
+  <h2 class="sec-h2">저희가 맡은 사이트의 서치어드바이저·PageSpeed <br>실측값을 공개합니다</h2>
+  <p class="sec-lead">네이버 서치어드바이저와 PageSpeed Insights 화면에 찍힌 값을 그대로 옮겼습니다. 병원명과 주소는 가렸습니다.</p>
 
   <div class="res-block">
     <div class="res-head">
@@ -345,7 +345,7 @@ get_header();
         </div>
       </article>
     </div>
-    <p class="res-note">네 항목 100점은 <b>빠르다는 뜻이지 잘 팔린다는 뜻이 아닙니다.</b> 다만 앞의 실태조사에서 본 대로, 기계가 읽는 자리가 비어 있으면 속도만 좋아도 검색과 AI 답변에서는 불리합니다. 저희는 이 두 가지를 같은 단계에서 맞춥니다.</p>
+    <p class="res-note">네 항목 100점은 <b>빠르다는 뜻입니다.</b> 다만 앞의 실태조사에서 본 대로, 기계가 읽는 자리가 비어 있으면 속도만 좋아도 검색과 AI 답변에서는 불리합니다. 저희는 이 두 가지를 같은 단계에서 맞춥니다.</p>
   </div>
 
   <p class="sec-caption">네이버 서치어드바이저 최근 90일 기준(2026년 9월 측정) · PageSpeed Insights 실측 · 병원명·주소·도메인은 가렸습니다 · 클릭률 1.2%는 업계 평균을 넘는 값이 아닙니다. 이 표는 유입이 늘었다는 사실까지만 말합니다 · 같은 조건에서 같은 결과를 보장하지 않습니다</p>
@@ -353,8 +353,8 @@ get_header();
 </div></section>
 <section class="section navy" id="process"><div class="wrap">
   <div class="overline light">/PROCESS · HOW WE WORK</div>
-  <h2 class="sec-h2" style="color:#fff">진단부터 성장까지, <br>한 팀이 네 단계로 책임집니다</h2>
-  <p class="sec-lead">순서가 있습니다. 진단 없이 제작부터 시작하면 두 번 만들게 됩니다. 상담과 진단은 무료입니다.</p>
+  <h2 class="sec-h2" style="color:#fff">진단·설계·제작·운영 네 단계를 <br>한 팀이 맡습니다</h2>
+  <p class="sec-lead">진단 없이 제작부터 시작하면 두 번 만들게 됩니다. 상담과 진단은 무료입니다.</p>
   <div class="grid-4" style="margin-top:clamp(40px,5vw,72px)">
     <div class="proc-card"><div class="num">01</div><div><h3>Discover</h3><div class="ko">진단</div><p>현재 사이트·검색 노출·경쟁사를 분석해 문제를 정확히 짚습니다.</p></div></div>
     <div class="proc-card"><div class="num">02</div><div><h3>Design</h3><div class="ko">설계</div><p>타깃 고객의 여정에 맞춰 구조와 메시지, 화면을 설계합니다.</p></div></div>
@@ -364,8 +364,8 @@ get_header();
 </div></section>
 <section class="section" id="why">
   <div class="overline">/WHY NOW · 지금인 이유</div>
-  <h2 class="sec-h2">검색은 이미 갈렸고, <br>AI 답변은 아직 갈리지 않았습니다</h2>
-  <p class="sec-lead">저희가 채점한 여덟 곳에서 나온 세 가지입니다. 업계 전망이 아니라 실측값이라 확인하실 수 있습니다.</p>
+  <h2 class="sec-h2">AI 답변 노출은 아직 순위가 <br>굳지 않았습니다</h2>
+  <p class="sec-lead">저희가 채점한 여덟 곳에서 나온 실측값 세 가지입니다.</p>
 
   <div class="grid-3" style="margin-top:clamp(40px,5vw,64px)">
     <div class="step">
@@ -394,7 +394,7 @@ get_header();
 
 <section class="section" id="about">
   <div class="about-grid">
-    <div><div class="overline">/ABOUT · CICLO</div><h2 class="sec-h2">예쁘기만 한 사이트가 아니라, <br>문의로 이어지는 사이트를 만듭니다</h2></div>
+    <div><div class="overline">/ABOUT · CICLO</div><h2 class="sec-h2">씨클로는 병원·법률·전문직 브랜드의 <br>검색 기반을 만듭니다</h2></div>
     <div>
       <p class="about-lead">보이는 것이 곧 신뢰입니다.<br>씨클로는 병원·법률·전문직처럼 <span class="blue">신뢰가 매출인 분야</span>의 디지털을 만듭니다.</p>
       <p class="about-body">웹사이트 디자인부터 검색 노출(GEO), 블로그 콘텐츠, 광고 운영까지 — 한 팀이 처음부터 끝까지 책임집니다.</p>
@@ -403,8 +403,8 @@ get_header();
 </section>
 <section class="section" id="faq">
   <div class="overline">/FAQ · QUESTIONS</div>
-  <h2 class="sec-h2">견적서를 받으셨을 때, <br>항목을 짚으실 수 있게 적었습니다</h2>
-  <p class="sec-lead">보장할 수 없는 것은 보장할 수 없다고 씁니다. 저희가 겪은 것도 같이 적었습니다.</p>
+  <h2 class="sec-h2">견적서 항목을 직접 확인하실 수 있게 <br>적었습니다</h2>
+  <p class="sec-lead">보장할 수 없는 항목은 보장할 수 없다고 적었습니다.</p>
   <div class="faq">
     <div class="faq-row"><h3>씨클로는 어떤 회사인가요?</h3><div class="faq-a">
       <p>병원·법률·전문직처럼 신뢰가 곧 매출인 분야의 디지털을 만듭니다. 웹사이트 디자인, GEO, 블로그 콘텐츠, 광고 운영을 한 팀이 맡습니다.</p>

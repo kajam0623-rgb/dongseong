@@ -24,7 +24,7 @@ get_header();
     </div>
     <div class="contact-proc">
       <div class="overline">/PROCESS</div>
-      <h2 class="sec-h2">문의 후 세 단계로 진행되고, <br>두 번째까지는 무료입니다</h2>
+      <h2 class="sec-h2">문의부터 착수까지 <br>세 단계로 진행합니다</h2>
       <div class="cp-steps">
         <div class="cp-step"><div class="num">01</div><div><div class="t">문의 접수</div><p>카카오톡·메일·전화 어느 채널이든 편하게 남겨주세요.</p></div></div>
         <div class="cp-step"><div class="num">02</div><div><div class="t">무료 진단</div><p>현재 사이트와 검색 노출 상태를 살펴보고 방향을 제안드립니다.</p></div></div>
@@ -37,7 +37,7 @@ get_header();
 
 <section class="section panel"><div class="wrap">
   <div class="overline">/FREE CHECK · 무료 진단에 들어가는 것</div>
-  <h2 class="sec-h2">무료라고 대충 보지 않습니다, <br>같은 쉰 개 항목으로 잽니다</h2>
+  <h2 class="sec-h2">무료 진단도 <br>같은 쉰 개 항목으로 잽니다</h2>
   <p class="sec-lead">치과 여덟 곳을 채점할 때 쓴 기준을 그대로 씁니다. 계약 여부와 상관없이 점수와 근거를 드립니다.</p>
   <div class="grid-3" style="margin-top:clamp(32px,4vw,48px)">
     <div class="card"><div class="num">01</div><h3>열 항목 채점</h3><p>검색 기본기부터 기계가 읽는 정보 표기까지, 항목마다 다섯 개씩 쉰 개를 확인합니다. 있다·없다로만 답하는 항목이라 판단이 들어가지 않습니다.</p></div>
@@ -49,7 +49,7 @@ get_header();
 
 <section class="section">
   <div class="overline">/BEFORE YOU WRITE · 미리 알려주시면</div>
-  <h2 class="sec-h2">이 네 가지를 같이 주시면, <br>첫 답변이 훨씬 구체해집니다</h2>
+  <h2 class="sec-h2">첫 문의에 <br>이 네 가지를 같이 주세요</h2>
   <p class="sec-lead">없어도 괜찮습니다. 주소 하나만 주셔도 진단은 시작됩니다.</p>
   <div class="fit-list">
     <div class="fit"><span class="arrow">→</span><p><b>지금 쓰시는 홈페이지 주소.</b> 이것만 있으면 저희가 먼저 채점해서 답장에 점수를 담아 드립니다.</p></div>
