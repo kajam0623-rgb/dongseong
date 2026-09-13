@@ -18,8 +18,8 @@ get_header();
 </header>
 <section class="section" style="padding-top:0">
   <div class="overline">/WHAT'S INCLUDED</div>
-  <h2 class="sec-h2">광고비를 늘리기 전에 <br>여섯 가지를 봅니다</h2>
-  <p class="sec-lead">치과 여덟 곳의 기술·성능 점수는 평균 47점이었습니다. 광고로 데려온 방문자도 검색으로 온 방문자와 같은 페이지에 도착합니다.</p>
+  <h2 class="sec-h2">광고비를 늘리기 전에 <br>6가지를 봅니다</h2>
+  <p class="sec-lead">치과 8곳의 기술·성능 점수는 평균 47점이었습니다. 광고로 데려온 방문자도 검색으로 온 방문자와 같은 페이지에 도착합니다.</p>
   <div class="grid-3" style="margin-top:clamp(32px,4vw,48px)">
     <div class="card"><div class="num">01</div><h3>광고 전략 설계</h3><p>타깃·지역·예산에 맞춰 채널별 광고 구조를 설계합니다.</p></div>
     <div class="card"><div class="num">02</div><h3>검색 광고</h3><p>네이버·구글 검색 광고로 지금 찾는 고객을 데려옵니다.</p></div>
@@ -28,12 +28,12 @@ get_header();
     <div class="card"><div class="num">05</div><h3>전환 추적</h3><p>전화·예약·상담 신청까지 전환 데이터를 정확히 측정합니다.</p></div>
     <div class="card"><div class="num">06</div><h3>월간 리포트</h3><p>성과와 다음 달 개선 방향을 리포트로 투명하게 공유합니다.</p></div>
   </div>
-  <p class="sec-caption">2026년 8월 측정 · 표본 8곳 · 열 항목 쉰 개 체크포인트 · 공개된 HTML 소스만 확인 · 이 점수는 검색 순위나 매출을 예측하지 않습니다</p>
-  <a class="sec-link" href="https://dental-seo-report.vercel.app/" target="_blank" rel="noopener">채점 기준 쉰 개와 전체 리포트 보기 →</a>
+  <p class="sec-caption">2026년 8월 측정 · 표본 8곳 · 10개 항목 50개 체크포인트 · 공개된 HTML 소스만 확인 · 이 점수는 검색 순위나 매출을 예측하지 않습니다</p>
+  <a class="sec-link" href="https://dental-seo-report.vercel.app/" target="_blank" rel="noopener">채점 기준 50개와 전체 리포트 보기 →</a>
 </section>
 <section class="section panel"><div class="wrap">
   <div class="overline">/HOW IT WORKS</div>
-  <h2 class="sec-h2">설계·집행·검증·리포트 <br>네 단계로 운영합니다</h2>
+  <h2 class="sec-h2">설계·집행·검증·리포트 <br>4단계로 운영합니다</h2>
   <div class="grid-4">
     <div class="step"><div class="num">01</div><div class="t">진단 · 목표</div><p>현재 광고 성과와 목표 지표를 정의합니다.</p></div>
     <div class="step"><div class="num">02</div><div class="t">세팅 · 론칭</div><p>추적 설치 후 캠페인을 론칭합니다.</p></div>

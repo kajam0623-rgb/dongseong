@@ -19,21 +19,21 @@ get_header();
 <section class="section" style="padding-top:0">
   <div class="overline">/WHAT'S INCLUDED</div>
   <h2 class="sec-h2">AI가 읽는 여섯 자리를 <br>채웁니다</h2>
-  <p class="sec-lead">저희가 치과 여덟 곳을 채점했을 때 가장 낮게 나온 항목이 정확히 이 자리였습니다. 기계용 정보 표기 평균 20점, 30점을 넘긴 곳은 없었습니다.</p>
+  <p class="sec-lead">저희가 치과 8곳을 채점했을 때 가장 낮게 나온 항목이 정확히 이 자리였습니다. 기계용 정보 표기 평균 20점, 30점을 넘긴 곳은 없었습니다.</p>
   <div class="grid-3" style="margin-top:clamp(32px,4vw,48px)">
     <div class="card"><div class="num">01</div><h3>AI 노출 진단</h3><p>ChatGPT·Gemini·네이버 AI에서 브랜드가 어떻게 언급되는지 현재 상태를 진단합니다.</p></div>
     <div class="card"><div class="num">02</div><h3>콘텐츠 구조화</h3><p>AI가 인용하기 좋은 형태로 사이트의 정보 구조와 문서 포맷을 재설계합니다.</p></div>
     <div class="card"><div class="num">03</div><h3>구조화 데이터</h3><p>스키마 마크업으로 진료·서비스·위치 정보를 검색엔진이 정확히 읽게 만듭니다.</p></div>
     <div class="card"><div class="num">04</div><h3>권위 신호 구축</h3><p>전문가 프로필, 출처, 리뷰 등 AI가 신뢰하는 근거 신호를 쌓습니다.</p></div>
     <div class="card"><div class="num">05</div><h3>검색 최적화(SEO)</h3><p>구글·네이버 검색의 기본기를 함께 다져 노출 기반을 넓힙니다.</p></div>
-    <div class="card"><div class="num">06</div><h3>모니터링 리포트</h3><p>AI 답변 속 브랜드 언급과 검색 순위 변화를 매월 리포트로 드립니다.</p></div>
+    <div class="card"><div class="num">06</div><h3>모니터링 리포트</h3><p>AI 답변 속 브랜드 언급과 검색 순위 변화를 매월 리포트로 보냅니다.</p></div>
   </div>
-  <p class="sec-caption">2026년 8월 측정 · 표본 8곳 · 열 항목 쉰 개 체크포인트 · 공개된 HTML 소스만 확인 · 이 점수는 검색 순위나 매출을 예측하지 않습니다</p>
-  <a class="sec-link" href="https://dental-seo-report.vercel.app/" target="_blank" rel="noopener">채점 기준 쉰 개와 전체 리포트 보기 →</a>
+  <p class="sec-caption">2026년 8월 측정 · 표본 8곳 · 10개 항목 50개 체크포인트 · 공개된 HTML 소스만 확인 · 이 점수는 검색 순위나 매출을 예측하지 않습니다</p>
+  <a class="sec-link" href="https://dental-seo-report.vercel.app/" target="_blank" rel="noopener">채점 기준 50개와 전체 리포트 보기 →</a>
 </section>
 <section class="section panel"><div class="wrap">
   <div class="overline">/HOW IT WORKS</div>
-  <h2 class="sec-h2">진단·설계·적용·모니터링 <br>네 단계로 진행합니다</h2>
+  <h2 class="sec-h2">진단·설계·적용·모니터링 <br>4단계로 진행합니다</h2>
   <div class="grid-4">
     <div class="step"><div class="num">01</div><div class="t">진단</div><p>AI 검색 노출 현황과 경쟁사를 분석합니다.</p></div>
     <div class="step"><div class="num">02</div><div class="t">전략 설계</div><p>노출 목표 키워드와 콘텐츠 로드맵을 세웁니다.</p></div>

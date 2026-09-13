@@ -18,22 +18,22 @@ get_header();
 </header>
 <section class="section" style="padding-top:0">
   <div class="overline">/WHAT'S INCLUDED</div>
-  <h2 class="sec-h2">기획·집필·발행까지 <br>여섯 가지를 대행합니다</h2>
-  <p class="sec-lead">치과 여덟 곳의 콘텐츠 품질은 평균 73점이었고, 콘텐츠 확장성은 63점이었습니다. 글은 있는데 쌓이는 구조가 없다는 뜻입니다.</p>
+  <h2 class="sec-h2">기획·집필·발행까지 <br>6가지를 대행합니다</h2>
+  <p class="sec-lead">치과 8곳의 콘텐츠 품질은 평균 73점이었고, 콘텐츠 확장성은 63점이었습니다. 글은 있는데 쌓이는 구조가 없다는 뜻입니다.</p>
   <div class="grid-3" style="margin-top:clamp(32px,4vw,48px)">
     <div class="card"><div class="num">01</div><h3>키워드 기획</h3><p>잠재 고객이 실제로 검색하는 질문을 찾아 월간 콘텐츠 캘린더를 만듭니다.</p></div>
     <div class="card"><div class="num">02</div><h3>전문 원고 제작</h3><p>의료·법률 등 전문 분야의 톤과 규정을 지키는 원고를 작성합니다.</p></div>
     <div class="card"><div class="num">03</div><h3>비주얼 제작</h3><p>썸네일·인포그래픽 등 글의 신뢰를 높이는 이미지를 함께 제작합니다.</p></div>
     <div class="card"><div class="num">04</div><h3>발행 · 운영</h3><p>네이버 블로그·홈페이지 칼럼에 정기 발행하고 채널을 관리합니다.</p></div>
     <div class="card"><div class="num">05</div><h3>검색 최적화</h3><p>제목·구조·태그를 검색 노출에 맞게 최적화해 발행합니다.</p></div>
-    <div class="card"><div class="num">06</div><h3>성과 리포트</h3><p>조회·유입·문의 전환을 매월 리포트로 정리해 드립니다.</p></div>
+    <div class="card"><div class="num">06</div><h3>성과 리포트</h3><p>조회·유입·문의 전환을 매월 리포트로 정리합니다.</p></div>
   </div>
-  <p class="sec-caption">2026년 8월 측정 · 표본 8곳 · 열 항목 쉰 개 체크포인트 · 공개된 HTML 소스만 확인 · 이 점수는 검색 순위나 매출을 예측하지 않습니다</p>
-  <a class="sec-link" href="https://dental-seo-report.vercel.app/" target="_blank" rel="noopener">채점 기준 쉰 개와 전체 리포트 보기 →</a>
+  <p class="sec-caption">2026년 8월 측정 · 표본 8곳 · 10개 항목 50개 체크포인트 · 공개된 HTML 소스만 확인 · 이 점수는 검색 순위나 매출을 예측하지 않습니다</p>
+  <a class="sec-link" href="https://dental-seo-report.vercel.app/" target="_blank" rel="noopener">채점 기준 50개와 전체 리포트 보기 →</a>
 </section>
 <section class="section panel"><div class="wrap">
   <div class="overline">/HOW IT WORKS</div>
-  <h2 class="sec-h2">키워드·기획·발행·리포트 <br>네 단계로 운영합니다</h2>
+  <h2 class="sec-h2">키워드·기획·발행·리포트 <br>4단계로 운영합니다</h2>
   <div class="grid-4">
     <div class="step"><div class="num">01</div><div class="t">주제 설계</div><p>진료·업무 분야별 핵심 주제를 함께 정합니다.</p></div>
     <div class="step"><div class="num">02</div><div class="t">원고 제작</div><p>초안 확인 후 수정을 거쳐 완성합니다.</p></div>

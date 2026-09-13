@@ -772,7 +772,7 @@ get_header();
     <h2 class="lg mt-s">진료과목마다, <br>페이지 하나씩</h2>
     <p class="bd mt-m" style="max-width:640px">
       임플란트를 찾는 환자분과 교정을 찾는 환자분은 서로 다른 말로 검색합니다.
-      한 페이지에 모아두면 어느 검색에도 걸리지 않습니다.
+      한 페이지에 모아두면 검색은 대표 키워드 하나만 잡습니다.
     </p>
 
     <div class="rows">
@@ -953,24 +953,24 @@ get_header();
 
     <p class="cap mt-l" style="max-width:660px">
       일반 제작 점수는 씨클로가 상담 과정에서 확인한 치과 홈페이지들의 일반적인 상태를 정리한 것입니다.
-      원장님 홈페이지의 실제 점수는 무료 진단으로 확인해 드립니다.
+      원장님 홈페이지의 실제 점수는 무료 진단으로 확인하실 수 있습니다.
     </p>
   </section>
 
   <!-- ══════════ 11 POINT 03 ══════════ -->
   <section class="scr lft b-white">
     <p class="md navy-t" style="font-size:15px;font-weight:800;letter-spacing:.14em">POINT 03</p>
-    <h2 class="lg mt-s">뭘 써야 할지, <br>목록으로 드립니다</h2>
+    <h2 class="lg mt-s">쓸 주제를 <br>목록으로 뽑아 둡니다</h2>
     <p class="bd mt-m" style="max-width:640px">
       검색 노출은 결국 콘텐츠가 쌓여야 시작됩니다.
-      그래서 만들 때부터 글이 들어갈 구조를 잡아두고, 무엇을 쓸지까지 정리해 드립니다.
+      그래서 만들 때부터 글이 들어갈 구조를 잡아두고, 무엇을 쓸지까지 정리합니다.
     </p>
 
     <div class="rows">
       <div class="r"><div class="k">카테고리</div><div class="v">진료과목에 맞춰 칼럼 카테고리를 미리 나눠둡니다. 글이 쌓일수록 해당 과목 페이지가 함께 힘을 받는 구조입니다.</div></div>
-      <div class="r"><div class="k">글 양식</div><div class="v">제목·소제목·요약이 잡혀 있는 양식을 넣어드립니다. 빈칸을 채우듯 쓰시면 검색엔진이 읽기 좋은 형태가 됩니다.</div></div>
-      <div class="r"><div class="k">주제 목록</div><div class="v">환자분들이 실제로 검색하는 질문을 조사해 <b>칼럼 주제 30개를 정리해 드립니다.</b> 무엇을 써야 할지 고민하지 않으셔도 됩니다.</div></div>
-      <div class="r"><div class="k">표현 가이드</div><div class="v">치료 효과 보장, 최상급 표현 등 의료광고 규정상 피해야 할 표현을 정리한 가이드를 함께 드립니다.</div></div>
+      <div class="r"><div class="k">글 양식</div><div class="v">제목·소제목·요약이 잡혀 있는 양식을 넣습니다. 빈칸을 채우듯 쓰시면 검색엔진이 읽기 좋은 형태가 됩니다.</div></div>
+      <div class="r"><div class="k">주제 목록</div><div class="v">환자분들이 실제로 검색하는 질문을 조사해 <b>칼럼 주제 30개를 뽑습니다.</b> 무엇을 써야 할지 고민하지 않으셔도 됩니다.</div></div>
+      <div class="r"><div class="k">표현 가이드</div><div class="v">치료 효과 보장, 최상급 표현 등 의료광고 규정상 피해야 할 표현을 정리한 가이드를 같이 넣습니다.</div></div>
     </div>
 
     <p class="cap mt-l">납품해 드리는 칼럼 주제 목록 예시입니다.</p>
@@ -1058,8 +1058,8 @@ get_header();
     </div>
 
     <div class="note">
-      <b>상담을 신청하시면</b> 실제 주소와 화면을 그대로 보여드립니다.
-      원장님 지역과 겹치지 않는 사례부터 안내드리고, 원하시면 해당 원장님께 여쭤본 뒤 연결해드립니다.
+      <b>상담을 신청하시면</b> 실제 주소와 화면을 그대로 보실 수 있습니다.
+      원장님 지역과 겹치지 않는 사례부터 안내하고, 원하시면 해당 원장님께 여쭤본 뒤 연결합니다.
     </div>
   </section>
 
@@ -1067,10 +1067,10 @@ get_header();
   <section class="scr lft b-dark2">
     <h2 class="lg">신청부터 오픈까지</h2>
     <div class="tl">
-      <div class="e"><div class="d">1일차</div><div><b>상담 · 진단</b><p>지금 홈페이지의 검색 노출 상태를 함께 확인합니다. 제작 사례도 이때 보여드립니다.</p></div></div>
+      <div class="e"><div class="d">1일차</div><div><b>상담 · 진단</b><p>지금 홈페이지의 검색 노출 상태를 함께 확인합니다. 제작 사례도 이때 함께 봅니다.</p></div></div>
       <div class="e"><div class="d">1주차</div><div><b>구조 설계 · 시안</b><p>진료과목을 어떻게 나눌지 정하고, 디자인 시안을 확인하신 뒤 제작에 들어갑니다.</p></div></div>
       <div class="e"><div class="d">2~3주차</div><div><b>제작 · 최적화</b><p>워드프레스 테마를 제작하고, SEO·GEO 설정과 색인 등록까지 마칩니다.</p></div></div>
-      <div class="e"><div class="d">최종 주차</div><div><b>콘텐츠 구조 세팅 · 인수인계</b><p>칼럼 카테고리와 글 양식을 넣고, 주제 목록 30개를 전달드립니다. 사용법도 안내드립니다.</p></div></div>
+      <div class="e"><div class="d">최종 주차</div><div><b>콘텐츠 구조 세팅 · 인수인계</b><p>칼럼 카테고리와 글 양식을 넣고, 주제 목록 30개를 넘깁니다. 사용법도 안내드립니다.</p></div></div>
       <div class="e"><div class="d">오픈 이후</div><div><b>3개월 무상 점검</b><p>오픈 후 3개월간 오류 수정과 색인 상태 점검을 무상으로 지원합니다.</p></div></div>
     </div>
   </section>
@@ -1159,7 +1159,7 @@ get_header();
 
   <!-- ══════════ 18 작업 원칙 ══════════ -->
   <section class="scr lft b-white">
-    <h2 class="lg">일하는 방식을 <br>먼저 알려드립니다</h2>
+    <h2 class="lg">일하는 방식을 <br>먼저 적어 둡니다</h2>
     <p class="bd mt-m" style="max-width:640px">
       후기를 늘어놓는 대신, 저희가 실제로 어떻게 일하는지 적어둡니다.
       상담 때 이 약속대로 하는지 직접 확인해 보세요.
@@ -1172,11 +1172,11 @@ get_header();
       </div>
       <div class="r">
         <div class="k">진행 공개</div>
-        <div class="v">작업 중인 사이트 주소를 드립니다. 언제든 들어와서 지금 어디까지 됐는지 직접 보실 수 있습니다.</div>
+        <div class="v">작업 중인 사이트 주소를 공유합니다. 언제든 들어와서 지금 어디까지 됐는지 직접 보실 수 있습니다.</div>
       </div>
       <div class="r">
         <div class="k">계정 인계</div>
-        <div class="v">도메인·서버·관리자 계정을 납품과 동시에 전부 넘겨드립니다. 저희가 쥐고 있는 것은 없습니다.</div>
+        <div class="v">도메인·서버·관리자 계정을 납품과 동시에 전부 넘깁니다. 저희가 쥐고 있는 것은 없습니다.</div>
       </div>
       <div class="r">
         <div class="k">3개월 점검</div>
@@ -1194,7 +1194,7 @@ get_header();
     <h2 class="lg">자주 묻는 질문</h2>
     <div class="fq">
       <div class="i"><div class="q"><i>Q.</i>지금 쓰는 홈페이지가 있는데, 옮길 수 있나요?</div>
-        <div class="a">기존 사이트의 글과 이미지는 대부분 옮겨올 수 있습니다. 다만 업체 정책에 따라 소스나 데이터 반출이 제한되는 경우가 있어, 상담 때 계약 조건을 함께 확인해드립니다.</div></div>
+        <div class="a">기존 사이트의 글과 이미지는 대부분 옮겨올 수 있습니다. 다만 업체 정책에 따라 소스나 데이터 반출이 제한되는 경우가 있어, 상담 때 계약 조건을 상담 때 같이 확인합니다.</div></div>
       <div class="i"><div class="q"><i>Q.</i>제작 후에 매달 나가는 비용이 있나요?</div>
         <div class="a">씨클로에 내시는 월 이용료는 없습니다. 도메인 연장비와 서버 사용료만 실비로 발생하며, 규모에 따라 연 20~40만원 선입니다. 이 비용도 병원 명의로 직접 결제하십니다.</div></div>
       <div class="i"><div class="q"><i>Q.</i>왜 다른 업체보다 저렴한가요?</div>
@@ -1204,7 +1204,7 @@ get_header();
       <div class="i"><div class="q"><i>Q.</i>GEO를 하면 AI 답변에 꼭 나오나요?</div>
         <div class="a">특정 노출을 보장드릴 수는 없습니다. AI 답변은 서비스마다 기준이 다르고 계속 바뀌기 때문입니다. 씨클로가 하는 일은 AI가 정보를 읽고 인용할 수 있는 구조를 갖추는 데까지입니다.</div></div>
       <div class="i"><div class="q"><i>Q.</i>의료광고 규정이 걱정됩니다.</div>
-        <div class="a">치료 효과 보장, 최상급 표현, 환자 유인 소지가 있는 문구는 처음부터 배제하고 작성합니다. 다만 최종 심의 책임은 의료기관에 있으므로, 필요한 경우 의료광고심의 절차를 함께 안내드립니다.</div></div>
+        <div class="a">치료 효과 보장, 최상급 표현, 환자 유인 소지가 있는 문구는 처음부터 배제하고 작성합니다. 다만 최종 심의 책임은 의료기관에 있으므로, 필요한 경우 의료광고심의 절차를 같이 안내합니다.</div></div>
       <div class="i"><div class="q"><i>Q.</i>칼럼은 제가 직접 써야 하나요?</div>
         <div class="a">이 서비스는 글이 쌓일 구조를 만들어드리는 데까지입니다. 카테고리와 글 양식을 세팅해드리고 주제 30개를 정리해 드리므로, 무엇을 쓸지 고민하실 필요는 없습니다. 작성까지 맡기고 싶으시면 별도로 문의해 주세요.</div></div>
       <div class="i"><div class="q"><i>Q.</i>제작 기간은 얼마나 걸리나요?</div>
@@ -1216,7 +1216,7 @@ get_header();
   <section class="scr snap b-dark">
     <h2 class="xl">지금 어디쯤인지 <br>부터 봅시다</h2>
     <p class="bd mt-m center-bd">
-      현재 홈페이지의 검색 노출 상태를 무료로 점검해드립니다.<br>
+      현재 홈페이지의 검색 노출 상태를 무료로 점검합니다.<br>
       점검 결과만 받아보시고 결정하셔도 괜찮습니다.
     </p>
     <div class="btns">
