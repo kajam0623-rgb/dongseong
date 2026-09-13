@@ -13,6 +13,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://academy.anitok.com/sinjeong-manhwa</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://academy.anitok.com/sinjeong-drawing</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>monthly</changefreq>
@@ -25,7 +31,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://academy.anitok.com/sinjeong-manhwa</loc>
+    <loc>https://academy.anitok.com/mokdong-webtoon</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://academy.anitok.com/yangcheon-drawing</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
