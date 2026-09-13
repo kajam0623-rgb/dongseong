@@ -1895,7 +1895,7 @@ export function renderBlogIndex(d, posts, { present = new Set() } = {}) {
 </section>`;
   return blogShell(d, {
     title: `학원소식 | ${d.name}`,
-    description: `${d.name}이 정리한 입시 요강 · 실기 주제 · 수업 이야기 ${posts.length}편.`,
+    description: `${d.name}${조사(d.name, '이', '가')} 정리한 입시 요강 · 실기 주제 · 수업 이야기 ${posts.length}편.`,
     canonical,
     image: resolveImageForMeta(d, present),
     jsonLd: `<script type="application/ld+json">${jsonld({
