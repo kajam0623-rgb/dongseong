@@ -269,7 +269,7 @@ get_header();
   <div class="res-block">
     <div class="res-head">
       <h3>검색 유입 · 최근 90일</h3>
-      <span class="res-src">출처: 네이버 서치어드바이저 · 직전 90일 대비</span>
+      <span class="res-src">출처: 네이버 서치어드바이저 · 최근 90일 · PC+Mobile · 2026.09.09 기준</span>
     </div>
     <div class="res-cards">
       <article class="res-card">
@@ -277,7 +277,7 @@ get_header();
         <div class="res-big"><b>740</b><span>클릭</span></div>
         <div class="res-delta"><i>↑</i>직전 90일 대비 +12,300%</div>
         <dl class="res-rows">
-          <div class="res-row"><dt>노출</dt><dd>6.4만</dd></div>
+          <div class="res-row"><dt>노출</dt><dd>6.4만 <i class="up">+9,099%</i></dd></div>
           <div class="res-row"><dt>클릭률</dt><dd>1.2%</dd></div>
           <div class="res-row"><dt>직전 90일 클릭</dt><dd>약 6</dd></div>
         </dl>
@@ -287,7 +287,7 @@ get_header();
         <div class="res-big"><b>110</b><span>클릭</span></div>
         <div class="res-delta"><i>↑</i>직전 90일 대비 +1,733%</div>
         <dl class="res-rows">
-          <div class="res-row"><dt>노출</dt><dd>1.9만</dd></div>
+          <div class="res-row"><dt>노출</dt><dd>1.9만 <i class="up">+1,486%</i></dd></div>
           <div class="res-row"><dt>클릭률</dt><dd>0.6%</dd></div>
           <div class="res-row"><dt>직전 90일 클릭</dt><dd>약 6</dd></div>
         </dl>
@@ -297,7 +297,7 @@ get_header();
         <div class="res-big"><b>74</b><span>클릭</span></div>
         <div class="res-delta"><i>↑</i>직전 90일 대비 +7,300%</div>
         <dl class="res-rows">
-          <div class="res-row"><dt>노출</dt><dd>1.4만</dd></div>
+          <div class="res-row"><dt>노출</dt><dd>1.4만 <i class="up">+903%</i></dd></div>
           <div class="res-row"><dt>클릭률</dt><dd>0.5%</dd></div>
           <div class="res-row"><dt>직전 90일 클릭</dt><dd>약 1</dd></div>
         </dl>
@@ -305,6 +305,53 @@ get_header();
     </div>
   </div>
 
+
+  <div class="res-block">
+    <div class="res-head">
+      <h3>어떤 검색어로 들어왔나</h3>
+      <span class="res-src">출처: 네이버 서치어드바이저 검색 키워드 · 최근 90일</span>
+    </div>
+    <p class="kw-lead">클릭 수가 아니라 <b>검색어</b>입니다. 세 곳 모두 상위 검색어 대부분이 병원 이름이 아니라 증상과 시술 질문이었습니다. 간판을 알고 찾아온 유입이 아니라 모르는 사람이 찾아온 유입입니다.</p>
+    <div class="kw-cards">
+      <article class="kw-card">
+        <div class="res-top"><span class="res-id">치과 ①</span><span class="res-tag">수도권 · 종합진료</span></div>
+        <div class="kw-head"><span>검색어</span><span>클릭</span><span>노출</span><span>CTR</span></div>
+        <div class="kw-list">
+          <div class="kw-row"><span class="kw-q">사랑니 발치후 식사</span><span class="kw-c">21</span><span class="kw-i">395</span><span class="kw-r">5.3%</span></div>
+          <div class="kw-row"><span class="kw-q">임플란트 식단</span><span class="kw-c">20</span><span class="kw-i">105</span><span class="kw-r">19.0%</span></div>
+          <div class="kw-row"><span class="kw-q">20대 임플란트</span><span class="kw-c">17</span><span class="kw-i">363</span><span class="kw-r">4.7%</span></div>
+          <div class="kw-row"><span class="kw-q">임플란트 수술 후 식사</span><span class="kw-c">14</span><span class="kw-i">479</span><span class="kw-r">2.9%</span></div>
+          <div class="kw-row"><span class="kw-q">임플란트 붓기 언제까지</span><span class="kw-c">14</span><span class="kw-i">40</span><span class="kw-r">35.0%</span></div>
+          <div class="kw-row"><span class="kw-q">임플란트 음식</span><span class="kw-c">12</span><span class="kw-i">165</span><span class="kw-r">7.3%</span></div>
+          <div class="kw-row"><span class="kw-q">사랑니 썩음</span><span class="kw-c">9</span><span class="kw-i">273</span><span class="kw-r">3.3%</span></div>
+          <div class="kw-row"><span class="kw-q">스케일링 피</span><span class="kw-c">8</span><span class="kw-i">452</span><span class="kw-r">1.8%</span></div>
+        </div>
+      </article>
+      <article class="kw-card">
+        <div class="res-top"><span class="res-id">치과 ②</span><span class="res-tag">인천 · 사랑니 중심</span></div>
+        <div class="kw-head"><span>검색어</span><span>클릭</span><span>노출</span><span>CTR</span></div>
+        <div class="kw-list">
+          <div class="kw-row"><span class="kw-q">혓바닥 혹</span><span class="kw-c">3</span><span class="kw-i">27</span><span class="kw-r">11.1%</span></div>
+          <div class="kw-row"><span class="kw-q">구월동 사랑니 발치 전문</span><span class="kw-c">2</span><span class="kw-i">532</span><span class="kw-r">0.4%</span></div>
+          <div class="kw-row"><span class="kw-q">혀 자극성 섬유종</span><span class="kw-c">2</span><span class="kw-i">14</span><span class="kw-r">14.3%</span></div>
+          <div class="kw-row"><span class="kw-q">구월동 사랑니 잘 뽑는 치과</span><span class="kw-c">2</span><span class="kw-i">11</span><span class="kw-r">18.2%</span></div>
+          <div class="kw-row"><span class="kw-q">구월동 사랑니 치과</span><span class="kw-c">1</span><span class="kw-i">653</span><span class="kw-r">0.2%</span></div>
+          <div class="kw-row"><span class="kw-q">인천 사랑니 전문 치과</span><span class="kw-c">1</span><span class="kw-i">554</span><span class="kw-r">0.2%</span></div>
+        </div>
+      </article>
+      <article class="kw-card">
+        <div class="res-top"><span class="res-id">치과 ③</span><span class="res-tag">수도권 · 개원 초기</span></div>
+        <div class="kw-head"><span>검색어</span><span>클릭</span><span>노출</span><span>CTR</span></div>
+        <div class="kw-list">
+          <div class="kw-row"><span class="kw-q">수원 사랑니 수면마취</span><span class="kw-c">3</span><span class="kw-i">10</span><span class="kw-r">30.0%</span></div>
+          <div class="kw-row"><span class="kw-q">수원정자동치과</span><span class="kw-c">2</span><span class="kw-i">66</span><span class="kw-r">3.0%</span></div>
+          <div class="kw-row"><span class="kw-q">수원 정자동 사랑니</span><span class="kw-c">1</span><span class="kw-i">86</span><span class="kw-r">1.2%</span></div>
+          <div class="kw-row"><span class="kw-q">수원 미세현미경 치과</span><span class="kw-c">1</span><span class="kw-i">49</span><span class="kw-r">2.0%</span></div>
+        </div>
+      </article>
+    </div>
+    <p class="sec-caption">병원 상호와 원장님 성함이 들어간 검색어는 뺐습니다. 세 곳 모두 상호 검색이 1위였고, 클릭은 각각 22 · 3 · 10이었습니다. 노출 1건에 클릭 2건으로 CTR이 200%로 찍힌 줄도 뺐습니다. 서치어드바이저 집계 특성이지 성과가 아닙니다.</p>
+  </div>
   <div class="res-block">
     <div class="res-head">
       <h3>페이지 속도 · 저희가 만든 사이트 실측</h3>

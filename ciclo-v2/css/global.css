@@ -1075,3 +1075,31 @@ html.scrolled .nav{transform:scale(.965);box-shadow:0 6px 20px rgba(17,30,108,.3
   .nav-logo img,.sidebar-brand img,.footer-brand img{transition:none}
   .nav-logo:hover img,.sidebar-brand:hover img,.footer-brand:hover img{transform:none}
 }
+
+
+/* ── 검색 키워드 표 ──
+   캡처에서 읽은 검색어 목록. 실적 %는 배수라 시작점이 작으면 의미가 흐려지는데,
+   검색어는 "환자분이 무엇을 검색해 들어왔는가" 라서 흐려질 여지가 없다.
+   씨클로가 파는 것(질문을 제목으로 쓰는 일)을 그대로 증명하는 자리다. */
+.kw-lead{margin-top:clamp(16px,1.8vw,22px);max-width:74ch;font-size:15.5px;line-height:1.7;
+  font-weight:400;color:rgba(18,18,18,.72)}
+.kw-cards{margin-top:clamp(20px,2.4vw,30px);display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(16px,2vw,26px)}
+.kw-card{background:var(--card);border:1px solid rgba(18,18,18,.1);border-radius:12px;
+  padding:clamp(20px,1.9vw,26px) clamp(18px,1.7vw,22px);
+  transition:border-color .18s cubic-bezier(.4,0,.2,1),transform .28s cubic-bezier(.22,1,.36,1)}
+.kw-card:hover{transform:translateY(-3px);border-color:rgba(17,30,108,.3)}
+.kw-head,.kw-row{display:grid;grid-template-columns:1fr 38px 52px 46px;gap:6px;align-items:baseline}
+.kw-head{margin-top:16px;padding-bottom:8px;border-bottom:1px solid rgba(18,18,18,.14);
+  font-size:11px;font-weight:700;letter-spacing:.08em;color:rgba(18,18,18,.55)}
+.kw-head span+span,.kw-row span+span{text-align:right;font-variant-numeric:tabular-nums}
+.kw-row{padding:9px 0;border-bottom:1px solid rgba(18,18,18,.07);font-size:13px;line-height:1.4}
+.kw-row:last-child{border-bottom:0}
+.kw-q{font-weight:600;color:var(--ink);word-break:keep-all}
+.kw-c{font-weight:800;color:var(--pt)}
+.kw-i,.kw-r{font-weight:500;color:rgba(18,18,18,.6)}
+/* 노출 증가율 — 카드 안 작은 배지 */
+.res-rows .up{font-style:normal;margin-left:6px;font-size:11.5px;font-weight:700;
+  color:rgba(17,30,108,.66)}
+@media(max-width:900px){.kw-cards{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.kw-cards{grid-template-columns:1fr}}
