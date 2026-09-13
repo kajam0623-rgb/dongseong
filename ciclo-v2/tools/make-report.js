@@ -5,10 +5,17 @@ const {
 } = require('docx');
 const fs = require('fs');
 
-// 사이트 본문과 같은 폰트. docx-js 는 문자열 하나로 ascii·hAnsi·cs·eastAsia 네 슬롯을
-// 모두 채우므로 한글(eastAsia)도 이 폰트로 잡힌다.
-// ※ 읽는 사람 PC 에 Pretendard 가 설치돼 있어야 그대로 보인다. 없으면 Word 가 대체한다.
-const FONT = 'Pretendard';
+// 폰트는 두 번째 인자로 바꾼다:  node make-report.js out.docx "Noto Sans KR"
+//
+// docx-js 는 문자열 하나로 rFonts 의 ascii·hAnsi·cs·eastAsia 네 슬롯을 모두 채운다.
+// Word 는 한글을 eastAsia 슬롯에서 고르므로 이 부분이 중요하다.
+//
+// 워드 문서는 웹처럼 폰트 폴백 스택을 쓸 수 없다. 읽는 PC 에 그 폰트가 없으면
+// Word 가 임의로 대체한다. 선택지:
+//   맑은 고딕      윈도우에 기본 설치 — 가장 안전하지만 브랜드와 무관
+//   Pretendard    사이트 본문과 동일 — 설치 필요
+//   Noto Sans KR  구글 본고딕 — 설치 필요하지만 구글 독스에는 내장
+const FONT = process.argv[3] || 'Pretendard';
 const NAVY = '111E6C';
 const INK  = '1A1A1A';
 const GREY = '5C5C5C';
