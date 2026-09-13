@@ -5,7 +5,10 @@ const {
 } = require('docx');
 const fs = require('fs');
 
-const FONT = '맑은 고딕';
+// 사이트 본문과 같은 폰트. docx-js 는 문자열 하나로 ascii·hAnsi·cs·eastAsia 네 슬롯을
+// 모두 채우므로 한글(eastAsia)도 이 폰트로 잡힌다.
+// ※ 읽는 사람 PC 에 Pretendard 가 설치돼 있어야 그대로 보인다. 없으면 Word 가 대체한다.
+const FONT = 'Pretendard';
 const NAVY = '111E6C';
 const INK  = '1A1A1A';
 const GREY = '5C5C5C';
