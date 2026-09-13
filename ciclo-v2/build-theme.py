@@ -201,6 +201,13 @@ function ciclo_column_cats() {
 		'insight'  => '인사이트',
 	);
 }
+
+/**
+ * SEO 제목·설명 주입 — 페이지 10개 + 칼럼 21편.
+ * 관리자 화면에 처음 들어올 때 한 번만 돌고, 끝나면 다시 돌지 않습니다.
+ * 자세한 것은 inc/seo-meta.php 주석.
+ */
+require_once get_theme_file_path( 'inc/seo-meta.php' );
 """)
 
 # ─────────────────────────────────────────────────────────────
@@ -537,6 +544,13 @@ get_header(); ?>
 
 # 설치 안내 — 빌더가 테마 폴더를 통째로 다시 만들기 때문에 소스는 바깥에 둔다
 shutil.copy(os.path.join(HERE, 'theme-README.md'), os.path.join(OUT, 'README.md'))
+
+# SEO 제목·설명 주입 — 페이지 10개 + 칼럼 21편을 한 번에 넣는다.
+# Rank Math 화면에서 31번 손으로 붙여넣는 대신 테마가 한 번 돌고 끝낸다.
+os.makedirs(os.path.join(OUT, 'inc'), exist_ok=True)
+shutil.copy(os.path.join(HERE, 'php', 'seo-meta.php'),
+            os.path.join(OUT, 'inc', 'seo-meta.php'))
+print('SEO   inc/seo-meta.php (페이지 10 · 칼럼 21)')
 
 os.makedirs(os.path.join(OUT, 'assets', 'img'), exist_ok=True)
 os.makedirs(os.path.join(OUT, 'assets', 'css'), exist_ok=True)

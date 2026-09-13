@@ -117,3 +117,10 @@ function ciclo_column_cats() {
 		'insight'  => '인사이트',
 	);
 }
+
+/**
+ * SEO 제목·설명 주입 — 페이지 10개 + 칼럼 21편.
+ * 관리자 화면에 처음 들어올 때 한 번만 돌고, 끝나면 다시 돌지 않습니다.
+ * 자세한 것은 inc/seo-meta.php 주석.
+ */
+require_once get_theme_file_path( 'inc/seo-meta.php' );
