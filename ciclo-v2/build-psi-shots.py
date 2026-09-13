@@ -56,10 +56,41 @@ WP_PATH = '/wp-content/uploads/ciclo/'   # 워드프레스 업로드 경로
 
 
 def find(stem):
+    """assets/psi/ 에서 캡처 파일을 찾는다.
+
+    1순위는 mobile.* / desktop.* 다.
+    없으면 그 폴더의 이미지를 파일명으로 판별한다 — 카톡이나 깃허브로 올리면
+    KakaoTalk_20260907_193951534.png 같은 이름 그대로 들어오기 때문이다.
+    이름으로 못 가리면 남은 이미지를 알파벳 순으로 mobile → desktop 에 배정하고
+    무엇을 무엇으로 봤는지 찍어 준다. 틀렸으면 파일만 맞바꿔 다시 돌리면 된다.
+    """
     for ext in ('png', 'jpg', 'jpeg', 'webp'):
         hits = glob.glob(os.path.join(SRC, stem + '.' + ext))
         if hits:
             return hits[0]
+
+    imgs = sorted(p for e in ('png', 'jpg', 'jpeg', 'webp')
+                  for p in glob.glob(os.path.join(SRC, '*.' + e)))
+    if not imgs:
+        return None
+
+    # 파일명에 힌트가 있으면 쓴다
+    KEY = {'mobile': ('mobile', 'mob', '모바일', '휴대'),
+           'desktop': ('desktop', 'desk', 'pc', '데스크')}
+    for p in imgs:
+        low = os.path.basename(p).lower()
+        if any(k in low for k in KEY[stem]):
+            return p
+
+    # 힌트가 없으면 순서대로 — mobile 이 먼저다
+    named = {p for st in ('mobile', 'desktop')
+             for k in KEY[st] for p in imgs if k in os.path.basename(p).lower()}
+    rest = [p for p in imgs if p not in named]
+    idx = 0 if stem == 'mobile' else 1
+    if len(rest) > idx:
+        print('   ※ %s ← %s (파일명에 힌트가 없어 순서로 배정했습니다)'
+              % (stem, os.path.basename(rest[idx])))
+        return rest[idx]
     return None
 
 
