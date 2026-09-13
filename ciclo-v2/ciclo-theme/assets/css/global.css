@@ -940,28 +940,30 @@ html.mo [data-mo].mo-in .mo-i{opacity:1;transform:none;
 /* 첫 훑기에 이미 화면 안이던 섹션 — 전환 없이 그대로 켠다.
    첫 화면 요소가 떴다 사라졌다 하는 깜빡임을 만들지 않기 위해서다. */
 html.mo [data-mo].mo-now .mo-i,
-html.mo [data-mo].mo-now .mo-i .ev-bar,
-html.mo [data-mo].mo-now .mo-i .dx-track i,
-html.mo [data-mo].mo-now .mo-i .ev-dot{transition:none!important}
+html.mo [data-mo].mo-now .mo-v .ev-bar,
+html.mo [data-mo].mo-now .mo-v .dx-track i,
+html.mo [data-mo].mo-now .mo-v .ev-dot{transition:none!important}
 
 /* 막대는 자기가 곧 데이터다. 길이가 자라는 것 자체가 정보를 읽히게 한다.
    width 대신 clip-path 로 깎는다 — 합성만으로 처리되고 모서리도 안 뭉갠다. */
-html.mo .mo-i .ev-bar,
-html.mo .mo-i .dx-track i{clip-path:inset(0 100% 0 0)}
-html.mo [data-mo].mo-in .mo-i .ev-bar,
-html.mo [data-mo].mo-in .mo-i .dx-track i{clip-path:inset(0 0 0 0);
-  transition:clip-path .92s cubic-bezier(.22,1,.36,1) calc(var(--mo-d,0ms) + 140ms)}
+/* 카드 자신이 화면에 들어온 뒤에 자란다(.mo-v). 섹션 기준으로 걸면
+   아랫줄 카드가 보이기 전에 다 끝나 있다. ciclo-effects.js 주석 참고. */
+html.mo .ev-bar,
+html.mo .dx-track i{clip-path:inset(0 100% 0 0)}
+html.mo .mo-v .ev-bar,
+html.mo .mo-v .dx-track i{clip-path:inset(0 0 0 0);
+  transition:clip-path .9s cubic-bezier(.22,1,.36,1) var(--bd,0ms)}
 
-html.mo .mo-i .ev-dot{transform:scale(0)}
-html.mo [data-mo].mo-in .mo-i .ev-dot{transform:scale(1);
+html.mo .ev-dot{transform:scale(0)}
+html.mo .mo-v .ev-dot{transform:scale(1);
   transition:transform .46s cubic-bezier(.34,1.42,.5,1)}
-html.mo [data-mo].mo-in .mo-i .ev-dot:nth-of-type(1){transition-delay:.34s}
-html.mo [data-mo].mo-in .mo-i .ev-dot:nth-of-type(2){transition-delay:.40s}
-html.mo [data-mo].mo-in .mo-i .ev-dot:nth-of-type(3){transition-delay:.46s}
-html.mo [data-mo].mo-in .mo-i .ev-dot:nth-of-type(4){transition-delay:.52s}
-html.mo [data-mo].mo-in .mo-i .ev-dot:nth-of-type(5){transition-delay:.58s}
-html.mo [data-mo].mo-in .mo-i .ev-dot:nth-of-type(6){transition-delay:.64s}
-html.mo [data-mo].mo-in .mo-i .ev-dot:nth-of-type(7){transition-delay:.70s}
+html.mo .mo-v .ev-dot:nth-of-type(1){transition-delay:.34s}
+html.mo .mo-v .ev-dot:nth-of-type(2){transition-delay:.40s}
+html.mo .mo-v .ev-dot:nth-of-type(3){transition-delay:.46s}
+html.mo .mo-v .ev-dot:nth-of-type(4){transition-delay:.52s}
+html.mo .mo-v .ev-dot:nth-of-type(5){transition-delay:.58s}
+html.mo .mo-v .ev-dot:nth-of-type(6){transition-delay:.64s}
+html.mo .mo-v .ev-dot:nth-of-type(7){transition-delay:.70s}
 
 /* ── 스크롤 진행선 ──
    scroll-timeline 을 지원하는 브라우저에서만 나타난다. JS 는 0줄이고,
@@ -1059,4 +1061,17 @@ html.scrolled .nav{transform:scale(.965);box-shadow:0 6px 20px rgba(17,30,108,.3
 @media(prefers-reduced-motion:reduce){
   .sec-h2 .ln>i{transform:none!important}
   .hero-mark{transition:none}
+}
+
+
+/* ── 로고 회전 ──
+   계속 돌리면 눈에 거슬리고 배터리도 먹는다. 호버에서 한 바퀴만 돈다.
+   로고는 CSS content:url 로 들어간 이미지라 img 자체에 transform 을 건다. */
+.nav-logo img,.sidebar-brand img,.footer-brand img{
+  transition:transform .9s cubic-bezier(.22,1,.36,1)}
+.nav-logo:hover img,.sidebar-brand:hover img,.footer-brand:hover img{
+  transform:rotate(360deg)}
+@media(prefers-reduced-motion:reduce){
+  .nav-logo img,.sidebar-brand img,.footer-brand img{transition:none}
+  .nav-logo:hover img,.sidebar-brand:hover img,.footer-brand:hover img{transform:none}
 }

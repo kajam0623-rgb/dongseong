@@ -177,6 +177,25 @@
        */
       var pending = secs.slice(), ticking = false, dead = false;
 
+      /* 데이터 블록 — 막대·점·숫자가 든 카드
+       * 이건 섹션이 아니라 카드 자신이 화면에 들어왔을 때 움직여야 한다.
+       * 섹션 단위로 켜면 6장짜리 그리드의 아랫줄 3장은 사용자가 거기
+       * 닿기 전에 이미 다 차 있다. 움직임은 있는데 아무도 못 본다.
+       *
+       * 그런데 카드 rect 는 섹션이 content-visibility 로 건너뛰어진 동안
+       * 전부 0 이라 믿을 수 없다. 그래서 순서를 둔다 —
+       * 섹션이 .mo-in 된 뒤에만 그 안 카드의 rect 를 본다. */
+      var DATA = '.dx,.ev-row,.ev-plot,.res-card,.psi-card';
+      var blocks = [];
+      document.querySelectorAll(DATA).forEach(function (el) {
+        var host = el.closest('[data-mo]');
+        if (!host) return;
+        // 같은 줄에 있는 것끼리 아주 짧은 계단을 준다
+        var sibs = el.parentNode ? Array.prototype.indexOf.call(el.parentNode.children, el) : 0;
+        el.style.setProperty('--bd', (Math.min(sibs, 3) * 80) + 'ms');
+        blocks.push({ el: el, host: host });
+      });
+
       function sweep(now) {
         var vh = window.innerHeight || 800, i = 0;
         while (i < pending.length) {
@@ -189,7 +208,19 @@
             pending.splice(i, 1);
           } else i++;
         }
-        if (!pending.length) off();
+
+        var j = 0;
+        while (j < blocks.length) {
+          var b = blocks[j];
+          if (!b.host.classList.contains('mo-in')) { j++; continue; }   // 아직 렌더 전
+          var br = b.el.getBoundingClientRect();
+          if (br.top < vh * 0.86 && br.bottom > 0) {
+            b.el.classList.add('mo-v');
+            blocks.splice(j, 1);
+          } else j++;
+        }
+
+        if (!pending.length && !blocks.length) off();
       }
 
       function onScroll() {
@@ -291,7 +322,13 @@
        * bottom>0 을 못 넘겨 증거 밴드 숫자가 전부 0 에 멈춰 있었다.
        * 섹션 상자는 contain-intrinsic-size 로 늘 레이아웃되므로 안전하다.
        * 위 등장 효과가 같은 이유로 섹션 단위인 것과 같은 판단이다. */
-      jobs.forEach(function (j) { j.host = j.el.closest('[data-mo]'); });
+      jobs.forEach(function (j) {
+        j.host = j.el.closest('[data-mo]');
+        // 숫자가 카드 안에 있으면 카드를, 아니면 섹션을 기준으로 본다.
+        // 6장짜리 그리드에서 섹션 기준으로 세면 아랫줄 숫자가 보이기 전에
+        // 다 올라가 버린다 — 막대와 같은 이유다.
+        j.box = j.el.closest('.dx,.ev-row,.ev-plot,.res-card,.psi-card') || j.host;
+      });
 
       function sweep() {
         var vh = window.innerHeight || 800, live = 0;
@@ -300,8 +337,10 @@
           live++;
           // 히어로처럼 섹션 밖에 있는 숫자는 첫 화면이라 바로 올린다
           if (!j.host) { run(j); return; }
-          var r = j.host.getBoundingClientRect();
-          if (r.top < vh * 0.9 && r.bottom > 0) run(j);
+          // 섹션이 아직 렌더 전이면 안쪽 rect 가 전부 0 이라 믿을 수 없다
+          if (!j.host.classList.contains('mo-in')) return;
+          var r = j.box.getBoundingClientRect();
+          if (r.top < vh * 0.88 && r.bottom > 0) run(j);
         });
         if (!live) off();
       }
