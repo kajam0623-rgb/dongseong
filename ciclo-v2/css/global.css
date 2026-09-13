@@ -150,8 +150,12 @@ body.nav-open{overflow:hidden}
 .hero h1{margin-top:22px;font-size:clamp(64px,11vw,168px)}
 /* 한 단어 워드마크 — 두 줄 표어보다 글자가 커 보이므로 상한을 낮추고
    자간을 조금 되돌린다(.display 의 -.03em 은 긴 문장 기준이다). */
-.hero h1.hero-name{font-size:clamp(58px,13vw,150px);letter-spacing:-.02em}
-/* 마침표는 브랜드 컬러 한 점. 150px 에서는 앞 자간이 실제로 몇 px 벌어지므로 당긴다. */
+/* 워드마크는 브랜드 네이비. Archivo(검정 그로테스크) 시절에는 검정+네이비
+   마침표 조합이 맞았지만, Pretendard 로 바꾸면서 글자가 가벼워져 네이비
+   단색이 뒤의 회색 마크와 부딪히지 않고 무게가 산다. */
+.hero h1.hero-name{font-size:clamp(58px,13vw,150px);letter-spacing:-.02em;color:var(--pt)}
+/* 마침표는 이제 워드마크와 같은 네이비다. 150px 에서 앞 자간이 실제로 몇 px
+   벌어지므로 당기는 것만 유지한다. */
 .hero h1.hero-name .blue{margin-left:-.06em}
 .hero .hero-claim{margin-top:30px;max-width:46ch}
 .hero .hero-claim b{display:inline-block;margin-bottom:10px;font-weight:700;
