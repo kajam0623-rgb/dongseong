@@ -28,6 +28,8 @@ get_header();
     <div class="card"><div class="num">05</div><h3>검색 최적화(SEO)</h3><p>구글·네이버 검색의 기본기를 함께 다져 노출 기반을 넓힙니다.</p></div>
     <div class="card"><div class="num">06</div><h3>모니터링 리포트</h3><p>AI 답변 속 브랜드 언급과 검색 순위 변화를 매월 리포트로 드립니다.</p></div>
   </div>
+  <p class="sec-caption">2026년 8월 측정 · 표본 8곳 · 열 항목 쉰 개 체크포인트 · 공개된 HTML 소스만 확인 · 이 점수는 검색 순위나 매출을 예측하지 않습니다</p>
+  <a class="sec-link" href="https://dental-seo-report.vercel.app/" target="_blank" rel="noopener">채점 기준 쉰 개와 전체 리포트 보기 →</a>
 </section>
 <section class="section panel"><div class="wrap">
   <div class="overline">/HOW IT WORKS</div>

@@ -309,16 +309,18 @@ get_header();
   <div class="res-block">
     <div class="res-head">
       <h3>페이지 속도 — 저희가 만든 사이트 실측</h3>
-      <span class="res-src">출처: PageSpeed Insights (Lighthouse) · 실제 URL 측정</span>
+      <span class="res-src">출처: PageSpeed Insights · 2026년 8월 31일 측정</span>
     </div>
     <div class="psi-cards">
       <article class="psi-card">
         <div class="res-top"><span class="res-id">치과 ④</span><span class="res-tag">모바일 측정</span></div>
+        <p class="psi-when">2026년 8월 31일 22:00 측정 · 휴대전화</p>
         <div class="psi-scores">
           <div class="psi-s"><div class="psi-ring">100</div><small>성능</small></div>
           <div class="psi-s"><div class="psi-ring">100</div><small>접근성</small></div>
           <div class="psi-s"><div class="psi-ring">100</div><small>권장사항</small></div>
           <div class="psi-s"><div class="psi-ring">100</div><small>검색엔진<br>최적화</small></div>
+          <div class="psi-s"><div class="psi-ring psi-frac">3/3</div><small>에이전트형<br>브라우징</small></div>
         </div>
         <div class="psi-vitals">
           <div class="psi-v"><b>1.0초</b><small>첫 콘텐츠</small></div>
@@ -327,14 +329,17 @@ get_header();
           <div class="psi-v"><b>0.003</b><small>레이아웃 이동</small></div>
           <div class="psi-v"><b>1.8초</b><small>속도 지수</small></div>
         </div>
+        <p class="psi-field">실제 사용자의 경험 — <b>데이터 없음</b>. 최근 방문이 적어 구글이 실사용자 기록을 쌓지 못한 상태입니다. 위 값은 실험실 측정치입니다.</p>
       </article>
       <article class="psi-card">
         <div class="res-top"><span class="res-id">치과 ⑤</span><span class="res-tag">데스크톱 측정</span></div>
+        <p class="psi-when">2026년 8월 31일 12:39 측정 · 데스크톱</p>
         <div class="psi-scores">
           <div class="psi-s"><div class="psi-ring">100</div><small>성능</small></div>
           <div class="psi-s"><div class="psi-ring">100</div><small>접근성</small></div>
           <div class="psi-s"><div class="psi-ring">100</div><small>권장사항</small></div>
           <div class="psi-s"><div class="psi-ring">100</div><small>검색엔진<br>최적화</small></div>
+          <div class="psi-s"><div class="psi-ring psi-frac">2/2</div><small>에이전트형<br>브라우징</small></div>
         </div>
         <div class="psi-vitals">
           <div class="psi-v"><b>0.4초</b><small>첫 콘텐츠</small></div>
@@ -343,12 +348,13 @@ get_header();
           <div class="psi-v"><b>0.006</b><small>레이아웃 이동</small></div>
           <div class="psi-v"><b>0.6초</b><small>속도 지수</small></div>
         </div>
+        <p class="psi-field">실제 사용자의 경험 — <b>데이터 없음</b>. 최근 방문이 적어 구글이 실사용자 기록을 쌓지 못한 상태입니다. 위 값은 실험실 측정치입니다.</p>
       </article>
     </div>
-    <p class="res-note">네 항목 100점은 <b>빠르다는 뜻입니다.</b> 다만 앞의 실태조사에서 본 대로, 기계가 읽는 자리가 비어 있으면 속도만 좋아도 검색과 AI 답변에서는 불리합니다. 저희는 이 두 가지를 같은 단계에서 맞춥니다.</p>
+    <p class="res-note">다섯 항목 만점은 <b>빠르다는 뜻입니다.</b> 다만 앞의 실태조사에서 본 대로, 기계가 읽는 자리가 비어 있으면 속도만 좋아도 검색과 AI 답변에서는 불리합니다. 저희는 이 두 가지를 같은 단계에서 맞춥니다.</p>
   </div>
 
-  <p class="sec-caption">네이버 서치어드바이저 최근 90일 기준(2026년 9월 측정) · PageSpeed Insights 실측 · 병원명·주소·도메인은 가렸습니다 · 클릭률 1.2%는 업계 평균을 넘는 값이 아닙니다. 이 표는 유입이 늘었다는 사실까지만 말합니다 · 같은 조건에서 같은 결과를 보장하지 않습니다</p>
+  <p class="sec-caption">네이버 서치어드바이저 최근 90일 기준(2026년 9월 측정) · PageSpeed Insights 2026년 8월 31일 측정(실험실 기준, 실사용자 데이터 없음) · 병원명·주소·도메인은 가렸습니다 · 클릭률 1.2%는 업계 평균을 넘는 값이 아닙니다. 이 표는 유입이 늘었다는 사실까지만 말합니다 · 같은 조건에서 같은 결과를 보장하지 않습니다</p>
   <a class="sec-link" href="/contact/">우리 사이트는 지금 몇 점인지 무료로 진단받기 →</a>
 </div></section>
 <section class="section navy" id="process"><div class="wrap">
