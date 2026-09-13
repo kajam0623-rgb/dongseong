@@ -544,6 +544,25 @@ body.nav-open{overflow:hidden}
 @media(max-width:900px){.res-cards{grid-template-columns:1fr 1fr}.psi-cards{grid-template-columns:1fr}}
 @media(max-width:620px){.res-cards{grid-template-columns:1fr}.psi-vitals{grid-template-columns:repeat(3,1fr);gap:12px 8px}}
 
+/* ── About / Contact 보강 ────────────────────────────────────────── */
+/* 사명 풀이처럼 영문 한 줄이 주인공인 제목. 인라인 font-size 대신 이 클래스를 쓴다. */
+.sec-h2.xl{font-size:clamp(34px,5vw,64px);line-height:1.05;letter-spacing:-.03em}
+/* 안 하는 일 — 카드가 아니라 목록. 자랑이 아니므로 시각적 무게를 낮춘다. */
+.dont{margin-top:clamp(32px,4vw,48px);display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(28px,4vw,60px)}
+.dont>div{padding:22px 0;border-top:1px solid rgba(18,18,18,.14)}
+.dont h3{margin:0;font-size:17px;font-weight:700;letter-spacing:-.015em}
+.dont p{margin:9px 0 0;font-size:15px;line-height:1.72;color:rgba(18,18,18,.66)}
+.section.navy .dont>div{border-top-color:rgba(255,255,255,.2)}
+.section.navy .dont p{color:rgba(255,255,255,.66)}
+/* 회사 정보 — 채우기 전에는 눈에 띄어야 한다 */
+.corp{margin-top:clamp(32px,4vw,48px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0 clamp(28px,4vw,60px);max-width:760px}
+.corp>div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;
+  border-bottom:1px solid rgba(18,18,18,.12);font-size:14.5px}
+.corp dt{color:rgba(18,18,18,.55)}
+.corp dd{margin:0;font-weight:700;text-align:right}
+@media(max-width:700px){.dont,.corp{grid-template-columns:1fr}}
+
 
 /* 화면 밖 섹션은 렌더링을 건너뛴다 (긴 페이지 초기 렌더 비용 절감).
    contain-intrinsic-size 의 auto 키워드가 실제 높이를 기억하므로
