@@ -84,7 +84,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pt);outline-offset:
 .nav{pointer-events:auto;display:flex;align-items:center;gap:22px;background:var(--pt);color:#fff;border-radius:999px;
   padding:11px 12px 11px 20px;box-shadow:0 12px 32px rgba(17,30,108,.28);max-width:100%}
 .nav-logo{display:flex;align-items:center;gap:10px;color:#fff}
-.nav-logo img{height:20px;width:auto}
+.nav-logo img{height:20px;width:auto;aspect-ratio:488/566;object-fit:contain}
 .nav-logo span{font-family:Archivo,sans-serif;font-weight:900;font-size:15px;letter-spacing:.08em}
 .nav-links{display:flex;align-items:center;gap:18px;font-size:13.5px;font-weight:600}
 .nav-links a{color:rgba(255,255,255,.78)}
@@ -110,7 +110,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pt);outline-offset:
 body.nav-open{overflow:hidden}
 .sidebar-top{display:flex;justify-content:space-between;align-items:center}
 .sidebar-brand{display:flex;align-items:center;gap:10px}
-.sidebar-brand img{height:22px}
+.sidebar-brand img{height:22px;width:auto;aspect-ratio:488/566;object-fit:contain}
 .sidebar-brand span{font-family:Archivo,sans-serif;font-weight:900;font-size:15px;letter-spacing:.08em}
 .sidebar-close{background:rgba(255,255,255,.12);border:none;color:#fff;border-radius:999px;width:40px;height:40px;cursor:pointer;font-size:18px;font-weight:600}
 .sidebar-close:hover{background:rgba(255,255,255,.22)}
@@ -140,7 +140,10 @@ body.nav-open{overflow:hidden}
 .hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
   padding:140px clamp(20px,4vw,48px) 184px;position:relative;overflow:hidden}
 .hero-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:0;pointer-events:none}
-.hero-mark img{height:min(78vh,620px);width:auto;filter:invert(.78);opacity:.1}
+/* 폭 기준으로 잡는다. 높이를 고정하면 전역 img{max-width:100%} 가 폭만 잘라내
+   390px 에서 195×620(비율 −63.5%)까지 짓눌렸다. 534px 폭 = 종전 620px 높이. */
+.hero-mark img{width:min(84vw,534px);height:auto;aspect-ratio:488/566;object-fit:contain;
+  filter:invert(.78);opacity:.1}
 @keyframes spin{to{transform:rotate(360deg)}}
 .hero>*{position:relative;z-index:1}
 .hero .hero-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:0;pointer-events:none}
@@ -149,7 +152,8 @@ body.nav-open{overflow:hidden}
 .hero .cta-row{margin-top:44px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .hero .corner{position:absolute;z-index:1}
 .hero .corner.l{left:clamp(16px,6vw,120px);bottom:48px;font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(20px,2.4vw,32px)}
-.hero .corner.r{right:clamp(16px,6vw,120px);bottom:56px;font-family:Archivo,sans-serif;font-weight:700;font-size:12px;letter-spacing:.14em;opacity:.55}
+/* .hero .corner.r 제거 — 뷰포트 고정 카톡 버튼과 자리가 구조적으로 겹친다.
+   같은 문구가 h1·마퀴·푸터 태그라인에 이미 있다. */
 .scroll-badge{position:absolute;left:50%;bottom:40px;transform:translateX(-50%);width:108px;height:108px;display:flex;align-items:center;justify-content:center;color:var(--ink);z-index:1}
 .scroll-badge svg{position:absolute;inset:0;width:100%;height:100%}
 .scroll-badge:hover{color:var(--pt)}
@@ -276,7 +280,10 @@ body.nav-open{overflow:hidden}
 
 /* footer */
 .footer{background:var(--pt);color:#fff;padding:clamp(80px,10vw,130px) clamp(20px,5vw,100px) clamp(48px,5vw,64px);position:relative;overflow:hidden}
-.footer-mark{position:absolute;right:-6%;bottom:-20%;height:90%;width:auto;opacity:.07;pointer-events:none}
+/* 히어로 마크와 같은 함정 — height:90% 를 두면 max-width 가 폭만 잘라
+   390px 에서 250×617(비율 −53%)로 짓눌린다. 폭 기준으로 통일한다. */
+.footer-mark{position:absolute;right:-6%;bottom:-20%;width:min(38%,58vw);height:auto;
+  aspect-ratio:488/566;object-fit:contain;opacity:.07;pointer-events:none}
 .footer .inner{max-width:1280px;margin:0 auto;position:relative}
 .footer h2{margin-top:18px;font-weight:700;font-size:clamp(28px,3.2vw,40px);line-height:1.25;letter-spacing:-.025em;word-break:keep-all}
 .footer .lead{margin-top:24px;font-size:18px;font-weight:400;color:rgba(255,255,255,.75);line-height:1.55}
@@ -286,7 +293,7 @@ body.nav-open{overflow:hidden}
 .footer-nav a:hover{color:#fff}
 .footer-bar{margin-top:clamp(60px,7vw,100px);border-top:1px solid rgba(255,255,255,.16);padding-top:26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
 .footer-brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.footer-brand img{height:20px}
+.footer-brand img{height:20px;width:auto;aspect-ratio:488/566;object-fit:contain}
 .footer-brand .nm{font-family:Archivo,sans-serif;font-weight:900;font-size:14px;letter-spacing:.08em}
 .footer-brand .tg{font-size:12px;font-weight:600;letter-spacing:.12em;color:rgba(255,255,255,.5)}
 .footer-copy{font-size:13px;font-weight:500;color:rgba(255,255,255,.5)}
@@ -587,7 +594,12 @@ main.site-main>.page-content:has(.ciclo-page){max-width:none}
   .about-grid,.mean-grid,.contact-grid,.faq-row{grid-template-columns:1fr}
   .proc-card{gap:28px}
 }
-@media(max-width:560px){.grid-4{grid-template-columns:1fr}}
+@media(max-width:560px){
+  .grid-4{grid-template-columns:1fr}
+  /* 히어로 하단 장식 2종을 내린다 — 고정 카톡 버튼과 서로 부딪힌다.
+     코너 라벨은 바로 아래 마퀴가 같은 문구를 반복하므로 잃는 정보가 없다. */
+  .scroll-badge{display:none}
+}
 @media(max-width:420px){
   .sec-h2 br,.footer h2 br{display:none}
   .sec-h2,.footer h2{font-size:26px}
@@ -702,14 +714,12 @@ body.blog, body.archive, body.single, body.search{background:var(--bg);color:var
 .ciclo-column .eael-load-more-button{background:var(--pt)!important;border-radius:999px!important;color:#fff!important;font-weight:700!important}
 @media(max-width:600px){.ciclo-column .eael-grid-post-holder{flex-direction:column;gap:14px}.ciclo-column .eael-entry-media{flex-basis:auto;max-width:none;width:100%}.ciclo-column .eael-entry-media img{height:200px}}
 
-/* intro float (회사소개서) — 카톡 버튼 아래 */
-.kakao-float{bottom:76px}
-.intro-float{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;align-items:center;gap:8px;background:var(--pt);color:#fff;
-  border-radius:999px;padding:14px 20px;font-size:14px;font-weight:800;box-shadow:0 10px 26px rgba(17,30,108,.32);transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .18s}
-.intro-float:hover{color:#fff;background:var(--pt2);transform:translateY(-2px);box-shadow:0 16px 32px rgba(17,30,108,.4)}
-
-/* 플로팅 버튼 크기 통일 */
-.kakao-float,.intro-float{width:152px;justify-content:center;padding:14px 0}
+/* 플로팅 버튼 — 카톡 하나만 띄운다.
+   이전에는 .intro-float(회사소개서) 자리를 비우려고 .kakao-float{bottom:76px} 로
+   들어 올려 뒀는데, .intro-float 요소는 어느 페이지에도 없다(전 페이지 grep 0건).
+   그 76px 때문에 390px 에서 카톡 버튼이 스크롤 배지와 31×52px 겹쳤다.
+   죽은 규칙과 리프트를 함께 걷어내고 기본 bottom:20px 로 되돌린다. */
+.kakao-float{width:152px;justify-content:center;padding:14px 0}
 
 
 /* featured work card */
