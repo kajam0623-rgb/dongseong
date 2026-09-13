@@ -1103,3 +1103,17 @@ html.scrolled .nav{transform:scale(.965);box-shadow:0 6px 20px rgba(17,30,108,.3
   color:rgba(17,30,108,.66)}
 @media(max-width:900px){.kw-cards{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.kw-cards{grid-template-columns:1fr}}
+
+
+/* ── 서치어드바이저 캡처 ──
+   세로로 긴 화면이라 3단으로 놓으면 글자가 안 읽힌다. 폭을 주고 가로로 민다.
+   바로 아래 .kw-cards 가 같은 내용을 기계가 읽는 표로 다시 싣는다. */
+.nv-shots{margin-top:clamp(20px,2.4vw,30px);display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.8vw,22px)}
+.nv-shot{margin:0;min-width:0}
+.nv-shot img{display:block;width:100%;height:auto;background:#fff;
+  border:1px solid rgba(18,18,18,.12);border-radius:10px}
+.nv-shot figcaption{margin-top:10px;font-size:12px;line-height:1.6;font-weight:400;
+  color:rgba(18,18,18,.62)}
+.nv-shot figcaption b{font-weight:700;color:rgba(18,18,18,.8)}
+@media(max-width:860px){.nv-shots{grid-template-columns:1fr;max-width:560px}}

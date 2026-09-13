@@ -312,6 +312,23 @@ get_header();
       <span class="res-src">출처: 네이버 서치어드바이저 검색 키워드 · 최근 90일</span>
     </div>
     <p class="kw-lead">클릭 수가 아니라 <b>검색어</b>입니다. 세 곳 모두 상위 검색어 대부분이 병원 이름이 아니라 증상과 시술 질문이었습니다. 간판을 알고 찾아온 유입이 아니라 모르는 사람이 찾아온 유입입니다.</p>
+    <div class="nv-shots">
+      <figure class="nv-shot">
+        <img src="<?php echo esc_url( get_theme_file_uri( 'assets/img/naver-1.webp' ) ); ?>" alt="네이버 서치어드바이저 치과 ① 최근 90일 화면 — 740클릭 · 6.4만 노출 · CTR 1.2% · 직전 90일 대비 클릭 +12,300%"
+             width="1000" height="1752" loading="lazy" decoding="async">
+        <figcaption><b>치과 ① · 수도권 · 종합진료</b> · 1위 상호 검색 1줄을 가렸습니다</figcaption>
+      </figure>
+      <figure class="nv-shot">
+        <img src="<?php echo esc_url( get_theme_file_uri( 'assets/img/naver-2.webp' ) ); ?>" alt="네이버 서치어드바이저 치과 ② 최근 90일 화면 — 110클릭 · 1.9만 노출 · CTR 0.6% · 직전 90일 대비 클릭 +1,733%"
+             width="1000" height="1722" loading="lazy" decoding="async">
+        <figcaption><b>치과 ② · 인천 · 사랑니 중심</b> · 상호가 들어간 3줄을 가렸습니다</figcaption>
+      </figure>
+      <figure class="nv-shot">
+        <img src="<?php echo esc_url( get_theme_file_uri( 'assets/img/naver-3.webp' ) ); ?>" alt="네이버 서치어드바이저 치과 ③ 최근 90일 화면 — 74클릭 · 1.4만 노출 · CTR 0.5% · 직전 90일 대비 클릭 +7,300%"
+             width="1000" height="1743" loading="lazy" decoding="async">
+        <figcaption><b>치과 ③ · 수도권 · 개원 초기</b> · 상호·원장님 성함 4줄을 가렸습니다</figcaption>
+      </figure>
+    </div>
     <div class="kw-cards">
       <article class="kw-card">
         <div class="res-top"><span class="res-id">치과 ①</span><span class="res-tag">수도권 · 종합진료</span></div>

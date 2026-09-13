@@ -547,7 +547,8 @@ shutil.copy(os.path.join(HERE, 'js', 'ciclo-effects.js'), os.path.join(OUT, 'ass
 # 캡처 WebP — 테마 안으로 넣는다. 워드프레스 미디어에 따로 올릴 필요가 없고,
 # 테마를 지웠다 다시 켜도 이미지가 같이 따라온다.
 import glob as _glob
-_shots = sorted(_glob.glob(os.path.join(HERE, 'images', 'psi-*.webp')))
+_shots = sorted(_glob.glob(os.path.join(HERE, 'images', 'psi-*.webp')) +
+                _glob.glob(os.path.join(HERE, 'images', 'naver-*.webp')))
 for _p in _shots:
     shutil.copy(_p, os.path.join(OUT, 'assets', 'img', os.path.basename(_p)))
 if _shots:
