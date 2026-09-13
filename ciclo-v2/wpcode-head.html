@@ -11,24 +11,23 @@
 
      ★ 이 스니펫을 넣지 않으면 폰트가 적용되지 않는다. CSS 교체와 세트다.
 
-     Archivo 웨이트 변경: 500;700;800;900 → 700;800;900
-       - 500 은 CSS 어디에서도 쓰이지 않는데 로드되고 있었다 (파일 1개 낭비)
-       - 600 은 .overline 이 쓰는데 로드가 안 돼서 브라우저가 700 으로 대체하고
-         있었다. v2 에서 .overline 을 700 으로 명시했으므로 600 도 불필요하다.
+     Archivo 는 걷어냈다 — 사이트 전체를 Pretendard 하나로 통일했다.
+     함께 사라진 것:
+       - 렌더 차단 스타일시트 1장 (fonts.googleapis.com/css2?family=Archivo)
+       - 서드파티 오리진 2개 (fonts.googleapis.com · fonts.gstatic.com)
+         → preconnect 2줄도 같이 뺐다. DNS+TLS 왕복 두 번이 없어진다
+       - Archivo woff2 3벌 (700 / 800 / 900)
+     이제 남은 외부 폰트 오리진은 jsdelivr 하나뿐이다.
      ========================================================================== -->
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&display=swap">
 
 <!-- 더 밀어붙이려면(선택)
-     두 폰트를 자체 호스팅하면 서드파티 오리진 2개(DNS+TLS)가 사라져
-     PageSpeed 에서 확실한 추가 점수가 된다. Pretendard dynamic-subset 은
-     유니코드 범위별로 woff2 가 쪼개져 있어 파일 수가 많지만, 한글 사이트에서는
-     그 방식이 오히려 전송량이 작다. 미디어에 올리고 이 두 <link> 의 href 만
-     내부 경로로 바꾸면 된다. -->
+     Pretendard 를 자체 호스팅하면 남은 서드파티 오리진 하나(DNS+TLS)까지
+     사라져 PageSpeed 에서 확실한 추가 점수가 된다. dynamic-subset 은 유니코드
+     범위별로 woff2 가 쪼개져 있어 파일 수가 많지만(CSS 1 + woff2 15), 한글
+     사이트에서는 그 방식이 오히려 전송량이 작다. 미디어에 올리고 위 <link> 의
+     href 만 내부 경로로 바꾸면 된다. -->
