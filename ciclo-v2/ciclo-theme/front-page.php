@@ -15,7 +15,7 @@ get_header();
 
   <div class="hero-grid">
     <div class="hero-copy">
-      <div class="overline dim">/DIGITAL AGENCY — SEOUL</div>
+      <div class="overline dim">/GEO, AEO, SEO AGENCY</div>
       <h1 class="hero-h1"><span class="hn display">CICLO<span class="blue">.</span></span><span class="hs">GEO 웹사이트, 랜딩페이지 제작</span></h1>
       <p class="hero-claim">검색엔진과 AI가 읽을 수 있는 구조로 만듭니다.<br>병원·법률·전문직 브랜드를 맡습니다.</p>
       <div class="cta-row">
