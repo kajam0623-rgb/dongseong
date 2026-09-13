@@ -12,18 +12,45 @@ get_header();
 <div class="ciclo-page" id="ciclo-home">
 <header class="hero">
   <div class="hero-mark" aria-hidden="true"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="488" height="566" fetchpriority="low" decoding="async"></div>
-  <div class="overline dim">/DIGITAL AGENCY — SEOUL</div>
-  <h1 class="display hero-name">CICLO<span class="blue">.</span></h1>
-  <p class="lead hero-claim"><b>GEO 웹사이트, 랜딩페이지 제작</b><br>검색엔진과 AI가 읽을 수 있는 구조로 만듭니다. <br>병원·법률·전문직 브랜드를 맡습니다.</p>
-  <div class="cta-row">
-    <a class="btn btn-primary" href="/contact/">프로젝트 문의 →</a>
-    <a class="btn btn-ghost" href="/work/">작업 보기</a>
+
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="overline dim">/DIGITAL AGENCY — SEOUL</div>
+      <h1 class="hero-h1"><span class="hn display">CICLO<span class="blue">.</span></span><span class="hs">GEO 웹사이트, 랜딩페이지 제작</span></h1>
+      <p class="hero-claim">검색엔진과 AI가 읽을 수 있는 구조로 만듭니다.<br>병원·법률·전문직 브랜드를 맡습니다.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/contact/">프로젝트 문의 <i class="ar" aria-hidden="true">→</i></a>
+        <a class="btn btn-ghost" href="/work/">작업 보기</a>
+      </div>
+    </div>
+
+    <div class="hero-proof">
+      <p class="hp-h">근거는 아래에 전부 엽니다</p>
+      <a class="hp-i" href="#evidence">
+        <b>81<i>점</i><em>→</em><span class="hp-low">20</span><i class="hp-lowi">점</i></b>
+        <span class="hp-c">사람이 보는 화면과 기계가 읽는 자리 — 치과 여덟 곳 평균</span>
+      </a>
+      <a class="hp-i" href="#results">
+        <b>100<i>/100</i></b>
+        <span class="hp-c">PageSpeed Insights 네 항목 — 저희가 만든 사이트 실측</span>
+      </a>
+      <a class="hp-i" href="#results">
+        <b>740<i>클릭</i></b>
+        <span class="hp-c">최근 90일 검색 유입 — 직전 90일 약 6클릭에서</span>
+      </a>
+    </div>
   </div>
-  <a class="scroll-badge" href="#services" title="스크롤">
-    <svg viewBox="0 0 120 120"><defs><path id="ring" d="M 60,60 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0"/></defs><text style="font-family:'Pretendard Variable',Pretendard,sans-serif;font-weight:800;font-size:11px;fill:currentColor"><textPath href="#ring" textLength="286" lengthAdjust="spacing">GEO · WEBSITE · LANDING PAGE ·</textPath></text></svg>
-    <span class="down">↓</span>
-  </a>
-  <div class="corner l">©2026</div>
+
+  <div class="hero-base">
+    <span class="hb-c">©2026</span>
+    <nav class="hb-idx" aria-label="서비스 바로가기">
+      <a href="/website-design/"><i>01</i>WEBSITE DESIGN</a>
+      <a href="/geo/"><i>02</i>GEO</a>
+      <a href="/blog-content/"><i>03</i>BLOG CONTENT</a>
+      <a href="/digital-marketing/"><i>04</i>DIGITAL MARKETING</a>
+    </nav>
+    <a class="hb-scroll" href="#evidence">SCROLL<span aria-hidden="true">↓</span></a>
+  </div>
 </header>
 <div class="marquee"><div class="marquee-track"><div><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span></div><div><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span><span>WEBSITE DESIGN</span><span class="dot">·</span><span>GEO</span><span class="dot">·</span><span>BLOG CONTENT</span><span class="dot">·</span><span>DIGITAL MARKETING</span><span class="dot">·</span></div></div></div>
 <section class="section navy evidence" id="evidence"><div class="wrap">

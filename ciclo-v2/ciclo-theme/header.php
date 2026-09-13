@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <a class="skip" href="#content">본문 바로가기</a>
+<div class="scroll-line" aria-hidden="true"></div>
 <div class="nav-fixed"><nav class="nav" aria-label="주 메뉴">
   <a class="nav-logo" href="/"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="CICLO" width="488" height="566" fetchpriority="high" decoding="async"><span>CICLO</span></a>
   <div class="nav-links">
