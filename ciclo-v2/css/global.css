@@ -25,7 +25,7 @@ img{display:block;max-width:100%;height:auto}
 
 /* overline */
 .overline{font-family:Archivo,'Arial Narrow',sans-serif;font-weight:700;font-size:14px;letter-spacing:.24em;line-height:1.45;color:var(--pt)}
-.overline.dim{color:rgba(18,18,18,.55)}
+.overline.dim{color:rgba(18,18,18,.62)}
 .overline.light{color:rgba(255,255,255,.6)}
 
 /* display headings */
@@ -37,9 +37,9 @@ img{display:block;max-width:100%;height:auto}
 .sec-link{display:inline-flex;align-items:center;gap:7px;margin-top:clamp(22px,2vw,28px);font-size:15px;font-weight:700;color:var(--pt);
   transition:color .15s cubic-bezier(.4,0,.2,1)}
 .sec-link:hover{color:var(--pt2)}
-.sec-caption{margin-top:clamp(16px,1.6vw,22px);font-size:13px;line-height:1.7;font-weight:400;color:rgba(18,18,18,.48)}
+.sec-caption{margin-top:clamp(16px,1.6vw,22px);font-size:13px;line-height:1.7;font-weight:400;color:rgba(18,18,18,.62)}
 .section.navy .sec-lead{color:rgba(255,255,255,.72)}
-.section.navy .sec-caption{color:rgba(255,255,255,.45)}
+.section.navy .sec-caption{color:rgba(255,255,255,.55)}
 .section.navy .sec-link{color:#fff}
 
 /* buttons */
@@ -121,7 +121,7 @@ body.nav-open{overflow:hidden}
 .sidebar-menu .lab-sub{font-size:19px}
 /* 메뉴 그룹 라벨 — 238LAB 처럼 페이지와 서비스를 나눈다 */
 .sidebar-group{margin-top:24px;margin-bottom:2px;font-family:Archivo,sans-serif;font-size:11px;
-  font-weight:700;letter-spacing:.2em;color:rgba(255,255,255,.38)}
+  font-weight:700;letter-spacing:.2em;color:rgba(255,255,255,.55)}
 .sidebar-menu .ko{font-size:12px;font-weight:600;color:rgba(255,255,255,.55)}
 .sidebar-foot{margin-top:auto;padding-top:36px}
 .kakao-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--kakao);color:#191919;border-radius:4px;padding:14px 0;font-size:15px;font-weight:800;transition:background .15s cubic-bezier(.4,0,.2,1)}
@@ -129,7 +129,7 @@ body.nav-open{overflow:hidden}
 .sidebar-contact{margin-top:18px;font-size:13.5px;line-height:1.8;color:rgba(255,255,255,.7);font-weight:400}
 .sidebar-contact a{color:rgba(255,255,255,.85)}
 .sidebar-contact a:hover{color:#fff}
-.sidebar-tag{margin-top:16px;font-size:11px;letter-spacing:.12em;color:rgba(255,255,255,.4);font-weight:600}
+.sidebar-tag{margin-top:16px;font-size:11px;letter-spacing:.12em;color:rgba(255,255,255,.55);font-weight:600}
 
 /* kakao float */
 .kakao-float{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;align-items:center;gap:8px;background:var(--kakao);color:#191919;
@@ -237,11 +237,11 @@ body.nav-open{overflow:hidden}
 /* work grid */
 .work-grid{margin-top:clamp(40px,5vw,64px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,36px)}
 .work-slot{aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:#E9E4D9;display:flex;align-items:center;justify-content:center;
-  color:rgba(18,18,18,.35);font-size:14px;font-weight:600}
+  color:rgba(18,18,18,.62);font-size:14px;font-weight:600}
 .work-meta{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px}
 .work-meta .t{font-family:Archivo,sans-serif;font-weight:800;font-size:18px;letter-spacing:-.01em;text-transform:uppercase}
 .work-meta .tag{font-size:13px;font-weight:600;color:var(--pt)}
-.work-desc{margin-top:6px;font-size:14px;line-height:1.62;font-weight:400;color:rgba(18,18,18,.6)}
+.work-desc{margin-top:6px;font-size:14px;line-height:1.62;font-weight:400;color:rgba(18,18,18,.62)}
 
 /* about */
 .about-grid{display:grid;grid-template-columns:1fr;gap:clamp(20px,3vw,28px);align-items:start}
@@ -275,7 +275,7 @@ body.nav-open{overflow:hidden}
 .channel.phone{background:#fff;border:1px solid rgba(18,18,18,.12);color:var(--ink)}
 .channel.phone:hover{color:var(--ink);border-color:rgba(17,30,108,.35)}
 .channel.phone .lab,.channel.phone .arr{color:var(--pt)}
-.channel.phone .sub{color:rgba(18,18,18,.6)}
+.channel.phone .sub{color:rgba(18,18,18,.62)}
 .channel .big{font-size:clamp(18px,2.2vw,26px)}
 .contact-proc{background:var(--panel);border-radius:12px;padding:32px 30px}
 .contact-proc h2{margin-top:12px;font-size:22px;font-weight:800;letter-spacing:-.01em}
@@ -284,7 +284,7 @@ body.nav-open{overflow:hidden}
 .cp-step .num{font-family:Archivo,sans-serif;font-weight:800;font-size:13px;color:var(--pt);min-width:24px}
 .cp-step .t{font-size:16px;font-weight:800}
 .cp-step p{margin-top:4px;font-size:14px;line-height:1.62;color:rgba(18,18,18,.65);font-weight:400}
-.cp-note{margin-top:28px;border-top:1px solid rgba(18,18,18,.14);padding-top:18px;font-size:13.5px;line-height:1.7;color:rgba(18,18,18,.6);font-weight:400}
+.cp-note{margin-top:28px;border-top:1px solid rgba(18,18,18,.14);padding-top:18px;font-size:13.5px;line-height:1.7;color:rgba(18,18,18,.62);font-weight:400}
 
 /* other services */
 .other-pills{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
@@ -308,8 +308,8 @@ body.nav-open{overflow:hidden}
 .footer-brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .footer-brand img{height:20px;width:auto;aspect-ratio:488/566;object-fit:contain}
 .footer-brand .nm{font-family:Archivo,sans-serif;font-weight:900;font-size:14px;letter-spacing:.08em}
-.footer-brand .tg{font-size:12px;font-weight:600;letter-spacing:.12em;color:rgba(255,255,255,.5)}
-.footer-copy{font-size:13px;font-weight:500;color:rgba(255,255,255,.5)}
+.footer-brand .tg{font-size:12px;font-weight:600;letter-spacing:.12em;color:rgba(255,255,255,.55)}
+.footer-copy{font-size:13px;font-weight:500;color:rgba(255,255,255,.55)}
 
 /* reveal — 제거됨 (238LAB은 스크롤 리빌 0개)
    ciclo-effects.js 에서 .reveal 주입 코드도 함께 삭제해야 한다.
@@ -354,7 +354,7 @@ body.nav-open{overflow:hidden}
 .ev-check{margin-top:clamp(26px,3vw,36px);padding:clamp(22px,2.2vw,28px) clamp(22px,2.2vw,26px);background:rgba(0,0,0,.22);border-left:2px solid var(--kakao)}
 .ev-check-h{font-family:Archivo,sans-serif;font-size:11px;font-weight:800;letter-spacing:.16em;color:rgba(255,255,255,.55)}
 .ev-check-s{margin-top:10px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px;line-height:1.7;color:#fff}
-.ev-check-s i{font-style:normal;color:rgba(255,255,255,.35);padding-inline:6px}
+.ev-check-s i{font-style:normal;color:rgba(255,255,255,.55);padding-inline:6px}
 .ev-check-s code{font-family:inherit;background:rgba(250,225,0,.15);color:var(--kakao);padding:1px 6px}
 .ev-check-p{margin-top:10px;font-size:13.5px;line-height:1.65;color:rgba(255,255,255,.6)}
 
@@ -379,7 +379,7 @@ body.nav-open{overflow:hidden}
 .ev-axis{display:grid;grid-template-columns:var(--lab) minmax(0,1fr) var(--val);gap:12px;margin-top:8px}
 .ev-scale{grid-column:2;position:relative;height:18px}
 .ev-scale span{position:absolute;top:0;transform:translateX(-50%);font-family:Archivo,sans-serif;
-  font-size:10.5px;font-weight:700;color:rgba(255,255,255,.35);font-variant-numeric:tabular-nums}
+  font-size:10.5px;font-weight:700;color:rgba(255,255,255,.55);font-variant-numeric:tabular-nums}
 .ev-foot{margin-top:18px;padding-left:calc(var(--lab) + 12px);font-size:13px;line-height:1.6;color:rgba(255,255,255,.6)}
 .ev-foot b{color:var(--kakao);font-weight:500}
 
@@ -398,14 +398,14 @@ body.nav-open{overflow:hidden}
   font-size:10.5px;font-weight:700;color:rgba(255,255,255,.6);font-variant-numeric:tabular-nums}
 .ev-plot-axis{position:relative;height:18px;margin-top:6px}
 .ev-plot-axis span{position:absolute;top:0;transform:translateX(-50%);font-family:Archivo,sans-serif;
-  font-size:10.5px;font-weight:700;color:rgba(255,255,255,.35);font-variant-numeric:tabular-nums}
+  font-size:10.5px;font-weight:700;color:rgba(255,255,255,.55);font-variant-numeric:tabular-nums}
 .ev-dots-foot{margin-top:14px;font-size:13px;line-height:1.65;color:rgba(255,255,255,.6)}
 .ev-dots-foot b{color:var(--kakao);font-weight:500}
 .ev-acts-h{font-size:15px;font-weight:700;line-height:1.5;letter-spacing:-.015em}
 .ev-acts-p{margin-top:8px;font-size:13.5px;line-height:1.7;color:rgba(255,255,255,.62)}
 .ev-acts{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px}
 .ev-acts .btn{padding:13px 20px;font-size:14px}
-.ev-src{margin-top:18px;font-size:12px;line-height:1.65;color:rgba(255,255,255,.42)}
+.ev-src{margin-top:18px;font-size:12px;line-height:1.65;color:rgba(255,255,255,.55)}
 
 @media(max-width:900px){
   .ev-grid,.ev-strip{grid-template-columns:1fr;gap:44px}
@@ -447,20 +447,20 @@ body.nav-open{overflow:hidden}
   display:flex;flex-direction:column;gap:clamp(16px,1.6vw,20px)}
 .dx-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .dx-id{font-family:Archivo,sans-serif;font-weight:800;font-size:16px;letter-spacing:-.01em;color:var(--pt)}
-.dx-type{font-size:12.5px;font-weight:600;color:rgba(18,18,18,.5)}
+.dx-type{font-size:12.5px;font-weight:600;color:rgba(18,18,18,.62)}
 .dx-bars{display:flex;flex-direction:column;gap:7px}
 .dx-bar{display:grid;grid-template-columns:52px minmax(0,1fr) 26px;align-items:center;gap:9px}
-.dx-lab{font-size:12px;font-weight:600;color:rgba(18,18,18,.5)}
+.dx-lab{font-size:12px;font-weight:600;color:rgba(18,18,18,.62)}
 .dx-track{height:8px;background:rgba(18,18,18,.07)}
 .dx-track i{display:block;height:100%;width:var(--w);background:var(--pt)}
 .dx-bar b{font-family:Archivo,sans-serif;font-size:13px;font-weight:800;text-align:right;
   font-variant-numeric:tabular-nums;color:var(--pt)}
 .dx-geo .dx-track i{background:rgba(17,30,108,.42)}
-.dx-geo b{color:rgba(17,30,108,.6)}
+.dx-geo b{color:rgba(17,30,108,.62)}  /* .6 은 흰 카드 위 4.26:1 로 AA 미달 */
 .dx-note{font-size:14px;line-height:1.75;color:rgba(18,18,18,.68)}
 .dx-note b{font-weight:500;color:var(--ink)}
 .dx-meta{margin-top:auto;padding-top:14px;border-top:1px solid rgba(18,18,18,.1);display:flex;flex-wrap:wrap;gap:6px}
-.dx-meta span{font-size:11.5px;font-weight:600;color:rgba(18,18,18,.55);background:rgba(18,18,18,.05);
+.dx-meta span{font-size:11.5px;font-weight:600;color:rgba(18,18,18,.62);background:rgba(18,18,18,.05);
   padding:4px 8px;border-radius:4px;font-variant-numeric:tabular-nums}
 .dx-meta .up{background:rgba(17,30,108,.09);color:var(--pt)}
 @media(max-width:900px){.dx-grid{grid-template-columns:1fr 1fr}}
@@ -478,7 +478,7 @@ body.nav-open{overflow:hidden}
   font-family:Archivo,'Arial Black',sans-serif;font-weight:900;font-size:clamp(26px,2.6vw,34px);
   letter-spacing:-.025em;color:var(--pt);font-variant-numeric:tabular-nums;line-height:1.1}
 .step .stat small{display:block;margin-top:6px;font-family:'Pretendard Variable',Pretendard,sans-serif;
-  font-size:12.5px;font-weight:400;letter-spacing:0;color:rgba(18,18,18,.55);line-height:1.55}
+  font-size:12.5px;font-weight:400;letter-spacing:0;color:rgba(18,18,18,.62);line-height:1.55}
 
 /* FAQ 답변이 여러 문단이 되므로 감싸는 컨테이너가 필요하다.
    감싸지 않으면 두 번째 문단이 2단 그리드의 첫 칸으로 넘어간다. */
@@ -510,14 +510,14 @@ body.nav-open{overflow:hidden}
 .dtable th,.dtable td{text-align:right;padding:13px 10px;border-bottom:1px solid rgba(18,18,18,.12);font-size:14px}
 .dtable th:first-child,.dtable td:first-child,
 .dtable th:nth-child(2),.dtable td:nth-child(2){text-align:left}
-.dtable thead th{font-size:12px;font-weight:700;letter-spacing:.04em;color:rgba(18,18,18,.5);
+.dtable thead th{font-size:12px;font-weight:700;letter-spacing:.04em;color:rgba(18,18,18,.62);
   border-bottom:1px solid rgba(18,18,18,.28);white-space:nowrap}
 .dtable td:first-child{font-family:Archivo,sans-serif;font-weight:800;color:var(--pt)}
-.dtable td:nth-child(2){font-size:13px;color:rgba(18,18,18,.55)}
+.dtable td:nth-child(2){font-size:13px;color:rgba(18,18,18,.62)}
 /* 구조화 데이터 열이 이 표의 요점이다. 색을 새로 들이지 않고 배경으로만 묶는다. */
 .dtable th:nth-child(6),.dtable td:nth-child(6){background:rgba(17,30,108,.05)}
 .dtable tfoot td{border-bottom:0;border-top:1px solid rgba(18,18,18,.28);font-weight:800;color:var(--pt)}
-.dtable-hint{display:none;margin-top:10px;font-size:12.5px;color:rgba(18,18,18,.45)}
+.dtable-hint{display:none;margin-top:10px;font-size:12.5px;color:rgba(18,18,18,.62)}
 @media(max-width:700px){.dtable-hint{display:block}}
 
 /* ── 실적 밴드 (#results) ─────────────────────────────────────────
@@ -528,24 +528,24 @@ body.nav-open{overflow:hidden}
 .res-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 20px;
   padding-bottom:12px;border-bottom:1px solid rgba(18,18,18,.16)}
 .res-head h3{margin:0;font-size:15px;font-weight:700;letter-spacing:-.01em}
-.res-src{font-size:12.5px;font-weight:400;color:rgba(18,18,18,.5)}
+.res-src{font-size:12.5px;font-weight:400;color:rgba(18,18,18,.62)}
 .res-cards{margin-top:clamp(22px,2.6vw,32px);display:grid;grid-template-columns:repeat(3,1fr);
   gap:clamp(16px,2vw,26px)}
 .res-card{background:var(--card);border-top:2px solid var(--pt);
   padding:clamp(24px,2.2vw,30px) clamp(22px,2vw,28px) clamp(22px,2vw,26px);display:flex;flex-direction:column}
 .res-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
 .res-id{font-family:Archivo,sans-serif;font-weight:800;font-size:13.5px;letter-spacing:.02em;color:var(--pt)}
-.res-tag{font-size:11.5px;font-weight:600;color:rgba(18,18,18,.5);background:rgba(18,18,18,.05);padding:3px 8px;border-radius:4px}
+.res-tag{font-size:11.5px;font-weight:600;color:rgba(18,18,18,.62);background:rgba(18,18,18,.05);padding:3px 8px;border-radius:4px}
 .res-big{margin-top:16px;display:flex;align-items:baseline;gap:8px;font-variant-numeric:tabular-nums}
 .res-big b{font-family:Archivo,'Arial Black',sans-serif;font-weight:900;font-size:clamp(38px,4.4vw,54px);
   line-height:.94;letter-spacing:-.03em;color:var(--pt)}
-.res-big span{font-size:14px;font-weight:600;color:rgba(18,18,18,.55)}
+.res-big span{font-size:14px;font-weight:600;color:rgba(18,18,18,.62)}
 .res-delta{margin-top:10px;display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
   font-size:13px;font-weight:700;color:var(--pt);background:rgba(17,30,108,.08);padding:5px 10px;border-radius:4px}
 .res-delta i{font-style:normal}
 .res-rows{margin-top:16px;padding-top:14px;border-top:1px solid rgba(18,18,18,.1);display:flex;flex-direction:column;gap:7px}
 .res-row{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;font-variant-numeric:tabular-nums}
-.res-row dt{color:rgba(18,18,18,.55)}
+.res-row dt{color:rgba(18,18,18,.62)}
 .res-row dd{margin:0;font-weight:700}
 .res-note{margin-top:clamp(22px,2.6vw,32px);max-width:64ch;
   padding:clamp(22px,2vw,26px) clamp(22px,2vw,26px);background:rgba(17,30,108,.05);
@@ -562,12 +562,12 @@ body.nav-open{overflow:hidden}
   border-radius:50%;display:grid;place-items:center;font-family:Archivo,sans-serif;font-weight:800;
   font-size:clamp(14px,1.5vw,17px);color:var(--pt);font-variant-numeric:tabular-nums}
 .psi-s small{display:block;margin-top:8px;min-height:calc(1.35em*2);font-size:11.5px;line-height:1.35;
-  color:rgba(18,18,18,.55)}
+  color:rgba(18,18,18,.62)}
 .psi-vitals{margin-top:18px;padding-top:14px;border-top:1px solid rgba(18,18,18,.1);
   display:grid;grid-template-columns:repeat(5,1fr);gap:8px;font-variant-numeric:tabular-nums}
 .psi-v{text-align:left}
 .psi-v b{display:block;font-family:Archivo,sans-serif;font-weight:800;font-size:14.5px;letter-spacing:-.01em}
-.psi-v small{display:block;margin-top:4px;font-size:11px;line-height:1.3;color:rgba(18,18,18,.5)}
+.psi-v small{display:block;margin-top:4px;font-size:11px;line-height:1.3;color:rgba(18,18,18,.62)}
 @media(max-width:900px){.res-cards{grid-template-columns:1fr 1fr}.psi-cards{grid-template-columns:1fr}}
 @media(max-width:620px){.res-cards{grid-template-columns:1fr}.psi-vitals{grid-template-columns:repeat(3,1fr);gap:12px 8px}}
 /* PSI 실제 캡처 — 재현 표(.psi-cards) 대신 도구 화면을 그대로 싣는 경우.
@@ -578,7 +578,7 @@ body.nav-open{overflow:hidden}
 .psi-shot{margin:0}
 .psi-shot img{display:block;width:100%;height:auto;background:#fff;
   border:1px solid rgba(18,18,18,.14);border-radius:6px}
-.psi-shot figcaption{margin-top:12px;font-size:13px;line-height:1.65;color:rgba(18,18,18,.55);
+.psi-shot figcaption{margin-top:12px;font-size:13px;line-height:1.65;color:rgba(18,18,18,.62);
   font-variant-numeric:tabular-nums}
 .psi-shot figcaption b{font-weight:700;color:rgba(18,18,18,.8)}
 @media(max-width:860px){.psi-shots{grid-template-columns:1fr}}
@@ -591,14 +591,14 @@ body.nav-open{overflow:hidden}
 .dont>div{padding:22px 0;border-top:1px solid rgba(18,18,18,.14)}
 .dont h3{margin:0;font-size:17px;font-weight:700;letter-spacing:-.015em}
 .dont p{margin:9px 0 0;font-size:15px;line-height:1.72;color:rgba(18,18,18,.66)}
-.section.navy .dont>div{border-top-color:rgba(255,255,255,.2)}
+.section.navy .dont>div{border-top-color:rgba(255,255,255,.55)}
 .section.navy .dont p{color:rgba(255,255,255,.66)}
 /* 회사 정보 — 채우기 전에는 눈에 띄어야 한다 */
 .corp{margin-top:clamp(32px,4vw,48px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   gap:0 clamp(28px,4vw,60px);max-width:760px}
 .corp>div{display:flex;justify-content:space-between;gap:16px;padding:clamp(14px,1.3vw,18px) 0;
   border-bottom:1px solid rgba(18,18,18,.12);font-size:14.5px}
-.corp dt{color:rgba(18,18,18,.55)}
+.corp dt{color:rgba(18,18,18,.62)}
 .corp dd{margin:0;font-weight:700;text-align:right}
 @media(max-width:700px){.dont,.corp{grid-template-columns:1fr}}
 
@@ -696,7 +696,7 @@ body.blog, body.archive, body.single, body.search{background:var(--bg);color:var
   max-width:1000px; margin:0 auto; padding:clamp(72px,9vw,120px) clamp(20px,5vw,48px);}
 /* 사이트 타이틀·설명(테마 헤더) */
 .wp-block-site-title a, .site-title a{font-family:Archivo,sans-serif!important;font-weight:900;letter-spacing:.02em;color:var(--pt)!important;text-transform:none}
-.wp-block-site-tagline, .site-description{color:rgba(18,18,18,.55);font-weight:500}
+.wp-block-site-tagline, .site-description{color:rgba(18,18,18,.62);font-weight:500}
 /* 아카이브/페이지 제목 (보관함 등) */
 .wp-block-query-title, .page-title, .archive-title, .wp-block-post-title.has-xx{
   font-family:Archivo,sans-serif!important;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;color:var(--ink)}
@@ -714,7 +714,7 @@ body.blog, body.archive, body.single, body.search{background:var(--bg);color:var
 /* 메타(날짜 등) */
 .wp-block-post-date, .posted-on, .entry-meta{font-family:Archivo,sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--pt);font-weight:700}
 /* 테마 푸터 톤 */
-.wp-block-site-footer, .site-footer{color:rgba(18,18,18,.5);font-size:13px}
+.wp-block-site-footer, .site-footer{color:rgba(18,18,18,.62);font-size:13px}
 /* 페이지네이션 */
 .wp-block-query-pagination a, .nav-links a.page-numbers{border:1px solid rgba(18,18,18,.2);border-radius:999px;padding:8px 16px;color:var(--pt);font-weight:700}
 
@@ -724,7 +724,7 @@ body.blog, body.archive, body.single, body.search{background:var(--bg);color:var
 .column-wrap{max-width:1200px;margin:0 auto;padding:clamp(96px,11vw,140px) clamp(20px,5vw,48px) clamp(60px,8vw,100px);
   display:grid!important;grid-template-columns:220px 1fr;gap:clamp(28px,4vw,64px);align-items:start}
 .col-side{position:sticky;top:96px}
-.col-side .lbl{font-family:Archivo,sans-serif;font-weight:700;font-size:12px;letter-spacing:.2em;color:rgba(18,18,18,.4)}
+.col-side .lbl{font-family:Archivo,sans-serif;font-weight:700;font-size:12px;letter-spacing:.2em;color:rgba(18,18,18,.62)}
 .col-side nav{margin-top:16px;display:flex;flex-direction:column;gap:2px}
 .col-side a{padding:8px 0;font-size:16px;font-weight:600;color:rgba(18,18,18,.68)}
 .col-side a:hover{color:var(--pt)}
@@ -742,8 +742,8 @@ body.blog, body.archive, body.single, body.search{background:var(--bg);color:var
 .ciclo-column .eael-entry-title{font-family:'Pretendard Variable',Pretendard,sans-serif;font-size:clamp(19px,2.2vw,24px);font-weight:800;letter-spacing:-.02em;line-height:1.32;margin:0}
 .ciclo-column .eael-entry-title a{color:var(--ink)}
 .ciclo-column .eael-entry-title a:hover{color:var(--pt)}
-.ciclo-column .eael-grid-post-excerpt,.ciclo-column .eael-grid-post-excerpt p{margin-top:10px;font-size:15px;line-height:1.7;color:rgba(18,18,18,.6);font-weight:500}
-.ciclo-column .eael-entry-meta,.ciclo-column .eael-posted-on,.ciclo-column .eael-entry-footer{margin-top:12px!important;font-family:Archivo,sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(18,18,18,.45);font-weight:700}
+.ciclo-column .eael-grid-post-excerpt,.ciclo-column .eael-grid-post-excerpt p{margin-top:10px;font-size:15px;line-height:1.7;color:rgba(18,18,18,.62);font-weight:500}
+.ciclo-column .eael-entry-meta,.ciclo-column .eael-posted-on,.ciclo-column .eael-entry-footer{margin-top:12px!important;font-family:Archivo,sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(18,18,18,.62);font-weight:700}
 .ciclo-column .eael-load-more-button-wrap,.ciclo-column .eael-post-grid-loadmore{margin-top:32px}
 .ciclo-column .eael-load-more-button{background:var(--pt)!important;border-radius:999px!important;color:#fff!important;font-weight:700!important}
 @media(max-width:600px){.ciclo-column .eael-grid-post-holder{flex-direction:column;gap:14px}.ciclo-column .eael-entry-media{flex-basis:auto;max-width:none;width:100%}.ciclo-column .eael-entry-media img{height:200px}}
@@ -764,7 +764,7 @@ body.blog, body.archive, body.single, body.search{background:var(--bg);color:var
 .work-feature .wf-copy{padding:clamp(32px,3.8vw,56px);display:flex;flex-direction:column;
   gap:clamp(22px,2.2vw,28px)}
 .work-feature .wf-ov{font-family:Archivo,sans-serif;font-weight:800;font-size:11.5px;
-  letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+  letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.55)}
 .work-feature h3{margin:0;font-size:clamp(25px,2.5vw,36px);font-weight:800;
   letter-spacing:-.035em;line-height:1.32}
 .work-feature h3 em{font-style:normal;color:#FFD400}
@@ -785,13 +785,13 @@ body.blog, body.archive, body.single, body.search{background:var(--bg);color:var
 .wf-search svg{width:15px;height:15px;flex:0 0 15px;stroke:rgba(18,18,18,.55);fill:none;stroke-width:2.2}
 .wf-rows{display:flex;flex-direction:column;gap:7px;margin-top:4px}
 .wf-row{display:flex;align-items:center;gap:11px;padding:11px 14px;border-radius:10px;
-  background:rgba(255,255,255,.05);font-size:13px;color:rgba(255,255,255,.5)}
+  background:rgba(255,255,255,.05);font-size:13px;color:rgba(255,255,255,.55)}
 .wf-row b{flex:0 0 auto;font-size:10.5px;font-weight:800;letter-spacing:.06em;
   padding:3px 7px;border-radius:4px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.6)}
 .wf-row.up{background:#FFD400;color:#121212;font-weight:700}
 .wf-row.up b{background:rgba(18,18,18,.14);color:#121212}
 .wf-skip{display:flex;align-items:center;gap:10px;padding:3px 2px;
-  font-size:11.5px;font-weight:700;letter-spacing:.04em;color:rgba(255,255,255,.34)}
+  font-size:11.5px;font-weight:700;letter-spacing:.04em;color:rgba(255,255,255,.55)}
 .wf-skip i{flex:1;height:1px;background:rgba(255,255,255,.14)}
 @media(max-width:860px){
   .work-feature{grid-template-columns:1fr}
