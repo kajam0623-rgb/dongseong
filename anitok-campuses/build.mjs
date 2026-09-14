@@ -14,7 +14,7 @@
  * 파일명은 data/<slug>.json 의 image.local 값과 같으면 된다.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlinkSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlinkSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -343,8 +343,20 @@ for (const slug of targets) {
 
   // 학원 이야기(블로그). content/<slug>/posts/*.md 가 있는 지점만 만들어진다.
   const posts = loadPosts(slug);
+  const blogDir = join(outDir, 'blog');
+  // 지운 글의 페이지가 남지 않게 먼저 치운다. sites/ 가 저장소에 들어 있어서
+  // 정리하지 않으면 글을 지워도 배포에는 그대로 따라간다. 틀린 글을 내렸는데
+  // 주소가 살아 있는 상태가 가장 나쁘다.
+  if (existsSync(blogDir)) {
+    const keep = new Set(posts.map((p) => p.slug));
+    for (const name of readdirSync(blogDir)) {
+      if (name === 'index.html' || keep.has(name)) continue;
+      rmSync(join(blogDir, name), { recursive: true, force: true });
+      console.warn(`지운 글의 페이지를 치웠다: ${slug}/blog/${name}`);
+    }
+    if (!posts.length) rmSync(blogDir, { recursive: true, force: true });
+  }
   if (posts.length) {
-    const blogDir = join(outDir, 'blog');
     mkdirSync(blogDir, { recursive: true });
     writeFileSync(join(blogDir, 'index.html'), minHtml(renderBlogIndex(d, posts, { present })));
     for (const post of posts) {
