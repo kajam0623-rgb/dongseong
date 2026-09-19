@@ -1728,6 +1728,9 @@ function markdown(md) {
     if (list) { out.push(`<ul class="post-list">${list.join('')}</ul>`); list = null; }
     if (olist) { out.push(`<ol class="post-olist">${olist.join('')}</ol>`); olist = null; }
     if (quote) {
+      // <aside> 로 감싸면 본문 추출기(AI 답변 엔진이 쓰는 그 방식)가 통째로
+      // 버린다. 실제로 읽어 보니 상자 안의 문장이 사라져 있었다. 인용되려고
+      // 하는 일인데 정반대가 된다. blockquote 는 본문으로 남는다.
       // 줄마다 따로 문단을 만든다. 합치면 따로 쓴 인용 두 개가 한 문장처럼
       // 붙어 읽힌다 — 이미 그렇게 쓰고 있는 글이 네 편 있었다.
       // 첫 줄을 **굵게** 로 열면 그 부분만 상자 제목이 된다.
@@ -1735,10 +1738,10 @@ function markdown(md) {
       const head = lead ? `<b>${mdInline(lead[1])}</b>` : '';
       const rest = lead ? [lead[2], ...quote.slice(1)] : quote;
       out.push(
-        `<aside class="post-note">` +
+        `<blockquote class="post-note">` +
           head +
           rest.filter(Boolean).map((l) => `<p>${mdInline(l)}</p>`).join('') +
-          `</aside>`
+          `</blockquote>`
       );
       quote = null;
     }
