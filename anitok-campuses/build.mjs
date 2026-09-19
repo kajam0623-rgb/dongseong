@@ -279,14 +279,18 @@ function loadPosts(slug) {
     if (!meta.slug || !meta.title || !meta.date) {
       throw new Error(`${slug}/${file}: slug · title · date 는 반드시 있어야 합니다`);
     }
-    // lib/render.mjs 의 markdown() 은 '## ' 제목, '- ' 목록, 문단만 다룬다.
-    // 표나 번호 목록을 쓰면 조용히 원문 그대로 새어 나온다. 한 번 그렇게
-    // 파이프 문자가 박힌 글을 올릴 뻔했으므로 빌드에서 잡는다.
+    // lib/render.mjs 의 markdown() 은 '## ' 제목, '- ' 목록, 문단과 줄 안의
+    // **굵게** · [링크](주소)를 다룬다. 표나 번호 목록을 쓰면 조용히 원문 그대로
+    // 새어 나온다. 한 번 그렇게 파이프 문자가 박힌 글을 올릴 뻔했으므로 빌드에서
+    // 잡는다.
+    // 줄 번호는 파일 기준으로 낸다. 본문 기준으로 세면 프론트매터 길이만큼
+    // 어긋나, 사람이 파일을 열었을 때 엉뚱한 줄을 보게 된다.
+    const bodyFirstLine = (raw.slice(0, raw.length - m[2].length).match(/\n/g) || []).length + 1;
     for (const [i, line] of m[2].split(/\r?\n/).entries()) {
       const t = line.trim();
       if (/^\|.*\|$/.test(t) || /^\d+\.\s/.test(t)) {
         throw new Error(
-          `${slug}/${file}:${i + 1}: markdown() 이 못 다루는 문법이다(표 · 번호 목록). ` +
+          `${slug}/${file}:${bodyFirstLine + i}: markdown() 이 못 다루는 문법이다(표 · 번호 목록). ` +
             `'- ' 목록이나 문단으로 바꿀 것 — ${t.slice(0, 40)}`
         );
       }
