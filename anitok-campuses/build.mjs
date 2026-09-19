@@ -279,20 +279,37 @@ function loadPosts(slug) {
     if (!meta.slug || !meta.title || !meta.date) {
       throw new Error(`${slug}/${file}: slug · title · date 는 반드시 있어야 합니다`);
     }
-    // lib/render.mjs 의 markdown() 은 '## ' 제목, '- ' 목록, 문단과 줄 안의
-    // **굵게** · [링크](주소)를 다룬다. 표나 번호 목록을 쓰면 조용히 원문 그대로
-    // 새어 나온다. 한 번 그렇게 파이프 문자가 박힌 글을 올릴 뻔했으므로 빌드에서
-    // 잡는다.
+    // lib/render.mjs 의 markdown() 은 '## ' · '### ' 제목, '- ' 목록,
+    // '1. ' 번호 목록, '|' 표, '>' 참고 상자, 문단, 줄 안의 **굵게** 와
+    // [링크](주소)를 다룬다. 그 밖의 문법은 조용히 원문 그대로 새어 나온다.
+    // 한 번 파이프 문자가 박힌 글을 올릴 뻔했으므로 빌드에서 잡는다.
     // 줄 번호는 파일 기준으로 낸다. 본문 기준으로 세면 프론트매터 길이만큼
     // 어긋나, 사람이 파일을 열었을 때 엉뚱한 줄을 보게 된다.
     const bodyFirstLine = (raw.slice(0, raw.length - m[2].length).match(/\n/g) || []).length + 1;
-    for (const [i, line] of m[2].split(/\r?\n/).entries()) {
+    const bodyLines = m[2].split(/\r?\n/);
+    for (const [i, line] of bodyLines.entries()) {
       const t = line.trim();
-      if (/^\|.*\|$/.test(t) || /^\d+\.\s/.test(t)) {
-        throw new Error(
-          `${slug}/${file}:${bodyFirstLine + i}: markdown() 이 못 다루는 문법이다(표 · 번호 목록). ` +
-            `'- ' 목록이나 문단으로 바꿀 것 — ${t.slice(0, 40)}`
-        );
+      const bad = (why) => {
+        throw new Error(`${slug}/${file}:${bodyFirstLine + i}: ${why}`);
+      };
+      // 표: 머리줄 다음에 구분줄이 없으면 표로 그려지지 않고 파이프가 글자로 남는다.
+      if (/^\|.*\|$/.test(t)) {
+        const prev = (bodyLines[i - 1] || '').trim();
+        const next = (bodyLines[i + 1] || '').trim();
+        const inTable =
+          /^\|[\s:|-]+\|$/.test(t) || /^\|[\s:|-]+\|$/.test(next) || /^\|.*\|$/.test(prev);
+        if (!inTable) {
+          bad('표에 구분줄이 없다. 이 줄 바로 아래에 | --- | --- | 를 넣을 것 — ' + t.slice(0, 40));
+        }
+      }
+      // 제목: ## 과 ### 만 그린다. # 과 #### 이상은 글자로 새어 나간다.
+      const h = t.match(/^(#+)\s/);
+      if (h && (h[1].length < 2 || h[1].length > 3)) {
+        bad(`## 와 ### 만 쓸 수 있다(받은 것: ${h[1]}) — ` + t.slice(0, 40));
+      }
+      // 굵게: ** 가 홀수면 한쪽이 안 닫힌 것이고, 별표가 그대로 남는다.
+      if (((t.match(/\*\*/g) || []).length) % 2) {
+        bad('굵게 표시(**)의 짝이 맞지 않는다. 별표가 글자로 남는다');
       }
     }
     posts.push({ ...meta, body: m[2].trim() });

@@ -1577,6 +1577,29 @@ const CSS_POST = `
 .post-index .k{min-width:88px;color:var(--muted-2);font-weight:700}
 .post-index .v{flex:1 1 240px;font-weight:700;color:#FFFFFF;border-bottom:1px solid transparent}
 .post-index .v:hover{border-bottom-color:var(--accent-lit)}
+.post-meta{display:flex;flex-wrap:wrap;gap:16px;margin:18px 0 0;font-size:13px;color:var(--muted-2)}
+.prose .post-h3{margin:30px 0 12px;font-size:clamp(17px,1.5vw,19px);line-height:1.45;font-weight:800;letter-spacing:-.03em;color:#FFFFFF}
+.prose .post-olist{margin:0 0 18px;padding:0;list-style:none;counter-reset:po;max-width:72ch}
+.prose .post-olist li{counter-increment:po;position:relative;padding-left:26px;margin-bottom:9px;font-size:clamp(15px,1.15vw,17px);line-height:1.85;color:#D6D6D8}
+.prose .post-olist li::before{content:counter(po) ".";position:absolute;left:0;top:0;font-size:inherit;line-height:inherit;font-weight:800;color:var(--accent-lit);font-variant-numeric:tabular-nums}
+.prose .post-tw{margin:0 0 24px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.prose .post-table{border-collapse:collapse;width:100%;min-width:460px;font-size:14.5px}
+.prose .post-table th,.prose .post-table td{border:1px solid var(--line);padding:11px 13px;text-align:left;vertical-align:top;word-break:keep-all}
+.prose .post-table th{background:var(--panel-2);font-weight:800;color:#FFFFFF;font-size:13.5px}
+.prose .post-table td{color:#D6D6D8}
+.prose .post-note{margin:0 0 24px;padding:18px 20px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;max-width:72ch}
+.prose .post-note b{display:block;font-size:15px;color:#FFFFFF;margin-bottom:6px}
+.prose .post-note p{margin:0;font-size:15px;line-height:1.8;color:#D6D6D8}
+.post-toc{margin:0 0 40px;padding:20px 22px;background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:72ch}
+.post-toc b{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--muted-2);margin-bottom:12px}
+.post-toc ol{margin:0;padding:0;list-style:none;counter-reset:toc}
+.post-toc li{margin:0;padding:5px 0;font-size:14.5px;line-height:1.5}
+.post-toc li.l2{counter-increment:toc}
+.post-toc li.l2 a::before{content:counter(toc) ". ";color:var(--muted-2);font-weight:700}
+.post-toc li.l3{padding-left:20px;font-size:13.5px}
+.post-toc a{color:#D6D6D8;border-bottom:1px solid transparent}
+.post-toc a:hover{border-bottom-color:var(--accent-lit)}
+.prose h2[id],.prose h3[id]{scroll-margin-top:84px}
 `;
 
 export function siteCss(d) {
@@ -1695,20 +1718,105 @@ function mdInline(s) {
 
 function markdown(md) {
   const out = [];
-  let list = null;
+  const toc = [];
+  let hn = 0;
+  let list = null;   // '- ' 목록
+  let olist = null;  // '1. ' 번호 목록
+  let quote = null;  // '>' 참고 상자
+  let table = null;  // 표
   const flush = () => {
     if (list) { out.push(`<ul class="post-list">${list.join('')}</ul>`); list = null; }
+    if (olist) { out.push(`<ol class="post-olist">${olist.join('')}</ol>`); olist = null; }
+    if (quote) {
+      // 줄마다 따로 문단을 만든다. 합치면 따로 쓴 인용 두 개가 한 문장처럼
+      // 붙어 읽힌다 — 이미 그렇게 쓰고 있는 글이 네 편 있었다.
+      // 첫 줄을 **굵게** 로 열면 그 부분만 상자 제목이 된다.
+      const lead = quote[0].match(/^\*\*(.+?)\*\*\s*(.*)$/);
+      const head = lead ? `<b>${mdInline(lead[1])}</b>` : '';
+      const rest = lead ? [lead[2], ...quote.slice(1)] : quote;
+      out.push(
+        `<aside class="post-note">` +
+          head +
+          rest.filter(Boolean).map((l) => `<p>${mdInline(l)}</p>`).join('') +
+          `</aside>`
+      );
+      quote = null;
+    }
+    if (table) {
+      const th = table.head.map((c) => `<th>${mdInline(c)}</th>`).join('');
+      const tr = table.rows
+        .map((r) => `<tr>${r.map((c) => `<td>${mdInline(c)}</td>`).join('')}</tr>`)
+        .join('');
+      // 좁은 화면에서 표가 본문을 밀지 않도록 가로 스크롤 상자에 넣는다.
+      out.push(
+        `<div class="post-tw"><table class="post-table"><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table></div>`
+      );
+      table = null;
+    }
   };
-  for (const raw of String(md).split(/\r?\n/)) {
-    const line = raw.trim();
+  const cells = (l) => l.slice(1, -1).split('|').map((c) => c.trim());
+  const lines = String(md).split(/\r?\n/);
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
     if (!line) { flush(); continue; }
-    if (line.startsWith('## ')) { flush(); out.push(`<h2 class="h2 post-h2">${mdInline(line.slice(3))}</h2>`); continue; }
-    if (line.startsWith('- ')) { (list = list || []).push(`<li>${mdInline(line.slice(2))}</li>`); continue; }
+
+    // 표는 머리줄 다음에 | --- | --- | 가 올 때만 표로 본다. 구분줄이 없으면
+    // 표로 그리지 않고 문단으로 흘려보낸다(빌드 검사가 먼저 잡는다).
+    if (/^\|.*\|$/.test(line)) {
+      if (table) { table.rows.push(cells(line)); continue; }
+      if (/^\|[\s:|-]+\|$/.test((lines[i + 1] || '').trim())) {
+        flush();
+        table = { head: cells(line), rows: [] };
+        i++;
+        continue;
+      }
+    }
+    if (table) flush();
+
+    // 제목에 id 를 달아 목차가 걸리게 한다. 한글 제목을 그대로 id 로 쓰면 같은
+    // 낱말이 두 번 나올 때 앵커가 겹치므로 순번을 쓴다.
+    if (line.startsWith('## ') || line.startsWith('### ')) {
+      flush();
+      const level = line.startsWith('### ') ? 3 : 2;
+      const text = line.slice(level + 1);
+      const id = 's' + ++hn;
+      toc.push({ level, id, text: text.replace(/\*\*/g, '') });
+      out.push(
+        level === 2
+          ? `<h2 class="h2 post-h2" id="${id}">${mdInline(text)}</h2>`
+          : `<h3 class="post-h3" id="${id}">${mdInline(text)}</h3>`
+      );
+      continue;
+    }
+    if (line.startsWith('- ')) {
+      if (!list) flush();
+      (list = list || []).push(`<li>${mdInline(line.slice(2))}</li>`);
+      continue;
+    }
+    if (/^\d+\.\s/.test(line)) {
+      if (!olist) flush();
+      (olist = olist || []).push(`<li>${mdInline(line.replace(/^\d+\.\s+/, ''))}</li>`);
+      continue;
+    }
+    if (/^>\s?/.test(line)) {
+      if (!quote) flush();
+      (quote = quote || []).push(line.replace(/^>\s?/, ''));
+      continue;
+    }
     flush();
     out.push(`<p>${mdInline(line)}</p>`);
   }
   flush();
-  return out.join('\n');
+  return { html: out.join('\n'), toc };
+}
+
+// 읽는 시간. 한글 산문은 분당 700자 안팎으로 읽힌다. 마크다운 기호와 주소는
+// 읽는 분량이 아니므로 빼고 센다. 부풀리면 첫 줄부터 신뢰를 잃는다.
+function readingMinutes(md) {
+  const text = String(md)
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[#>*|_-]/g, '');
+  return Math.max(2, Math.round(text.replace(/\s/g, '').length / 700));
 }
 
 function postJsonLd(d, post) {
@@ -1801,6 +1909,14 @@ export function renderPost(d, post, { posts = [], present = new Set() } = {}) {
   const canonical = `${d.site.origin}/blog/${post.slug}/`;
   const others = posts.filter((p) => p.slug !== post.slug).slice(0, 6);
   const booking = naverBooking(d);
+  const { html: prose, toc } = markdown(post.body);
+  // 목차는 제목이 셋 이상일 때만 세운다. 두 개짜리 목차는 자리만 차지한다.
+  const tocHtml =
+    toc.length >= 3
+      ? `<nav class="post-toc" aria-label="목차"><b>목차</b><ol>${toc
+          .map((t) => `<li class="l${t.level}"><a href="#${t.id}">${esc(t.text)}</a></li>`)
+          .join('')}</ol></nav>`
+      : '';
   const body = `<section class="lp-head" id="top">
   <div class="wrap">
     <nav class="crumb" aria-label="현재 위치">
@@ -1809,13 +1925,17 @@ export function renderPost(d, post, { posts = [], present = new Set() } = {}) {
     <span class="kicker">${esc(post.kicker || '학원소식')}</span>
     <h1 class="lp-h1">${esc(post.title)}</h1>
     <p class="lp-sub">${esc(post.description)}</p>
+    <p class="post-meta"><time datetime="${esc(post.date)}">${esc(post.date)}</time><span>읽는 시간 ${readingMinutes(
+    post.body
+  )}분</span></p>
   </div>
 </section>
 
 <article class="sec">
   <div class="wrap">
+    ${tocHtml}
     <div class="prose" data-reveal="0">
-${markdown(post.body)}
+${prose}
     </div>
   </div>
 </article>
