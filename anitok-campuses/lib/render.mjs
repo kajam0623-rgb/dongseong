@@ -595,6 +595,27 @@ a,button,summary{touch-action:manipulation}
  * 실제로 쓰인 글자 묶음만 받아 간다.
  */
 /**
+ * 로고 자리. 지점이 brandWord 를 주면 이미지 대신 글자로 그린다.
+ * 김포 시안의 로고는 흰 'ANITALK' 아래 작은 영문 한 줄이다. 바깥 서버의
+ * 이미지를 쓰면 그 서버가 막히거나 느릴 때 로고 자리가 비고, 색도 필터로
+ * 뒤집어야 해서 시안과 미묘하게 달라진다. 글자로 그리면 둘 다 없어진다.
+ */
+function logoMark(d, cls, h, w, extra = '') {
+  if (d.brandWord) {
+    return `<span class="${cls} logo-word" role="img" aria-label="애니톡"><b>${esc(d.brandWord.main)}</b>${
+      d.brandWord.sub
+        ? // 아주 작은 글자는 브라우저가 자간을 뭉개서, 폭을 ANITALK 에 맞춘 SVG 글자로 그린다.
+          `<small aria-hidden="true"><svg viewBox="0 0 200 9" preserveAspectRatio="none"><text x="0" y="7.6" textLength="200" lengthAdjust="spacingAndGlyphs">${esc(
+            d.brandWord.sub
+          )}</text></svg></small>`
+        : ''
+    }</span>`;
+  }
+  const box = logoBox(d, h, w);
+  return `<img class="${cls}" src="${url(d.brandLogo)}" alt="애니톡" width="${box.w}" height="${box.h}"${box.attr}${extra}>`;
+}
+
+/**
  * 머리글 · 꼬리글 로고의 고유 비율. 기본은 지금까지 쓰던 가로형 워드마크
  * (98x26) 다. 지점이 제 로고를 들고 있으면 data 의 brandLogoBox 로
  * 알려 준다. 값이 맞아야 글꼴보다 늦게 내려온 그림이 자리를 밀지 않는다.
@@ -905,7 +926,7 @@ function header(d, { base = '' } = {}) {
 <header class="hdr">
   <div class="hdr-in">
     <a class="brand" href="${url(base || '#top')}">
-      <img class="brand-logo" src="${url(d.brandLogo)}" alt="애니톡" width="${logoBox(d, 26, 98).w}" height="${logoBox(d, 26, 98).h}"${logoBox(d, 26, 98).attr} fetchpriority="high">
+      ${logoMark(d, 'brand-logo', 26, 98, ' fetchpriority="high"')}
       <span class="brand-div" aria-hidden="true"></span>
       <span class="brand-name">${esc(d.name)}</span>
     </a>
@@ -1220,7 +1241,7 @@ function visit(d, siblings) {
           d.links.naverPlace
             ? `<a class="more" href="${url(
                 d.links.naverPlace
-              )}" target="_blank" rel="noopener">네이버 지도로 보기 &rarr;</a>`
+              )}" target="_blank" rel="noopener">네이버 지도로 보기${d.skin === 'ppt' ? '' : ' '}&rarr;</a>`
             : ''
         }
       </div>
@@ -1228,7 +1249,7 @@ function visit(d, siblings) {
         <h3>전화 문의</h3>
         <p class="big">${esc(d.phone)}</p>
         <p>${esc(d.hours.line1)}<br>${esc(d.hours.line2)}</p>
-        <a class="more" href="tel:${esc(digits(d.phone))}">바로 전화하기 &rarr;</a>
+        <a class="more" href="tel:${esc(digits(d.phone))}">바로 전화하기${d.skin === 'ppt' ? '' : ' '}&rarr;</a>
       </div>
       ${
         booking
@@ -1240,7 +1261,7 @@ function visit(d, siblings) {
         )}</p>
         <a class="more" href="${url(booking)}" target="_blank" rel="noopener">${esc(
           d.visit.bookingBtn || '네이버로 예약하기'
-        )} &rarr;</a>
+        )}${d.skin === 'ppt' ? '' : ' '}&rarr;</a>
       </div>`
           : ''
       }
@@ -1264,7 +1285,7 @@ function visit(d, siblings) {
   </div>
   <div class="wrap">
     <div class="foot">
-      <img class="foot-logo" src="${url(d.brandLogo)}" alt="애니톡" width="${logoBox(d, 24, 91).w}" height="${logoBox(d, 24, 91).h}"${logoBox(d, 24, 91).attr} loading="lazy" decoding="async">
+      ${logoMark(d, 'foot-logo', 24, 91, ' loading="lazy" decoding="async"')}
       ${sibs ? `<div class="sites"><span style="color:#5A5A5F;font-weight:700">애니톡 캠퍼스</span>${sibs}</div>` : ''}
       <div>&copy; ${new Date().getFullYear()} ANITALK. All rights reserved.</div>
     </div>
@@ -1610,7 +1631,7 @@ function lpFoot(d) {
   return `<section class="sec visit">
   <div class="wrap">
     <div class="foot">
-      <img class="foot-logo" src="${url(d.brandLogo)}" alt="애니톡" width="${logoBox(d, 24, 91).w}" height="${logoBox(d, 24, 91).h}"${logoBox(d, 24, 91).attr} loading="lazy" decoding="async">
+      ${logoMark(d, 'foot-logo', 24, 91, ' loading="lazy" decoding="async"')}
       <div class="sites"><a href="/">${esc(d.name)}</a><a href="${url(
     d.links.naverPlace
   )}" target="_blank" rel="noopener">네이버 지도</a></div>
@@ -1816,6 +1837,191 @@ ${quickBar(d)}
  * 두 번째 페이지부터는 브라우저 캐시에서 바로 나온다.
  * ───────────────────────────────────────────────────────────── */
 
+const PPT_CSS = `
+/* ════════════════════ 김포 시안(PPT) 전용 ════════════════════
+ * 시안은 1920 화면 기준 고정 크기로 그려져 있다(슬라이드 2000px = 1920 × 1.0417).
+ * 슬라이드 픽셀을 재서 1920 기준 px 로 옮겼고, 그보다 좁은 화면에서는 --k 로
+ * 같은 비율만큼 줄인다. 이 블록은 skin=ppt 인 지점의 s.css 에만 들어간다. */
+html[data-skin=ppt]{--k:clamp(.62px,calc(100vw / 1920),1px);--ppt-w:calc(1325 * var(--k));
+  --ppt-orange:#FF6434;--ppt-kicker:#FF8B68;--ppt-line:#7B7B7B;--ppt-navy:#19204E;
+  --ppt-card:linear-gradient(147deg,#3B3B3B 4%,#000 68%)}
+/* 배경: 화면에 붙은 대각선 그라데이션. 어느 위치로 스크롤해도 시안의 한 장처럼
+ * 왼쪽 위가 회색이고 오른쪽 아래로 검게 떨어진다(슬라이드 픽셀에서 147도로 맞췄다). */
+html[data-skin=ppt] body{background:#000 linear-gradient(147deg,#3B3B3B 16%,#000 61%) fixed}
+html[data-skin=ppt] .sec:not(.sec--light),html[data-skin=ppt] .visit{background:transparent;border-top:0}
+html[data-skin=ppt] .wrap{max-width:calc(var(--ppt-w) + 2 * var(--pad-x))}
+html[data-skin=ppt] .hdr-in{max-width:calc(var(--ppt-w) + 2 * clamp(16px,3vw,36px))}
+
+/* 로고: 흰 ANITALK + 작은 영문 한 줄 */
+.logo-word{display:inline-flex;flex-direction:column;align-items:flex-start;color:#FFFFFF;line-height:1;filter:none;height:auto;width:auto}
+.logo-word b{font-size:22px;font-weight:900;letter-spacing:-.01em;line-height:.9}
+.logo-word small{display:block;width:0;min-width:100%;margin-top:3px}
+.logo-word svg{display:block;width:100%;height:auto;overflow:visible}
+.logo-word text{font-size:9.9px;font-weight:700;letter-spacing:0;fill:currentColor;text-rendering:geometricPrecision}
+.foot .logo-word{opacity:.85;margin-bottom:24px}
+
+/* 섹션 머리: CAREER / 남다른 교육 인사이트 / 설명 — 모든 어두운 섹션이 같다 */
+html[data-skin=ppt] .kicker{font-size:calc(28 * var(--k));font-weight:300;letter-spacing:0;text-transform:uppercase;
+  color:var(--ppt-kicker);margin-bottom:calc(22 * var(--k));line-height:1.2}
+html[data-skin=ppt] .sec:not(.sec--light) .h2{font-size:calc(51 * var(--k));font-weight:800;letter-spacing:-.025em;line-height:1.2;color:#FFFFFF}
+html[data-skin=ppt] .sec:not(.sec--light) .lede{font-size:calc(25 * var(--k));font-weight:400;letter-spacing:-.025em;line-height:1.4;
+  color:#FFFFFF;margin:calc(8 * var(--k)) auto 0;max-width:none}
+html[data-skin=ppt] .sec:not(.sec--light) .wrap>.kicker,html[data-skin=ppt] .sec:not(.sec--light) .wrap>.h2,
+html[data-skin=ppt] .sec:not(.sec--light) .wrap>.lede{text-align:center}
+html[data-skin=ppt] .sec:not(.sec--light){padding-block:calc(116 * var(--k)) calc(120 * var(--k))}
+@media (min-width:901px){
+  html[data-skin=ppt] main>.sec:not(.sec--light):not(.visit){min-height:calc(100vh - 64px)}
+}
+
+/* 카드 공통: 회색 2px 테두리, 안쪽은 왼쪽 위 회색 → 검정 */
+html[data-skin=ppt] .stat,html[data-skin=ppt] .vcard,html[data-skin=ppt] .cg-card{
+  background:var(--ppt-card);border:2px solid var(--ppt-line);border-radius:calc(17 * var(--k))}
+
+/* CAREER */
+html[data-skin=ppt] .stats{grid-template-columns:repeat(4,1fr);gap:calc(12 * var(--k));margin-top:calc(42 * var(--k))}
+html[data-skin=ppt] .stat{min-height:calc(289 * var(--k));padding:calc(52 * var(--k)) calc(27 * var(--k)) calc(30 * var(--k));gap:0;text-align:left}
+html[data-skin=ppt] .stat-when,html[data-skin=ppt] .stat-label{font-size:calc(25 * var(--k));font-weight:400;letter-spacing:-.025em;
+  color:#A5A5A5;margin:0 0 calc(10 * var(--k))}
+html[data-skin=ppt] .stat-when{letter-spacing:0}
+html[data-skin=ppt] .stat-value,html[data-skin=ppt] .stat-value[data-len]{font-size:calc(56 * var(--k));font-weight:800;letter-spacing:-.025em;
+  line-height:1.05;color:var(--ppt-orange)}
+html[data-skin=ppt] .stat-value .unit{font-size:calc(24 * var(--k));font-weight:400;margin-left:calc(4 * var(--k));color:#FFFFFF;letter-spacing:-.025em}
+html[data-skin=ppt] .stat-detail{margin:calc(18 * var(--k)) 0 0;gap:0}
+html[data-skin=ppt] .stat-detail li{font-size:calc(25 * var(--k));line-height:1.36;color:#FFFFFF;letter-spacing:-.025em}
+
+/* CLASS: 머리 아래 가로줄, 두 반씩 한 줄, 줄 사이에도 가로줄 */
+html[data-skin=ppt] #classes .cgrid{grid-template-columns:repeat(2,calc(525 * var(--k)));justify-content:center;
+  column-gap:calc(108 * var(--k));row-gap:0;margin-top:calc(30 * var(--k));border-top:1px solid #A5A5A5}
+html[data-skin=ppt] #classes .cg{padding:calc(44 * var(--k)) 0 calc(71 * var(--k))}
+html[data-skin=ppt] #classes .cg:nth-child(n+3){border-top:1px solid #A5A5A5}
+html[data-skin=ppt] #classes .cg:nth-child(n+3)::before{content:none}
+html[data-skin=ppt] .cg-head{gap:calc(6 * var(--k));margin-bottom:calc(14 * var(--k));align-items:baseline}
+html[data-skin=ppt] .cg-name{font-size:calc(48 * var(--k));font-weight:800;letter-spacing:-.025em;line-height:1.1}
+html[data-skin=ppt] .cg-range{font-size:calc(24 * var(--k));font-weight:400;color:#FFFFFF;letter-spacing:-.025em}
+html[data-skin=ppt] .cg-card{overflow:hidden}
+html[data-skin=ppt] .cg-shots{height:calc(272 * var(--k));gap:0;background:#000}
+html[data-skin=ppt] .cg-cap{padding:calc(14 * var(--k)) calc(13 * var(--k)) calc(16 * var(--k));font-size:calc(23 * var(--k));
+  line-height:1.3;color:#CCCCCC;letter-spacing:-.04em;background:transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:900px){html[data-skin=ppt] .cg-cap{white-space:normal}}
+
+/* CAMPUS · STUDENT WORKS: 정사각 5칸, 회색 테두리, 캡션은 흰 글자 가운데 */
+html[data-skin=ppt] .gal{grid-template-columns:repeat(5,1fr);gap:calc(14 * var(--k));margin-top:calc(56 * var(--k))}
+html[data-skin=ppt] #works .gal{row-gap:calc(8 * var(--k))}
+html[data-skin=ppt] #gallery .gal .shot img,html[data-skin=ppt] #works .gal .shot img,
+html[data-skin=ppt] #gallery .gal .shot .ph,html[data-skin=ppt] #works .gal .shot .ph{aspect-ratio:1/1;border-radius:calc(17 * var(--k));
+  border:3px solid var(--ppt-line);box-sizing:border-box}
+html[data-skin=ppt] .gal figcaption{margin-top:calc(10 * var(--k));font-size:calc(25 * var(--k));line-height:1.4;color:#FFFFFF;
+  text-align:center;letter-spacing:-.025em}
+
+/* FAQ: 줄 구분선 없이 Q 와 질문, 오른쪽에 가는 흰 꺾쇠 */
+html[data-skin=ppt] .faq{border-top:0;margin-top:calc(34 * var(--k))}
+html[data-skin=ppt] .faq details{border-bottom:0}
+html[data-skin=ppt] .faq summary{padding:calc(38 * var(--k)) calc(60 * var(--k)) calc(38 * var(--k)) calc(27 * var(--k));
+  font-size:calc(24 * var(--k));font-weight:400;line-height:1.4;letter-spacing:-.025em;color:#FFFFFF}
+html[data-skin=ppt] .faq summary::before{top:calc(38 * var(--k));font-size:calc(24 * var(--k));line-height:1.4;font-weight:800;color:#FFFFFF}
+html[data-skin=ppt] .faq summary::after{right:calc(4 * var(--k));top:50%;width:calc(22 * var(--k));height:calc(22 * var(--k));
+  margin-top:calc(-16 * var(--k));border-right:2px solid #FFFFFF;border-bottom:2px solid #FFFFFF}
+html[data-skin=ppt] .faq details[open] summary::after{margin-top:calc(-4 * var(--k))}
+html[data-skin=ppt] .faq .ans{padding:0 calc(27 * var(--k)) calc(40 * var(--k));margin-top:calc(-22 * var(--k));
+  font-size:calc(24 * var(--k));line-height:1.4;color:#DADADA;letter-spacing:-.025em}
+
+/* LOCAL: 내용은 그대로, 칩을 어두운 판 하나에 담는다 */
+html[data-skin=ppt] #local .lp-links{margin:calc(56 * var(--k)) calc(-38 * var(--k)) 0;padding:calc(14 * var(--k)) calc(28 * var(--k)) calc(20 * var(--k));
+  background:#141416;gap:calc(10 * var(--k)) calc(12 * var(--k))}
+html[data-skin=ppt] #local .lp-links a{background:#141416;border-color:rgba(255,255,255,.14);min-height:calc(46 * var(--k));
+  padding:0 calc(22 * var(--k));font-size:calc(13.5 * var(--k));color:#DDDDDD}
+
+/* VISIT */
+html[data-skin=ppt] .visit-grid{grid-template-columns:repeat(4,1fr);gap:calc(12 * var(--k));margin-top:calc(53 * var(--k))}
+html[data-skin=ppt] #visit .vcard{min-height:calc(284 * var(--k));padding:calc(22 * var(--k)) calc(15 * var(--k)) calc(20 * var(--k));gap:0}
+html[data-skin=ppt] #visit .vcard h3{font-size:calc(25 * var(--k));font-weight:400;letter-spacing:-.025em;color:var(--ppt-orange);
+  margin:0 0 calc(18 * var(--k));line-height:1.3}
+html[data-skin=ppt] #visit .vcard p{font-size:calc(24 * var(--k));line-height:1.35;color:#FFFFFF;letter-spacing:-.025em}
+html[data-skin=ppt] #visit .vcard:first-child p{font-weight:700}
+html[data-skin=ppt] #visit .vcard .big{font-size:calc(27 * var(--k));font-weight:800;letter-spacing:0}
+html[data-skin=ppt] #visit .vcard a.more,html[data-skin=ppt] #visit .vcard .social a{margin-top:auto;padding:0 calc(10 * var(--k));
+  height:calc(48 * var(--k));border:2px solid #8C8C8C;border-radius:calc(8 * var(--k));font-size:calc(25 * var(--k));font-weight:400;
+  color:#FFFFFF;display:inline-flex;align-items:center;letter-spacing:-.025em;background:transparent}
+html[data-skin=ppt] #visit .vcard .social{gap:calc(12 * var(--k))}
+html[data-skin=ppt] #visit .vcard .social a{margin-top:0}
+
+/* HERO */
+html[data-skin=ppt] .hero{height:calc(100vh - 64px);min-height:calc(640 * var(--k))}
+html[data-skin=ppt] .hero-bg{height:100%;animation:none;transform:scale(1.115) translateX(1.94%);object-position:center 13%}
+html[data-skin=ppt] .scroll-dot{display:none}
+html[data-skin=ppt] .hero{padding-bottom:calc(76 * var(--k))}
+html[data-skin=ppt] .hero-glow{display:none}
+html[data-skin=ppt] .hero-in{max-width:calc(var(--ppt-w) + 2 * clamp(20px,4vw,56px))}
+html[data-skin=ppt] .hero .tag-plain{font-size:calc(37 * var(--k));margin:0 0 calc(8 * var(--k));letter-spacing:0}
+html[data-skin=ppt] .hero h1{font-size:calc(38 * var(--k));line-height:1.3}
+html[data-skin=ppt] .hero h1 .over{margin-bottom:calc(10 * var(--k))}
+html[data-skin=ppt] .hero h1 .lit--box{font-size:calc(62 * var(--k));line-height:1;padding:0 calc(10 * var(--k));
+  border-radius:0;display:inline-block;letter-spacing:-.025em}
+html[data-skin=ppt] .hero-sub{font-size:calc(32 * var(--k));margin-top:calc(24 * var(--k));letter-spacing:-.025em}
+
+/* 학원소개: 흰 바탕, 남색 글자, 오른쪽 작품은 왼쪽 끝이 흰색으로 풀린다 */
+html[data-skin=ppt] .about--split{position:relative;overflow:hidden}
+html[data-skin=ppt] .about-split{display:block;position:relative;height:calc(100vh - 64px);min-height:calc(780 * var(--k))}
+html[data-skin=ppt] .about-split .about-copy{position:relative;z-index:1;overflow:visible;max-width:none;justify-self:start;
+  padding:calc(124 * var(--k)) 0 0 max(var(--pad-x),calc((100vw - var(--ppt-w)) / 2))}
+html[data-skin=ppt] .about-art{position:absolute;top:0;right:0;bottom:0;width:calc(1095 * var(--k));min-width:57vw;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%);mask-image:linear-gradient(90deg,transparent 0,#000 9%)}
+html[data-skin=ppt] .about-art .fig img{object-position:left center}
+html[data-skin=ppt] .sec--light .kicker{text-transform:none;font-size:calc(28 * var(--k));color:var(--ppt-navy);margin-bottom:calc(26 * var(--k))}
+html[data-skin=ppt] .sec--light .h2{font-size:calc(47 * var(--k));line-height:1.22;letter-spacing:-.03em;color:var(--ppt-navy)}
+html[data-skin=ppt] .sec--light .h2 b{color:var(--ppt-navy)}
+html[data-skin=ppt] .about-copy>div{margin-top:calc(26 * var(--k)) !important}
+html[data-skin=ppt] .sec--light .about-copy p{font-size:calc(20.5 * var(--k));line-height:1.36;letter-spacing:-.025em;color:var(--ppt-navy);
+  margin:0 0 calc(14 * var(--k))}
+html[data-skin=ppt] .sec--light .about-copy b{color:var(--ppt-navy);font-weight:700}
+html[data-skin=ppt] .about-copy .badges{gap:calc(13 * var(--k)) calc(12 * var(--k));margin-top:calc(16 * var(--k));max-width:calc(560 * var(--k))}
+html[data-skin=ppt] .sec--light .badge{border:2px solid var(--ppt-navy);border-radius:999px;background:transparent;color:var(--ppt-navy);
+  height:calc(44 * var(--k));padding:0 calc(26 * var(--k));display:inline-flex;align-items:center;font-size:calc(23 * var(--k));
+  font-weight:400;letter-spacing:-.025em}
+
+/* 좁은 화면: 크기는 기존 모바일 규칙을 따르고 색 · 테두리만 시안을 쓴다 */
+@media (max-width:900px){
+  html[data-skin=ppt]{--k:.62px}
+  html[data-skin=ppt] body{background-attachment:scroll}
+  html[data-skin=ppt] .sec:not(.sec--light){background:linear-gradient(160deg,#2E2E2E 0,#000 520px)}
+  html[data-skin=ppt] .stats,html[data-skin=ppt] .visit-grid{grid-template-columns:1fr 1fr}
+  html[data-skin=ppt] #classes .cgrid{grid-template-columns:1fr;column-gap:0}
+  html[data-skin=ppt] .gal{grid-template-columns:repeat(2,1fr)}
+  html[data-skin=ppt] .kicker{font-size:15px}
+  html[data-skin=ppt] .sec:not(.sec--light) .h2{font-size:28px}
+  html[data-skin=ppt] .sec:not(.sec--light) .lede{font-size:15px}
+  html[data-skin=ppt] .stat-value,html[data-skin=ppt] .stat-value[data-len]{font-size:34px}
+  html[data-skin=ppt] .stat-when,html[data-skin=ppt] .stat-label,html[data-skin=ppt] .stat-detail li,
+  html[data-skin=ppt] .gal figcaption,html[data-skin=ppt] .faq summary,html[data-skin=ppt] .faq summary::before,
+  html[data-skin=ppt] .faq .ans,html[data-skin=ppt] .cg-cap,html[data-skin=ppt] #visit .vcard h3,
+  html[data-skin=ppt] #visit .vcard p,html[data-skin=ppt] #visit .vcard a.more,html[data-skin=ppt] #visit .vcard .social a{font-size:15px}
+  html[data-skin=ppt] .stat-value .unit,html[data-skin=ppt] .cg-range{font-size:14px}
+  html[data-skin=ppt] .cg-name{font-size:26px}
+  html[data-skin=ppt] #visit .vcard .big{font-size:18px}
+  html[data-skin=ppt] .cg-shots{height:clamp(170px,46vw,260px)}
+  html[data-skin=ppt] #local .lp-links{margin-inline:0}
+  html[data-skin=ppt] #local .lp-links a{font-size:13.5px;min-height:44px}
+  html[data-skin=ppt] .hero{height:auto;min-height:clamp(520px,92vh,760px)}
+  html[data-skin=ppt] .hero .tag-plain{font-size:18px}
+  html[data-skin=ppt] .hero h1{font-size:20px}
+  html[data-skin=ppt] .hero h1 .lit--box{font-size:31px}
+  html[data-skin=ppt] .hero-sub{font-size:16px}
+  html[data-skin=ppt] .about-split{height:auto;min-height:0;display:flex;flex-direction:column}
+  html[data-skin=ppt] .about-split .about-copy{padding:48px var(--pad-x) 56px}
+  html[data-skin=ppt] .about-art{position:relative;width:auto;min-width:0;height:clamp(300px,70vw,460px);order:-1;
+    -webkit-mask-image:none;mask-image:none}
+  html[data-skin=ppt] .sec--light .kicker{font-size:15px}
+  html[data-skin=ppt] .sec--light .h2{font-size:27px}
+  html[data-skin=ppt] .sec--light .about-copy p{font-size:15.5px;line-height:1.6}
+  html[data-skin=ppt] .sec--light .badge{font-size:14px;height:38px;padding:0 14px}
+}
+@media (max-width:520px){
+  html[data-skin=ppt] .stats,html[data-skin=ppt] .visit-grid{grid-template-columns:1fr}
+}
+/* 하단 퀵바: 김포는 버튼이 둘이다. 3칸 격자면 오른쪽 한 칸이 빈 채로 남는다. */
+html[data-skin=ppt] .qbar{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:1fr}
+`;
+
 const CSS_POST = `
 .prose .post-h2{margin:44px 0 16px;font-size:clamp(20px,2.2vw,27px);line-height:1.35}
 .prose .post-h2:first-child{margin-top:0}
@@ -1852,7 +2058,7 @@ const CSS_POST = `
 `;
 
 export function siteCss(d) {
-  return `${CSS}${CSS_MOBILE}${CSS_POST}${themeCss(d.theme)}\n`;
+  return `${CSS}${CSS_MOBILE}${CSS_POST}${themeCss(d.theme)}${d.skin === 'ppt' ? PPT_CSS : ''}\n`;
 }
 
 export function siteJs() {

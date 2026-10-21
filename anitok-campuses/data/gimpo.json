@@ -83,7 +83,7 @@
     ],
     "figures": [
       {
-        "local": "about-1.webp",
+        "local": "about-ppt.webp",
         "caption": ""
       }
     ],
@@ -145,7 +145,7 @@
       {
         "name": "주니어반",
         "range": "초등 4-6학년",
-        "lead": "아이의 눈높이에서 가능성을 찾는 수업을 제공합니다.",
+        "lead": "아이의 눈높이에서 가능성을 키워나갑니다.",
         "items": [
           {
             "image": {
@@ -164,7 +164,7 @@
       {
         "name": "디지털 드로잉반",
         "range": "고등 1학년-성인",
-        "lead": "학생의 목표에 맞는 개별 커리큘럼을 운영합니다.",
+        "lead": "학생의 목표에 맞는 맞춤 커리큘럼을 운영합니다.",
         "items": [
           {
             "image": {
@@ -296,23 +296,23 @@
           "caption": "중등예비반 수업작"
         },
         {
-          "local": "class-midexam-1.webp",
+          "local": "work-06.webp",
           "caption": "애니톡 상황표현 연구작"
         },
         {
-          "local": "class-highprep-1.webp",
+          "local": "work-07.webp",
           "caption": "애니톡 이미지보드 연구작"
         },
         {
-          "local": "class-highexam-1.webp",
+          "local": "work-08.webp",
           "caption": "애니톡 칸만화 연구작"
         },
         {
-          "local": "class-cg-1.webp",
+          "local": "work-09.webp",
           "caption": "고등예비반 수업작"
         },
         {
-          "local": "class-cg-2.webp",
+          "local": "work-10.webp",
           "caption": "CG반 수업작"
         }
       ]
@@ -345,6 +345,9 @@
     ]
   },
   "local": {
+    "kicker": "LOCAL",
+    "title": "지역별 과목별 안내",
+    "lede": "찾으시는 지역과 배우고싶은 과목에 맞는 안내 페이지입니다.",
     "area": "김포",
     "areaSlug": "gimpo",
     "subjects": [
@@ -368,21 +371,9 @@
         "note": "장기동 인근 학생들도 함께 수강하고 있습니다."
       },
       {
-        "area": "장기동",
-        "slug": "janggi",
-        "subject": "misul",
-        "note": "장기동 인근 학생들도 함께 수강하고 있습니다."
-      },
-      {
         "area": "운양동",
         "slug": "unyang",
         "subject": "manhwa",
-        "note": "학원이 있는 운양역 바로 앞 권역입니다."
-      },
-      {
-        "area": "운양동",
-        "slug": "unyang",
-        "subject": "misul",
         "note": "학원이 있는 운양역 바로 앞 권역입니다."
       },
       {
@@ -396,6 +387,18 @@
         "slug": "gurae",
         "subject": "misul",
         "note": "구래동 인근 학생들이 함께 수강하고 있습니다."
+      },
+      {
+        "area": "장기동",
+        "slug": "janggi",
+        "subject": "misul",
+        "note": "장기동 인근 학생들도 함께 수강하고 있습니다."
+      },
+      {
+        "area": "운양동",
+        "slug": "unyang",
+        "subject": "misul",
+        "note": "학원이 있는 운양역 바로 앞 권역입니다."
       }
     ]
   },
@@ -444,5 +447,9 @@
     "consultBtn": "",
     "socialNoPlace": true
   },
-  "skin": "ppt"
+  "skin": "ppt",
+  "brandWord": {
+    "main": "ANITALK",
+    "sub": "ANIMATION CARTOON PROFESSIONAL SCHOOL"
+  }
 }
