@@ -28,6 +28,19 @@ function url(v) {
   return '';
 }
 
+/**
+ * 시안의 본문은 한 문장 안에서 일부만 굵고, 줄도 정해진 자리에서 바꾼다.
+ * 데이터에서 **굵게** 와 줄바꿈(\n)을 쓰면 그대로 그린다. esc() 를 먼저
+ * 거친 뒤에 바꾸므로 입력값이 태그로 해석되지는 않는다(* 와 줄바꿈만 본다).
+ */
+function rich(v) {
+  // 줄바꿈을 먼저 <br> 로 바꾼다. 굵게 표시가 줄을 넘어갈 때 . 이 \n 을
+  // 잡지 못해 ** 가 글자로 그대로 남는 일이 있었다(네이버 예약 카드).
+  return esc(v)
+    .replace(/\n/g, '<br>')
+    .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+}
+
 /** JSON-LD 안에 넣는 문자열. </script> 탈출을 막는다. */
 function jsonld(obj) {
   return JSON.stringify(obj, null, 2).replace(/</g, '\\u003c');
@@ -196,6 +209,18 @@ figure{margin:0}
   max(24px,calc((100vw - var(--wrap)) / 2 + 24px));justify-self:end;max-width:none}
 /* 시안은 제목이 두 줄이다. 칼럼이 좁으면 세 줄로 떨어진다. */
 .sec--light .h2{font-size:clamp(25px,2.4vw,44px);line-height:1.26}
+/* 시안: 제목 첫 줄은 보통 굵기, 둘째 줄만 굵다. 본문도 일부만 굵다. */
+.sec--light .h2{font-weight:400}
+.sec--light .h2 b{font-weight:800}
+.sec--light .about-copy b{font-weight:700;color:#15151A}
+/* 오시는 길 카드 안의 굵은 첫 문장 */
+html[data-skin=ppt] #visit .vcard b{font-weight:700;color:#FFFFFF}
+/* 시안의 카드 버튼은 밑줄 링크가 아니라 테두리 박스이고 왼쪽에 붙는다. */
+html[data-skin=ppt] #visit .vcard a.more{align-self:flex-start;margin-top:auto;display:inline-flex;align-items:center;
+  gap:6px;padding:9px 14px;border:1px solid rgba(255,255,255,.55);border-bottom-width:1px;
+  border-radius:6px;font-size:15px;font-weight:500;color:#FFFFFF;text-decoration:none}
+html[data-skin=ppt] #visit .vcard a.more:hover{background:#FFFFFF;color:#15151A;border-color:#FFFFFF}
+html[data-skin=ppt] #visit .vcard .social{justify-content:flex-start;margin-top:auto}
 /* 작품은 화면 오른쪽 끝까지, 섹션 높이를 꽉 채운다. */
 .about-art{align-self:stretch;position:relative;overflow:hidden}
 .about-art .fig{height:100%;margin:0}
@@ -211,14 +236,14 @@ figure{margin:0}
 /* ── 시안 맞춤: 갤러리 ─────────────────────────────────────────────
  * 캠퍼스 둘러보기는 가로(4:3), 작품 갤러리는 세로(3:3.45). 캡션은
  * 사진 바깥 가운데. 지금까지는 둘 다 정사각에 캡션이 왼쪽이었다. */
-#gallery .gal .shot img,#gallery .gal .shot .ph{aspect-ratio:4/3}
-#works .gal .shot img,#works .gal .shot .ph{aspect-ratio:3/3.45}
-#gallery .gal figcaption,#works .gal figcaption{text-align:center}
-#gallery .gal .shot img,#works .gal .shot img,
-#gallery .gal .shot .ph,#works .gal .shot .ph{border-radius:16px}
+html[data-skin=ppt] #gallery .gal .shot img,html[data-skin=ppt] #gallery .gal .shot .ph{aspect-ratio:4/3}
+html[data-skin=ppt] #works .gal .shot img,html[data-skin=ppt] #works .gal .shot .ph{aspect-ratio:3/3.45}
+html[data-skin=ppt] #gallery .gal figcaption,html[data-skin=ppt] #works .gal figcaption{text-align:center}
+html[data-skin=ppt] #gallery .gal .shot img,html[data-skin=ppt] #works .gal .shot img,
+html[data-skin=ppt] #gallery .gal .shot .ph,html[data-skin=ppt] #works .gal .shot .ph{border-radius:16px}
 /* 오시는 길 카드는 시안에서 왼쪽 정렬이다. */
-#visit .vcard{text-align:left;align-items:flex-start}
-#visit .vcard *{text-align:left}
+html[data-skin=ppt] #visit .vcard{text-align:left;align-items:flex-start}
+html[data-skin=ppt] #visit .vcard *{text-align:left}
 
 @media (max-width:900px){
   .nav,.hdr-tel{display:none}
@@ -240,13 +265,13 @@ figure{margin:0}
 /* ── 시안 맞춤: 히어로 ──────────────────────────────────────────────
  * 시안은 글자가 지금보다 한참 작고, 'since 2012' 가 주황 알약이 아니라
  * 평문이며, 둘째 줄이 한 줄 안에서 앞(regular)/뒤(bold)만 갈린다. */
-.hero .tag-plain{margin:0 0 6px;font-size:clamp(17px,1.5vw,22px);font-weight:400;
+html[data-skin=ppt] .hero .tag-plain{margin:0 0 6px;font-size:clamp(17px,1.5vw,22px);font-weight:400;
   color:#FFFFFF;letter-spacing:var(--track-num,normal);text-shadow:0 4px 24px rgba(0,0,0,.8)}
-.hero h1{font-size:clamp(27px,2.6vw,38px);line-height:1.34;letter-spacing:-.025em}
-.hero h1 .over{display:block;font-size:1em;font-weight:400;letter-spacing:-.025em;margin-bottom:6px}
-.hero h1 .over b{font-weight:800}
-.hero h1 .lit--box{font-weight:800;font-size:1.32em}
-.hero-sub{font-size:clamp(15px,1.25vw,19px);font-weight:400}
+html[data-skin=ppt] .hero h1{font-size:clamp(27px,2.6vw,38px);line-height:1.34;letter-spacing:-.025em}
+html[data-skin=ppt] .hero h1 .over{display:block;font-size:1em;font-weight:400;letter-spacing:-.025em;margin-bottom:6px}
+html[data-skin=ppt] .hero h1 .over b{font-weight:800}
+html[data-skin=ppt] .hero h1 .lit--box{font-weight:800;font-size:1.32em}
+html[data-skin=ppt] .hero-sub{font-size:clamp(15px,1.25vw,19px);font-weight:400}
 .hero h1 .lit{color:var(--accent-lit)}
 /* 김포 시안: 학원 이름을 오렌지 판으로 덮고 그 위에 흰 글자를 올린다.
  * box-decoration-break 가 있어야 두 줄로 접혀도 양끝 여백이 유지된다. */
@@ -928,7 +953,7 @@ function hero(d, present) {
 
 function about(d, present) {
   const figs = (d.about.figures || []).map((f) => figure(f, present)).join('');
-  const paras = (d.about.paragraphs || []).map((p) => `<p>${esc(p)}</p>`).join('');
+  const paras = (d.about.paragraphs || []).map((p) => `<p>${rich(p)}</p>`).join('');
   const badges = (d.about.badges || []).map((b) => `<span class="badge">${esc(b)}</span>`).join('');
   // 시안의 학원소개는 흰 배경이고, 작품이 오른쪽 화면 끝까지 닿는다.
   // about.theme 으로 갈라 두어 다른 지점은 지금까지의 어두운 구성을 그대로 쓴다.
@@ -938,7 +963,7 @@ function about(d, present) {
   <div class="about-split">
     <div class="about-copy" data-reveal="0">
       <span class="kicker">${esc(d.about.kicker)}</span>
-      <h2 class="h2">${esc(d.about.title)}</h2>
+      <h2 class="h2">${rich(d.about.title)}</h2>
       <div style="margin-top:24px">${paras}</div>
       ${badges ? `<div class="badges">${badges}</div>` : ''}
     </div>
@@ -1173,8 +1198,9 @@ function faq(d) {
 
 function visit(d, siblings) {
   const booking = naverBooking(d);
+  // 시안은 마지막 카드에 블로그 · 인스타그램만 둔다(네이버 지도는 첫 카드에 이미 있다).
   const social = [
-    d.links.naverPlace && { label: '네이버 지도', href: d.links.naverPlace },
+    d.visit.socialNoPlace ? null : d.links.naverPlace && { label: '네이버 지도', href: d.links.naverPlace },
     d.links.blog && { label: '블로그', href: d.links.blog },
     d.links.instagram && { label: '인스타그램', href: d.links.instagram },
   ].filter(Boolean);
@@ -1184,7 +1210,7 @@ function visit(d, siblings) {
     .join('');
   return `<section class="sec visit" id="visit">
   <div class="wrap">
-    <span class="kicker" data-reveal="0">Visit</span>
+    <span class="kicker" data-reveal="0">${esc(d.visit.kicker || 'Visit')}</span>
     <h2 class="h2" data-reveal="40">${esc(d.visit.title)}</h2>
     <div class="visit-grid">
       <div class="vcard" data-reveal="0">
@@ -1208,15 +1234,28 @@ function visit(d, siblings) {
         booking
           ? `<div class="vcard" data-reveal="120">
         <h3>네이버 예약</h3>
-        <p>네이버 예약으로 상담 시간을 바로 잡을 수 있습니다. 원하는 날짜와 시간을 선택해 주세요.</p>
-        <a class="more" href="${url(booking)}" target="_blank" rel="noopener">네이버로 예약하기 &rarr;</a>
+        <p>${rich(
+          d.visit.booking ||
+            '네이버 예약으로 상담 시간을 바로 잡을 수 있습니다. 원하는 날짜와 시간을 선택해 주세요.'
+        )}</p>
+        <a class="more" href="${url(booking)}" target="_blank" rel="noopener">${esc(
+          d.visit.bookingBtn || '네이버로 예약하기'
+        )} &rarr;</a>
       </div>`
           : ''
       }
       <div class="vcard" data-reveal="${booking ? 180 : 120}">
         <h3>온라인 상담</h3>
-        <p>${esc(d.visit.consult)}</p>
-        <a class="more" href="${url(d.links.consult)}" target="_blank" rel="noopener">상담 신청하기 &rarr;</a>
+        <p>${rich(d.visit.consult)}</p>
+        ${
+          // 시안의 '온라인 상담' 카드에는 상담 신청 링크가 없고 블로그 · 인스타그램만
+          // 있다. consultBtn 을 빈 문자열로 주면 링크를 뺀다.
+          d.visit.consultBtn === ''
+            ? ''
+            : `<a class="more" href="${url(d.links.consult)}" target="_blank" rel="noopener">${esc(
+                d.visit.consultBtn || '상담 신청하기'
+              )} &rarr;</a>`
+        }
         ${social.length ? `<div class="social">${social
           .map((s) => `<a href="${url(s.href)}" target="_blank" rel="noopener">${esc(s.label)}</a>`)
           .join('')}</div>` : ''}
@@ -1608,7 +1647,7 @@ export function renderLocal(d, page, { pages = [], present = new Set() } = {}) {
   const others = pages.filter((p) => p.slug !== page.slug);
 
   return `<!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"${d.skin ? ` data-skin="${esc(d.skin)}"` : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1825,7 +1864,7 @@ export function siteJs() {
 /** 기본 Vercel 404 대신 같은 톤의 페이지. 검색엔진에는 색인하지 않도록 막는다. */
 export function render404(d) {
   return `<!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"${d.skin ? ` data-skin="${esc(d.skin)}"` : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1878,7 +1917,7 @@ function localIndex(d) {
 
 export function renderPage(d, { present = new Set(), siblings = [] } = {}) {
   return `<!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"${d.skin ? ` data-skin="${esc(d.skin)}"` : ''}>
 <head>
 ${head(d, present)}
 ${structuredData(d)}
@@ -2074,7 +2113,7 @@ function postJsonLd(d, post) {
 
 function blogShell(d, { title, description, canonical, keywords = [], jsonLd = '', image = '', body }) {
   return `<!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"${d.skin ? ` data-skin="${esc(d.skin)}"` : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

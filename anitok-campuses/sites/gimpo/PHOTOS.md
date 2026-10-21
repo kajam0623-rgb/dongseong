@@ -26,8 +26,8 @@
 | `work-03.webp` | 중등예비반 수업작 | 적용됨 |
 | `work-04.webp` | 중등예비반 수업작 | 적용됨 |
 | `work-05.webp` | 중등예비반 수업작 | 적용됨 |
-| `class-midexam-1.webp` | 중등입시반 예시작 | 적용됨 |
-| `class-highprep-1.webp` | 고등예비반 예시작 | 적용됨 |
-| `class-highexam-1.webp` | 고등입시반 예시작 | 적용됨 |
-| `class-cg-1.webp` | CG반 수업작 | 적용됨 |
+| `class-midexam-1.webp` | 애니톡 상황표현 연구작 | 적용됨 |
+| `class-highprep-1.webp` | 애니톡 이미지보드 연구작 | 적용됨 |
+| `class-highexam-1.webp` | 애니톡 칸만화 연구작 | 적용됨 |
+| `class-cg-1.webp` | 고등예비반 수업작 | 적용됨 |
 | `class-cg-2.webp` | CG반 수업작 | 적용됨 |

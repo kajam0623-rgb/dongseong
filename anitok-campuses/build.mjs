@@ -18,6 +18,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlink
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import {
   renderPage,
   render404,
@@ -393,8 +394,20 @@ for (const slug of targets) {
   // 찍히면, 바뀐 것이 없는 지점까지 새로 고쳐졌다고 검색엔진에 알리게 된다.
   // 그래서 사이트맵에 올라가는 페이지의 내용이 정말 달라졌을 때만 날짜를
   // 올리고, 아니면 이미 나가 있던 날짜를 그대로 쓴다.
+  // 공유 CSS/JS 주소에 내용 해시를 붙인다. s.css 는 하루 캐시라, 주소가
+  // 그대로면 새 HTML 이 어제의 CSS 와 섞여 레이아웃이 깨져 보인다
+  // (실제로 김포 학원소개가 그렇게 깨져 보였다). 내용이 바뀌면 주소도 바뀐다.
+  const css = minCss(siteCss(d));
+  const js = minJs(siteJs());
+  const ver = (s) => createHash('sha1').update(s).digest('hex').slice(0, 10);
+  const withVer = (body) =>
+    body
+      .replaceAll('href="/s.css"', `href="/s.css?v=${ver(css)}"`)
+      .replaceAll('src="/s.js"', `src="/s.js?v=${ver(js)}"`);
+
   let pageChanged = false;
   const writePage = (file, body) => {
+    body = withVer(body);
     if (!existsSync(file) || readFileSync(file, 'utf8') !== body) pageChanged = true;
     writeFileSync(file, body);
   };
@@ -403,8 +416,8 @@ for (const slug of targets) {
   writePage(join(outDir, 'index.html'), html);
 
   // CSS/JS는 모든 페이지가 공유한다. 페이지마다 인라인하면 20KB씩 중복된다.
-  writeFileSync(join(outDir, 's.css'), minCss(siteCss(d)));
-  writeFileSync(join(outDir, 's.js'), minJs(siteJs()));
+  writeFileSync(join(outDir, 's.css'), css);
+  writeFileSync(join(outDir, 's.js'), js);
 
   // 지역 · 과목 랜딩페이지 (목동만화학원 / 화곡만화학원 …)
   const pages = localPages(d);
@@ -588,7 +601,7 @@ ${[
   );
 
   // 404 — 기본 Vercel 페이지 대신 같은 톤으로.
-  writeFileSync(join(outDir, '404.html'), minHtml(render404(d)));
+  writeFileSync(join(outDir, '404.html'), withVer(minHtml(render404(d))));
 
   writeFileSync(
     join(outDir, 'README.md'),

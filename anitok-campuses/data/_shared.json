@@ -144,8 +144,7 @@
       "btnHoverFg": "#FF6B26",
       "pulse": "rgba(255,107,38,.55)",
       "track": "-.025em",
-      "trackNum": "normal",
-      "logoFilter": "none"
+      "trackNum": "normal"
     }
   },
   "brandLogo": "https://cdn.imweb.me/thumbnail/20260323/40ecf7572706b.png",
