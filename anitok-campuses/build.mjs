@@ -459,6 +459,16 @@ ${[
             source: '/gal/(.*)',
             headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
           },
+          // 글꼴을 직접 들고 있는 지점만. 파일 이름에 버전이 붙어 있어
+          // 1년 캐시로 둔다(바꿀 때는 파일이 통째로 바뀐다).
+          ...(d.site.selfHostFont
+            ? [
+                {
+                  source: '/fonts/(.*)',
+                  headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+                },
+              ]
+            : []),
           {
             source: '/(s.css|s.js)',
             headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, must-revalidate' }],

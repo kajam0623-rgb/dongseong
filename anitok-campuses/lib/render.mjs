@@ -495,6 +495,23 @@ a,button,summary{touch-action:manipulation}
  * data/_shared.json 의 themes 에 항목을 추가하고 지점 데이터에서 theme 이름만
  * 지정하면 된다. 마크업과 레이아웃은 전 지점이 동일하다.
  * ───────────────────────────────────────────────────────────── */
+/**
+ * 본문 글꼴(Pretendard Variable v1.3.9) 을 불러오는 <link>.
+ *
+ * 기본은 지금까지와 같은 jsdelivr CDN 이다. site.selfHostFont 를 켠 지점은
+ * sites/<slug>/fonts/ 에 넣어 둔 같은 버전의 파일을 제 도메인에서 내려 준다.
+ * 바깥 CDN 이 막히거나 느린 환경에서도 글꼴이 그대로 나오고, 접속이 한 곳으로
+ * 줄어 첫 글자가 늦게 바뀌는 일도 없다. 동적 서브셋이라 브라우저는 그 페이지에
+ * 실제로 쓰인 글자 묶음만 받아 간다.
+ */
+function fontHead(d) {
+  if (d.site?.selfHostFont) return '<link rel="stylesheet" href="/fonts/pretendard.css">';
+  return (
+    '<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>\n' +
+    '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">'
+  );
+}
+
 const THEME_KEYS = {
   accent: '--accent',
   accentLit: '--accent-lit',
@@ -1300,8 +1317,7 @@ ${ogImage ? `<meta name="twitter:image" content="${esc(ogImage)}">` : ''}
 ${(d.seo.verification || [])
   .map((v) => `<meta name="${esc(v.name)}" content="${esc(v.content)}">`)
   .join('\n')}
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+${fontHead(d)}
 ${
   d.analytics?.ga4
     ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(d.analytics.ga4)}"></script>
@@ -1489,8 +1505,7 @@ ${ogImage ? `<meta property="og:image" content="${esc(ogImage)}">` : ''}
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(desc)}">
 ${ogImage ? `<meta name="twitter:image" content="${esc(ogImage)}">` : ''}
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+${fontHead(d)}
 <meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
 <link rel="stylesheet" href="/s.css">
 ${lpJsonLd(d, page, others)}
@@ -1690,7 +1705,7 @@ export function render404(d) {
 <link rel="icon" href="/icon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/icon-16.png" sizes="16x16" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+${fontHead(d)}
 <link rel="stylesheet" href="/s.css">
 <style>
 .nf{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;gap:20px}
@@ -1954,8 +1969,7 @@ ${image ? `<meta property="og:image" content="${esc(image)}">` : ''}
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">
 ${image ? `<meta name="twitter:image" content="${esc(image)}">` : ''}
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+${fontHead(d)}
 <meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
 <link rel="stylesheet" href="/s.css">
 ${jsonLd}

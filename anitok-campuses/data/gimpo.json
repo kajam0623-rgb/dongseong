@@ -6,7 +6,8 @@
   "shortName": "김포",
   "site": {
     "origin": "https://gimpo-anitok.vercel.app",
-    "subdomain": "gimpo"
+    "subdomain": "gimpo",
+    "selfHostFont": true
   },
   "phone": "031-985-5382",
   "address": {
