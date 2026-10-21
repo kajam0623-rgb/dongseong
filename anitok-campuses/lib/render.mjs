@@ -178,6 +178,36 @@ figure{margin:0}
 .mnav{display:none;background:var(--mnav-bg);color:var(--on-accent);border-top:1px solid var(--mnav-line)}
 .mnav.is-open{display:block}
 .mnav a{display:block;padding:15px clamp(16px,4vw,28px);font-size:15px;font-weight:600;border-bottom:1px solid var(--mnav-line)}
+/* ── 시안 맞춤: 학원소개를 흰 배경으로 ──────────────────────────────
+ * 시안에서 이 섹션만 흰 바탕에 짙은 글씨이고, 작품이 오른쪽 화면 끝까지
+ * 닿는다. about.theme = 'light' 인 지점에만 적용되고 나머지는 그대로다. */
+.sec--light{background:#FFFFFF;color:#15151A;padding-block:0}
+.sec--light .kicker{color:#8A8A90}
+.sec--light .h2{color:#15151A}
+/* .about-copy p 가 밝은 회색을 주고 있어 같은 자리에서는 이기지 못한다.
+ * 흰 바탕에서는 거의 읽히지 않으므로 더 좁은 선택자로 덮는다. */
+.sec--light .about-copy p{color:#33333A}
+.sec--light p{color:#33333A}
+.sec--light .badge{background:transparent;border:1px solid #C9C9D0;color:#2A2A31}
+.about-split{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+  align-items:center;gap:0;height:clamp(620px,46vw,860px)}
+.about-split .about-copy{overflow:auto}
+.about-split .about-copy{padding:clamp(56px,5vw,88px) clamp(32px,3.4vw,64px) clamp(56px,5vw,88px)
+  max(24px,calc((100vw - var(--wrap)) / 2 + 24px));justify-self:end;max-width:none}
+/* 시안은 제목이 두 줄이다. 칼럼이 좁으면 세 줄로 떨어진다. */
+.sec--light .h2{font-size:clamp(25px,2.4vw,44px);line-height:1.26}
+/* 작품은 화면 오른쪽 끝까지, 섹션 높이를 꽉 채운다. */
+.about-art{align-self:stretch;position:relative;overflow:hidden}
+.about-art .fig{height:100%;margin:0}
+.about-art .fig img,.about-art .fig .ph{width:100%;height:100%;aspect-ratio:auto;
+  max-height:none;object-fit:cover;border-radius:0}
+.about-art figcaption{display:none}
+@media (max-width:860px){
+  .about-split{grid-template-columns:1fr;min-height:0}
+  .about-split .about-copy{padding:clamp(48px,9vw,72px) var(--pad-x);justify-self:stretch;max-width:none}
+  .about-art{height:clamp(300px,62vw,440px);order:-1}
+}
+
 /* ── 시안 맞춤: 갤러리 ─────────────────────────────────────────────
  * 캠퍼스 둘러보기는 가로(4:3), 작품 갤러리는 세로(3:3.45). 캡션은
  * 사진 바깥 가운데. 지금까지는 둘 다 정사각에 캡션이 왼쪽이었다. */
@@ -900,6 +930,22 @@ function about(d, present) {
   const figs = (d.about.figures || []).map((f) => figure(f, present)).join('');
   const paras = (d.about.paragraphs || []).map((p) => `<p>${esc(p)}</p>`).join('');
   const badges = (d.about.badges || []).map((b) => `<span class="badge">${esc(b)}</span>`).join('');
+  // 시안의 학원소개는 흰 배경이고, 작품이 오른쪽 화면 끝까지 닿는다.
+  // about.theme 으로 갈라 두어 다른 지점은 지금까지의 어두운 구성을 그대로 쓴다.
+  const light = d.about.theme === 'light';
+  if (light) {
+    return `<section class="sec sec--light about--split" id="about">
+  <div class="about-split">
+    <div class="about-copy" data-reveal="0">
+      <span class="kicker">${esc(d.about.kicker)}</span>
+      <h2 class="h2">${esc(d.about.title)}</h2>
+      <div style="margin-top:24px">${paras}</div>
+      ${badges ? `<div class="badges">${badges}</div>` : ''}
+    </div>
+    <div class="about-art" data-reveal="120">${figs}</div>
+  </div>
+</section>`;
+  }
   return `<section class="sec" id="about">
   <div class="wrap">
     <div class="about-grid">

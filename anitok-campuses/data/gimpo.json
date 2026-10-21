@@ -86,7 +86,8 @@
         "local": "about-1.webp",
         "caption": ""
       }
-    ]
+    ],
+    "theme": "light"
   },
   "results": {
     "kicker": "CAREER",
