@@ -54,9 +54,8 @@
     "naver": "1a10efa7b4e598ec59628e41b93d71079fcb3d34"
   },
   "hero": {
-    "tag": "since 2012",
     "over": "특별한 아이를 위한 ",
-    "line1": "특별한 교육의 시작!",
+    "line1": "",
     "line2": "김포 애니톡 만화애니학원",
     "sub": "학생은 그리는 걸 배우고 우리는 듣는 걸 배우겠습니다.",
     "image": {
@@ -64,7 +63,9 @@
       "caption": "김포 애니톡 만화애니학원 입구",
       "eager": true
     },
-    "litBox": true
+    "litBox": true,
+    "tagPlain": "since 2012",
+    "overStrong": "특별한 교육의 시작"
   },
   "about": {
     "kicker": "ANITALK GIMPO",
@@ -432,9 +433,5 @@
       "href": "#visit"
     }
   ],
-  "brandLogo": "/gal/logo.webp",
-  "brandLogoBox": {
-    "w": 140,
-    "h": 140
-  }
+  "brandLogo": "https://cdn.imweb.me/thumbnail/20260323/40ecf7572706b.png"
 }

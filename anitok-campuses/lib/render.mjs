@@ -66,7 +66,12 @@ function naverBooking(d) {
  * ───────────────────────────────────────────────────────────── */
 function resolveImage(slot, present) {
   if (!slot) return null;
-  if (slot.local && present.has(slot.local)) return { src: `/gal/${slot.local}`, kind: 'local' };
+  if (slot.local && present.has(slot.local)) {
+    // present 가 Map 이면 사진의 실제 크기까지 들어 있다(Set 이던 시절의
+    // 호출부와도 호환되도록 get 이 없으면 크기 없이 돌려준다).
+    const size = typeof present.get === 'function' ? present.get(slot.local) : null;
+    return { src: `/gal/${slot.local}`, kind: 'local', w: size?.w, h: size?.h };
+  }
   if (slot.remote) return { src: slot.remote, kind: 'remote' };
   return null;
 }
@@ -173,6 +178,18 @@ figure{margin:0}
 .mnav{display:none;background:var(--mnav-bg);color:var(--on-accent);border-top:1px solid var(--mnav-line)}
 .mnav.is-open{display:block}
 .mnav a{display:block;padding:15px clamp(16px,4vw,28px);font-size:15px;font-weight:600;border-bottom:1px solid var(--mnav-line)}
+/* ── 시안 맞춤: 갤러리 ─────────────────────────────────────────────
+ * 캠퍼스 둘러보기는 가로(4:3), 작품 갤러리는 세로(3:3.45). 캡션은
+ * 사진 바깥 가운데. 지금까지는 둘 다 정사각에 캡션이 왼쪽이었다. */
+#gallery .gal .shot img,#gallery .gal .shot .ph{aspect-ratio:4/3}
+#works .gal .shot img,#works .gal .shot .ph{aspect-ratio:3/3.45}
+#gallery .gal figcaption,#works .gal figcaption{text-align:center}
+#gallery .gal .shot img,#works .gal .shot img,
+#gallery .gal .shot .ph,#works .gal .shot .ph{border-radius:16px}
+/* 오시는 길 카드는 시안에서 왼쪽 정렬이다. */
+#visit .vcard{text-align:left;align-items:flex-start}
+#visit .vcard *{text-align:left}
+
 @media (max-width:900px){
   .nav,.hdr-tel{display:none}
   .burger{display:inline-flex}
@@ -190,6 +207,16 @@ figure{margin:0}
 .tag{display:inline-flex;align-items:center;gap:8px;background:var(--tag-bg);color:var(--on-accent);border-radius:999px;padding:8px 18px;font-size:13px;font-weight:700;margin-bottom:24px}
 .hero h1{font-size:clamp(34px,5.4vw,72px);line-height:1.14;letter-spacing:-.05em;text-shadow:0 6px 34px rgba(0,0,0,.8)}
 .hero h1 .over{display:block;font-size:.56em;font-weight:700;letter-spacing:-.03em;margin-bottom:10px}
+/* ── 시안 맞춤: 히어로 ──────────────────────────────────────────────
+ * 시안은 글자가 지금보다 한참 작고, 'since 2012' 가 주황 알약이 아니라
+ * 평문이며, 둘째 줄이 한 줄 안에서 앞(regular)/뒤(bold)만 갈린다. */
+.hero .tag-plain{margin:0 0 6px;font-size:clamp(17px,1.5vw,22px);font-weight:400;
+  color:#FFFFFF;letter-spacing:var(--track-num,normal);text-shadow:0 4px 24px rgba(0,0,0,.8)}
+.hero h1{font-size:clamp(27px,2.6vw,38px);line-height:1.34;letter-spacing:-.025em}
+.hero h1 .over{display:block;font-size:1em;font-weight:400;letter-spacing:-.025em;margin-bottom:6px}
+.hero h1 .over b{font-weight:800}
+.hero h1 .lit--box{font-weight:800;font-size:1.32em}
+.hero-sub{font-size:clamp(15px,1.25vw,19px);font-weight:400}
 .hero h1 .lit{color:var(--accent-lit)}
 /* 김포 시안: 학원 이름을 오렌지 판으로 덮고 그 위에 흰 글자를 올린다.
  * box-decoration-break 가 있어야 두 줄로 접혀도 양끝 여백이 유지된다. */
@@ -266,8 +293,10 @@ figure{margin:0}
 /* 띠의 높이는 고정이고 사진은 그 안에서 잘린다. 그리드로 짜면 행이 auto 라
  * img 의 height:100% 가 풀리지 않아 세로 사진이 카드 밖으로 넘쳤다(디지털
  * 드로잉반 작품이 캡션을 덮던 문제). flex 는 높이가 확정이라 100% 가 먹는다. */
-.cg-shots{display:flex;height:clamp(190px,21vw,268px);overflow:hidden}
-.cg-shots>*{flex:1 1 0;min-width:0;height:100%}
+/* 시안은 사진을 잘라 넣지 않는다. 띠 높이는 고정하되 그림은 제 비율대로
+ * 담는다(contain). cover 로 두면 세로 작품의 위아래가 잘려 나간다. */
+.cg-shots{display:flex;gap:2px;height:clamp(190px,21vw,268px);overflow:hidden;background:#0C0C0E}
+.cg-shots>*{flex:1 1 0;min-width:0;height:100%;display:block;padding:0;border:0;background:#0C0C0E;cursor:zoom-in}
 .cg-shots img,.cg-shots .ph{width:100%;height:100%;object-fit:cover;border-radius:0}
 .cg-cap{margin:0;padding:18px 20px;font-size:15px;line-height:1.65;color:var(--ink)}
 .lede--mid{margin-left:auto;margin-right:auto;text-align:center}
@@ -851,9 +880,16 @@ function hero(d, present) {
   <div class="hero-scrim-b" aria-hidden="true"></div>
   <div class="hero-in">
     ${d.hero.tag ? `<p class="tag" data-reveal="0">${esc(d.hero.tag)}</p>` : ''}
-    <h1 data-reveal="80"><span class="over">${esc(d.hero.over)}</span>${esc(
-    d.hero.line1
-  )}<br><span class="lit${d.hero.litBox ? ' lit--box' : ''}">${esc(d.hero.line2)}</span></h1>
+    ${
+      d.hero.tagPlain
+        ? `<p class="tag-plain" data-reveal="0">${esc(d.hero.tagPlain)}</p>`
+        : ''
+    }
+    <h1 data-reveal="80"><span class="over">${esc(d.hero.over)}${
+    d.hero.overStrong ? `<b>${esc(d.hero.overStrong)}</b>` : ''
+  }</span>${esc(d.hero.line1)}${
+    d.hero.line1 ? '<br>' : ''
+  }<span class="lit${d.hero.litBox ? ' lit--box' : ''}">${esc(d.hero.line2)}</span></h1>
     <p class="hero-sub" data-reveal="160">${esc(d.hero.sub)}</p>
   </div>
   <div class="scroll-dot" aria-hidden="true"><i></i></div>
@@ -938,10 +974,30 @@ function passList(d) {
 </section>`;
 }
 
+/** 누르면 원본이 뜨는 사진. 라이트박스 스크립트가 button.shot 을 찾는다. */
+function shotOf(slot, present, ratio) {
+  const img = resolveImage(slot, present);
+  const grow = ratio ? ` style="flex:${ratio.toFixed(3)} 1 0"` : '';
+  if (!img) return `<div class="ph-wrap"${grow}>${imgOnly(slot, present)}</div>`;
+  return `<button class="shot" type="button"${grow} aria-label="${esc(
+    (slot.caption || '사진') + ' 크게 보기'
+  )}">${imgOnly(slot, present)}</button>`;
+}
+
 function classesGrid(d, present) {
   const cells = d.classes.groups
     .map((g, i) => {
-      const shots = (g.items || []).map((c) => imgOnly(c.image, present)).join('');
+      // 시안은 사진을 잘라 넣지 않는다. 비율을 지킨 채 띠 안에 담고,
+      // 누르면 원본이 뜨도록 갤러리와 같은 버튼으로 감싼다.
+      // 사진마다 가로를 제 비율만큼 준다. 그러면 같은 높이로 나란히 서면서도
+      // 어디도 잘리지 않는다 — 시안이 그렇게 되어 있다.
+      const shots = (g.items || [])
+        .map((c) => {
+          const im = resolveImage(c.image, present);
+          const ratio = im && im.w && im.h ? im.w / im.h : 1.4;
+          return shotOf(c.image, present, ratio);
+        })
+        .join('');
       return `<div class="cg" data-reveal="${(i % 2) * 60}">
       <div class="cg-head">
         <h3 class="cg-name">${esc(g.name)}</h3>

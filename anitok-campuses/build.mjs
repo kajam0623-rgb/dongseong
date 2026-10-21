@@ -66,6 +66,43 @@ function gitDate(relPath) {
   return out;
 }
 
+
+/**
+ * webp 의 가로·세로를 헤더에서 직접 읽는다.
+ *
+ * 시안은 수업 과목의 사진을 잘라 넣지 않는다. 사진마다 제 비율만큼 가로를
+ * 차지해야 같은 높이로 나란히 서면서도 아무 데도 잘리지 않는다. 그러려면
+ * 빌드가 각 사진의 비율을 알아야 하는데, 지금까지는 파일 이름만 보고 있었다.
+ * 외부 라이브러리를 쓰지 않는 저장소라 헤더를 직접 읽는다.
+ * (VP8 / VP8L / VP8X 세 가지 형식 모두 쓰인다.)
+ */
+function webpSize(file) {
+  let b;
+  try {
+    b = readFileSync(file);
+  } catch {
+    return null;
+  }
+  if (b.length < 30 || b.toString('ascii', 0, 4) !== 'RIFF' || b.toString('ascii', 8, 12) !== 'WEBP') {
+    return null;
+  }
+  const tag = b.toString('ascii', 12, 16);
+  if (tag === 'VP8X') {
+    return { w: (b.readUIntLE(24, 3) & 0xffffff) + 1, h: (b.readUIntLE(27, 3) & 0xffffff) + 1 };
+  }
+  if (tag === 'VP8 ') {
+    // 키프레임 시그니처 9d 01 2a 뒤에 16비트씩 가로·세로(상위 2비트는 배율)
+    if (b[23] !== 0x9d || b[24] !== 0x01 || b[25] !== 0x2a) return null;
+    return { w: b.readUInt16LE(26) & 0x3fff, h: b.readUInt16LE(28) & 0x3fff };
+  }
+  if (tag === 'VP8L') {
+    if (b[20] !== 0x2f) return null;
+    const n = b.readUInt32LE(21);
+    return { w: (n & 0x3fff) + 1, h: ((n >> 14) & 0x3fff) + 1 };
+  }
+  return null;
+}
+
 function contentDate(slug) {
   // ISO 날짜는 문자열로 정렬해도 시간순이다.
   const dates = [gitDate(`data/${slug}.json`), gitDate('data/_shared.json')]
@@ -339,7 +376,13 @@ for (const slug of targets) {
   mkdirSync(galDir, { recursive: true });
 
   // gal/ 에 실제로 존재하는 파일만 로컬 이미지로 인정한다.
-  const present = new Set(readdirSync(galDir).filter((f) => f !== '.gitkeep'));
+  // 이름만 담던 Set 을 크기까지 담는 Map 으로 바꾼다. .has() 를 쓰던 곳은
+  // Map 에서도 그대로 동작하고, 비율이 필요한 곳만 .get() 을 쓴다.
+  const present = new Map(
+    readdirSync(galDir)
+      .filter((f) => f !== '.gitkeep')
+      .map((f) => [f, webpSize(join(galDir, f))])
+  );
 
   // git은 빈 디렉터리를 추적하지 않는다. 지점 저장소로 분리했을 때도 gal/ 이
   // 남아 있도록 자리를 잡아 둔다.
