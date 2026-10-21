@@ -461,7 +461,10 @@ a,button,summary{touch-action:manipulation}
 .lp-list li{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding:15px 2px;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.6}
 .lp-list .k{flex:0 0 auto;font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--accent-lit);min-width:74px}
 .lp-list .v{flex:1 1 220px;font-weight:600}
-.lp-list .m{flex:0 0 auto;font-size:13px;color:var(--muted-2)}
+.lp-list /* 줄어들 수 있어야 한다. 0 0 auto 로 두면 긴 설명이 그대로 버텨서 좁은
+ * 화면에서 줄 전체가 밖으로 밀려 나간다(학원소식 목록이 390px 에서
+ * 134px 넘쳤다). min-width:0 이 있어야 flex 안에서 글이 접힌다. */
+.m{flex:0 1 auto;min-width:0;font-size:13px;color:var(--muted-2)}
 .lp-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
 .lp-links a{border:1px solid var(--line-2);border-radius:999px;padding:10px 18px;font-size:13.5px;font-weight:600;color:#D6D6D8;background:var(--panel-2);min-height:44px;display:inline-flex;align-items:center}
 .lp-links a:hover{border-color:var(--accent-lit);color:#fff}
@@ -782,11 +785,16 @@ const JS = `
       lbImg.src = img.currentSrc || img.src;
       lbImg.alt = img.alt || '';
       lb.classList.add('is-open');
+      // 열려 있는 동안에는 보조기기에도 보여야 한다. aria-hidden 을 켠 채로
+      // 두면 화면에는 떠 있는데 스크린리더에는 없는 상태가 되고, 그 안의
+      // 닫기 버튼에 포커스를 주는 것이라 더 나쁘다.
+      lb.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       lb.querySelector('.lb-close').focus();
     });
     function close(){
       lb.classList.remove('is-open');
+      lb.setAttribute('aria-hidden', 'true');
       lbImg.removeAttribute('src');
       document.body.style.overflow = '';
       if (last) last.focus();
