@@ -125,7 +125,12 @@ html{scroll-behavior:smooth}
 body{
   margin:0;background:var(--bg);color:var(--ink);
   font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-  letter-spacing:-.03em;-webkit-font-smoothing:antialiased;overflow-x:clip;
+  /* 자간은 지점 테마에서 덮어쓴다. 김포 시안은 -25(=-.025em) 를 지정했고,
+     다른 지점은 지금까지의 -.03em 을 그대로 쓴다.
+     장평 97 은 Pretendard Variable 에 폭(wdth) 축이 없어 브라우저에서
+     재현할 수 없다. scaleX 로 눌러 넣으면 글자가 일그러지고 줄바꿈이
+     어긋나므로 자간만 맞췄다. */
+  letter-spacing:var(--track,-.03em);-webkit-font-smoothing:antialiased;overflow-x:clip;
 }
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
@@ -134,6 +139,8 @@ h1,h2,h3,h4{margin:0;font-weight:800;line-height:1.2}
 figure{margin:0}
 :focus-visible{outline:2px solid var(--accent-lit);outline-offset:3px}
 
+/* 시안: 숫자와 영문은 자간 0. 값이 없는 지점은 본문 자간을 그대로 따른다. */
+.hdr-tel,.stat-value,.cg-range,.pass .yr,.lb-close,time{letter-spacing:var(--track-num,inherit)}
 .wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--pad-x)}
 .sec{padding-block:var(--pad-y)}
 .sec--tint{background:var(--panel)}
@@ -181,6 +188,11 @@ figure{margin:0}
 .hero h1{font-size:clamp(34px,5.4vw,72px);line-height:1.14;letter-spacing:-.05em;text-shadow:0 6px 34px rgba(0,0,0,.8)}
 .hero h1 .over{display:block;font-size:.56em;font-weight:700;letter-spacing:-.03em;margin-bottom:10px}
 .hero h1 .lit{color:var(--accent-lit)}
+/* 김포 시안: 학원 이름을 오렌지 판으로 덮고 그 위에 흰 글자를 올린다.
+ * box-decoration-break 가 있어야 두 줄로 접혀도 양끝 여백이 유지된다. */
+.hero h1 .lit--box{color:var(--on-accent);background:var(--accent);padding:.06em .2em .12em;
+  border-radius:4px;-webkit-box-decoration-break:clone;box-decoration-break:clone;
+  box-shadow:0 10px 30px rgba(0,0,0,.45)}
 .hero h1[data-reveal]{transform:none}
 .hero h1 .w{display:inline-block;will-change:transform,opacity;opacity:0;transform:translateY(.5em);transition:opacity .42s ease-out var(--d,0ms),transform .62s cubic-bezier(.16,1,.3,1) var(--d,0ms)}
 .hero h1.is-in .w{opacity:1;transform:none}
@@ -207,6 +219,9 @@ figure{margin:0}
 .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
 .badge{border:1px solid var(--line-2);border-radius:6px;padding:10px 16px;font-size:13px;font-weight:600;color:#D6D6D8;background:var(--panel-2)}
 .about-figs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* 사진이 한 장일 때(김포 시안)는 자르지 않고 원래 비율 그대로 크게 건다. */
+.about-figs--solo{grid-template-columns:1fr}
+.about-figs.about-figs--solo .fig:first-child img,.about-figs.about-figs--solo .fig:first-child .ph{aspect-ratio:auto;max-height:min(70vh,620px);width:auto;max-width:100%;margin-inline:auto;border-radius:14px}
 .about-figs .fig:first-child{grid-column:1/-1}
 .fig img,.fig .ph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px}
 .about-figs .fig:first-child img,.about-figs .fig:first-child .ph{aspect-ratio:16/9}
@@ -239,6 +254,20 @@ figure{margin:0}
 .note{margin:26px 0 0;font-size:13px;line-height:1.7;color:var(--muted-2)}
 
 /* 수업 과목 */
+/* 수업 과목 — 2열 그리드(김포 시안). 반마다 작품 띠 + 한 줄 설명. */
+.cgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:46px 44px;margin-top:48px}
+.cg-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.cg-name{font-size:clamp(21px,2.3vw,30px);font-weight:800;letter-spacing:-.04em}
+.cg-range{font-size:14px;font-weight:700;color:var(--muted)}
+.cg-card{background:var(--panel-2);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+/* 띠의 높이는 고정이고 사진은 그 안에서 잘린다. 그리드로 짜면 행이 auto 라
+ * img 의 height:100% 가 풀리지 않아 세로 사진이 카드 밖으로 넘쳤다(디지털
+ * 드로잉반 작품이 캡션을 덮던 문제). flex 는 높이가 확정이라 100% 가 먹는다. */
+.cg-shots{display:flex;height:clamp(190px,21vw,268px);overflow:hidden}
+.cg-shots>*{flex:1 1 0;min-width:0;height:100%}
+.cg-shots img,.cg-shots .ph{width:100%;height:100%;object-fit:cover;border-radius:0}
+.cg-cap{margin:0;padding:18px 20px;font-size:15px;line-height:1.65;color:var(--ink)}
+.lede--mid{margin-left:auto;margin-right:auto;text-align:center}
 .class-group{margin-top:56px}
 .class-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--line-2)}
 .class-no{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--accent-lit)}
@@ -375,6 +404,8 @@ a,button,summary{touch-action:manipulation}
   .gal{grid-template-columns:repeat(auto-fill,minmax(min(46%,150px),1fr));gap:10px;margin-top:28px}
   .gal figcaption{font-size:11.5px;margin-top:7px}
   .cards{grid-template-columns:1fr;gap:12px}
+  .cgrid{grid-template-columns:1fr;gap:30px;margin-top:32px}
+  .cg-shots{height:clamp(170px,46vw,230px)}
   .stats{grid-template-columns:1fr;gap:10px}
   .pass{grid-template-columns:1fr}
   .steps{grid-template-columns:repeat(auto-fit,minmax(min(46%,140px),1fr));gap:10px}
@@ -478,6 +509,8 @@ const THEME_KEYS = {
   btnHoverFg: '--btn-hover-fg',
   logoFilter: '--logo-filter',
   pulse: '--pulse',
+  track: '--track',
+  trackNum: '--track-num',
 };
 
 /** 지점 테마를 :root 오버라이드로 뽑는다. 값이 없는 키는 기본(레드)을 그대로 쓴다. */
@@ -775,7 +808,7 @@ function hero(d, present) {
     ${d.hero.tag ? `<p class="tag" data-reveal="0">${esc(d.hero.tag)}</p>` : ''}
     <h1 data-reveal="80"><span class="over">${esc(d.hero.over)}</span>${esc(
     d.hero.line1
-  )}<br><span class="lit">${esc(d.hero.line2)}</span></h1>
+  )}<br><span class="lit${d.hero.litBox ? ' lit--box' : ''}">${esc(d.hero.line2)}</span></h1>
     <p class="hero-sub" data-reveal="160">${esc(d.hero.sub)}</p>
   </div>
   <div class="scroll-dot" aria-hidden="true"><i></i></div>
@@ -795,7 +828,9 @@ function about(d, present) {
         <div style="margin-top:24px">${paras}</div>
         ${badges ? `<div class="badges">${badges}</div>` : ''}
       </div>
-      <div class="about-figs" data-reveal="120">${figs}</div>
+      <div class="about-figs${
+        (d.about.figures || []).length === 1 ? ' about-figs--solo' : ''
+      }" data-reveal="120">${figs}</div>
     </div>
   </div>
 </section>`;
@@ -807,7 +842,7 @@ function results(d) {
     .map(
       (s, i) => `<article class="stat" data-reveal="${i * 60}">
       ${s.when ? `<span class="stat-when">${esc(s.when)}</span>` : ''}
-      <span class="stat-label">${esc(s.label)}</span>
+      ${s.label ? `<span class="stat-label">${esc(s.label)}</span>` : ''}
       <span class="stat-value"${
         String(s.value || '').trim().length >= 4
           ? ' data-len="long"'
@@ -858,8 +893,38 @@ function passList(d) {
 </section>`;
 }
 
+function classesGrid(d, present) {
+  const cells = d.classes.groups
+    .map((g, i) => {
+      const shots = (g.items || []).map((c) => imgOnly(c.image, present)).join('');
+      return `<div class="cg" data-reveal="${(i % 2) * 60}">
+      <div class="cg-head">
+        <h3 class="cg-name">${esc(g.name)}</h3>
+        <span class="cg-range">${esc(g.range)}</span>
+      </div>
+      <div class="cg-card">
+        <div class="cg-shots" data-n="${(g.items || []).length}">${shots}</div>
+        <p class="cg-cap">${esc(g.lead)}</p>
+      </div>
+    </div>`;
+    })
+    .join('');
+  return `<section class="sec sec--tint" id="classes">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">${esc(d.classes.kicker)}</span>
+    <h2 class="h2" data-reveal="40">${esc(d.classes.title)}</h2>
+    ${d.classes.lede ? `<p class="lede lede--mid" data-reveal="80">${esc(d.classes.lede)}</p>` : ''}
+    <div class="cgrid">${cells}</div>
+  </div>
+</section>`;
+}
+
 function classes(d, present) {
   if (!d.classes?.groups?.length) return '';
+  // 김포 시안은 반마다 '이름 + 학년 / 작품 띠 / 한 줄 설명' 카드를 2열로 세운다.
+  // 기존 지점은 반 하나당 설명 카드가 여러 장이라 레이아웃이 다르다. 데이터의
+  // classes.layout 으로 갈라 두고, 값이 없으면 지금까지의 모양을 그대로 쓴다.
+  if (d.classes.layout === 'grid') return classesGrid(d, present);
   const groups = d.classes.groups
     .map((g, gi) => {
       const cards = (g.items || [])
