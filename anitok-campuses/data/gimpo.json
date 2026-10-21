@@ -430,5 +430,10 @@
       "label": "오시는 길",
       "href": "#visit"
     }
-  ]
+  ],
+  "brandLogo": "/gal/logo.webp",
+  "brandLogoBox": {
+    "w": 140,
+    "h": 140
+  }
 }

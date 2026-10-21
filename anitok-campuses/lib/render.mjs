@@ -155,9 +155,12 @@ figure{margin:0}
 .brand{display:flex;align-items:center;gap:12px;min-width:0}
 /* 원본 로고는 검정 워드마크다. 헤더 글자색에 맞춰 필터로 단색 전환한다. */
 .brand-logo{height:26px;width:auto;flex:0 0 auto;filter:var(--logo-filter)}
+/* 동그란 엠블럼형 로고. 가로형 워드마크와 같은 높이로 그리면 너무 작다. */
+.brand-logo[data-shape=mark]{height:34px}
+.foot-logo[data-shape=mark]{height:30px;opacity:1}
 .brand-div{width:1px;height:20px;background:currentColor;opacity:.4;flex:0 0 auto}
 .brand-name{font-size:clamp(14px,1.3vw,17px);font-weight:800;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media (max-width:520px){.brand-logo{height:22px}.brand-div,.brand-name{display:none}}
+@media (max-width:520px){.brand-logo{height:22px}.brand-logo[data-shape=mark]{height:28px}.brand-div,.brand-name{display:none}}
 .nav{display:flex;align-items:center;gap:clamp(12px,1.6vw,26px)}
 .nav a{font-size:14px;font-weight:600;padding:4px 0;border-bottom:2px solid transparent;white-space:nowrap;transition:border-color .34s cubic-bezier(.16,1,.3,1),opacity .34s cubic-bezier(.16,1,.3,1)}
 .nav a:hover{border-bottom-color:currentColor}
@@ -320,7 +323,7 @@ figure{margin:0}
 .social a{border:1px solid var(--line-2);border-radius:6px;padding:9px 15px;font-size:13px;font-weight:600;color:#D6D6D8}
 .social a:hover{border-color:var(--accent-lit);color:#fff}
 .foot{border-top:1px solid var(--line);padding-block:40px;font-size:12.5px;line-height:1.9;color:var(--muted-2)}
-.foot-logo{height:24px;width:auto;margin-bottom:24px;filter:brightness(0) invert(1);opacity:.85}
+.foot-logo{height:24px;width:auto;margin-bottom:24px;filter:var(--logo-filter);opacity:.85}
 .foot .sites{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:22px}
 .foot .sites a{font-size:13px;font-weight:600;color:var(--muted)}
 .foot .sites a:hover{color:#fff}
@@ -504,10 +507,27 @@ a,button,summary{touch-action:manipulation}
  * 줄어 첫 글자가 늦게 바뀌는 일도 없다. 동적 서브셋이라 브라우저는 그 페이지에
  * 실제로 쓰인 글자 묶음만 받아 간다.
  */
-function fontHead(d) {
+/**
+ * 머리글 · 꼬리글 로고의 고유 비율. 기본은 지금까지 쓰던 가로형 워드마크
+ * (98x26) 다. 지점이 제 로고를 들고 있으면 data 의 brandLogoBox 로
+ * 알려 준다. 값이 맞아야 글꼴보다 늦게 내려온 그림이 자리를 밀지 않는다.
+ */
+function logoBox(d, h, w) {
+  // 지점이 제 로고를 들고 있지 않으면 지금까지 쓰던 공용 워드마크 그대로다.
+  // 비율을 다시 계산하면 반올림이 1px 달라져 7개 지점의 결과물이 전부
+  // 바뀌므로, 기본값은 계산하지 않고 원래 숫자를 그대로 돌려준다.
+  if (!d.brandLogoBox) return { w, h, attr: '' };
+  const ratio = d.brandLogoBox.w / d.brandLogoBox.h;
+  // 정사각에 가까우면 엠블럼. 가로로 긴 워드마크와 그리는 크기가 다르다.
+  const mark = ratio > 0.8 && ratio < 1.25;
+  const hh = mark ? Math.round(h * 1.3) : h;
+  return { w: Math.round(ratio * hh), h: hh, attr: mark ? ' data-shape="mark"' : '' };
+}
+
+function fontHead(d, { preconnect = true } = {}) {
   if (d.site?.selfHostFont) return '<link rel="stylesheet" href="/fonts/pretendard.css">';
   return (
-    '<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>\n' +
+    (preconnect ? '<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>\n' : '') +
     '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">'
   );
 }
@@ -793,7 +813,7 @@ function header(d, { base = '' } = {}) {
 <header class="hdr">
   <div class="hdr-in">
     <a class="brand" href="${url(base || '#top')}">
-      <img class="brand-logo" src="${url(d.brandLogo)}" alt="애니톡" width="98" height="26" fetchpriority="high">
+      <img class="brand-logo" src="${url(d.brandLogo)}" alt="애니톡" width="${logoBox(d, 26, 98).w}" height="${logoBox(d, 26, 98).h}"${logoBox(d, 26, 98).attr} fetchpriority="high">
       <span class="brand-div" aria-hidden="true"></span>
       <span class="brand-name">${esc(d.name)}</span>
     </a>
@@ -1095,7 +1115,7 @@ function visit(d, siblings) {
   </div>
   <div class="wrap">
     <div class="foot">
-      <img class="foot-logo" src="${url(d.brandLogo)}" alt="애니톡" width="91" height="24" loading="lazy" decoding="async">
+      <img class="foot-logo" src="${url(d.brandLogo)}" alt="애니톡" width="${logoBox(d, 24, 91).w}" height="${logoBox(d, 24, 91).h}"${logoBox(d, 24, 91).attr} loading="lazy" decoding="async">
       ${sibs ? `<div class="sites"><span style="color:#5A5A5F;font-weight:700">애니톡 캠퍼스</span>${sibs}</div>` : ''}
       <div>&copy; ${new Date().getFullYear()} ANITALK. All rights reserved.</div>
     </div>
@@ -1441,7 +1461,7 @@ function lpFoot(d) {
   return `<section class="sec visit">
   <div class="wrap">
     <div class="foot">
-      <img class="foot-logo" src="${url(d.brandLogo)}" alt="애니톡" width="91" height="24" loading="lazy" decoding="async">
+      <img class="foot-logo" src="${url(d.brandLogo)}" alt="애니톡" width="${logoBox(d, 24, 91).w}" height="${logoBox(d, 24, 91).h}"${logoBox(d, 24, 91).attr} loading="lazy" decoding="async">
       <div class="sites"><a href="/">${esc(d.name)}</a><a href="${url(
     d.links.naverPlace
   )}" target="_blank" rel="noopener">네이버 지도</a></div>
@@ -1705,7 +1725,7 @@ export function render404(d) {
 <link rel="icon" href="/icon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/icon-16.png" sizes="16x16" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-${fontHead(d)}
+${fontHead(d, { preconnect: false })}
 <link rel="stylesheet" href="/s.css">
 <style>
 .nf{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;gap:20px}

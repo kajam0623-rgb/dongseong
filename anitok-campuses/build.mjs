@@ -345,8 +345,19 @@ for (const slug of targets) {
   // 남아 있도록 자리를 잡아 둔다.
   writeFileSync(join(galDir, '.gitkeep'), '');
 
+  // 사이트맵의 lastmod 는 '이 지점 페이지가 실제로 바뀐 날' 이어야 한다.
+  // 공용 파일(_shared.json)을 건드렸다는 이유만으로 7개 지점이 전부 오늘로
+  // 찍히면, 바뀐 것이 없는 지점까지 새로 고쳐졌다고 검색엔진에 알리게 된다.
+  // 그래서 사이트맵에 올라가는 페이지의 내용이 정말 달라졌을 때만 날짜를
+  // 올리고, 아니면 이미 나가 있던 날짜를 그대로 쓴다.
+  let pageChanged = false;
+  const writePage = (file, body) => {
+    if (!existsSync(file) || readFileSync(file, 'utf8') !== body) pageChanged = true;
+    writeFileSync(file, body);
+  };
+
   const html = minHtml(renderPage(d, { present, siblings }));
-  writeFileSync(join(outDir, 'index.html'), html);
+  writePage(join(outDir, 'index.html'), html);
 
   // CSS/JS는 모든 페이지가 공유한다. 페이지마다 인라인하면 20KB씩 중복된다.
   writeFileSync(join(outDir, 's.css'), minCss(siteCss(d)));
@@ -359,7 +370,7 @@ for (const slug of targets) {
     if (f.endsWith('.html') && !keepHtml.has(f)) unlinkSync(join(outDir, f));
   }
   for (const page of pages) {
-    writeFileSync(join(outDir, `${page.slug}.html`), minHtml(renderLocal(d, page, { pages, present })));
+    writePage(join(outDir, `${page.slug}.html`), minHtml(renderLocal(d, page, { pages, present })));
   }
 
   // 학원 이야기(블로그). content/<slug>/posts/*.md 가 있는 지점만 만들어진다.
@@ -379,11 +390,11 @@ for (const slug of targets) {
   }
   if (posts.length) {
     mkdirSync(blogDir, { recursive: true });
-    writeFileSync(join(blogDir, 'index.html'), minHtml(renderBlogIndex(d, posts, { present })));
+    writePage(join(blogDir, 'index.html'), minHtml(renderBlogIndex(d, posts, { present })));
     for (const post of posts) {
       const postDir = join(blogDir, post.slug);
       mkdirSync(postDir, { recursive: true });
-      writeFileSync(join(postDir, 'index.html'), minHtml(renderPost(d, post, { posts, present })));
+      writePage(join(postDir, 'index.html'), minHtml(renderPost(d, post, { posts, present })));
     }
   }
 
@@ -392,22 +403,38 @@ for (const slug of targets) {
     `User-agent: *\nAllow: /\n\nSitemap: ${d.site.origin}/sitemap.xml\n`
   );
 
-  const lastmod = contentDate(slug);
+  // 사이트맵에 올릴 주소를 먼저 추린다.
+  // canonical 을 대표 페이지로 넘긴 중복 페이지는 넣지 않는다. 넣으면
+  // 서치콘솔이 "제출된 URL이 대표 URL로 선택되지 않음" 으로 잡는다.
+  const siteUrls = [
+    [`${d.site.origin}/`, '1.0'],
+    ...pages
+      .filter((p) => !p.canonicalSlug || p.canonicalSlug === p.slug)
+      .map((p) => [`${d.site.origin}/${p.slug}`, '0.8']),
+    ...(posts.length ? [[`${d.site.origin}/blog/`, '0.8']] : []),
+  ];
+
+  // lastmod 는 '이 지점 페이지가 실제로 바뀐 날' 이다. 페이지 내용이 그대로고
+  // 주소 목록도 그대로면 이미 나가 있던 날짜를 그대로 쓴다. 공용 파일을
+  // 건드렸다는 이유만으로 7개 지점이 전부 오늘로 찍히면, 바뀐 것이 없는
+  // 지점까지 새로 고쳐졌다고 검색엔진에 알리는 셈이 된다.
+  const sitemapPath = join(outDir, 'sitemap.xml');
+  const prevSitemap = existsSync(sitemapPath) ? readFileSync(sitemapPath, 'utf8') : '';
+  const prevLastmod = (prevSitemap.match(/<lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod>/) || [])[1];
+  const prevLocs = (prevSitemap.match(/<loc>/g) || []).length;
+  const lastmod =
+    !pageChanged && prevLastmod && prevLocs === siteUrls.length + posts.length
+      ? prevLastmod
+      : contentDate(slug);
   const urlEntry = (loc, priority) =>
     `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n` +
     `    <changefreq>monthly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
   writeFileSync(
-    join(outDir, 'sitemap.xml'),
+    sitemapPath,
     `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${[
-  urlEntry(`${d.site.origin}/`, '1.0'),
-  // canonical 을 대표 페이지로 넘긴 중복 페이지는 사이트맵에 넣지 않는다.
-  // 넣으면 서치콘솔이 "제출된 URL이 대표 URL로 선택되지 않음" 으로 잡는다.
-  ...pages
-    .filter((p) => !p.canonicalSlug || p.canonicalSlug === p.slug)
-    .map((p) => urlEntry(`${d.site.origin}/${p.slug}`, '0.8')),
-  ...(posts.length ? [urlEntry(`${d.site.origin}/blog/`, '0.8')] : []),
+  ...siteUrls.map(([loc, priority]) => urlEntry(loc, priority)),
   // 글의 lastmod 는 오늘이 아니라 글이 쓰인 날이다. 매 빌드마다 오늘로 찍으면
   // 바뀐 것이 없는데도 전부 새 글처럼 보여 사이트맵의 신호가 무의미해진다.
   ...posts.map(
