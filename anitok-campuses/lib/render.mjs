@@ -887,7 +887,8 @@ const JS = `
       var img = b.querySelector('img');
       if (!img) return;
       last = b;
-      lbImg.src = img.currentSrc || img.src;
+      // 썸네일과 따로 원본 파일이 있으면(data-full) 그것을 크게 띄운다.
+      lbImg.src = b.getAttribute('data-full') || img.currentSrc || img.src;
       lbImg.alt = img.alt || '';
       lb.classList.add('is-open');
       // 열려 있는 동안에는 보조기기에도 보여야 한다. aria-hidden 을 켠 채로
@@ -1164,7 +1165,9 @@ function galleries(d, present) {
           if (!resolveImage(s, present)) {
             return `<figure class="fig is-empty">${imgOnly(s, present)}${cap}</figure>`;
           }
-          return `<figure class="fig"><button class="shot" type="button" aria-label="${esc(
+          // 썸네일보다 큰 원본이 따로 있으면 누를 때 그것을 띄운다.
+          const full = s.full && present.has(s.full) ? ` data-full="/gal/${esc(s.full)}"` : '';
+          return `<figure class="fig"><button class="shot" type="button"${full} aria-label="${esc(
             s.caption || '사진 크게 보기'
           )}">${imgOnly(s, present)}</button>${cap}</figure>`;
         })
@@ -2020,6 +2023,8 @@ html[data-skin=ppt] .sec--light .badge{border:2px solid var(--ppt-navy);border-r
 @media (max-width:520px){
   html[data-skin=ppt] .stats,html[data-skin=ppt] .visit-grid{grid-template-columns:1fr}
 }
+/* 라이트박스: 작은 사진도 '아이콘'처럼 보이지 않게 화면에 맞는 가장 큰 크기로 띄운다. */
+html[data-skin=ppt] .lb img{width:min(1200px,92vw);height:min(88vh,1200px);max-width:none;max-height:none;object-fit:contain;border-radius:0}
 /* 하단 퀵바: 김포는 버튼이 둘이다. 3칸 격자면 오른쪽 한 칸이 빈 채로 남는다. */
 html[data-skin=ppt] .qbar{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:1fr}
 `;

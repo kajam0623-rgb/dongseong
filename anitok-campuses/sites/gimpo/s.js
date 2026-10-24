@@ -193,7 +193,7 @@ if (!b) return;
 var img = b.querySelector('img');
 if (!img) return;
 last = b;
-lbImg.src = img.currentSrc || img.src;
+lbImg.src = b.getAttribute('data-full') || img.currentSrc || img.src;
 lbImg.alt = img.alt || '';
 lb.classList.add('is-open');
 lb.setAttribute('aria-hidden', 'false');
