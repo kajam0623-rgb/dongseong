@@ -1925,11 +1925,13 @@ html[data-skin=ppt] .faq details[open] summary::after{margin-top:calc(-4 * var(-
 html[data-skin=ppt] .faq .ans{padding:0 calc(27 * var(--k)) calc(40 * var(--k));margin-top:calc(-22 * var(--k));
   font-size:calc(24 * var(--k));line-height:1.4;color:#DADADA;letter-spacing:-.025em}
 
-/* LOCAL: 내용은 그대로, 칩을 어두운 판 하나에 담는다 */
-html[data-skin=ppt] #local .lp-links{margin:calc(56 * var(--k)) calc(-38 * var(--k)) 0;padding:calc(14 * var(--k)) calc(28 * var(--k)) calc(20 * var(--k));
-  background:#141416;gap:calc(10 * var(--k)) calc(12 * var(--k))}
-html[data-skin=ppt] #local .lp-links a{background:#141416;border-color:rgba(255,255,255,.14);min-height:calc(46 * var(--k));
-  padding:0 calc(22 * var(--k));font-size:calc(13.5 * var(--k));color:#DDDDDD}
+/* LOCAL: 내용은 그대로. 칩을 감싸던 판은 없애고(2차 수정 요청) 배경 위에 칩만
+ * 떠 있게 한다. 머리글이 가운데 정렬이라 칩 줄도 가운데로 모은다. */
+html[data-skin=ppt] #local .lp-links{margin:calc(56 * var(--k)) 0 0;padding:0;background:none;
+  justify-content:center;gap:calc(12 * var(--k)) calc(12 * var(--k))}
+html[data-skin=ppt] #local .lp-links a{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.22);min-height:calc(48 * var(--k));
+  padding:0 calc(24 * var(--k));font-size:calc(16 * var(--k));color:#E6E6E6}
+html[data-skin=ppt] #local .lp-links a:hover{border-color:var(--ppt-orange);color:#FFFFFF}
 
 /* VISIT */
 html[data-skin=ppt] .visit-grid{grid-template-columns:repeat(4,1fr);gap:calc(12 * var(--k));margin-top:calc(53 * var(--k))}
