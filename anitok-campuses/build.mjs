@@ -14,16 +14,110 @@
  * 파일명은 data/<slug>.json 의 image.local 값과 같으면 된다.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlinkSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlinkSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderPage, render404, renderLocal, localPages, siteCss, siteJs } from './lib/render.mjs';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import {
+  renderPage,
+  render404,
+  renderLocal,
+  localPages,
+  renderPost,
+  renderBlogIndex,
+  siteCss,
+  siteJs,
+} from './lib/render.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(ROOT, 'data');
 const OUT_DIR = join(ROOT, 'sites');
 
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
+
+/**
+ * 사이트맵의 lastmod 는 "빌드를 돌린 날"이 아니라 "내용이 바뀐 날"이어야 한다.
+ *
+ * 예전에는 new Date() 를 썼다. 그러면 아무것도 안 고치고 빌드만 다시 돌려도
+ * 전 페이지가 오늘 바뀐 것으로 찍힌다. 검색엔진은 lastmod 가 늘 오늘인 사이트맵을
+ * 신뢰하지 않고 아예 무시해 버리기 때문에, 진짜로 고쳤을 때 알릴 방법이 없어진다.
+ *
+ * 지점 페이지의 내용은 data/<slug>.json 과 data/_shared.json 에서만 나온다.
+ * 그래서 두 파일의 마지막 커밋일 중 나중 것을 쓴다. 템플릿(lib/render.mjs)이나
+ * 스타일이 바뀐 것은 "내용이 바뀐 것"이 아니라서 세지 않는다.
+ * 글(blog)은 글마다 제 날짜가 있으므로 여기를 거치지 않는다.
+ */
+const gitDateCache = new Map();
+let gitMissingWarned = false;
+
+function gitDate(relPath) {
+  if (gitDateCache.has(relPath)) return gitDateCache.get(relPath);
+  let out = '';
+  try {
+    out = execFileSync('git', ['log', '-1', '--format=%cs', '--', relPath], {
+      cwd: ROOT,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+  } catch {
+    out = '';
+  }
+  gitDateCache.set(relPath, out);
+  return out;
+}
+
+
+/**
+ * webp 의 가로·세로를 헤더에서 직접 읽는다.
+ *
+ * 시안은 수업 과목의 사진을 잘라 넣지 않는다. 사진마다 제 비율만큼 가로를
+ * 차지해야 같은 높이로 나란히 서면서도 아무 데도 잘리지 않는다. 그러려면
+ * 빌드가 각 사진의 비율을 알아야 하는데, 지금까지는 파일 이름만 보고 있었다.
+ * 외부 라이브러리를 쓰지 않는 저장소라 헤더를 직접 읽는다.
+ * (VP8 / VP8L / VP8X 세 가지 형식 모두 쓰인다.)
+ */
+function webpSize(file) {
+  let b;
+  try {
+    b = readFileSync(file);
+  } catch {
+    return null;
+  }
+  if (b.length < 30 || b.toString('ascii', 0, 4) !== 'RIFF' || b.toString('ascii', 8, 12) !== 'WEBP') {
+    return null;
+  }
+  const tag = b.toString('ascii', 12, 16);
+  if (tag === 'VP8X') {
+    return { w: (b.readUIntLE(24, 3) & 0xffffff) + 1, h: (b.readUIntLE(27, 3) & 0xffffff) + 1 };
+  }
+  if (tag === 'VP8 ') {
+    // 키프레임 시그니처 9d 01 2a 뒤에 16비트씩 가로·세로(상위 2비트는 배율)
+    if (b[23] !== 0x9d || b[24] !== 0x01 || b[25] !== 0x2a) return null;
+    return { w: b.readUInt16LE(26) & 0x3fff, h: b.readUInt16LE(28) & 0x3fff };
+  }
+  if (tag === 'VP8L') {
+    if (b[20] !== 0x2f) return null;
+    const n = b.readUInt32LE(21);
+    return { w: (n & 0x3fff) + 1, h: ((n >> 14) & 0x3fff) + 1 };
+  }
+  return null;
+}
+
+function contentDate(slug) {
+  // ISO 날짜는 문자열로 정렬해도 시간순이다.
+  const dates = [gitDate(`data/${slug}.json`), gitDate('data/_shared.json')]
+    .filter(Boolean)
+    .sort();
+  if (dates.length) return dates[dates.length - 1];
+  // git 이력을 못 읽는 환경(얕은 클론·tarball)에서는 오늘로 떨어진다.
+  // 틀린 값이지만 사이트맵이 통째로 깨지는 것보다는 낫다.
+  if (!gitMissingWarned) {
+    gitMissingWarned = true;
+    console.warn('경고: git 이력을 읽지 못해 sitemap 의 lastmod 를 오늘로 적는다.');
+  }
+  return new Date().toISOString().slice(0, 10);
+}
 
 /** CSS: 주석과 들여쓰기·빈 줄을 걷어낸다. 선택자/값은 손대지 않는다. */
 function minCss(css) {
@@ -95,6 +189,26 @@ function loadCampus(slug) {
   const d = merge(shared, readJson(join(DATA_DIR, `${slug}.json`)));
   d.site = { ...d.site, origin: resolveOrigin(d) };
 
+  // 네이버 소유확인 코드는 지점마다 다르다. 그런데 seo.verification 은 배열이고
+  // merge() 는 배열을 병합하지 않고 통째로 갈아끼운다. 지점 JSON 에 네이버 항목만
+  // 적으면 _shared.json 의 구글 태그가 조용히 사라진다. 실제로 눈에 띄지도 않는다.
+  //
+  // 그래서 코드 한 줄만 seo.naver 에 적게 하고, 공통 배열에 얹는 일은 여기서 한다.
+  // seo.verification 에 직접 적는 예전 방식도 계속 동작하되, 같은 name 이 겹치면
+  // 지점 값이 이긴다.
+  if (d.seo?.naver) {
+    const list = (d.seo.verification || []).filter(
+      (v) => v.name !== 'naver-site-verification'
+    );
+    d.seo = {
+      ...d.seo,
+      verification: [
+        ...list,
+        { name: 'naver-site-verification', content: d.seo.naver },
+      ],
+    };
+  }
+
   // themeName 으로 _shared.json 의 테마를 찾아 붙인다. 이름이 틀리면 빌드를 멈춘다.
   const name = d.themeName || 'red';
   const theme = (shared.themes || {})[name];
@@ -154,25 +268,156 @@ const siblings = [
 let built = 0;
 const report = [];
 
+/**
+ * 학원 이야기 글을 읽는다. content/<slug>/posts/*.md 하나가 글 한 편이다.
+ *
+ * 프론트매터는 일부러 좁게 잡았다. 스칼라 · 대괄호 배열 · faq 의 q/a 쌍이 전부다.
+ * 그보다 복잡한 것은 헤더가 아니라 본문에 있어야 한다.
+ */
+function loadPosts(slug) {
+  const dir = join(ROOT, 'content', slug, 'posts');
+  if (!existsSync(dir)) return [];
+  const posts = [];
+  for (const file of readdirSync(dir).filter((f) => f.endsWith('.md'))) {
+    const raw = readFileSync(join(dir, file), 'utf8');
+    const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+    if (!m) throw new Error(`${slug}/${file}: 프론트매터가 없습니다`);
+    const meta = { faq: [] };
+    let entry = null;
+    for (const line of m[1].split(/\r?\n/)) {
+      if (!line.trim()) continue;
+      let mm = line.match(/^ {2}- q:\s*"?(.*?)"?\s*$/);
+      if (mm) {
+        entry = { q: mm[1], a: '' };
+        meta.faq.push(entry);
+        continue;
+      }
+      mm = line.match(/^ {4}a:\s*"?(.*?)"?\s*$/);
+      if (mm && entry) {
+        entry.a = mm[1];
+        continue;
+      }
+      mm = line.match(/^([a-zA-Z]+):\s*(.*)$/);
+      if (!mm) continue;
+      const [, k, v] = mm;
+      if (k === 'faq') {
+        entry = null;
+        continue;
+      }
+      if (v.startsWith('[')) {
+        meta[k] = v
+          .slice(1, -1)
+          .split(',')
+          .map((x) => x.trim().replace(/^"|"$/g, ''))
+          .filter(Boolean);
+      } else {
+        meta[k] = v.replace(/^"|"$/g, '');
+      }
+    }
+    if (!meta.slug || !meta.title || !meta.date) {
+      throw new Error(`${slug}/${file}: slug · title · date 는 반드시 있어야 합니다`);
+    }
+    // lib/render.mjs 의 markdown() 은 '## ' · '### ' 제목, '- ' 목록,
+    // '1. ' 번호 목록, '|' 표, '>' 참고 상자, 문단, 줄 안의 **굵게** 와
+    // [링크](주소)를 다룬다. 그 밖의 문법은 조용히 원문 그대로 새어 나온다.
+    // 한 번 파이프 문자가 박힌 글을 올릴 뻔했으므로 빌드에서 잡는다.
+    // 줄 번호는 파일 기준으로 낸다. 본문 기준으로 세면 프론트매터 길이만큼
+    // 어긋나, 사람이 파일을 열었을 때 엉뚱한 줄을 보게 된다.
+    const bodyFirstLine = (raw.slice(0, raw.length - m[2].length).match(/\n/g) || []).length + 1;
+    const bodyLines = m[2].split(/\r?\n/);
+    for (const [i, line] of bodyLines.entries()) {
+      const t = line.trim();
+      const bad = (why) => {
+        throw new Error(`${slug}/${file}:${bodyFirstLine + i}: ${why}`);
+      };
+      // 표: 머리줄 다음에 구분줄이 없으면 표로 그려지지 않고 파이프가 글자로 남는다.
+      if (/^\|.*\|$/.test(t)) {
+        const prev = (bodyLines[i - 1] || '').trim();
+        const next = (bodyLines[i + 1] || '').trim();
+        const inTable =
+          /^\|[\s:|-]+\|$/.test(t) || /^\|[\s:|-]+\|$/.test(next) || /^\|.*\|$/.test(prev);
+        if (!inTable) {
+          bad('표에 구분줄이 없다. 이 줄 바로 아래에 | --- | --- | 를 넣을 것 — ' + t.slice(0, 40));
+        }
+      }
+      // 제목: ## 과 ### 만 그린다. # 과 #### 이상은 글자로 새어 나간다.
+      const h = t.match(/^(#+)\s/);
+      if (h && (h[1].length < 2 || h[1].length > 3)) {
+        bad(`## 와 ### 만 쓸 수 있다(받은 것: ${h[1]}) — ` + t.slice(0, 40));
+      }
+      // 굵게: ** 가 홀수면 한쪽이 안 닫힌 것이고, 별표가 그대로 남는다.
+      if (((t.match(/\*\*/g) || []).length) % 2) {
+        bad('굵게 표시(**)의 짝이 맞지 않는다. 별표가 글자로 남는다');
+      }
+    }
+    posts.push({ ...meta, body: m[2].trim() });
+  }
+  // 최신 글이 먼저. 목록과 사이트맵이 같은 순서를 쓴다.
+  return posts.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+}
+
 for (const slug of targets) {
   const d = loadCampus(slug);
+
+  // 학원소식 메뉴는 글이 있는 지점에만 붙인다.
+  //
+  // 지점 JSON 의 nav 를 손으로 고치는 방식이었는데, 그러면 글을 추가할 때마다
+  // nav 를 같이 고쳐야 하는 것을 잊기 쉽고, 반대로 글이 없는 지점에 메뉴만
+  // 남으면 /blog/ 가 404 가 된다. 글의 존재 여부에서 메뉴를 끌어내면 둘 다 막힌다.
+  // 이미 /blog/ 를 가리키는 항목이 있으면 그대로 둔다.
+  const postsForNav = loadPosts(slug);
+  if (postsForNav.length && !(d.nav || []).some((n) => n.href === '/blog/')) {
+    const nav = [...(d.nav || [])];
+    const visitAt = nav.findIndex((n) => n.href === '#visit');
+    nav.splice(visitAt < 0 ? nav.length : visitAt, 0, { label: '학원소식', href: '/blog/' });
+    d.nav = nav;
+  }
   const outDir = join(OUT_DIR, slug);
   const galDir = join(outDir, 'gal');
   mkdirSync(galDir, { recursive: true });
 
   // gal/ 에 실제로 존재하는 파일만 로컬 이미지로 인정한다.
-  const present = new Set(readdirSync(galDir).filter((f) => f !== '.gitkeep'));
+  // 이름만 담던 Set 을 크기까지 담는 Map 으로 바꾼다. .has() 를 쓰던 곳은
+  // Map 에서도 그대로 동작하고, 비율이 필요한 곳만 .get() 을 쓴다.
+  const present = new Map(
+    readdirSync(galDir)
+      .filter((f) => f !== '.gitkeep')
+      .map((f) => [f, webpSize(join(galDir, f))])
+  );
 
   // git은 빈 디렉터리를 추적하지 않는다. 지점 저장소로 분리했을 때도 gal/ 이
   // 남아 있도록 자리를 잡아 둔다.
   writeFileSync(join(galDir, '.gitkeep'), '');
 
+  // 사이트맵의 lastmod 는 '이 지점 페이지가 실제로 바뀐 날' 이어야 한다.
+  // 공용 파일(_shared.json)을 건드렸다는 이유만으로 7개 지점이 전부 오늘로
+  // 찍히면, 바뀐 것이 없는 지점까지 새로 고쳐졌다고 검색엔진에 알리게 된다.
+  // 그래서 사이트맵에 올라가는 페이지의 내용이 정말 달라졌을 때만 날짜를
+  // 올리고, 아니면 이미 나가 있던 날짜를 그대로 쓴다.
+  // 공유 CSS/JS 주소에 내용 해시를 붙인다. s.css 는 하루 캐시라, 주소가
+  // 그대로면 새 HTML 이 어제의 CSS 와 섞여 레이아웃이 깨져 보인다
+  // (실제로 김포 학원소개가 그렇게 깨져 보였다). 내용이 바뀌면 주소도 바뀐다.
+  const css = minCss(siteCss(d));
+  const js = minJs(siteJs());
+  const ver = (s) => createHash('sha1').update(s).digest('hex').slice(0, 10);
+  const withVer = (body) =>
+    body
+      .replaceAll('href="/s.css"', `href="/s.css?v=${ver(css)}"`)
+      .replaceAll('src="/s.js"', `src="/s.js?v=${ver(js)}"`);
+
+  let pageChanged = false;
+  const writePage = (file, body) => {
+    body = withVer(body);
+    if (!existsSync(file) || readFileSync(file, 'utf8') !== body) pageChanged = true;
+    writeFileSync(file, body);
+  };
+
   const html = minHtml(renderPage(d, { present, siblings }));
-  writeFileSync(join(outDir, 'index.html'), html);
+  writePage(join(outDir, 'index.html'), html);
 
   // CSS/JS는 모든 페이지가 공유한다. 페이지마다 인라인하면 20KB씩 중복된다.
-  writeFileSync(join(outDir, 's.css'), minCss(siteCss(d)));
-  writeFileSync(join(outDir, 's.js'), minJs(siteJs()));
+  writeFileSync(join(outDir, 's.css'), css);
+  writeFileSync(join(outDir, 's.js'), js);
 
   // 지역 · 과목 랜딩페이지 (목동만화학원 / 화곡만화학원 …)
   const pages = localPages(d);
@@ -181,7 +426,32 @@ for (const slug of targets) {
     if (f.endsWith('.html') && !keepHtml.has(f)) unlinkSync(join(outDir, f));
   }
   for (const page of pages) {
-    writeFileSync(join(outDir, `${page.slug}.html`), minHtml(renderLocal(d, page, { pages })));
+    writePage(join(outDir, `${page.slug}.html`), minHtml(renderLocal(d, page, { pages, present })));
+  }
+
+  // 학원 이야기(블로그). content/<slug>/posts/*.md 가 있는 지점만 만들어진다.
+  const posts = loadPosts(slug);
+  const blogDir = join(outDir, 'blog');
+  // 지운 글의 페이지가 남지 않게 먼저 치운다. sites/ 가 저장소에 들어 있어서
+  // 정리하지 않으면 글을 지워도 배포에는 그대로 따라간다. 틀린 글을 내렸는데
+  // 주소가 살아 있는 상태가 가장 나쁘다.
+  if (existsSync(blogDir)) {
+    const keep = new Set(posts.map((p) => p.slug));
+    for (const name of readdirSync(blogDir)) {
+      if (name === 'index.html' || keep.has(name)) continue;
+      rmSync(join(blogDir, name), { recursive: true, force: true });
+      console.warn(`지운 글의 페이지를 치웠다: ${slug}/blog/${name}`);
+    }
+    if (!posts.length) rmSync(blogDir, { recursive: true, force: true });
+  }
+  if (posts.length) {
+    mkdirSync(blogDir, { recursive: true });
+    writePage(join(blogDir, 'index.html'), minHtml(renderBlogIndex(d, posts, { present })));
+    for (const post of posts) {
+      const postDir = join(blogDir, post.slug);
+      mkdirSync(postDir, { recursive: true });
+      writePage(join(postDir, 'index.html'), minHtml(renderPost(d, post, { posts, present })));
+    }
   }
 
   writeFileSync(
@@ -189,17 +459,46 @@ for (const slug of targets) {
     `User-agent: *\nAllow: /\n\nSitemap: ${d.site.origin}/sitemap.xml\n`
   );
 
-  const today = new Date().toISOString().slice(0, 10);
+  // 사이트맵에 올릴 주소를 먼저 추린다.
+  // canonical 을 대표 페이지로 넘긴 중복 페이지는 넣지 않는다. 넣으면
+  // 서치콘솔이 "제출된 URL이 대표 URL로 선택되지 않음" 으로 잡는다.
+  const siteUrls = [
+    [`${d.site.origin}/`, '1.0'],
+    ...pages
+      .filter((p) => !p.canonicalSlug || p.canonicalSlug === p.slug)
+      .map((p) => [`${d.site.origin}/${p.slug}`, '0.8']),
+    ...(posts.length ? [[`${d.site.origin}/blog/`, '0.8']] : []),
+  ];
+
+  // lastmod 는 '이 지점 페이지가 실제로 바뀐 날' 이다. 페이지 내용이 그대로고
+  // 주소 목록도 그대로면 이미 나가 있던 날짜를 그대로 쓴다. 공용 파일을
+  // 건드렸다는 이유만으로 7개 지점이 전부 오늘로 찍히면, 바뀐 것이 없는
+  // 지점까지 새로 고쳐졌다고 검색엔진에 알리는 셈이 된다.
+  const sitemapPath = join(outDir, 'sitemap.xml');
+  const prevSitemap = existsSync(sitemapPath) ? readFileSync(sitemapPath, 'utf8') : '';
+  const prevLastmod = (prevSitemap.match(/<lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod>/) || [])[1];
+  const prevLocs = (prevSitemap.match(/<loc>/g) || []).length;
+  const lastmod =
+    !pageChanged && prevLastmod && prevLocs === siteUrls.length + posts.length
+      ? prevLastmod
+      : contentDate(slug);
   const urlEntry = (loc, priority) =>
-    `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n` +
+    `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n` +
     `    <changefreq>monthly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
   writeFileSync(
-    join(outDir, 'sitemap.xml'),
+    sitemapPath,
     `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${[
-  urlEntry(`${d.site.origin}/`, '1.0'),
-  ...pages.map((p) => urlEntry(`${d.site.origin}/${p.slug}`, '0.8')),
+  ...siteUrls.map(([loc, priority]) => urlEntry(loc, priority)),
+  // 글의 lastmod 는 오늘이 아니라 글이 쓰인 날이다. 매 빌드마다 오늘로 찍으면
+  // 바뀐 것이 없는데도 전부 새 글처럼 보여 사이트맵의 신호가 무의미해진다.
+  ...posts.map(
+    (p) =>
+      `  <url>\n    <loc>${d.site.origin}/blog/${p.slug}/</loc>\n` +
+      `    <lastmod>${p.updated || p.date}</lastmod>\n` +
+      `    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`
+  ),
 ].join('\n')}
 </urlset>
 `
@@ -218,6 +517,18 @@ ${[
           destination: `${d.site.origin}/:path*`,
           permanent: true,
         },
+        // 같은 내용이 뜨는 다른 호스트(오타 도메인, 예전 주소)도 정식 주소로 넘긴다.
+        // 붙어 있지 않은 호스트면 이 규칙은 그냥 걸리지 않는다. 넣어서 손해가 없다.
+        //
+        // 호스트 정규식에 부정 선행(?!...)은 쓰지 않는다. Vercel 의 라우팅 엔진은
+        // 러스트 regex 라 선행 판단을 지원하지 않아 규칙이 통째로 죽는다.
+        // 그래서 넘길 호스트를 site.altHosts 에 하나씩 적는다.
+        ...(d.site.altHosts || []).map((h) => ({
+          source: '/:path*',
+          has: [{ type: 'host', value: h }],
+          destination: `${d.site.origin}/:path*`,
+          permanent: true,
+        })),
       ];
 
   writeFileSync(
@@ -231,6 +542,16 @@ ${[
             source: '/gal/(.*)',
             headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
           },
+          // 글꼴을 직접 들고 있는 지점만. 파일 이름에 버전이 붙어 있어
+          // 1년 캐시로 둔다(바꿀 때는 파일이 통째로 바뀐다).
+          ...(d.site.selfHostFont
+            ? [
+                {
+                  source: '/fonts/(.*)',
+                  headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+                },
+              ]
+            : []),
           {
             source: '/(s.css|s.js)',
             headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, must-revalidate' }],
@@ -280,7 +601,7 @@ ${[
   );
 
   // 404 — 기본 Vercel 페이지 대신 같은 톤으로.
-  writeFileSync(join(outDir, '404.html'), minHtml(render404(d)));
+  writeFileSync(join(outDir, '404.html'), withVer(minHtml(render404(d))));
 
   writeFileSync(
     join(outDir, 'README.md'),

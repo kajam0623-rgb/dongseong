@@ -28,6 +28,19 @@ function url(v) {
   return '';
 }
 
+/**
+ * 시안의 본문은 한 문장 안에서 일부만 굵고, 줄도 정해진 자리에서 바꾼다.
+ * 데이터에서 **굵게** 와 줄바꿈(\n)을 쓰면 그대로 그린다. esc() 를 먼저
+ * 거친 뒤에 바꾸므로 입력값이 태그로 해석되지는 않는다(* 와 줄바꿈만 본다).
+ */
+function rich(v) {
+  // 줄바꿈을 먼저 <br> 로 바꾼다. 굵게 표시가 줄을 넘어갈 때 . 이 \n 을
+  // 잡지 못해 ** 가 글자로 그대로 남는 일이 있었다(네이버 예약 카드).
+  return esc(v)
+    .replace(/\n/g, '<br>')
+    .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+}
+
 /** JSON-LD 안에 넣는 문자열. </script> 탈출을 막는다. */
 function jsonld(obj) {
   return JSON.stringify(obj, null, 2).replace(/</g, '\\u003c');
@@ -66,7 +79,12 @@ function naverBooking(d) {
  * ───────────────────────────────────────────────────────────── */
 function resolveImage(slot, present) {
   if (!slot) return null;
-  if (slot.local && present.has(slot.local)) return { src: `/gal/${slot.local}`, kind: 'local' };
+  if (slot.local && present.has(slot.local)) {
+    // present 가 Map 이면 사진의 실제 크기까지 들어 있다(Set 이던 시절의
+    // 호출부와도 호환되도록 get 이 없으면 크기 없이 돌려준다).
+    const size = typeof present.get === 'function' ? present.get(slot.local) : null;
+    return { src: `/gal/${slot.local}`, kind: 'local', w: size?.w, h: size?.h };
+  }
   if (slot.remote) return { src: slot.remote, kind: 'remote' };
   return null;
 }
@@ -125,7 +143,12 @@ html{scroll-behavior:smooth}
 body{
   margin:0;background:var(--bg);color:var(--ink);
   font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-  letter-spacing:-.03em;-webkit-font-smoothing:antialiased;overflow-x:clip;
+  /* 자간은 지점 테마에서 덮어쓴다. 김포 시안은 -25(=-.025em) 를 지정했고,
+     다른 지점은 지금까지의 -.03em 을 그대로 쓴다.
+     장평 97 은 Pretendard Variable 에 폭(wdth) 축이 없어 브라우저에서
+     재현할 수 없다. scaleX 로 눌러 넣으면 글자가 일그러지고 줄바꿈이
+     어긋나므로 자간만 맞췄다. */
+  letter-spacing:var(--track,-.03em);-webkit-font-smoothing:antialiased;overflow-x:clip;
 }
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
@@ -134,6 +157,8 @@ h1,h2,h3,h4{margin:0;font-weight:800;line-height:1.2}
 figure{margin:0}
 :focus-visible{outline:2px solid var(--accent-lit);outline-offset:3px}
 
+/* 시안: 숫자와 영문은 자간 0. 값이 없는 지점은 본문 자간을 그대로 따른다. */
+.hdr-tel,.stat-value,.cg-range,.pass .yr,.lb-close,time{letter-spacing:var(--track-num,inherit)}
 .wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--pad-x)}
 .sec{padding-block:var(--pad-y)}
 .sec--tint{background:var(--panel)}
@@ -148,9 +173,12 @@ figure{margin:0}
 .brand{display:flex;align-items:center;gap:12px;min-width:0}
 /* 원본 로고는 검정 워드마크다. 헤더 글자색에 맞춰 필터로 단색 전환한다. */
 .brand-logo{height:26px;width:auto;flex:0 0 auto;filter:var(--logo-filter)}
+/* 동그란 엠블럼형 로고. 가로형 워드마크와 같은 높이로 그리면 너무 작다. */
+.brand-logo[data-shape=mark]{height:34px}
+.foot-logo[data-shape=mark]{height:30px;opacity:1}
 .brand-div{width:1px;height:20px;background:currentColor;opacity:.4;flex:0 0 auto}
 .brand-name{font-size:clamp(14px,1.3vw,17px);font-weight:800;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media (max-width:520px){.brand-logo{height:22px}.brand-div,.brand-name{display:none}}
+@media (max-width:520px){.brand-logo{height:22px}.brand-logo[data-shape=mark]{height:28px}.brand-div,.brand-name{display:none}}
 .nav{display:flex;align-items:center;gap:clamp(12px,1.6vw,26px)}
 .nav a{font-size:14px;font-weight:600;padding:4px 0;border-bottom:2px solid transparent;white-space:nowrap;transition:border-color .34s cubic-bezier(.16,1,.3,1),opacity .34s cubic-bezier(.16,1,.3,1)}
 .nav a:hover{border-bottom-color:currentColor}
@@ -163,6 +191,60 @@ figure{margin:0}
 .mnav{display:none;background:var(--mnav-bg);color:var(--on-accent);border-top:1px solid var(--mnav-line)}
 .mnav.is-open{display:block}
 .mnav a{display:block;padding:15px clamp(16px,4vw,28px);font-size:15px;font-weight:600;border-bottom:1px solid var(--mnav-line)}
+/* ── 시안 맞춤: 학원소개를 흰 배경으로 ──────────────────────────────
+ * 시안에서 이 섹션만 흰 바탕에 짙은 글씨이고, 작품이 오른쪽 화면 끝까지
+ * 닿는다. about.theme = 'light' 인 지점에만 적용되고 나머지는 그대로다. */
+.sec--light{background:#FFFFFF;color:#15151A;padding-block:0}
+.sec--light .kicker{color:#8A8A90}
+.sec--light .h2{color:#15151A}
+/* .about-copy p 가 밝은 회색을 주고 있어 같은 자리에서는 이기지 못한다.
+ * 흰 바탕에서는 거의 읽히지 않으므로 더 좁은 선택자로 덮는다. */
+.sec--light .about-copy p{color:#33333A}
+.sec--light p{color:#33333A}
+.sec--light .badge{background:transparent;border:1px solid #C9C9D0;color:#2A2A31}
+.about-split{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+  align-items:center;gap:0;height:clamp(620px,46vw,860px)}
+.about-split .about-copy{overflow:auto}
+.about-split .about-copy{padding:clamp(56px,5vw,88px) clamp(32px,3.4vw,64px) clamp(56px,5vw,88px)
+  max(24px,calc((100vw - var(--wrap)) / 2 + 24px));justify-self:end;max-width:none}
+/* 시안은 제목이 두 줄이다. 칼럼이 좁으면 세 줄로 떨어진다. */
+.sec--light .h2{font-size:clamp(25px,2.4vw,44px);line-height:1.26}
+/* 시안: 제목 첫 줄은 보통 굵기, 둘째 줄만 굵다. 본문도 일부만 굵다. */
+.sec--light .h2{font-weight:400}
+.sec--light .h2 b{font-weight:800}
+.sec--light .about-copy b{font-weight:700;color:#15151A}
+/* 오시는 길 카드 안의 굵은 첫 문장 */
+html[data-skin=ppt] #visit .vcard b{font-weight:700;color:#FFFFFF}
+/* 시안의 카드 버튼은 밑줄 링크가 아니라 테두리 박스이고 왼쪽에 붙는다. */
+html[data-skin=ppt] #visit .vcard a.more{align-self:flex-start;margin-top:auto;display:inline-flex;align-items:center;
+  gap:6px;padding:9px 14px;border:1px solid rgba(255,255,255,.55);border-bottom-width:1px;
+  border-radius:6px;font-size:15px;font-weight:500;color:#FFFFFF;text-decoration:none}
+html[data-skin=ppt] #visit .vcard a.more:hover{background:#FFFFFF;color:#15151A;border-color:#FFFFFF}
+html[data-skin=ppt] #visit .vcard .social{justify-content:flex-start;margin-top:auto}
+/* 작품은 화면 오른쪽 끝까지, 섹션 높이를 꽉 채운다. */
+.about-art{align-self:stretch;position:relative;overflow:hidden}
+.about-art .fig{height:100%;margin:0}
+.about-art .fig img,.about-art .fig .ph{width:100%;height:100%;aspect-ratio:auto;
+  max-height:none;object-fit:cover;border-radius:0}
+.about-art figcaption{display:none}
+@media (max-width:860px){
+  .about-split{grid-template-columns:1fr;min-height:0}
+  .about-split .about-copy{padding:clamp(48px,9vw,72px) var(--pad-x);justify-self:stretch;max-width:none}
+  .about-art{height:clamp(300px,62vw,440px);order:-1}
+}
+
+/* ── 시안 맞춤: 갤러리 ─────────────────────────────────────────────
+ * 캠퍼스 둘러보기는 가로(4:3), 작품 갤러리는 세로(3:3.45). 캡션은
+ * 사진 바깥 가운데. 지금까지는 둘 다 정사각에 캡션이 왼쪽이었다. */
+html[data-skin=ppt] #gallery .gal .shot img,html[data-skin=ppt] #gallery .gal .shot .ph{aspect-ratio:4/3}
+html[data-skin=ppt] #works .gal .shot img,html[data-skin=ppt] #works .gal .shot .ph{aspect-ratio:3/3.45}
+html[data-skin=ppt] #gallery .gal figcaption,html[data-skin=ppt] #works .gal figcaption{text-align:center}
+html[data-skin=ppt] #gallery .gal .shot img,html[data-skin=ppt] #works .gal .shot img,
+html[data-skin=ppt] #gallery .gal .shot .ph,html[data-skin=ppt] #works .gal .shot .ph{border-radius:16px}
+/* 오시는 길 카드는 시안에서 왼쪽 정렬이다. */
+html[data-skin=ppt] #visit .vcard{text-align:left;align-items:flex-start}
+html[data-skin=ppt] #visit .vcard *{text-align:left}
+
 @media (max-width:900px){
   .nav,.hdr-tel{display:none}
   .burger{display:inline-flex}
@@ -180,7 +262,22 @@ figure{margin:0}
 .tag{display:inline-flex;align-items:center;gap:8px;background:var(--tag-bg);color:var(--on-accent);border-radius:999px;padding:8px 18px;font-size:13px;font-weight:700;margin-bottom:24px}
 .hero h1{font-size:clamp(34px,5.4vw,72px);line-height:1.14;letter-spacing:-.05em;text-shadow:0 6px 34px rgba(0,0,0,.8)}
 .hero h1 .over{display:block;font-size:.56em;font-weight:700;letter-spacing:-.03em;margin-bottom:10px}
+/* ── 시안 맞춤: 히어로 ──────────────────────────────────────────────
+ * 시안은 글자가 지금보다 한참 작고, 'since 2012' 가 주황 알약이 아니라
+ * 평문이며, 둘째 줄이 한 줄 안에서 앞(regular)/뒤(bold)만 갈린다. */
+html[data-skin=ppt] .hero .tag-plain{margin:0 0 6px;font-size:clamp(17px,1.5vw,22px);font-weight:400;
+  color:#FFFFFF;letter-spacing:var(--track-num,normal);text-shadow:0 4px 24px rgba(0,0,0,.8)}
+html[data-skin=ppt] .hero h1{font-size:clamp(27px,2.6vw,38px);line-height:1.34;letter-spacing:-.025em}
+html[data-skin=ppt] .hero h1 .over{display:block;font-size:1em;font-weight:400;letter-spacing:-.025em;margin-bottom:6px}
+html[data-skin=ppt] .hero h1 .over b{font-weight:800}
+html[data-skin=ppt] .hero h1 .lit--box{font-weight:800;font-size:1.32em}
+html[data-skin=ppt] .hero-sub{font-size:clamp(15px,1.25vw,19px);font-weight:400}
 .hero h1 .lit{color:var(--accent-lit)}
+/* 김포 시안: 학원 이름을 오렌지 판으로 덮고 그 위에 흰 글자를 올린다.
+ * box-decoration-break 가 있어야 두 줄로 접혀도 양끝 여백이 유지된다. */
+.hero h1 .lit--box{color:var(--on-accent);background:var(--accent);padding:.06em .2em .12em;
+  border-radius:4px;-webkit-box-decoration-break:clone;box-decoration-break:clone;
+  box-shadow:0 10px 30px rgba(0,0,0,.45)}
 .hero h1[data-reveal]{transform:none}
 .hero h1 .w{display:inline-block;will-change:transform,opacity;opacity:0;transform:translateY(.5em);transition:opacity .42s ease-out var(--d,0ms),transform .62s cubic-bezier(.16,1,.3,1) var(--d,0ms)}
 .hero h1.is-in .w{opacity:1;transform:none}
@@ -207,6 +304,9 @@ figure{margin:0}
 .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
 .badge{border:1px solid var(--line-2);border-radius:6px;padding:10px 16px;font-size:13px;font-weight:600;color:#D6D6D8;background:var(--panel-2)}
 .about-figs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* 사진이 한 장일 때(김포 시안)는 자르지 않고 원래 비율 그대로 크게 건다. */
+.about-figs--solo{grid-template-columns:1fr}
+.about-figs.about-figs--solo .fig:first-child img,.about-figs.about-figs--solo .fig:first-child .ph{aspect-ratio:auto;max-height:min(70vh,620px);width:auto;max-width:100%;margin-inline:auto;border-radius:14px}
 .about-figs .fig:first-child{grid-column:1/-1}
 .fig img,.fig .ph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px}
 .about-figs .fig:first-child img,.about-figs .fig:first-child .ph{aspect-ratio:16/9}
@@ -221,12 +321,12 @@ figure{margin:0}
 
 /* 실적 카드 */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:44px}
-.stat{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:clamp(24px,2.4vw,34px);display:flex;flex-direction:column;gap:10px}
-.stat-when{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--accent-lit)}
-.stat-label{font-size:15px;font-weight:700;color:#D6D6D8}
-.stat-value{font-size:clamp(30px,3.4vw,46px);font-weight:800;letter-spacing:-.05em;line-height:1}
-.stat-value .unit{font-size:.42em;font-weight:700;margin-left:6px;letter-spacing:-.02em;color:var(--muted)}
-.stat-detail{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+.stat{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:clamp(26px,2.6vw,36px);display:flex;flex-direction:column;gap:8px}
+.stat-when{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--muted-2)}
+.stat-label{font-size:14.5px;font-weight:700;color:#D6D6D8;margin-bottom:2px}
+.stat-value{font-size:clamp(42px,4.6vw,62px);font-weight:800;letter-spacing:-.055em;line-height:1.02;color:var(--accent-lit);overflow-wrap:anywhere}
+.stat-value[data-len="mid"]{font-size:clamp(34px,3.7vw,50px)}.stat-value[data-len="long"]{font-size:clamp(27px,2.9vw,39px);letter-spacing:-.045em}.stat-value .unit{display:inline-block;white-space:nowrap;font-size:.32em;font-weight:700;margin-left:8px;letter-spacing:-.02em;color:#D6D6D8}
+.stat-detail{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
 .stat-detail li{font-size:13px;line-height:1.6;color:var(--muted)}
 
 /* 합격 명단 */
@@ -235,10 +335,26 @@ figure{margin:0}
 .pass li:hover{background:#1A1A1D;border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.45)}
 .pass .yr{flex:0 0 auto;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:800;letter-spacing:.02em;padding:5px 10px;border-radius:999px}
 .pass .what{flex:1 1 auto;min-width:0;font-size:14.5px;font-weight:700;letter-spacing:-.03em;line-height:1.45;overflow-wrap:anywhere}
-.pass .who{flex:0 1 auto;min-width:0;font-size:13px;font-weight:600;color:var(--muted-2)}
+.pass .who{flex:0 1 auto;min-width:0;font-size:14.5px;font-weight:800;letter-spacing:-.02em;color:var(--accent-lit)}
 .note{margin:26px 0 0;font-size:13px;line-height:1.7;color:var(--muted-2)}
 
 /* 수업 과목 */
+/* 수업 과목 — 2열 그리드(김포 시안). 반마다 작품 띠 + 한 줄 설명. */
+.cgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:46px 44px;margin-top:48px}
+.cg-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.cg-name{font-size:clamp(21px,2.3vw,30px);font-weight:800;letter-spacing:-.04em}
+.cg-range{font-size:14px;font-weight:700;color:var(--muted)}
+.cg-card{background:var(--panel-2);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+/* 띠의 높이는 고정이고 사진은 그 안에서 잘린다. 그리드로 짜면 행이 auto 라
+ * img 의 height:100% 가 풀리지 않아 세로 사진이 카드 밖으로 넘쳤다(디지털
+ * 드로잉반 작품이 캡션을 덮던 문제). flex 는 높이가 확정이라 100% 가 먹는다. */
+/* 시안은 사진을 잘라 넣지 않는다. 띠 높이는 고정하되 그림은 제 비율대로
+ * 담는다(contain). cover 로 두면 세로 작품의 위아래가 잘려 나간다. */
+.cg-shots{display:flex;gap:2px;height:clamp(190px,21vw,268px);overflow:hidden;background:#0C0C0E}
+.cg-shots>*{flex:1 1 0;min-width:0;height:100%;display:block;padding:0;border:0;background:#0C0C0E;cursor:zoom-in}
+.cg-shots img,.cg-shots .ph{width:100%;height:100%;object-fit:cover;border-radius:0}
+.cg-cap{margin:0;padding:18px 20px;font-size:15px;line-height:1.65;color:var(--ink)}
+.lede--mid{margin-left:auto;margin-right:auto;text-align:center}
 .class-group{margin-top:56px}
 .class-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--line-2)}
 .class-no{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--accent-lit)}
@@ -291,7 +407,7 @@ figure{margin:0}
 .social a{border:1px solid var(--line-2);border-radius:6px;padding:9px 15px;font-size:13px;font-weight:600;color:#D6D6D8}
 .social a:hover{border-color:var(--accent-lit);color:#fff}
 .foot{border-top:1px solid var(--line);padding-block:40px;font-size:12.5px;line-height:1.9;color:var(--muted-2)}
-.foot-logo{height:24px;width:auto;margin-bottom:24px;filter:brightness(0) invert(1);opacity:.85}
+.foot-logo{height:24px;width:auto;margin-bottom:24px;filter:var(--logo-filter);opacity:.85}
 .foot .sites{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:22px}
 .foot .sites a{font-size:13px;font-weight:600;color:var(--muted)}
 .foot .sites a:hover{color:#fff}
@@ -375,6 +491,8 @@ a,button,summary{touch-action:manipulation}
   .gal{grid-template-columns:repeat(auto-fill,minmax(min(46%,150px),1fr));gap:10px;margin-top:28px}
   .gal figcaption{font-size:11.5px;margin-top:7px}
   .cards{grid-template-columns:1fr;gap:12px}
+  .cgrid{grid-template-columns:1fr;gap:30px;margin-top:32px}
+  .cg-shots{height:clamp(170px,46vw,230px)}
   .stats{grid-template-columns:1fr;gap:10px}
   .pass{grid-template-columns:1fr}
   .steps{grid-template-columns:repeat(auto-fit,minmax(min(46%,140px),1fr));gap:10px}
@@ -427,7 +545,10 @@ a,button,summary{touch-action:manipulation}
 .lp-list li{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding:15px 2px;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.6}
 .lp-list .k{flex:0 0 auto;font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--accent-lit);min-width:74px}
 .lp-list .v{flex:1 1 220px;font-weight:600}
-.lp-list .m{flex:0 0 auto;font-size:13px;color:var(--muted-2)}
+.lp-list /* 줄어들 수 있어야 한다. 0 0 auto 로 두면 긴 설명이 그대로 버텨서 좁은
+ * 화면에서 줄 전체가 밖으로 밀려 나간다(학원소식 목록이 390px 에서
+ * 134px 넘쳤다). min-width:0 이 있어야 flex 안에서 글이 접힌다. */
+.m{flex:0 1 auto;min-width:0;font-size:13px;color:var(--muted-2)}
 .lp-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
 .lp-links a{border:1px solid var(--line-2);border-radius:999px;padding:10px 18px;font-size:13.5px;font-weight:600;color:#D6D6D8;background:var(--panel-2);min-height:44px;display:inline-flex;align-items:center}
 .lp-links a:hover{border-color:var(--accent-lit);color:#fff}
@@ -464,6 +585,61 @@ a,button,summary{touch-action:manipulation}
  * data/_shared.json 의 themes 에 항목을 추가하고 지점 데이터에서 theme 이름만
  * 지정하면 된다. 마크업과 레이아웃은 전 지점이 동일하다.
  * ───────────────────────────────────────────────────────────── */
+/**
+ * 본문 글꼴(Pretendard Variable v1.3.9) 을 불러오는 <link>.
+ *
+ * 기본은 지금까지와 같은 jsdelivr CDN 이다. site.selfHostFont 를 켠 지점은
+ * sites/<slug>/fonts/ 에 넣어 둔 같은 버전의 파일을 제 도메인에서 내려 준다.
+ * 바깥 CDN 이 막히거나 느린 환경에서도 글꼴이 그대로 나오고, 접속이 한 곳으로
+ * 줄어 첫 글자가 늦게 바뀌는 일도 없다. 동적 서브셋이라 브라우저는 그 페이지에
+ * 실제로 쓰인 글자 묶음만 받아 간다.
+ */
+/**
+ * 로고 자리. 지점이 brandWord 를 주면 이미지 대신 글자로 그린다.
+ * 김포 시안의 로고는 흰 'ANITALK' 아래 작은 영문 한 줄이다. 바깥 서버의
+ * 이미지를 쓰면 그 서버가 막히거나 느릴 때 로고 자리가 비고, 색도 필터로
+ * 뒤집어야 해서 시안과 미묘하게 달라진다. 글자로 그리면 둘 다 없어진다.
+ */
+function logoMark(d, cls, h, w, extra = '') {
+  if (d.brandWord) {
+    return `<span class="${cls} logo-word" role="img" aria-label="애니톡"><b>${esc(d.brandWord.main)}</b>${
+      d.brandWord.sub
+        ? // 아주 작은 글자는 브라우저가 자간을 뭉개서, 폭을 ANITALK 에 맞춘 SVG 글자로 그린다.
+          `<small aria-hidden="true"><svg viewBox="0 0 200 9" preserveAspectRatio="none"><text x="0" y="7.6" textLength="200" lengthAdjust="spacingAndGlyphs">${esc(
+            d.brandWord.sub
+          )}</text></svg></small>`
+        : ''
+    }</span>`;
+  }
+  const box = logoBox(d, h, w);
+  return `<img class="${cls}" src="${url(d.brandLogo)}" alt="애니톡" width="${box.w}" height="${box.h}"${box.attr}${extra}>`;
+}
+
+/**
+ * 머리글 · 꼬리글 로고의 고유 비율. 기본은 지금까지 쓰던 가로형 워드마크
+ * (98x26) 다. 지점이 제 로고를 들고 있으면 data 의 brandLogoBox 로
+ * 알려 준다. 값이 맞아야 글꼴보다 늦게 내려온 그림이 자리를 밀지 않는다.
+ */
+function logoBox(d, h, w) {
+  // 지점이 제 로고를 들고 있지 않으면 지금까지 쓰던 공용 워드마크 그대로다.
+  // 비율을 다시 계산하면 반올림이 1px 달라져 7개 지점의 결과물이 전부
+  // 바뀌므로, 기본값은 계산하지 않고 원래 숫자를 그대로 돌려준다.
+  if (!d.brandLogoBox) return { w, h, attr: '' };
+  const ratio = d.brandLogoBox.w / d.brandLogoBox.h;
+  // 정사각에 가까우면 엠블럼. 가로로 긴 워드마크와 그리는 크기가 다르다.
+  const mark = ratio > 0.8 && ratio < 1.25;
+  const hh = mark ? Math.round(h * 1.3) : h;
+  return { w: Math.round(ratio * hh), h: hh, attr: mark ? ' data-shape="mark"' : '' };
+}
+
+function fontHead(d, { preconnect = true } = {}) {
+  if (d.site?.selfHostFont) return '<link rel="stylesheet" href="/fonts/pretendard.css">';
+  return (
+    (preconnect ? '<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>\n' : '') +
+    '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">'
+  );
+}
+
 const THEME_KEYS = {
   accent: '--accent',
   accentLit: '--accent-lit',
@@ -478,6 +654,8 @@ const THEME_KEYS = {
   btnHoverFg: '--btn-hover-fg',
   logoFilter: '--logo-filter',
   pulse: '--pulse',
+  track: '--track',
+  trackNum: '--track-num',
 };
 
 /** 지점 테마를 :root 오버라이드로 뽑는다. 값이 없는 키는 기본(레드)을 그대로 쓴다. */
@@ -709,14 +887,20 @@ const JS = `
       var img = b.querySelector('img');
       if (!img) return;
       last = b;
-      lbImg.src = img.currentSrc || img.src;
+      // 썸네일과 따로 원본 파일이 있으면(data-full) 그것을 크게 띄운다.
+      lbImg.src = b.getAttribute('data-full') || img.currentSrc || img.src;
       lbImg.alt = img.alt || '';
       lb.classList.add('is-open');
+      // 열려 있는 동안에는 보조기기에도 보여야 한다. aria-hidden 을 켠 채로
+      // 두면 화면에는 떠 있는데 스크린리더에는 없는 상태가 되고, 그 안의
+      // 닫기 버튼에 포커스를 주는 것이라 더 나쁘다.
+      lb.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       lb.querySelector('.lb-close').focus();
     });
     function close(){
       lb.classList.remove('is-open');
+      lb.setAttribute('aria-hidden', 'true');
       lbImg.removeAttribute('src');
       document.body.style.overflow = '';
       if (last) last.focus();
@@ -743,7 +927,7 @@ function header(d, { base = '' } = {}) {
 <header class="hdr">
   <div class="hdr-in">
     <a class="brand" href="${url(base || '#top')}">
-      <img class="brand-logo" src="${url(d.brandLogo)}" alt="애니톡" width="98" height="26" fetchpriority="high">
+      ${logoMark(d, 'brand-logo', 26, 98, ' fetchpriority="high"')}
       <span class="brand-div" aria-hidden="true"></span>
       <span class="brand-name">${esc(d.name)}</span>
     </a>
@@ -773,9 +957,16 @@ function hero(d, present) {
   <div class="hero-scrim-b" aria-hidden="true"></div>
   <div class="hero-in">
     ${d.hero.tag ? `<p class="tag" data-reveal="0">${esc(d.hero.tag)}</p>` : ''}
-    <h1 data-reveal="80"><span class="over">${esc(d.hero.over)}</span>${esc(
-    d.hero.line1
-  )}<br><span class="lit">${esc(d.hero.line2)}</span></h1>
+    ${
+      d.hero.tagPlain
+        ? `<p class="tag-plain" data-reveal="0">${esc(d.hero.tagPlain)}</p>`
+        : ''
+    }
+    <h1 data-reveal="80"><span class="over">${esc(d.hero.over)}${
+    d.hero.overStrong ? `<b>${esc(d.hero.overStrong)}</b>` : ''
+  }</span>${esc(d.hero.line1)}${
+    d.hero.line1 ? '<br>' : ''
+  }<span class="lit${d.hero.litBox ? ' lit--box' : ''}">${esc(d.hero.line2)}</span></h1>
     <p class="hero-sub" data-reveal="160">${esc(d.hero.sub)}</p>
   </div>
   <div class="scroll-dot" aria-hidden="true"><i></i></div>
@@ -784,8 +975,24 @@ function hero(d, present) {
 
 function about(d, present) {
   const figs = (d.about.figures || []).map((f) => figure(f, present)).join('');
-  const paras = (d.about.paragraphs || []).map((p) => `<p>${esc(p)}</p>`).join('');
+  const paras = (d.about.paragraphs || []).map((p) => `<p>${rich(p)}</p>`).join('');
   const badges = (d.about.badges || []).map((b) => `<span class="badge">${esc(b)}</span>`).join('');
+  // 시안의 학원소개는 흰 배경이고, 작품이 오른쪽 화면 끝까지 닿는다.
+  // about.theme 으로 갈라 두어 다른 지점은 지금까지의 어두운 구성을 그대로 쓴다.
+  const light = d.about.theme === 'light';
+  if (light) {
+    return `<section class="sec sec--light about--split" id="about">
+  <div class="about-split">
+    <div class="about-copy" data-reveal="0">
+      <span class="kicker">${esc(d.about.kicker)}</span>
+      <h2 class="h2">${rich(d.about.title)}</h2>
+      <div style="margin-top:24px">${paras}</div>
+      ${badges ? `<div class="badges">${badges}</div>` : ''}
+    </div>
+    <div class="about-art" data-reveal="120">${figs}</div>
+  </div>
+</section>`;
+  }
   return `<section class="sec" id="about">
   <div class="wrap">
     <div class="about-grid">
@@ -795,7 +1002,9 @@ function about(d, present) {
         <div style="margin-top:24px">${paras}</div>
         ${badges ? `<div class="badges">${badges}</div>` : ''}
       </div>
-      <div class="about-figs" data-reveal="120">${figs}</div>
+      <div class="about-figs${
+        (d.about.figures || []).length === 1 ? ' about-figs--solo' : ''
+      }" data-reveal="120">${figs}</div>
     </div>
   </div>
 </section>`;
@@ -807,10 +1016,14 @@ function results(d) {
     .map(
       (s, i) => `<article class="stat" data-reveal="${i * 60}">
       ${s.when ? `<span class="stat-when">${esc(s.when)}</span>` : ''}
-      <span class="stat-label">${esc(s.label)}</span>
-      <span class="stat-value">${esc(s.value)}${
-        s.unit ? `<span class="unit">${esc(s.unit)}</span>` : ''
-      }</span>
+      ${s.label ? `<span class="stat-label">${esc(s.label)}</span>` : ''}
+      <span class="stat-value"${
+        String(s.value || '').trim().length >= 4
+          ? ' data-len="long"'
+          : String(s.value || '').trim().length === 3
+            ? ' data-len="mid"'
+            : ''
+      }>${esc(s.value)}${s.unit ? `<span class="unit">${esc(s.unit)}</span>` : ''}</span>
       ${
         s.detail?.length
           ? `<ul class="stat-detail">${s.detail.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`
@@ -854,8 +1067,58 @@ function passList(d) {
 </section>`;
 }
 
+/** 누르면 원본이 뜨는 사진. 라이트박스 스크립트가 button.shot 을 찾는다. */
+function shotOf(slot, present, ratio) {
+  const img = resolveImage(slot, present);
+  const grow = ratio ? ` style="flex:${ratio.toFixed(3)} 1 0"` : '';
+  if (!img) return `<div class="ph-wrap"${grow}>${imgOnly(slot, present)}</div>`;
+  return `<button class="shot" type="button"${grow} aria-label="${esc(
+    (slot.caption || '사진') + ' 크게 보기'
+  )}">${imgOnly(slot, present)}</button>`;
+}
+
+function classesGrid(d, present) {
+  const cells = d.classes.groups
+    .map((g, i) => {
+      // 시안은 사진을 잘라 넣지 않는다. 비율을 지킨 채 띠 안에 담고,
+      // 누르면 원본이 뜨도록 갤러리와 같은 버튼으로 감싼다.
+      // 사진마다 가로를 제 비율만큼 준다. 그러면 같은 높이로 나란히 서면서도
+      // 어디도 잘리지 않는다 — 시안이 그렇게 되어 있다.
+      const shots = (g.items || [])
+        .map((c) => {
+          const im = resolveImage(c.image, present);
+          const ratio = im && im.w && im.h ? im.w / im.h : 1.4;
+          return shotOf(c.image, present, ratio);
+        })
+        .join('');
+      return `<div class="cg" data-reveal="${(i % 2) * 60}">
+      <div class="cg-head">
+        <h3 class="cg-name">${esc(g.name)}</h3>
+        <span class="cg-range">${esc(g.range)}</span>
+      </div>
+      <div class="cg-card">
+        <div class="cg-shots" data-n="${(g.items || []).length}">${shots}</div>
+        <p class="cg-cap">${esc(g.lead)}</p>
+      </div>
+    </div>`;
+    })
+    .join('');
+  return `<section class="sec sec--tint" id="classes">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">${esc(d.classes.kicker)}</span>
+    <h2 class="h2" data-reveal="40">${esc(d.classes.title)}</h2>
+    ${d.classes.lede ? `<p class="lede lede--mid" data-reveal="80">${esc(d.classes.lede)}</p>` : ''}
+    <div class="cgrid">${cells}</div>
+  </div>
+</section>`;
+}
+
 function classes(d, present) {
   if (!d.classes?.groups?.length) return '';
+  // 김포 시안은 반마다 '이름 + 학년 / 작품 띠 / 한 줄 설명' 카드를 2열로 세운다.
+  // 기존 지점은 반 하나당 설명 카드가 여러 장이라 레이아웃이 다르다. 데이터의
+  // classes.layout 으로 갈라 두고, 값이 없으면 지금까지의 모양을 그대로 쓴다.
+  if (d.classes.layout === 'grid') return classesGrid(d, present);
   const groups = d.classes.groups
     .map((g, gi) => {
       const cards = (g.items || [])
@@ -902,7 +1165,9 @@ function galleries(d, present) {
           if (!resolveImage(s, present)) {
             return `<figure class="fig is-empty">${imgOnly(s, present)}${cap}</figure>`;
           }
-          return `<figure class="fig"><button class="shot" type="button" aria-label="${esc(
+          // 썸네일보다 큰 원본이 따로 있으면 누를 때 그것을 띄운다.
+          const full = s.full && present.has(s.full) ? ` data-full="/gal/${esc(s.full)}"` : '';
+          return `<figure class="fig"><button class="shot" type="button"${full} aria-label="${esc(
             s.caption || '사진 크게 보기'
           )}">${imgOnly(s, present)}</button>${cap}</figure>`;
         })
@@ -957,8 +1222,9 @@ function faq(d) {
 
 function visit(d, siblings) {
   const booking = naverBooking(d);
+  // 시안은 마지막 카드에 블로그 · 인스타그램만 둔다(네이버 지도는 첫 카드에 이미 있다).
   const social = [
-    d.links.naverPlace && { label: '네이버 지도', href: d.links.naverPlace },
+    d.visit.socialNoPlace ? null : d.links.naverPlace && { label: '네이버 지도', href: d.links.naverPlace },
     d.links.blog && { label: '블로그', href: d.links.blog },
     d.links.instagram && { label: '인스타그램', href: d.links.instagram },
   ].filter(Boolean);
@@ -968,7 +1234,7 @@ function visit(d, siblings) {
     .join('');
   return `<section class="sec visit" id="visit">
   <div class="wrap">
-    <span class="kicker" data-reveal="0">Visit</span>
+    <span class="kicker" data-reveal="0">${esc(d.visit.kicker || 'Visit')}</span>
     <h2 class="h2" data-reveal="40">${esc(d.visit.title)}</h2>
     <div class="visit-grid">
       <div class="vcard" data-reveal="0">
@@ -978,7 +1244,7 @@ function visit(d, siblings) {
           d.links.naverPlace
             ? `<a class="more" href="${url(
                 d.links.naverPlace
-              )}" target="_blank" rel="noopener">네이버 지도로 보기 &rarr;</a>`
+              )}" target="_blank" rel="noopener">네이버 지도로 보기${d.skin === 'ppt' ? '' : ' '}&rarr;</a>`
             : ''
         }
       </div>
@@ -986,21 +1252,34 @@ function visit(d, siblings) {
         <h3>전화 문의</h3>
         <p class="big">${esc(d.phone)}</p>
         <p>${esc(d.hours.line1)}<br>${esc(d.hours.line2)}</p>
-        <a class="more" href="tel:${esc(digits(d.phone))}">바로 전화하기 &rarr;</a>
+        <a class="more" href="tel:${esc(digits(d.phone))}">바로 전화하기${d.skin === 'ppt' ? '' : ' '}&rarr;</a>
       </div>
       ${
         booking
           ? `<div class="vcard" data-reveal="120">
         <h3>네이버 예약</h3>
-        <p>네이버 예약으로 상담 시간을 바로 잡을 수 있습니다. 원하는 날짜와 시간을 선택해 주세요.</p>
-        <a class="more" href="${url(booking)}" target="_blank" rel="noopener">네이버로 예약하기 &rarr;</a>
+        <p>${rich(
+          d.visit.booking ||
+            '네이버 예약으로 상담 시간을 바로 잡을 수 있습니다. 원하는 날짜와 시간을 선택해 주세요.'
+        )}</p>
+        <a class="more" href="${url(booking)}" target="_blank" rel="noopener">${esc(
+          d.visit.bookingBtn || '네이버로 예약하기'
+        )}${d.skin === 'ppt' ? '' : ' '}&rarr;</a>
       </div>`
           : ''
       }
       <div class="vcard" data-reveal="${booking ? 180 : 120}">
         <h3>온라인 상담</h3>
-        <p>${esc(d.visit.consult)}</p>
-        <a class="more" href="${url(d.links.consult)}" target="_blank" rel="noopener">상담 신청하기 &rarr;</a>
+        <p>${rich(d.visit.consult)}</p>
+        ${
+          // 시안의 '온라인 상담' 카드에는 상담 신청 링크가 없고 블로그 · 인스타그램만
+          // 있다. consultBtn 을 빈 문자열로 주면 링크를 뺀다.
+          d.visit.consultBtn === ''
+            ? ''
+            : `<a class="more" href="${url(d.links.consult)}" target="_blank" rel="noopener">${esc(
+                d.visit.consultBtn || '상담 신청하기'
+              )} &rarr;</a>`
+        }
         ${social.length ? `<div class="social">${social
           .map((s) => `<a href="${url(s.href)}" target="_blank" rel="noopener">${esc(s.label)}</a>`)
           .join('')}</div>` : ''}
@@ -1009,7 +1288,7 @@ function visit(d, siblings) {
   </div>
   <div class="wrap">
     <div class="foot">
-      <img class="foot-logo" src="${url(d.brandLogo)}" alt="애니톡" width="91" height="24" loading="lazy" decoding="async">
+      ${logoMark(d, 'foot-logo', 24, 91, ' loading="lazy" decoding="async"')}
       ${sibs ? `<div class="sites"><span style="color:#5A5A5F;font-weight:700">애니톡 캠퍼스</span>${sibs}</div>` : ''}
       <div>&copy; ${new Date().getFullYear()} ANITALK. All rights reserved.</div>
     </div>
@@ -1066,14 +1345,49 @@ function quickBar(d) {
 
 /* ─────────────────────── 구조화 데이터 ─────────────────────── */
 
+/** "Mo-Fr 13:00-22:00" 같은 축약 표기를 OpeningHoursSpecification 으로 편다. */
+function hoursSpec(lines) {
+  const DAY = {
+    Mo: 'Monday', Tu: 'Tuesday', We: 'Wednesday', Th: 'Thursday',
+    Fr: 'Friday', Sa: 'Saturday', Su: 'Sunday',
+  };
+  const ORDER = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+  return (lines || [])
+    .map((line) => {
+      const m = /^([A-Za-z,-]+)\s+(\d{2}:\d{2})-(\d{2}:\d{2})$/.exec(String(line).trim());
+      if (!m) return null;
+      const days = [];
+      for (const part of m[1].split(',')) {
+        const range = part.split('-');
+        if (range.length === 2) {
+          // Mo-Fr 처럼 범위로 적힌 것은 요일 순서대로 펼친다.
+          const a = ORDER.indexOf(range[0]);
+          const b = ORDER.indexOf(range[1]);
+          if (a < 0 || b < 0) return null;
+          for (let i = a; i <= b; i += 1) days.push(DAY[ORDER[i]]);
+        } else if (DAY[part]) {
+          days.push(DAY[part]);
+        } else {
+          return null;
+        }
+      }
+      if (!days.length) return null;
+      return { '@type': 'OpeningHoursSpecification', dayOfWeek: days, opens: m[2], closes: m[3] };
+    })
+    .filter(Boolean);
+}
+
 function structuredData(d) {
+  const base = d.site.origin;
+  const orgId = `${base}/#organization`;
   const org = {
-    '@context': 'https://schema.org',
-    '@type': 'EducationalOrganization',
+    // LocalBusiness 를 같이 달아야 지역 검색과 AI 답변에서 "동네 학원" 으로 잡힌다.
+    '@type': ['EducationalOrganization', 'LocalBusiness'],
+    '@id': orgId,
     name: d.name,
     alternateName: d.alternateName || undefined,
     description: d.seo.description,
-    url: d.site.origin + '/',
+    url: base + '/',
     telephone: d.phone,
     image: d.hero.image?.remote || undefined,
     address: {
@@ -1083,18 +1397,68 @@ function structuredData(d) {
       addressLocality: d.geo.locality,
       streetAddress: d.address.street,
     },
-    openingHours: d.hours.schemaOrg,
     parentOrganization: { '@type': 'Organization', name: d.company.name, url: 'https://anitok.com/' },
     sameAs: [d.links.naverPlace, d.links.blog, d.links.instagram].filter(Boolean),
   };
+
+  const spec = hoursSpec(d.hours?.schemaOrg);
+  if (spec.length) org.openingHoursSpecification = spec;
+  else if (d.hours?.schemaOrg) org.openingHours = d.hours.schemaOrg;
+
+  if (d.links.naverPlace) org.hasMap = d.links.naverPlace;
+  if (d.company?.bizNo) {
+    org.identifier = { '@type': 'PropertyValue', name: '사업자등록번호', value: d.company.bizNo };
+  }
   if (d.geo.lat && d.geo.lng) {
     org.geo = { '@type': 'GeoCoordinates', latitude: d.geo.lat, longitude: d.geo.lng };
   }
-  const blocks = [org];
+
+  // 실제로 학생이 오는 동네만 areaServed 에 적는다. 없는 지역을 지어내지 않는다.
+  const served = [];
+  const seen = new Set();
+  const push = (name, type) => {
+    const key = String(name || '').trim();
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    served.push({ '@type': type, name: key });
+  };
+  push(d.geo.locality, 'City');
+  for (const n of d.local?.nearbyAll || d.local?.nearby || []) push(n.area, 'Place');
+  if (served.length) org.areaServed = served;
+
+  // 반 목록은 data 의 classes 를 그대로 옮긴다. GEO 답변에서 "무슨 반이 있냐" 에 바로 쓰인다.
+  const courses = (d.classes?.groups || []).flatMap((g) =>
+    (g.items || []).map((it) => ({
+      '@type': 'Course',
+      name: it.title,
+      description: it.desc,
+      provider: { '@id': orgId },
+    }))
+  );
+  if (courses.length) {
+    org.hasOfferCatalog = {
+      '@type': 'OfferCatalog',
+      name: d.classes?.title || '수업 과목',
+      itemListElement: courses,
+    };
+  }
+
+  const graph = [
+    org,
+    {
+      '@type': 'WebSite',
+      '@id': `${base}/#website`,
+      url: base + '/',
+      name: d.name,
+      inLanguage: 'ko-KR',
+      publisher: { '@id': orgId },
+    },
+  ];
+
   if (d.faq?.items?.length) {
-    blocks.push({
-      '@context': 'https://schema.org',
+    graph.push({
       '@type': 'FAQPage',
+      '@id': `${base}/#faq`,
       mainEntity: d.faq.items.map((f) => ({
         '@type': 'Question',
         name: f.q,
@@ -1102,9 +1466,11 @@ function structuredData(d) {
       })),
     });
   }
-  return blocks
-    .map((b) => `<script type="application/ld+json">${jsonld(b)}</script>`)
-    .join('\n');
+
+  return `<script type="application/ld+json">${jsonld({
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  })}</script>`;
 }
 
 function head(d, present) {
@@ -1144,8 +1510,7 @@ ${ogImage ? `<meta name="twitter:image" content="${esc(ogImage)}">` : ''}
 ${(d.seo.verification || [])
   .map((v) => `<meta name="${esc(v.name)}" content="${esc(v.content)}">`)
   .join('\n')}
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+${fontHead(d)}
 ${
   d.analytics?.ga4
     ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(d.analytics.ga4)}"></script>
@@ -1192,10 +1557,33 @@ export function localPages(d) {
       note: note || '',
     };
   };
-  return [
-    ...(loc.subjects || []).map((k) => make(loc.area, loc.areaSlug, k, loc.note)),
-    ...(loc.nearby || []).map((n) => make(n.area, n.slug, n.subject, n.note)),
-  ].filter(Boolean);
+  const main = (loc.subjects || [])
+    .map((k) => make(loc.area, loc.areaSlug, k, loc.note))
+    .filter(Boolean);
+
+  // 인근 동네 페이지는 같은 과목의 대표 페이지와 본문이 거의 같다. 바뀌는 것은
+  // 동네 이름과 note 한 줄뿐이라 실측하면 88~90% 가 겹친다. 구글은 이런 묶음을
+  // 도어웨이 페이지로 보고, 잘해야 하나만 남기고 나머지를 걸러낸다.
+  //
+  // 그래서 그 동네만의 내용(intro·points)이 실제로 있을 때만 독립 페이지로 두고,
+  // 없으면 canonical 을 대표 페이지로 넘긴다. 방문자에게는 그대로 보이고,
+  // 검색엔진에는 신호가 대표 페이지 하나로 모인다. nearby 항목에 intro 를
+  // 채워 넣는 순간 자동으로 제 주소를 되찾는다.
+  const bySubject = new Map(main.map((p) => [p.subjectKey, p]));
+  const near = (loc.nearby || [])
+    .map((n) => {
+      const p = make(n.area, n.slug, n.subject, n.note);
+      if (!p) return null;
+      p.intro = n.intro || null;
+      p.points = n.points || null;
+      const parent = bySubject.get(n.subject);
+      const unique = Boolean((n.intro && n.intro.length) || (n.points && n.points.length));
+      p.canonicalSlug = !unique && parent ? parent.slug : p.slug;
+      return p;
+    })
+    .filter(Boolean);
+
+  return [...main, ...near];
 }
 
 /** 캠퍼스의 반 편성을 한 줄짜리 목록으로 압축한다(랜딩페이지용). */
@@ -1246,7 +1634,7 @@ function lpFoot(d) {
   return `<section class="sec visit">
   <div class="wrap">
     <div class="foot">
-      <img class="foot-logo" src="${url(d.brandLogo)}" alt="애니톡" width="91" height="24" loading="lazy" decoding="async">
+      ${logoMark(d, 'foot-logo', 24, 91, ' loading="lazy" decoding="async"')}
       <div class="sites"><a href="/">${esc(d.name)}</a><a href="${url(
     d.links.naverPlace
   )}" target="_blank" rel="noopener">네이버 지도</a></div>
@@ -1257,9 +1645,10 @@ function lpFoot(d) {
 </section>`;
 }
 
-export function renderLocal(d, page, { pages = [] } = {}) {
+export function renderLocal(d, page, { pages = [], present = new Set() } = {}) {
   const booking = naverBooking(d);
-  const canonical = `${d.site.origin}/${page.slug}`;
+  const canonical = `${d.site.origin}/${page.canonicalSlug || page.slug}`;
+  const ogImage = resolveImageForMeta(d, present);
   const s = page.subject;
   const title = `${page.keyword} | ${d.name}`;
   const 을를 = 조사(page.keyword, '을', '를');
@@ -1282,7 +1671,7 @@ export function renderLocal(d, page, { pages = [] } = {}) {
   const others = pages.filter((p) => p.slug !== page.slug);
 
   return `<!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"${d.skin ? ` data-skin="${esc(d.skin)}"` : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1304,11 +1693,12 @@ export function renderLocal(d, page, { pages = [] } = {}) {
 <meta property="og:url" content="${esc(canonical)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
+${ogImage ? `<meta property="og:image" content="${esc(ogImage)}">` : ''}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(desc)}">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+${ogImage ? `<meta name="twitter:image" content="${esc(ogImage)}">` : ''}
+${fontHead(d)}
 <meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
 <link rel="stylesheet" href="/s.css">
 ${lpJsonLd(d, page, others)}
@@ -1342,7 +1732,9 @@ ${header(d, { base: '/' })}
       '를'
     )} 배운다면</h2>
     <div class="prose" style="margin-top:26px" data-reveal="80">
-      ${(s.intro || []).map((t) => `<p>${esc(t)}</p>`).join('')}
+      ${(page.intro && page.intro.length ? page.intro : s.intro || [])
+        .map((t) => `<p>${esc(t)}</p>`)
+        .join('')}
       <p>${page.note ? esc(page.note) + ' ' : ''}${esc(d.name)}${조사(
     d.name,
     '은',
@@ -1352,7 +1744,7 @@ ${header(d, { base: '/' })}
   )}에 있습니다. 상담은 ${esc(d.hours.line1)}, ${esc(d.hours.line2)}에 받습니다.</p>
     </div>
     <ul class="lp-points" data-reveal="0">
-      ${(s.points || [])
+      ${(page.points && page.points.length ? page.points : s.points || [])
         .map((p) => `<li><b>${esc(p.t)}</b><span>${esc(p.d)}</span></li>`)
         .join('')}
     </ul>
@@ -1448,8 +1840,232 @@ ${quickBar(d)}
  * 두 번째 페이지부터는 브라우저 캐시에서 바로 나온다.
  * ───────────────────────────────────────────────────────────── */
 
+const PPT_CSS = `
+/* ════════════════════ 김포 시안(PPT) 전용 ════════════════════
+ * 시안은 1920 화면 기준 고정 크기로 그려져 있다(슬라이드 2000px = 1920 × 1.0417).
+ * 슬라이드 픽셀을 재서 1920 기준 px 로 옮겼고, 그보다 좁은 화면에서는 --k 로
+ * 같은 비율만큼 줄인다. 이 블록은 skin=ppt 인 지점의 s.css 에만 들어간다. */
+html[data-skin=ppt]{--k:clamp(.62px,calc(100vw / 1920),1px);--ppt-w:calc(1325 * var(--k));
+  --ppt-orange:#FF6434;--ppt-kicker:#FF8B68;--ppt-line:#7B7B7B;--ppt-navy:#19204E;
+  --ppt-card:linear-gradient(147deg,#3B3B3B 4%,#000 68%)}
+/* 배경: 화면에 붙은 대각선 그라데이션. 어느 위치로 스크롤해도 시안의 한 장처럼
+ * 왼쪽 위가 회색이고 오른쪽 아래로 검게 떨어진다(슬라이드 픽셀에서 147도로 맞췄다). */
+html[data-skin=ppt] body{background:#000 linear-gradient(147deg,#3B3B3B 16%,#000 61%) fixed}
+html[data-skin=ppt] .sec:not(.sec--light),html[data-skin=ppt] .visit{background:transparent;border-top:0}
+html[data-skin=ppt] .wrap{max-width:calc(var(--ppt-w) + 2 * var(--pad-x))}
+html[data-skin=ppt] .hdr-in{max-width:calc(var(--ppt-w) + 2 * clamp(16px,3vw,36px))}
+
+/* 로고: 흰 ANITALK + 작은 영문 한 줄 */
+.logo-word{display:inline-flex;flex-direction:column;align-items:flex-start;color:#FFFFFF;line-height:1;filter:none;height:auto;width:auto}
+.logo-word b{font-size:22px;font-weight:900;letter-spacing:-.01em;line-height:.9}
+.logo-word small{display:block;width:0;min-width:100%;margin-top:3px}
+.logo-word svg{display:block;width:100%;height:auto;overflow:visible}
+.logo-word text{font-size:9.9px;font-weight:700;letter-spacing:0;fill:currentColor;text-rendering:geometricPrecision}
+.foot .logo-word{opacity:.85;margin-bottom:24px}
+
+/* 섹션 머리: CAREER / 남다른 교육 인사이트 / 설명 — 모든 어두운 섹션이 같다 */
+html[data-skin=ppt] .kicker{font-size:calc(28 * var(--k));font-weight:300;letter-spacing:0;text-transform:uppercase;
+  color:var(--ppt-kicker);margin-bottom:calc(22 * var(--k));line-height:1.2}
+html[data-skin=ppt] .sec:not(.sec--light) .h2{font-size:calc(51 * var(--k));font-weight:800;letter-spacing:-.025em;line-height:1.2;color:#FFFFFF}
+html[data-skin=ppt] .sec:not(.sec--light) .lede{font-size:calc(25 * var(--k));font-weight:400;letter-spacing:-.025em;line-height:1.4;
+  color:#FFFFFF;margin:calc(8 * var(--k)) auto 0;max-width:none}
+html[data-skin=ppt] .sec:not(.sec--light) .wrap>.kicker,html[data-skin=ppt] .sec:not(.sec--light) .wrap>.h2,
+html[data-skin=ppt] .sec:not(.sec--light) .wrap>.lede{text-align:center}
+html[data-skin=ppt] .sec:not(.sec--light){padding-block:calc(116 * var(--k)) calc(120 * var(--k))}
+@media (min-width:901px){
+  html[data-skin=ppt] main>.sec:not(.sec--light):not(.visit){min-height:calc(100vh - 64px)}
+}
+
+/* 카드 공통: 회색 2px 테두리, 안쪽은 왼쪽 위 회색 → 검정 */
+html[data-skin=ppt] .stat,html[data-skin=ppt] .vcard,html[data-skin=ppt] .cg-card{
+  background:var(--ppt-card);border:2px solid var(--ppt-line);border-radius:calc(17 * var(--k))}
+
+/* CAREER */
+html[data-skin=ppt] .stats{grid-template-columns:repeat(4,1fr);gap:calc(12 * var(--k));margin-top:calc(42 * var(--k))}
+html[data-skin=ppt] .stat{min-height:calc(289 * var(--k));padding:calc(52 * var(--k)) calc(27 * var(--k)) calc(30 * var(--k));gap:0;text-align:left}
+html[data-skin=ppt] .stat-when,html[data-skin=ppt] .stat-label{font-size:calc(25 * var(--k));font-weight:400;letter-spacing:-.025em;
+  color:#A5A5A5;margin:0 0 calc(10 * var(--k))}
+html[data-skin=ppt] .stat-when{letter-spacing:0}
+html[data-skin=ppt] .stat-value,html[data-skin=ppt] .stat-value[data-len]{font-size:calc(56 * var(--k));font-weight:800;letter-spacing:-.025em;
+  line-height:1.05;color:var(--ppt-orange)}
+html[data-skin=ppt] .stat-value .unit{font-size:calc(24 * var(--k));font-weight:400;margin-left:calc(4 * var(--k));color:#FFFFFF;letter-spacing:-.025em}
+html[data-skin=ppt] .stat-detail{margin:calc(18 * var(--k)) 0 0;gap:0}
+html[data-skin=ppt] .stat-detail li{font-size:calc(25 * var(--k));line-height:1.36;color:#FFFFFF;letter-spacing:-.025em}
+
+/* CLASS: 머리 아래 가로줄, 두 반씩 한 줄, 줄 사이에도 가로줄 */
+html[data-skin=ppt] #classes .cgrid{grid-template-columns:repeat(2,calc(525 * var(--k)));justify-content:center;
+  column-gap:calc(108 * var(--k));row-gap:0;margin-top:calc(30 * var(--k));border-top:1px solid #A5A5A5}
+html[data-skin=ppt] #classes .cg{padding:calc(44 * var(--k)) 0 calc(71 * var(--k))}
+html[data-skin=ppt] #classes .cg:nth-child(n+3){border-top:1px solid #A5A5A5}
+html[data-skin=ppt] #classes .cg:nth-child(n+3)::before{content:none}
+html[data-skin=ppt] .cg-head{gap:calc(6 * var(--k));margin-bottom:calc(14 * var(--k));align-items:baseline}
+html[data-skin=ppt] .cg-name{font-size:calc(48 * var(--k));font-weight:800;letter-spacing:-.025em;line-height:1.1}
+html[data-skin=ppt] .cg-range{font-size:calc(24 * var(--k));font-weight:400;color:#FFFFFF;letter-spacing:-.025em}
+html[data-skin=ppt] .cg-card{overflow:hidden}
+html[data-skin=ppt] .cg-shots{height:calc(272 * var(--k));gap:0;background:#000}
+html[data-skin=ppt] .cg-cap{padding:calc(14 * var(--k)) calc(13 * var(--k)) calc(16 * var(--k));font-size:calc(23 * var(--k));
+  line-height:1.3;color:#CCCCCC;letter-spacing:-.04em;background:transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:900px){html[data-skin=ppt] .cg-cap{white-space:normal}}
+
+/* CAMPUS · STUDENT WORKS: 정사각 5칸, 회색 테두리, 캡션은 흰 글자 가운데 */
+html[data-skin=ppt] .gal{grid-template-columns:repeat(5,1fr);gap:calc(14 * var(--k));margin-top:calc(56 * var(--k))}
+html[data-skin=ppt] #works .gal{row-gap:calc(8 * var(--k))}
+html[data-skin=ppt] #gallery .gal .shot img,html[data-skin=ppt] #works .gal .shot img,
+html[data-skin=ppt] #gallery .gal .shot .ph,html[data-skin=ppt] #works .gal .shot .ph{aspect-ratio:1/1;border-radius:calc(17 * var(--k));
+  border:3px solid var(--ppt-line);box-sizing:border-box}
+html[data-skin=ppt] .gal figcaption{margin-top:calc(10 * var(--k));font-size:calc(25 * var(--k));line-height:1.4;color:#FFFFFF;
+  text-align:center;letter-spacing:-.025em}
+
+/* FAQ: 줄 구분선 없이 Q 와 질문, 오른쪽에 가는 흰 꺾쇠 */
+html[data-skin=ppt] .faq{border-top:0;margin-top:calc(34 * var(--k))}
+html[data-skin=ppt] .faq details{border-bottom:0}
+html[data-skin=ppt] .faq summary{padding:calc(38 * var(--k)) calc(60 * var(--k)) calc(38 * var(--k)) calc(27 * var(--k));
+  font-size:calc(24 * var(--k));font-weight:400;line-height:1.4;letter-spacing:-.025em;color:#FFFFFF}
+html[data-skin=ppt] .faq summary::before{top:calc(38 * var(--k));font-size:calc(24 * var(--k));line-height:1.4;font-weight:800;color:#FFFFFF}
+html[data-skin=ppt] .faq summary::after{right:calc(4 * var(--k));top:50%;width:calc(22 * var(--k));height:calc(22 * var(--k));
+  margin-top:calc(-16 * var(--k));border-right:2px solid #FFFFFF;border-bottom:2px solid #FFFFFF}
+html[data-skin=ppt] .faq details[open] summary::after{margin-top:calc(-4 * var(--k))}
+html[data-skin=ppt] .faq .ans{padding:0 calc(27 * var(--k)) calc(40 * var(--k));margin-top:calc(-22 * var(--k));
+  font-size:calc(24 * var(--k));line-height:1.4;color:#DADADA;letter-spacing:-.025em}
+
+/* LOCAL: 내용은 그대로. 칩을 감싸던 판은 없애고(2차 수정 요청) 배경 위에 칩만
+ * 떠 있게 한다. 머리글이 가운데 정렬이라 칩 줄도 가운데로 모은다. */
+html[data-skin=ppt] #local .lp-links{margin:calc(56 * var(--k)) 0 0;padding:0;background:none;
+  justify-content:center;gap:calc(12 * var(--k)) calc(12 * var(--k))}
+html[data-skin=ppt] #local .lp-links a{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.22);min-height:calc(48 * var(--k));
+  padding:0 calc(24 * var(--k));font-size:calc(16 * var(--k));color:#E6E6E6}
+html[data-skin=ppt] #local .lp-links a:hover{border-color:var(--ppt-orange);color:#FFFFFF}
+
+/* VISIT */
+html[data-skin=ppt] .visit-grid{grid-template-columns:repeat(4,1fr);gap:calc(12 * var(--k));margin-top:calc(53 * var(--k))}
+html[data-skin=ppt] #visit .vcard{min-height:calc(284 * var(--k));padding:calc(22 * var(--k)) calc(15 * var(--k)) calc(20 * var(--k));gap:0}
+html[data-skin=ppt] #visit .vcard h3{font-size:calc(25 * var(--k));font-weight:400;letter-spacing:-.025em;color:var(--ppt-orange);
+  margin:0 0 calc(18 * var(--k));line-height:1.3}
+html[data-skin=ppt] #visit .vcard p{font-size:calc(24 * var(--k));line-height:1.35;color:#FFFFFF;letter-spacing:-.025em}
+html[data-skin=ppt] #visit .vcard:first-child p{font-weight:700}
+html[data-skin=ppt] #visit .vcard .big{font-size:calc(27 * var(--k));font-weight:800;letter-spacing:0}
+html[data-skin=ppt] #visit .vcard a.more,html[data-skin=ppt] #visit .vcard .social a{margin-top:auto;padding:0 calc(10 * var(--k));
+  height:calc(48 * var(--k));border:2px solid #8C8C8C;border-radius:calc(8 * var(--k));font-size:calc(25 * var(--k));font-weight:400;
+  color:#FFFFFF;display:inline-flex;align-items:center;letter-spacing:-.025em;background:transparent}
+html[data-skin=ppt] #visit .vcard .social{gap:calc(12 * var(--k))}
+html[data-skin=ppt] #visit .vcard .social a{margin-top:0}
+
+/* HERO */
+html[data-skin=ppt] .hero{height:calc(100vh - 64px);min-height:calc(640 * var(--k))}
+html[data-skin=ppt] .hero-bg{height:100%;animation:none;transform:scale(1.115) translateX(1.94%);object-position:center 13%}
+html[data-skin=ppt] .scroll-dot{display:none}
+html[data-skin=ppt] .hero{padding-bottom:calc(76 * var(--k))}
+html[data-skin=ppt] .hero-glow{display:none}
+html[data-skin=ppt] .hero-in{max-width:calc(var(--ppt-w) + 2 * clamp(20px,4vw,56px))}
+html[data-skin=ppt] .hero .tag-plain{font-size:calc(37 * var(--k));margin:0 0 calc(8 * var(--k));letter-spacing:0}
+html[data-skin=ppt] .hero h1{font-size:calc(38 * var(--k));line-height:1.3}
+html[data-skin=ppt] .hero h1 .over{margin-bottom:calc(10 * var(--k))}
+html[data-skin=ppt] .hero h1 .lit--box{font-size:calc(62 * var(--k));line-height:1;padding:0 calc(10 * var(--k));
+  border-radius:0;display:inline-block;letter-spacing:-.025em}
+html[data-skin=ppt] .hero-sub{font-size:calc(32 * var(--k));margin-top:calc(24 * var(--k));letter-spacing:-.025em}
+
+/* 학원소개: 흰 바탕, 남색 글자, 오른쪽 작품은 왼쪽 끝이 흰색으로 풀린다 */
+html[data-skin=ppt] .about--split{position:relative;overflow:hidden}
+html[data-skin=ppt] .about-split{display:block;position:relative;height:calc(100vh - 64px);min-height:calc(780 * var(--k))}
+html[data-skin=ppt] .about-split .about-copy{position:relative;z-index:1;overflow:visible;max-width:none;justify-self:start;
+  padding:calc(124 * var(--k)) 0 0 max(var(--pad-x),calc((100vw - var(--ppt-w)) / 2))}
+html[data-skin=ppt] .about-art{position:absolute;top:0;right:0;bottom:0;width:calc(1095 * var(--k));min-width:57vw;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%);mask-image:linear-gradient(90deg,transparent 0,#000 9%)}
+html[data-skin=ppt] .about-art .fig img{object-position:left center}
+html[data-skin=ppt] .sec--light .kicker{text-transform:none;font-size:calc(28 * var(--k));color:var(--ppt-navy);margin-bottom:calc(26 * var(--k))}
+html[data-skin=ppt] .sec--light .h2{font-size:calc(47 * var(--k));line-height:1.22;letter-spacing:-.03em;color:var(--ppt-navy)}
+html[data-skin=ppt] .sec--light .h2 b{color:var(--ppt-navy)}
+html[data-skin=ppt] .about-copy>div{margin-top:calc(26 * var(--k)) !important}
+html[data-skin=ppt] .sec--light .about-copy p{font-size:calc(20.5 * var(--k));line-height:1.36;letter-spacing:-.025em;color:var(--ppt-navy);
+  margin:0 0 calc(14 * var(--k))}
+html[data-skin=ppt] .sec--light .about-copy b{color:var(--ppt-navy);font-weight:700}
+html[data-skin=ppt] .about-copy .badges{gap:calc(13 * var(--k)) calc(12 * var(--k));margin-top:calc(16 * var(--k));max-width:calc(560 * var(--k))}
+html[data-skin=ppt] .sec--light .badge{border:2px solid var(--ppt-navy);border-radius:999px;background:transparent;color:var(--ppt-navy);
+  height:calc(44 * var(--k));padding:0 calc(26 * var(--k));display:inline-flex;align-items:center;font-size:calc(23 * var(--k));
+  font-weight:400;letter-spacing:-.025em}
+
+/* 좁은 화면: 크기는 기존 모바일 규칙을 따르고 색 · 테두리만 시안을 쓴다 */
+@media (max-width:900px){
+  html[data-skin=ppt]{--k:.62px}
+  html[data-skin=ppt] body{background-attachment:scroll}
+  html[data-skin=ppt] .sec:not(.sec--light){background:linear-gradient(160deg,#2E2E2E 0,#000 520px)}
+  html[data-skin=ppt] .stats,html[data-skin=ppt] .visit-grid{grid-template-columns:1fr 1fr}
+  html[data-skin=ppt] #classes .cgrid{grid-template-columns:1fr;column-gap:0}
+  html[data-skin=ppt] .gal{grid-template-columns:repeat(2,1fr)}
+  html[data-skin=ppt] .kicker{font-size:15px}
+  html[data-skin=ppt] .sec:not(.sec--light) .h2{font-size:28px}
+  html[data-skin=ppt] .sec:not(.sec--light) .lede{font-size:15px}
+  html[data-skin=ppt] .stat-value,html[data-skin=ppt] .stat-value[data-len]{font-size:34px}
+  html[data-skin=ppt] .stat-when,html[data-skin=ppt] .stat-label,html[data-skin=ppt] .stat-detail li,
+  html[data-skin=ppt] .gal figcaption,html[data-skin=ppt] .faq summary,html[data-skin=ppt] .faq summary::before,
+  html[data-skin=ppt] .faq .ans,html[data-skin=ppt] .cg-cap,html[data-skin=ppt] #visit .vcard h3,
+  html[data-skin=ppt] #visit .vcard p,html[data-skin=ppt] #visit .vcard a.more,html[data-skin=ppt] #visit .vcard .social a{font-size:15px}
+  html[data-skin=ppt] .stat-value .unit,html[data-skin=ppt] .cg-range{font-size:14px}
+  html[data-skin=ppt] .cg-name{font-size:26px}
+  html[data-skin=ppt] #visit .vcard .big{font-size:18px}
+  html[data-skin=ppt] .cg-shots{height:clamp(170px,46vw,260px)}
+  html[data-skin=ppt] #local .lp-links{margin-inline:0}
+  html[data-skin=ppt] #local .lp-links a{font-size:13.5px;min-height:44px}
+  html[data-skin=ppt] .hero{height:auto;min-height:clamp(520px,92vh,760px)}
+  html[data-skin=ppt] .hero .tag-plain{font-size:18px}
+  html[data-skin=ppt] .hero h1{font-size:20px}
+  html[data-skin=ppt] .hero h1 .lit--box{font-size:31px}
+  html[data-skin=ppt] .hero-sub{font-size:16px}
+  html[data-skin=ppt] .about-split{height:auto;min-height:0;display:flex;flex-direction:column}
+  html[data-skin=ppt] .about-split .about-copy{padding:48px var(--pad-x) 56px}
+  html[data-skin=ppt] .about-art{position:relative;width:auto;min-width:0;height:clamp(300px,70vw,460px);order:-1;
+    -webkit-mask-image:none;mask-image:none}
+  html[data-skin=ppt] .sec--light .kicker{font-size:15px}
+  html[data-skin=ppt] .sec--light .h2{font-size:27px}
+  html[data-skin=ppt] .sec--light .about-copy p{font-size:15.5px;line-height:1.6}
+  html[data-skin=ppt] .sec--light .badge{font-size:14px;height:38px;padding:0 14px}
+}
+@media (max-width:520px){
+  html[data-skin=ppt] .stats,html[data-skin=ppt] .visit-grid{grid-template-columns:1fr}
+}
+/* 라이트박스: 작은 사진도 '아이콘'처럼 보이지 않게 화면에 맞는 가장 큰 크기로 띄운다. */
+html[data-skin=ppt] .lb img{width:min(1200px,92vw);height:min(88vh,1200px);max-width:none;max-height:none;object-fit:contain;border-radius:0}
+/* 하단 퀵바: 김포는 버튼이 둘이다. 3칸 격자면 오른쪽 한 칸이 빈 채로 남는다. */
+html[data-skin=ppt] .qbar{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:1fr}
+`;
+
+const CSS_POST = `
+.prose .post-h2{margin:44px 0 16px;font-size:clamp(20px,2.2vw,27px);line-height:1.35}
+.prose .post-h2:first-child{margin-top:0}
+.prose .post-list{margin:0 0 18px;padding:0 0 0 2px;list-style:none;max-width:72ch}
+.prose .post-list li{position:relative;padding-left:16px;margin-bottom:9px;font-size:clamp(15px,1.15vw,17px);line-height:1.85;color:#D6D6D8}
+.prose .post-list li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--accent-lit)}
+.post-index li{align-items:baseline}
+.post-index .k{min-width:88px;color:var(--muted-2);font-weight:700}
+.post-index .v{flex:1 1 240px;font-weight:700;color:#FFFFFF;border-bottom:1px solid transparent}
+.post-index .v:hover{border-bottom-color:var(--accent-lit)}
+.post-meta{display:flex;flex-wrap:wrap;gap:16px;margin:18px 0 0;font-size:13px;color:var(--muted-2)}
+.prose .post-h3{margin:30px 0 12px;font-size:clamp(17px,1.5vw,19px);line-height:1.45;font-weight:800;letter-spacing:-.03em;color:#FFFFFF}
+.prose .post-olist{margin:0 0 18px;padding:0;list-style:none;counter-reset:po;max-width:72ch}
+.prose .post-olist li{counter-increment:po;position:relative;padding-left:26px;margin-bottom:9px;font-size:clamp(15px,1.15vw,17px);line-height:1.85;color:#D6D6D8}
+.prose .post-olist li::before{content:counter(po) ".";position:absolute;left:0;top:0;font-size:inherit;line-height:inherit;font-weight:800;color:var(--accent-lit);font-variant-numeric:tabular-nums}
+.prose .post-tw{margin:0 0 24px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.prose .post-table{border-collapse:collapse;width:100%;min-width:460px;font-size:14.5px}
+.prose .post-table th,.prose .post-table td{border:1px solid var(--line);padding:11px 13px;text-align:left;vertical-align:top;word-break:keep-all}
+.prose .post-table th{background:var(--panel-2);font-weight:800;color:#FFFFFF;font-size:13.5px}
+.prose .post-table td{color:#D6D6D8}
+.prose .post-note{margin:0 0 24px;padding:18px 20px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;max-width:72ch}
+.prose .post-note b{display:block;font-size:15px;color:#FFFFFF;margin-bottom:6px}
+.prose .post-note p{margin:0;font-size:15px;line-height:1.8;color:#D6D6D8}
+.post-toc{margin:0 0 40px;padding:20px 22px;background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:72ch}
+.post-toc b{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--muted-2);margin-bottom:12px}
+.post-toc ol{margin:0;padding:0;list-style:none;counter-reset:toc}
+.post-toc li{margin:0;padding:5px 0;font-size:14.5px;line-height:1.5}
+.post-toc li.l2{counter-increment:toc}
+.post-toc li.l2 a::before{content:counter(toc) ". ";color:var(--muted-2);font-weight:700}
+.post-toc li.l3{padding-left:20px;font-size:13.5px}
+.post-toc a{color:#D6D6D8;border-bottom:1px solid transparent}
+.post-toc a:hover{border-bottom-color:var(--accent-lit)}
+.prose h2[id],.prose h3[id]{scroll-margin-top:84px}
+`;
+
 export function siteCss(d) {
-  return `${CSS}${CSS_MOBILE}${themeCss(d.theme)}\n`;
+  return `${CSS}${CSS_MOBILE}${CSS_POST}${themeCss(d.theme)}${d.skin === 'ppt' ? PPT_CSS : ''}\n`;
 }
 
 export function siteJs() {
@@ -1461,7 +2077,7 @@ export function siteJs() {
 /** 기본 Vercel 404 대신 같은 톤의 페이지. 검색엔진에는 색인하지 않도록 막는다. */
 export function render404(d) {
   return `<!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"${d.skin ? ` data-skin="${esc(d.skin)}"` : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1471,7 +2087,7 @@ export function render404(d) {
 <link rel="icon" href="/icon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/icon-16.png" sizes="16x16" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+${fontHead(d, { preconnect: false })}
 <link rel="stylesheet" href="/s.css">
 <style>
 .nf{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;gap:20px}
@@ -1514,7 +2130,7 @@ function localIndex(d) {
 
 export function renderPage(d, { present = new Set(), siblings = [] } = {}) {
   return `<!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"${d.skin ? ` data-skin="${esc(d.skin)}"` : ''}>
 <head>
 ${head(d, present)}
 ${structuredData(d)}
@@ -1540,4 +2156,347 @@ ${quickBar(d)}
 </body>
 </html>
 `;
+}
+
+/* ─────────────────── 학원소식(블로그) ───────────────────
+ * 지점 홈은 한 장짜리라 "청강대 실기대전 주제" 같은 검색어로 들어올 자리가
+ * 없다. 네이버 블로그에 이미 쓴 글을 그대로 옮기면 원문이 먼저 색인돼 있고
+ * 네이버 도메인이 더 세서 검색엔진이 둘 중 하나만 남기는데, 남는 건 원문이다.
+ * 그래서 옮겨 적지 않고 다시 쓴 글을 여기서 렌더링한다. canonical 을 이 사이트로
+ * 거는 것도 그래서 성립한다.
+ *
+ * 디자인은 지역 랜딩페이지와 같은 클래스를 그대로 쓴다. s.css 에 새 규칙을
+ * 넣지 않으므로 여섯 지점의 CSS 파일이 지금과 같은 크기로 남는다.
+ * ───────────────────────────────────────────────────────── */
+
+/** 아주 좁은 마크다운만 읽는다. 문단 · ## 소제목 · - 목록 · **굵게** 뿐이다. */
+function mdInline(s) {
+  return esc(s)
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, t, h) =>
+      /^(https?:|\/)/.test(h) ? `<a href="${esc(h)}">${t}</a>` : m
+    );
+}
+
+function markdown(md) {
+  const out = [];
+  const toc = [];
+  let hn = 0;
+  let list = null;   // '- ' 목록
+  let olist = null;  // '1. ' 번호 목록
+  let quote = null;  // '>' 참고 상자
+  let table = null;  // 표
+  const flush = () => {
+    if (list) { out.push(`<ul class="post-list">${list.join('')}</ul>`); list = null; }
+    if (olist) { out.push(`<ol class="post-olist">${olist.join('')}</ol>`); olist = null; }
+    if (quote) {
+      // <aside> 로 감싸면 본문 추출기(AI 답변 엔진이 쓰는 그 방식)가 통째로
+      // 버린다. 실제로 읽어 보니 상자 안의 문장이 사라져 있었다. 인용되려고
+      // 하는 일인데 정반대가 된다. blockquote 는 본문으로 남는다.
+      // 줄마다 따로 문단을 만든다. 합치면 따로 쓴 인용 두 개가 한 문장처럼
+      // 붙어 읽힌다 — 이미 그렇게 쓰고 있는 글이 네 편 있었다.
+      // 첫 줄을 **굵게** 로 열면 그 부분만 상자 제목이 된다.
+      const lead = quote[0].match(/^\*\*(.+?)\*\*\s*(.*)$/);
+      const head = lead ? `<b>${mdInline(lead[1])}</b>` : '';
+      const rest = lead ? [lead[2], ...quote.slice(1)] : quote;
+      out.push(
+        `<blockquote class="post-note">` +
+          head +
+          rest.filter(Boolean).map((l) => `<p>${mdInline(l)}</p>`).join('') +
+          `</blockquote>`
+      );
+      quote = null;
+    }
+    if (table) {
+      const th = table.head.map((c) => `<th>${mdInline(c)}</th>`).join('');
+      const tr = table.rows
+        .map((r) => `<tr>${r.map((c) => `<td>${mdInline(c)}</td>`).join('')}</tr>`)
+        .join('');
+      // 좁은 화면에서 표가 본문을 밀지 않도록 가로 스크롤 상자에 넣는다.
+      out.push(
+        `<div class="post-tw"><table class="post-table"><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table></div>`
+      );
+      table = null;
+    }
+  };
+  const cells = (l) => l.slice(1, -1).split('|').map((c) => c.trim());
+  const lines = String(md).split(/\r?\n/);
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) { flush(); continue; }
+
+    // 표는 머리줄 다음에 | --- | --- | 가 올 때만 표로 본다. 구분줄이 없으면
+    // 표로 그리지 않고 문단으로 흘려보낸다(빌드 검사가 먼저 잡는다).
+    if (/^\|.*\|$/.test(line)) {
+      if (table) { table.rows.push(cells(line)); continue; }
+      if (/^\|[\s:|-]+\|$/.test((lines[i + 1] || '').trim())) {
+        flush();
+        table = { head: cells(line), rows: [] };
+        i++;
+        continue;
+      }
+    }
+    if (table) flush();
+
+    // 제목에 id 를 달아 목차가 걸리게 한다. 한글 제목을 그대로 id 로 쓰면 같은
+    // 낱말이 두 번 나올 때 앵커가 겹치므로 순번을 쓴다.
+    if (line.startsWith('## ') || line.startsWith('### ')) {
+      flush();
+      const level = line.startsWith('### ') ? 3 : 2;
+      const text = line.slice(level + 1);
+      const id = 's' + ++hn;
+      toc.push({ level, id, text: text.replace(/\*\*/g, '') });
+      out.push(
+        level === 2
+          ? `<h2 class="h2 post-h2" id="${id}">${mdInline(text)}</h2>`
+          : `<h3 class="post-h3" id="${id}">${mdInline(text)}</h3>`
+      );
+      continue;
+    }
+    if (line.startsWith('- ')) {
+      if (!list) flush();
+      (list = list || []).push(`<li>${mdInline(line.slice(2))}</li>`);
+      continue;
+    }
+    if (/^\d+\.\s/.test(line)) {
+      if (!olist) flush();
+      (olist = olist || []).push(`<li>${mdInline(line.replace(/^\d+\.\s+/, ''))}</li>`);
+      continue;
+    }
+    if (/^>\s?/.test(line)) {
+      if (!quote) flush();
+      (quote = quote || []).push(line.replace(/^>\s?/, ''));
+      continue;
+    }
+    flush();
+    out.push(`<p>${mdInline(line)}</p>`);
+  }
+  flush();
+  return { html: out.join('\n'), toc };
+}
+
+// 읽는 시간. 한글 산문은 분당 700자 안팎으로 읽힌다. 마크다운 기호와 주소는
+// 읽는 분량이 아니므로 빼고 센다. 부풀리면 첫 줄부터 신뢰를 잃는다.
+function readingMinutes(md) {
+  const text = String(md)
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[#>*|_-]/g, '');
+  return Math.max(2, Math.round(text.replace(/\s/g, '').length / 700));
+}
+
+function postJsonLd(d, post) {
+  const base = d.site.origin;
+  const canonical = `${base}/blog/${post.slug}/`;
+  const graph = [
+    {
+      '@type': 'BlogPosting',
+      '@id': `${canonical}#article`,
+      headline: post.title,
+      description: post.description,
+      inLanguage: 'ko-KR',
+      datePublished: post.date,
+      dateModified: post.updated || post.date,
+      mainEntityOfPage: canonical,
+      author: { '@type': 'Organization', name: d.name, url: base + '/' },
+      publisher: { '@id': `${base}/#organization` },
+      about: (post.keywords || []).join(', ') || undefined,
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: d.name, item: base + '/' },
+        { '@type': 'ListItem', position: 2, name: '학원소식', item: `${base}/blog/` },
+        { '@type': 'ListItem', position: 3, name: post.title, item: canonical },
+      ],
+    },
+  ];
+  if (post.faq?.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: post.faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    });
+  }
+  return `<script type="application/ld+json">${jsonld({ '@context': 'https://schema.org', '@graph': graph })}</script>`;
+}
+
+function blogShell(d, { title, description, canonical, keywords = [], jsonLd = '', image = '', body }) {
+  return `<!DOCTYPE html>
+<html lang="ko"${d.skin ? ` data-skin="${esc(d.skin)}"` : ''}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(description)}">
+${keywords.length ? `<meta name="keywords" content="${esc(keywords.join(', '))}">` : ''}
+<meta name="author" content="${esc(d.name)}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="${esc(canonical)}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/icon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/icon-16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="${esc(d.name)}">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="${esc(canonical)}">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
+${image ? `<meta property="og:image" content="${esc(image)}">` : ''}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(description)}">
+${image ? `<meta name="twitter:image" content="${esc(image)}">` : ''}
+${fontHead(d)}
+<meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
+<link rel="stylesheet" href="/s.css">
+${jsonLd}
+</head>
+<body>
+${header(d, { base: '/' })}
+<main>
+${body}
+</main>
+${lpFoot(d)}
+${quickBar(d)}
+<script src="/s.js" defer></script>
+</body>
+</html>
+`;
+}
+
+export function renderPost(d, post, { posts = [], present = new Set() } = {}) {
+  const canonical = `${d.site.origin}/blog/${post.slug}/`;
+  const others = posts.filter((p) => p.slug !== post.slug).slice(0, 6);
+  const booking = naverBooking(d);
+  const { html: prose, toc } = markdown(post.body);
+  // 목차는 제목이 셋 이상일 때만 세운다. 두 개짜리 목차는 자리만 차지한다.
+  const tocHtml =
+    toc.length >= 3
+      ? `<nav class="post-toc" aria-label="목차"><b>목차</b><ol>${toc
+          .map((t) => `<li class="l${t.level}"><a href="#${t.id}">${esc(t.text)}</a></li>`)
+          .join('')}</ol></nav>`
+      : '';
+  const body = `<section class="lp-head" id="top">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치">
+      <a href="/">${esc(d.shortName || d.name)}</a><span aria-hidden="true">›</span><a href="/blog/">학원소식</a><span aria-hidden="true">›</span><span>${esc(post.title)}</span>
+    </nav>
+    <span class="kicker">${esc(post.kicker || '학원소식')}</span>
+    <h1 class="lp-h1">${esc(post.title)}</h1>
+    <p class="lp-sub">${esc(post.description)}</p>
+    <p class="post-meta"><time datetime="${esc(post.date)}">${esc(post.date)}</time><span>읽는 시간 ${readingMinutes(
+    post.body
+  )}분</span></p>
+  </div>
+</section>
+
+<article class="sec">
+  <div class="wrap">
+    ${tocHtml}
+    <div class="prose" data-reveal="0">
+${prose}
+    </div>
+  </div>
+</article>
+${
+  post.faq?.length
+    ? `<section class="sec sec--tint">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">FAQ</span>
+    <h2 class="h2" data-reveal="40">자주 묻는 질문</h2>
+    <div class="faq" data-reveal="0">${post.faq
+      .map((f) => `<details><summary>${esc(f.q)}</summary><div class="ans">${esc(f.a)}</div></details>`)
+      .join('')}</div>
+  </div>
+</section>`
+    : ''
+}
+<section class="sec lp-cta">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">Visit</span>
+    <h2 class="h2" data-reveal="40">상담 · 예약 안내</h2>
+    <p class="lede" data-reveal="80">${esc(d.address.line1)} ${esc(d.address.line2)}<br>${esc(d.hours.line1)} · ${esc(d.hours.line2)}</p>
+    <div class="cta-row" data-reveal="120">
+      ${booking ? `<a class="btn btn--solid" href="${url(booking)}" target="_blank" rel="noopener">네이버 예약 →</a>` : ''}
+      <a class="btn btn--ghost" href="tel:${esc(digits(d.phone))}">전화 ${esc(d.phone)}</a>
+    </div>
+  </div>
+</section>
+${
+  others.length
+    ? `<section class="sec">
+  <div class="wrap">
+    <span class="kicker" data-reveal="0">More</span>
+    <h2 class="h2" data-reveal="40">다른 소식</h2>
+    <div class="lp-links" data-reveal="0">
+      <a href="/blog/">글 전체 보기</a>
+      ${others.map((p) => `<a href="/blog/${esc(p.slug)}/">${esc(p.title)}</a>`).join('')}
+    </div>
+  </div>
+</section>`
+    : ''
+}`;
+  return blogShell(d, {
+    title: `${post.title} | ${d.name}`,
+    description: post.description,
+    canonical,
+    keywords: post.keywords || [],
+    jsonLd: postJsonLd(d, post),
+    image: resolveImageForMeta(d, present),
+    body,
+  });
+}
+
+export function renderBlogIndex(d, posts, { present = new Set() } = {}) {
+  const canonical = `${d.site.origin}/blog/`;
+  const rows = posts
+    .map(
+      (p) =>
+        `<li><span class="k">${esc(p.date)}</span>` +
+        `<a class="v" href="/blog/${esc(p.slug)}/">${esc(p.title)}</a>` +
+        `<span class="m">${esc(p.description.slice(0, 58))}…</span></li>`
+    )
+    .join('');
+  const body = `<section class="lp-head" id="top">
+  <div class="wrap">
+    <nav class="crumb" aria-label="현재 위치">
+      <a href="/">${esc(d.shortName || d.name)}</a><span aria-hidden="true">›</span><span>학원소식</span>
+    </nav>
+    <span class="kicker">Stories</span>
+    <h1 class="lp-h1">학원소식</h1>
+    <p class="lp-sub">입시 요강과 실기 주제, 수업에서 자주 나오는 질문을 정리했습니다.</p>
+  </div>
+</section>
+<section class="sec">
+  <div class="wrap">
+    <ul class="lp-list post-index" data-reveal="0">${rows}</ul>
+  </div>
+</section>`;
+  return blogShell(d, {
+    title: `학원소식 | ${d.name}`,
+    description: `${d.name}${조사(d.name, '이', '가')} 정리한 입시 요강 · 실기 주제 · 수업 이야기 ${posts.length}편.`,
+    canonical,
+    image: resolveImageForMeta(d, present),
+    jsonLd: `<script type="application/ld+json">${jsonld({
+      '@context': 'https://schema.org',
+      '@type': 'Blog',
+      '@id': `${canonical}#blog`,
+      name: `${d.name} 학원소식`,
+      url: canonical,
+      inLanguage: 'ko-KR',
+      publisher: { '@id': `${d.site.origin}/#organization` },
+      blogPost: posts.map((p) => ({
+        '@type': 'BlogPosting',
+        headline: p.title,
+        datePublished: p.date,
+        url: `${d.site.origin}/blog/${p.slug}/`,
+      })),
+    })}</script>`,
+    body,
+  });
 }

@@ -193,14 +193,16 @@ if (!b) return;
 var img = b.querySelector('img');
 if (!img) return;
 last = b;
-lbImg.src = img.currentSrc || img.src;
+lbImg.src = b.getAttribute('data-full') || img.currentSrc || img.src;
 lbImg.alt = img.alt || '';
 lb.classList.add('is-open');
+lb.setAttribute('aria-hidden', 'false');
 document.body.style.overflow = 'hidden';
 lb.querySelector('.lb-close').focus();
 });
 function close(){
 lb.classList.remove('is-open');
+lb.setAttribute('aria-hidden', 'true');
 lbImg.removeAttribute('src');
 document.body.style.overflow = '';
 if (last) last.focus();
