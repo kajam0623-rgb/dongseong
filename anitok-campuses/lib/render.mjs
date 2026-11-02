@@ -1840,6 +1840,49 @@ ${quickBar(d)}
  * 두 번째 페이지부터는 브라우저 캐시에서 바로 나온다.
  * ───────────────────────────────────────────────────────────── */
 
+const LOGO_WORD_CSS = `
+.logo-word{display:inline-flex;flex-direction:column;align-items:flex-start;color:#FFFFFF;line-height:1;filter:none;height:auto;width:auto}
+.logo-word b{font-size:22px;font-weight:900;letter-spacing:-.01em;line-height:.9}
+.logo-word small{display:block;width:0;min-width:100%;margin-top:3px}
+.logo-word svg{display:block;width:100%;height:auto;overflow:visible}
+.logo-word text{font-size:9.9px;font-weight:700;letter-spacing:0;fill:currentColor;text-rendering:geometricPrecision}
+.foot .logo-word{opacity:.85;margin-bottom:24px}
+`;
+
+const JUNIOR_CSS = `
+/* ════════════════════ 일산 주니어(초3~중3) — 밝은 바탕 ════════════════════
+ * 읽는 사람이 학부모다. 입시용 검정 바탕 대신 따뜻한 흰 바탕을 쓰고, 로고 ·
+ * 빨강 · 상단바는 일산과 같게 둔다. 대부분 색 토큰만 바꾸고, 기본 CSS 에 박힌
+ * 밝은 회색 글자(#D6D6D8 등)만 따로 짙게 덮는다. 작은 글자 포인트색은 흰 바탕
+ * 위에서 4.5:1 을 넘도록 #C8101A 로 내렸다. */
+html[data-skin=junior]{--bg:#FFFCF7;--ink:#1A1A1F;--panel:#FFF5EA;--panel-2:#FFFFFF;--line:#EADFD2;--line-2:#D8CABA;
+  --muted:#55555D;--muted-2:#6B6B73;--accent-lit:#C8101A}
+html[data-skin=junior] .hero{color:#FFFFFF}
+html[data-skin=junior] .about-copy p,html[data-skin=junior] .badge,html[data-skin=junior] .vcard p,
+html[data-skin=junior] .social a,html[data-skin=junior] .lp-links a,html[data-skin=junior] .prose p,
+html[data-skin=junior] .lp-sub{color:#3A3A42}
+html[data-skin=junior] .vcard a.more,html[data-skin=junior] .social a:hover,html[data-skin=junior] .foot .sites a:hover,
+html[data-skin=junior] .lp-links a:hover,html[data-skin=junior] .crumb a:hover{color:var(--ink)}
+html[data-skin=junior] .cg-shots,html[data-skin=junior] .cg-shots>*{background:#F3ECE3}
+html[data-skin=junior] .cg-card,html[data-skin=junior] .vcard,html[data-skin=junior] .step,html[data-skin=junior] .badge{
+  box-shadow:0 6px 22px rgba(70,45,20,.06)}
+html[data-skin=junior] .qbar{background:var(--line)}
+html[data-skin=junior] .qbar a{background:#FFFFFF;color:var(--ink)}
+html[data-skin=junior] .qbar a.pri{background:var(--accent);color:var(--on-accent)}
+html[data-skin=junior] .foot .logo-word{color:var(--ink)}
+`;
+
+const SUB_CSS = `
+/* ════════════════════ 일산 반 사이트(주니어 · 성인취미) 공통 ════════════════════ */
+/* 작품은 6장이라 3열 두 줄로 딱 떨어지게 둔다. 자동 칸 수면 5+1 로 한 장이 남는다. */
+html[data-skin=junior] #works .gal,html[data-skin=hobby] #works .gal{grid-template-columns:repeat(3,1fr)}
+@media (max-width:760px){html[data-skin=junior] #works .gal,html[data-skin=hobby] #works .gal{grid-template-columns:repeat(2,1fr)}}
+/* 반 카드에 사진이 한 장뿐이면 비율대로 두지 않고 칸을 채운다. 남는 자리가 검게 비지 않게. */
+html[data-skin=junior] .cg-shots[data-n="1"]>*,html[data-skin=hobby] .cg-shots[data-n="1"]>*{flex:1 1 auto!important}
+/* 하단 퀵바는 버튼이 둘이다. 3칸 격자면 한 칸이 빈다. */
+html[data-skin=junior] .qbar,html[data-skin=hobby] .qbar{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:1fr}
+`;
+
 const PPT_CSS = `
 /* ════════════════════ 김포 시안(PPT) 전용 ════════════════════
  * 시안은 1920 화면 기준 고정 크기로 그려져 있다(슬라이드 2000px = 1920 × 1.0417).
@@ -1856,12 +1899,6 @@ html[data-skin=ppt] .wrap{max-width:calc(var(--ppt-w) + 2 * var(--pad-x))}
 html[data-skin=ppt] .hdr-in{max-width:calc(var(--ppt-w) + 2 * clamp(16px,3vw,36px))}
 
 /* 로고: 흰 ANITALK + 작은 영문 한 줄 */
-.logo-word{display:inline-flex;flex-direction:column;align-items:flex-start;color:#FFFFFF;line-height:1;filter:none;height:auto;width:auto}
-.logo-word b{font-size:22px;font-weight:900;letter-spacing:-.01em;line-height:.9}
-.logo-word small{display:block;width:0;min-width:100%;margin-top:3px}
-.logo-word svg{display:block;width:100%;height:auto;overflow:visible}
-.logo-word text{font-size:9.9px;font-weight:700;letter-spacing:0;fill:currentColor;text-rendering:geometricPrecision}
-.foot .logo-word{opacity:.85;margin-bottom:24px}
 
 /* 섹션 머리: CAREER / 남다른 교육 인사이트 / 설명 — 모든 어두운 섹션이 같다 */
 html[data-skin=ppt] .kicker{font-size:calc(28 * var(--k));font-weight:300;letter-spacing:0;text-transform:uppercase;
@@ -2065,7 +2102,9 @@ const CSS_POST = `
 `;
 
 export function siteCss(d) {
-  return `${CSS}${CSS_MOBILE}${CSS_POST}${themeCss(d.theme)}${d.skin === 'ppt' ? PPT_CSS : ''}\n`;
+  return `${CSS}${CSS_MOBILE}${CSS_POST}${themeCss(d.theme)}${d.brandWord ? LOGO_WORD_CSS : ''}${
+    d.skin === 'ppt' ? PPT_CSS : ''
+  }${d.skin === 'junior' ? JUNIOR_CSS : ''}${d.skin === 'junior' || d.skin === 'hobby' ? SUB_CSS : ''}\n`;
 }
 
 export function siteJs() {

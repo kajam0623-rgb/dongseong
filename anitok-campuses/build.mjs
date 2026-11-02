@@ -261,7 +261,12 @@ for (const t of targets) {
 // 푸터의 형제 캠퍼스 링크 — 전체 지점을 항상 읽어서 만든다.
 // otherCampuses 는 이 저장소 밖에 있는 캠퍼스(일산)를 끼워 넣기 위한 것이다.
 const siblings = [
-  ...allSlugs.map(loadCampus).map((d) => ({ slug: d.slug, label: d.shortName, href: d.site.origin })),
+  // listed:false 인 사이트(일산 주니어 · 성인취미처럼 한 캠퍼스 안의 반 사이트)는
+  // 캠퍼스가 아니라서 다른 지점 꼬리글의 캠퍼스 목록에 올리지 않는다.
+  ...allSlugs
+    .map(loadCampus)
+    .filter((d) => d.listed !== false)
+    .map((d) => ({ slug: d.slug, label: d.shortName, href: d.site.origin })),
   ...(shared.otherCampuses || []),
 ].sort((a, b) => a.label.localeCompare(b.label, 'ko'));
 

@@ -1,0 +1,307 @@
+{
+  "themeName": "red",
+  "listed": false,
+  "phone": "031-994-3134",
+  "address": {
+    "street": "일산로 200 3층",
+    "line1": "경기도 고양시 일산동구",
+    "line2": "일산로 200 3층"
+  },
+  "geo": {
+    "regionCode": "KR-41",
+    "region": "경기도",
+    "locality": "고양시 일산동구",
+    "placename": "경기도 고양시 일산동구",
+    "lat": "37.6584",
+    "lng": "126.7706"
+  },
+  "hours": {
+    "line1": "화-토 13:00-22:00",
+    "line2": "일요일 · 월요일 휴무",
+    "schemaOrg": [
+      "Tu-Sa 13:00-22:00"
+    ]
+  },
+  "links": {
+    "naverPlace": "https://naver.me/xMjI1z3s",
+    "naverBooking": "https://booking.naver.com/booking/6/bizes/626887/items/4216506",
+    "blog": "https://blog.naver.com/anitalk-ilsan",
+    "instagram": "https://www.instagram.com/anitalk_ilsan",
+    "consult": "https://booking.naver.com/booking/6/bizes/626887/items/4216506"
+  },
+  "company": {
+    "name": "일산애니톡만화애니학원",
+    "ceo": "이은혜, 김동성",
+    "bizNo": "766-96-01214",
+    "address": "경기도 고양시 일산동구 일산로 200 3층",
+    "tel": "031-994-3134"
+  },
+  "brandWord": {
+    "main": "ANITALK",
+    "sub": "ANIMATION CARTOON PROFESSIONAL SCHOOL"
+  },
+  "local": null,
+  "results": null,
+  "passList": null,
+  "visit": {
+    "kicker": "VISIT",
+    "title": "오시는 길과 상담 안내",
+    "booking": "**네이버 예약으로 상담 시간을\n바로 정할 수 있습니다.**\n원하는 날짜와 시간을\n선택해 주세요",
+    "bookingBtn": "상담 시간 정하기",
+    "consult": "블로그와 인스타그램에서\n수업 소식을 볼 수 있습니다",
+    "consultBtn": "",
+    "socialNoPlace": true
+  },
+  "slug": "ilsan-hobby",
+  "repo": "ilsan-hobby",
+  "name": "일산애니톡 성인취미반",
+  "shortName": "일산 성인취미",
+  "skin": "hobby",
+  "site": {
+    "subdomain": "hobby-ilsan",
+    "selfHostFont": true
+  },
+  "seo": {
+    "title": "일산 성인미술학원 · 디지털드로잉 취미반 | 일산애니톡 성인취미반",
+    "description": "대학생 · 직장인 누구나, 일산애니톡 성인취미반. 웹툰 · 디지털드로잉 · 일러스트 · 취업포트폴리오 중 원하는 분야만 골라 수강. 와콤 신티크 · 아이패드. 일산동구 일산로 200 3층 · 031-994-3134",
+    "ogTitle": "일산애니톡 성인취미반 | 원하는 분야만 골라 배우는 그림",
+    "ogDescription": "웹툰 · 디지털드로잉 · 일러스트 · 취업포트폴리오. 대학생 · 직장인 누구나. 일산동구 일산로 200 3층",
+    "keywords": [
+      "성인미술학원",
+      "디지털드로잉 취미",
+      "그림 학원 취미반",
+      "그림 학원 성인",
+      "일산성인미술",
+      "일산취미미술",
+      "일산디지털드로잉",
+      "일산웹툰학원",
+      "일산일러스트학원",
+      "성인취미미술",
+      "취업포트폴리오"
+    ]
+  },
+  "nav": [
+    {
+      "label": "취미반 소개",
+      "href": "#about"
+    },
+    {
+      "label": "분야",
+      "href": "#classes"
+    },
+    {
+      "label": "단계",
+      "href": "#process"
+    },
+    {
+      "label": "작품",
+      "href": "#works"
+    },
+    {
+      "label": "수업 모습",
+      "href": "#gallery"
+    },
+    {
+      "label": "자주 묻는 질문",
+      "href": "#faq"
+    },
+    {
+      "label": "오시는 길",
+      "href": "#visit"
+    }
+  ],
+  "hero": {
+    "tagPlain": "대학생 · 직장인 · 누구나",
+    "over": "원하는 분야만 골라, ",
+    "overStrong": "내 속도로",
+    "line1": "",
+    "line2": "일산애니톡 성인취미반",
+    "litBox": true,
+    "sub": "취미로 시작해 데뷔와 취업까지",
+    "image": {
+      "local": "12bf9b9f.webp",
+      "caption": "일산애니톡 로비",
+      "eager": true
+    }
+  },
+  "about": {
+    "kicker": "ANITALK ILSAN HOBBY",
+    "title": "취미로 시작해\n데뷔와 취업까지",
+    "paragraphs": [
+      "성인취미반은 대학생, 직장인 누구나 등록할 수 있습니다. 웹툰, 디지털드로잉, 일러스트, 취업포트폴리오 중 원하는 분야만 골라 수강하실 수 있습니다.",
+      "디지털드로잉 수업은 와콤 신티크와 아이패드로 클립스튜디오, 프로크리에이트를 익힙니다. 처음이어도 상담 때 지금 실력을 보고 진도를 정합니다.",
+      "일산애니톡은 2011년부터 만화 · 애니메이션만 가르쳐 온 전문 학원입니다."
+    ],
+    "badges": [
+      "대학생 · 직장인",
+      "분야별 선택 수강",
+      "신티크 · 아이패드",
+      "Since 2011"
+    ],
+    "figures": [
+      {
+        "local": "h0.webp",
+        "caption": "신티크 디지털드로잉 수업"
+      }
+    ]
+  },
+  "classes": {
+    "kicker": "CLASS",
+    "title": "네 개의 분야",
+    "lede": "원하는 분야만 골라서 배우실 수 있습니다.",
+    "layout": "grid",
+    "groups": [
+      {
+        "name": "웹툰",
+        "range": "스토리 · 연출",
+        "lead": "콘티부터 컷 연출, 완성 원고까지 한 편의 웹툰을 직접 만들어 봅니다.",
+        "items": [
+          {
+            "image": {
+              "local": "h2.webp",
+              "caption": "성인취미반 학생작품"
+            }
+          }
+        ]
+      },
+      {
+        "name": "디지털드로잉",
+        "range": "신티크 · 아이패드",
+        "lead": "와콤 신티크와 아이패드로 클립스튜디오 · 프로크리에이트를 익힙니다.",
+        "items": [
+          {
+            "image": {
+              "local": "c2.webp",
+              "caption": "아이패드 드로잉 수업"
+            }
+          }
+        ]
+      },
+      {
+        "name": "일러스트",
+        "range": "캐릭터 · 채색",
+        "lead": "캐릭터 디자인과 채색, 배경 연출까지 한 장의 완성작으로 마무리합니다.",
+        "items": [
+          {
+            "image": {
+              "local": "h3.webp",
+              "caption": "성인취미반 학생작품"
+            }
+          }
+        ]
+      },
+      {
+        "name": "취업포트폴리오",
+        "range": "웹툰 · 게임 실무",
+        "lead": "업계 기준에 맞춘 포트폴리오를 완성해 취업과 데뷔를 준비하는 고급 과정.",
+        "items": [
+          {
+            "image": {
+              "local": "h1.webp",
+              "caption": "클립스튜디오 실습"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "process": {
+    "kicker": "STEP",
+    "title": "처음 상담부터 포트폴리오까지",
+    "steps": [
+      "상담 · 분야 선택",
+      "기본기 수업",
+      "디지털 툴 익히기",
+      "작품 완성",
+      "포트폴리오 · 취업"
+    ]
+  },
+  "galleries": [
+    {
+      "id": "works",
+      "kicker": "WORKS",
+      "title": "성인취미반 학생 작품",
+      "lede": "성인취미반 수강생들이 직접 그린 작품입니다.",
+      "items": [
+        {
+          "local": "h2.webp",
+          "caption": "성인취미반 학생작품"
+        },
+        {
+          "local": "h3.webp",
+          "caption": "성인취미반 학생작품"
+        },
+        {
+          "local": "h4.webp",
+          "caption": "성인취미반 학생작품"
+        },
+        {
+          "local": "h5.webp",
+          "caption": "성인취미반 학생작품"
+        },
+        {
+          "local": "k9.webp",
+          "caption": "성인취미반 학생작품"
+        },
+        {
+          "local": "k6.webp",
+          "caption": "성인취미반 학생작품"
+        }
+      ]
+    },
+    {
+      "id": "gallery",
+      "kicker": "CLASSROOM",
+      "title": "수업 모습",
+      "lede": "디지털드로잉실과 수업 모습입니다.",
+      "items": [
+        {
+          "local": "h0.webp",
+          "caption": "신티크 디지털드로잉 수업"
+        },
+        {
+          "local": "h1.webp",
+          "caption": "클립스튜디오 실습"
+        },
+        {
+          "local": "c2.webp",
+          "caption": "아이패드 드로잉 수업"
+        }
+      ]
+    }
+  ],
+  "faq": {
+    "title": "자주 묻는 질문",
+    "lede": "상담 때 가장 많이 받는 질문을 모았습니다.",
+    "items": [
+      {
+        "q": "성인도 취미로 배울 수 있나요?",
+        "a": "성인취미반은 대학생, 직장인 누구나 등록할 수 있습니다. 웹툰, 디지털드로잉, 일러스트, 취업포트폴리오 중 원하는 분야만 골라 수강하실 수 있습니다."
+      },
+      {
+        "q": "그림을 처음 그려 봐도 괜찮나요?",
+        "a": "네. 상담 때 현재 실력을 보고 진도를 정합니다."
+      },
+      {
+        "q": "디지털 장비나 준비물이 필요한가요?",
+        "a": "디지털드로잉 수업은 와콤 신티크와 아이패드로 클립스튜디오, 프로크리에이트를 익힙니다. 개인 준비물은 분야에 따라 다르므로 상담 때 안내드립니다."
+      },
+      {
+        "q": "취업이나 게임 포트폴리오도 준비할 수 있나요?",
+        "a": "네. 취업포트폴리오반에서는 웹툰 · 게임 실무 기준에 맞춘 포트폴리오를 완성합니다."
+      },
+      {
+        "q": "수업 시간과 휴무일은 어떻게 되나요?",
+        "a": "13:00부터 22:00까지 운영하며, 일요일과 월요일은 휴무입니다. 반별 수업 시간은 상담 때 안내드립니다."
+      },
+      {
+        "q": "수강료는 어떻게 되나요?",
+        "a": "네이버 지도에서 ‘일산애니톡만화애니학원’을 검색하시면 확인하실 수 있습니다."
+      },
+      {
+        "q": "상담과 등록은 어떻게 진행되나요?",
+        "a": "네이버 예약으로 상담을 신청하시거나 031-994-3134로 전화 주시면 됩니다."
+      }
+    ]
+  }
+}
