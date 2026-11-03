@@ -1,0 +1,15 @@
+{
+  "note": "지점과 무관한 공통 키워드다. 측정 방법은 content/<지점>/keywords.json 과 같다.",
+  "measuredAt": "2026-09-13",
+  "method": "firecrawl_scrape / ac.search.naver.com/nx/ac (rawHtml, maxAge 0)",
+  "results": [
+    { "term": "한국애니고", "suggested": 10, "selfRank": 1,
+      "siblings": ["한국애니고", "한국애니고등학교", "한국애니고 내신", "한국애니고 편입", "한국애니고 학비", "한국애니고 실기", "한국애니고 합격", "한국애니고등학교 성적", "한국 애니고 입시", "한국 애니고 기숙사"] },
+    { "term": "웹툰학원", "suggested": 7, "selfRank": 1,
+      "siblings": ["웹툰학원", "웹툰학원비", "웹툰학원추천", "웹툰학원물", "대구웹툰학원", "부산웹툰학원", "인천웹툰학원"] },
+    { "term": "만화학원", "suggested": 4, "selfRank": 1,
+      "siblings": ["만화학원", "일산만화학원", "취미만화학원", "만화학원학원비"] },
+    { "term": "애니고입시", "suggested": 2, "selfRank": 1, "siblings": ["애니고 입시", "애니고 입시 학원"] },
+    { "term": "청강대입시", "suggested": 2, "selfRank": 2, "siblings": ["청강대 입시요강", "청강대 입시"] }
+  ]
+}

@@ -10,7 +10,7 @@
 | 부천 애니톡 만화애니학원 | `bucheon` | 오렌지 | `bucheon-anitok` | bucheon-anitok.vercel.app | 032-329-8685 |
 | 광교 애니톡 만화애니학원 | `gwanggyo` | 오렌지 | `gwanggyo-anitok` | gwanggyo-anitok.vercel.app | 031-211-0904 |
 | 김포 애니톡 만화애니학원 | `gimpo` | 오렌지 | `gimpo-anitok` | gimpo-anitok.vercel.app | 031-985-5382 |
-| 애니톡 웹툰게임 아카데미 | `academy` | 블랙앤화이트 | `academy-anitok` | academy-anitok.vercel.app | 02-2695-9514 |
+| 애니톡 웹툰게임 아카데미 | `academy` | 블랙앤화이트 | `academy-anitok` | academy.anitok.com | 02-2695-9514 |
 
 일산은 이미 `kajam0623-rgb/ilsan-anitok` 에 있으므로 여기서 다시 만들지 않는다.
 

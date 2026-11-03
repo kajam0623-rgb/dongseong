@@ -1,0 +1,24 @@
+{
+  "note": "ac.search.naver.com 자동완성을 firecrawl 로 한 건씩 직접 조회한 결과다. tools/keyword-research.js 가 이 컨테이너에서는 네이버에 닿지 못해 손으로 측정했다. suggested = 자동완성 개수, selfRank = 자기 자신이 뜬 순위(null = 안 뜸 = 수요 없음). 검색량이 아니라 '수요의 존재'를 재는 값이다.",
+  "measuredAt": "2026-09-13",
+  "method": "firecrawl_scrape / ac.search.naver.com/nx/ac (rawHtml, maxAge 0)",
+  "results": [
+    { "term": "목동미술학원",      "suggested": 4,  "selfRank": 1, "siblings": ["목동 미술학원", "목동 미술학원 유아", "목동 미술학원 비교", "목동 미술학원 추천"] },
+    { "term": "목동입시미술학원",  "suggested": 1,  "selfRank": 1, "siblings": ["목동 입시 미술학원"] },
+    { "term": "목동만화학원",      "suggested": 1,  "selfRank": 1, "siblings": ["목동 만화학원"] },
+    { "term": "목동웹툰학원",      "suggested": 0,  "selfRank": null, "siblings": [] },
+    { "term": "목동 웹툰학원",     "suggested": 0,  "selfRank": null, "siblings": [], "note": "띄어쓰기를 바꿔도 결과가 같다. 자동완성은 공백을 정규화한다." },
+    { "term": "목동애니메이션학원", "suggested": 0, "selfRank": null, "siblings": [] },
+    { "term": "목동일러스트학원",  "suggested": 0,  "selfRank": null, "siblings": [] },
+    { "term": "목동미술입시학원",  "suggested": 0,  "selfRank": null, "siblings": [], "note": "'목동입시미술학원' 은 뜨는데 어순을 바꾼 이 형태는 안 뜬다." },
+    { "term": "목동디지털드로잉",  "suggested": 0,  "selfRank": null, "siblings": [] },
+    { "term": "목동그림학원",      "suggested": 0,  "selfRank": null, "siblings": [] },
+    { "term": "목동취미미술",      "suggested": 0,  "selfRank": null, "siblings": [] },
+    { "term": "양천구만화학원",    "suggested": 0,  "selfRank": null, "siblings": [] },
+    { "term": "양천구미술학원",    "suggested": 0,  "selfRank": null, "siblings": [] },
+    { "term": "화곡만화학원",      "suggested": 0,  "selfRank": null, "siblings": [] },
+    { "term": "화곡미술학원",      "suggested": 0,  "selfRank": null, "siblings": [] },
+    { "term": "신정동미술학원",    "suggested": 0,  "selfRank": null, "siblings": [] },
+    { "term": "오목교만화학원",    "suggested": 0,  "selfRank": null, "siblings": [] }
+  ]
+}

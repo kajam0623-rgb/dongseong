@@ -1,36 +1,139 @@
 # 배포 안내
 
 7개 지점 사이트는 `sites/<slug>/` 에 이미 빌드되어 있고, 폴더 하나가 그대로 배포 루트다.
-방법은 두 가지다. **A가 더 빠르고, 저장소를 새로 만들 필요가 없다.**
+
+**2026-09-09: 7개 지점 전부 부트스트랩 방식으로 프로덕션 배포했다(아래 0번).**
+Git 연결(A)은 여전히 권장 사항이다. 연결해 두면 푸시할 때마다 자동 배포되므로
+배포마다 0번을 다시 돌릴 필요가 없다.
 
 ---
 
-## A. 지금 있는 저장소 하나로 7개 사이트 배포 (권장, 새 저장소 불필요)
+## 0. 부트스트랩 배포 (지금 쓰는 방법, 세션에서 바로 가능)
 
-Vercel은 프로젝트마다 **Root Directory**를 따로 지정할 수 있다. 저장소는 `kajam0623-rgb/dongseong`
-하나를 쓰고, 프로젝트만 7개 만들면 지점별로 도메인이 갈린다.
+Vercel 토큰에 팀 스코프 읽기 권한이 없어 프로젝트를 Git 에 연결하지 못한다.
+그렇다고 지점마다 산출물 150~250KB 를 손으로 다시 적어 올릴 수도 없다.
 
-각 지점마다 한 번씩 반복한다.
+대신 **빌드 시점에 저장소를 받아오게 한다.** `kajam0623-rgb/dongseong` 은 공개
+저장소라 Vercel 빌드 컨테이너에서 그냥 clone 된다. 그래서 실제로 올리는 파일은
+세 개(`build.sh`, `package.json`, `vercel.json`)뿐이고, 나머지는 빌드가 만든다.
 
-1. [vercel.com/new](https://vercel.com/new) → `kajam0623-rgb/dongseong` **Import**
-2. **Project Name**: `mokdong-anitok` (그대로 `mokdong-anitok.vercel.app` 이 된다)
-3. **Root Directory**: `Edit` 를 눌러 `anitok-campuses/sites/mokdong` 선택
-4. **Framework Preset**: `Other`, Build Command 비움, Output Directory 기본값
-5. **Branch**: `claude/ilsan-anitok-project-arpdi5`
-   (main에 머지한 뒤에는 main으로 바꿔도 된다)
-6. Deploy
+올리는 파일:
 
-| 프로젝트 이름 | Root Directory |
+| 파일 | 내용 |
 |---|---|
-| `mokdong-anitok` | `anitok-campuses/sites/mokdong` |
-| `hongdae-anitok` | `anitok-campuses/sites/hongdae` |
-| `gangdong-anitok` | `anitok-campuses/sites/gangdong` |
-| `bucheon-anitok` | `anitok-campuses/sites/bucheon` |
-| `gwanggyo-anitok` | `anitok-campuses/sites/gwanggyo` |
-| `gimpo-anitok` | `anitok-campuses/sites/gimpo` |
-| `academy-anitok` | `anitok-campuses/sites/academy` |
+| `build.sh` | `tools/vercel-bootstrap/build.sh` 사본. clone → `node build.mjs <slug>` → `public/` |
+| `package.json` | 이름만 있는 최소 파일 (Vercel 이 빌드 대상으로 인식하게) |
+| `vercel.json` | **해당 지점의** `sites/<slug>/vercel.json` 을 그대로. 지점마다 리다이렉트 목적지가 다르다 |
 
-Vercel CLI가 편하면 저장소를 로컬에 받은 뒤 한 줄씩:
+Project Settings (배포 API 로 같이 넘긴다):
+
+```
+framework       : null
+installCommand  : true          (의존성 없음. no-op)
+buildCommand    : bash build.sh <slug>
+outputDirectory : public
+```
+
+주의할 점:
+
+- `buildCommand` 는 **256자 제한**이 있다. 명령을 인라인으로 길게 쓰면 400 이 난다.
+  그래서 스크립트 파일로 뺐다.
+- `vercel.json` 은 **배포 루트**에 있어야 적용된다. `public/` 안에 있으면 그냥
+  정적 파일로 서빙될 뿐이다. 그래서 `build.sh` 가 사본을 지운다.
+- `academy` 만 `*.vercel.app` 리다이렉트가 없다. 커스텀 도메인이 아니라
+  academy 도 2026-09-11 부터 `academy.anitok.com` 을 쓴다. 7곳 모두 리다이렉트가 붙는다.
+  academy 에는 오타 도메인 `acdemy.anitok.com` 을 정식 주소로 넘기는 규칙이 하나 더 있다.
+- 빌드가 실패하면 프로덕션은 **그대로 유지**된다. 실패해도 사이트가 깨지지 않는다.
+- 이 방식은 배포 **시점**의 브랜치 상태를 굳혀 올린다. 자동 갱신이 아니다.
+  저장소를 고친 뒤에는 다시 배포해야 한다.
+
+**`deploy_to_vercel` 에 `teamId` 를 넘기면 안 된다 (2026-09-13 확인).**
+`teamId: team_M7sXygtY8ZzpT4aG4dak7sVC` 를 붙이면 403 `forbidden` 이 난다.
+**생략하면 그대로 통과한다.** 프로젝트는 같은 스코프(`kajam0623-rgbs-projects`)에
+정상적으로 올라간다. 읽기 API(`get_deployment`, 빌드 로그)는 teamId 가 필수라
+여전히 403 이다 — 즉 올릴 수는 있어도 Vercel API 로는 결과를 못 본다.
+
+**결과 확인은 firecrawl 로 한다 (2026-09-13 확인).** 컨테이너 프록시는
+`*.anitok.com` 을 막지만 firecrawl 은 닿는다. 배포 1~2분 뒤:
+
+```
+firecrawl_scrape  url: https://<지점>.anitok.com/
+                  formats: ["summary"]   ← metadata 만 받아 출력이 짧다
+                  maxAge: 0              ← 캐시 금지. 안 하면 이전 배포를 본다
+```
+
+`metadata.title` · `description` · `keywords` · `naver-site-verification` 이
+의도한 값인지 보면 배포가 실제로 반영됐는지 알 수 있다. `formats: ["rawHtml"]`
+은 페이지 전체가 와서 출력이 매우 길다 — 본문까지 봐야 할 때만 쓴다.
+
+---
+
+## A. 이미 있는 7개 프로젝트에 Git 연결하기 (권장, 한 번만 하면 끝)
+
+
+7개 Vercel 프로젝트는 **이미 만들어져 있고 커스텀 도메인도 붙어 있다.** 다만 Git 저장소에
+연결돼 있지 않아 배포할 때마다 파일을 수동으로 올려야 한다. 일산(`ilsan-anitok`)만 연결돼
+있어서 푸시하면 자동 배포된다. 나머지 7곳도 같은 상태로 맞춘다.
+
+프로젝트를 새로 만들 필요는 없다. 새로 만들면 도메인을 옮겨 붙여야 해서 오히려 손해다.
+기존 프로젝트에 저장소만 연결한다.
+
+각 지점마다 한 번씩:
+
+1. Vercel → 해당 프로젝트 → **Settings → Git → Connect Git Repository**
+2. `kajam0623-rgb/dongseong` 선택
+3. **Root Directory**: `anitok-campuses/sites/<slug>` (아래 표)
+4. **Framework Preset**: `Other`, Build Command 비움, Output Directory 기본값
+5. **Production Branch**: `claude/ilsan-anitok-project-arpdi5` — 아래 경고를 먼저 읽을 것
+6. Save 후 Deployments 탭에서 한 번 재배포
+
+| Vercel 프로젝트 | Root Directory | 도메인 |
+|---|---|---|
+| `mokdong-anitok` | `anitok-campuses/sites/mokdong` | `mokdong.anitok.com` |
+| `hongdae-anitok` | `anitok-campuses/sites/hongdae` | `hongdae.anitok.com` |
+| `gangdong-anitok` | `anitok-campuses/sites/gangdong` | `gangdong.anitok.com` |
+| `gwanggyo-anitok` | `anitok-campuses/sites/gwanggyo` | `gwanggyo.anitok.com` |
+| `gimpo-anitok` | `anitok-campuses/sites/gimpo` | `gimpo.anitok.com` |
+| `bucheon-anitok` | `anitok-campuses/sites/bucheon` | `bucheon.anitok.com` |
+| `academy-anitok` | `anitok-campuses/sites/academy` | `academy.anitok.com` |
+
+> **Production Branch 를 `main` 으로 두면 안 된다**
+> Vercel 은 기본값으로 저장소의 기본 브랜치(`main`)를 프로덕션으로 잡는다. 그런데 지금
+> `origin/main` 에는 구조화 데이터 개선 커밋이 아직 없다. `main` 으로 연결하면 7개 사이트가
+> 전부 예전 JSON-LD 로 되돌아간다.
+> 두 가지 중 하나를 택한다.
+> - Production Branch 를 `claude/ilsan-anitok-project-arpdi5` 로 지정한다 (머지 불필요)
+> - 먼저 그 브랜치를 `main` 에 머지한 뒤 `main` 으로 연결한다
+
+> **지역 랜딩페이지 42개는 이미 공개됐다**
+> 예전에는 지점마다 `index.html` 과 `404.html` 두 장만 라이브였다. 2026-09-09 부트스트랩
+> 배포로 지점별 지역 랜딩페이지 6장(예: 김포는 `gimpo-webtoon`, `hangang-manhwa` 등)과
+> `sitemap.xml` 전체 URL 이 함께 올라갔다. 홍대는 블로그 6장이 더해져 13개 URL 이다.
+> 랜딩페이지에는 BreadcrumbList 와 FAQPage 구조화 데이터가 들어 있어 본문 분량이 얇다는
+> 문제가 같이 해소됐다.
+
+> **왜 대신 눌러주지 못하나**
+> 이 세션의 Vercel 토큰은 배포 전용이다. 팀 스코프 자체에 접근 권한이 없다.
+>
+> ```
+> list_teams                 → []
+> list_projects · get_project → 403 Forbidden
+> create_git_project          → 403 "Not authorized: Trying to access resource
+>                               under scope kajam0623-rgbs-projects.
+>                               You must re-authenticate to this scope."
+>                               (teamId: team_M7sXygtY8ZzpT4aG4dak7sVC)
+> ```
+>
+> 이름을 바꿔 새 프로젝트를 만드는 우회로도 같은 403 에서 막힌다. 남는 것은
+> `deploy_to_vercel` 파일 업로드 하나뿐이고, 이건 매번 사이트 전체를 한 번에
+> 올려야 한다. 홍대 기준 17개 파일 167KB 다. 게다가 이 세션에서는 올린 결과를
+> 확인할 방법이 없다 — 프록시가 `*.anitok.com` 과 `*.vercel.app` 을 막고,
+> 스크레이퍼 크레딧도 떨어졌다. 잘려 올라가도 알 수가 없다.
+>
+> 그래서 Git 연결은 브라우저에서 직접 눌러야 한다. 한 번 눌러 두면 이 문제가
+> 통째로 사라진다.
+
+Vercel CLI 가 편하면 로컬에서 폴더째 올릴 수도 있다(연결 없이 1회성 배포).
 
 ```bash
 cd anitok-campuses
@@ -38,7 +141,6 @@ npx vercel deploy sites/mokdong --prod --name mokdong-anitok
 npx vercel deploy sites/hongdae --prod --name hongdae-anitok
 # ... 나머지도 동일
 ```
-
 ---
 
 ## B. 지점별 저장소로 분리

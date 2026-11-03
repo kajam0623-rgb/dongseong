@@ -5,27 +5,29 @@
 
 | 파일명 | 들어갈 사진 | 현재 상태 |
 |---|---|---|
-| `hero.webp` | 김포 애니톡 만화애니학원 | 임시(애니톡 CDN 이미지) |
-| `about-1.webp` | 김포 수업 현장 | 임시(애니톡 CDN 이미지) |
-| `about-2.webp` | 김포 작업 공간 | 임시(애니톡 CDN 이미지) |
-| `about-3.webp` | 김포 학원 내부 | 임시(애니톡 CDN 이미지) |
-| `class-junior-1.webp` | 주니어반 수업 | 임시(애니톡 CDN 이미지) |
-| `class-mid-1.webp` | 중등 예비반 수업 | 임시(애니톡 CDN 이미지) |
-| `class-mid-2.webp` | 중등 입시반 실기 | 임시(애니톡 CDN 이미지) |
-| `class-high-1.webp` | 고등 입시반 실기 | 임시(애니톡 CDN 이미지) |
-| `class-hobby-1.webp` | 디지털 드로잉반 수업 | 임시(애니톡 CDN 이미지) |
-| `gal-1.webp` | 김포 학원 공간 | 임시(애니톡 CDN 이미지) |
-| `gal-2.webp` | 김포 수업 현장 | 임시(애니톡 CDN 이미지) |
-| `gal-3.webp` | 김포 작업 공간 | 임시(애니톡 CDN 이미지) |
-| `gal-4.webp` | 김포 학원 내부 | 임시(애니톡 CDN 이미지) |
-| `gal-5.webp` | 김포 드로잉 공간 | 임시(애니톡 CDN 이미지) |
-| `work-1.webp` | 학생 우수작 · 청강대 게임과 포트폴리오 | 임시(애니톡 CDN 이미지) |
-| `work-2.webp` | 일러스트 · 애니톡 디지털드로잉 | 임시(애니톡 CDN 이미지) |
-| `work-3.webp` | 상황표현 · 2024 애니톡 상황표현 우수작 | 임시(애니톡 CDN 이미지) |
-| `work-4.webp` | 칸만화 | 임시(애니톡 CDN 이미지) |
-| `work-5.webp` | 이미지보드 · 2024 애니톡 이미지보드 우수작 | 임시(애니톡 CDN 이미지) |
-| `work-6.webp` | 학생 우수작 · 2019 | 임시(애니톡 CDN 이미지) |
-| `work-7.webp` | 일러스트 · 애니톡 디지털드로잉 | 임시(애니톡 CDN 이미지) |
-| `work-8.webp` | 상황표현 · 2023 애니톡 상황표현 우수작 | 임시(애니톡 CDN 이미지) |
-| `work-9.webp` | 칸만화 · 2024 애니톡 칸만화 우수작 | 임시(애니톡 CDN 이미지) |
-| `work-10.webp` | 이미지보드 · 2024 애니톡 이미지보드 우수작 | 임시(애니톡 CDN 이미지) |
+| `hero.webp` | 김포 애니톡 만화애니학원 입구 | 적용됨 |
+| `about-ppt.webp` | - | 적용됨 |
+| `class-junior-1.webp` | 주니어반 수업작 | 적용됨 |
+| `class-junior-2.webp` | 주니어반 수업작 | 적용됨 |
+| `class-cg-1.webp` | CG반 수업작 | 적용됨 |
+| `class-cg-2.webp` | CG반 수업작 | 적용됨 |
+| `class-midprep-1.webp` | 중등예비반 수업작 | 적용됨 |
+| `class-midprep-2.webp` | 중등예비반 수업작 | 적용됨 |
+| `class-midexam-1.webp` | 중등입시반 예시작 | 적용됨 |
+| `class-highprep-1.webp` | 고등예비반 예시작 | 적용됨 |
+| `class-highexam-1.webp` | 고등입시반 예시작 | 적용됨 |
+| `room-junior.webp` | 주니어반 | 적용됨 |
+| `room-midprep.webp` | 중등예비반 | 적용됨 |
+| `room-highprep.webp` | 고등예비반 | 적용됨 |
+| `room-highexam.webp` | 고등입시반 | 적용됨 |
+| `room-cg.webp` | CG반 | 적용됨 |
+| `work-01.webp` | 주니어반 수업작 | 적용됨 |
+| `work-02.webp` | 주니어반 수업작 | 적용됨 |
+| `work-03.webp` | 중등예비반 수업작 | 적용됨 |
+| `work-04.webp` | 중등예비반 수업작 | 적용됨 |
+| `work-05.webp` | 중등예비반 수업작 | 적용됨 |
+| `work-06.webp` | 애니톡 상황표현 연구작 | 적용됨 |
+| `work-07.webp` | 애니톡 이미지보드 연구작 | 적용됨 |
+| `work-08.webp` | 애니톡 칸만화 연구작 | 적용됨 |
+| `work-09.webp` | 고등예비반 수업작 | 적용됨 |
+| `work-10.webp` | CG반 수업작 | 적용됨 |
