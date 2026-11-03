@@ -102,6 +102,10 @@
       "href": "#gallery"
     },
     {
+      "label": "공간 영상",
+      "href": "#tour"
+    },
+    {
       "label": "자주 묻는 질문",
       "href": "#faq"
     },
@@ -119,8 +123,8 @@
     "litBox": true,
     "sub": "취미로 시작해 데뷔와 취업까지",
     "image": {
-      "local": "12bf9b9f.webp",
-      "caption": "일산애니톡 로비",
+      "local": "hero-room.webp",
+      "caption": "일산애니톡 디지털드로잉실",
       "eager": true
     }
   },
@@ -224,6 +228,10 @@
       "lede": "성인취미반 수강생들이 직접 그린 작품입니다.",
       "items": [
         {
+          "local": "w-beach.webp",
+          "caption": "성인취미반 학생작품"
+        },
+        {
           "local": "h2.webp",
           "caption": "성인취미반 학생작품"
         },
@@ -242,10 +250,6 @@
         {
           "local": "k9.webp",
           "caption": "성인취미반 학생작품"
-        },
-        {
-          "local": "k6.webp",
-          "caption": "성인취미반 학생작품"
         }
       ]
     },
@@ -255,6 +259,18 @@
       "title": "수업 모습",
       "lede": "디지털드로잉실과 수업 모습입니다.",
       "items": [
+        {
+          "local": "room-yellow.webp",
+          "caption": "디지털드로잉실"
+        },
+        {
+          "local": "room-wall.webp",
+          "caption": "학생 작품이 걸린 벽"
+        },
+        {
+          "local": "room-cintiq.webp",
+          "caption": "신티크 수업"
+        },
         {
           "local": "h0.webp",
           "caption": "신티크 디지털드로잉 수업"
@@ -303,5 +319,13 @@
         "a": "네이버 예약으로 상담을 신청하시거나 031-994-3134로 전화 주시면 됩니다."
       }
     ]
+  },
+  "film": {
+    "id": "tour",
+    "kicker": "CLASS TOUR",
+    "title": "수업 공간 둘러보기",
+    "lede": "성인취미반이 수업하는 디지털드로잉실을 영상으로 담았습니다.",
+    "src": "class-tour.mp4",
+    "poster": "class-tour-poster.webp"
   }
 }

@@ -1184,6 +1184,24 @@ function galleries(d, present) {
     .join('');
 }
 
+/** 짧은 공간 영상. 소리 없이 자동 반복한다(모바일 자동재생 조건이 '음소거 + playsinline').
+ * 파일이 gal/ 에 실제로 있을 때만 그린다. */
+function film(d, present) {
+  const f = d.film;
+  if (!f?.src || !present.has(f.src)) return '';
+  const poster = f.poster && present.has(f.poster) ? ` poster="/gal/${esc(f.poster)}"` : '';
+  return `<section class="sec" id="${esc(f.id || 'tour')}">
+  <div class="wrap film">
+    <div class="film-copy">
+      <span class="kicker" data-reveal="0">${esc(f.kicker || 'Tour')}</span>
+      <h2 class="h2" data-reveal="40">${esc(f.title)}</h2>
+      ${f.lede ? `<p class="lede" data-reveal="80">${esc(f.lede)}</p>` : ''}
+    </div>
+    <video class="film-video" src="/gal/${esc(f.src)}"${poster} muted autoplay loop playsinline preload="metadata" aria-label="${esc(f.title)}"></video>
+  </div>
+</section>`;
+}
+
 function process(d) {
   if (!d.process?.steps?.length) return '';
   const steps = d.process.steps
@@ -1319,7 +1337,10 @@ function sideRail(d) {
     }>${icon(key)}<span>${esc(label)}</span></a>`;
 
   const items = [
-    item('#results', 'check', '합격실적', false, false),
+    // 합격실적 섹션이 없는 사이트(일산 주니어 · 성인취미)는 그 자리를 작품으로 보낸다.
+    d.results?.items?.length
+      ? item('#results', 'check', '합격실적', false, false)
+      : (d.galleries || []).some((g) => g.id === 'works') && item('#works', 'check', '작품', false, false),
     booking && item(booking, 'chat', '예약상담', true, true),
     item(`tel:${digits(d.phone)}`, 'tel', '전화문의', false, false),
     d.links?.naverPlace && item(d.links.naverPlace, 'map', '오시는 길', false, true),
@@ -1850,33 +1871,49 @@ const LOGO_WORD_CSS = `
 `;
 
 const JUNIOR_CSS = `
-/* ════════════════════ 일산 주니어(초3~중3) — 밝은 바탕 ════════════════════
- * 읽는 사람이 학부모다. 입시용 검정 바탕 대신 따뜻한 흰 바탕을 쓰고, 로고 ·
- * 빨강 · 상단바는 일산과 같게 둔다. 대부분 색 토큰만 바꾸고, 기본 CSS 에 박힌
- * 밝은 회색 글자(#D6D6D8 등)만 따로 짙게 덮는다. 작은 글자 포인트색은 흰 바탕
- * 위에서 4.5:1 을 넘도록 #C8101A 로 내렸다. */
-html[data-skin=junior]{--bg:#FFFCF7;--ink:#1A1A1F;--panel:#FFF5EA;--panel-2:#FFFFFF;--line:#EADFD2;--line-2:#D8CABA;
-  --muted:#55555D;--muted-2:#6B6B73;--accent-lit:#C8101A}
-html[data-skin=junior] .hero{color:#FFFFFF}
-html[data-skin=junior] .about-copy p,html[data-skin=junior] .badge,html[data-skin=junior] .vcard p,
-html[data-skin=junior] .social a,html[data-skin=junior] .lp-links a,html[data-skin=junior] .prose p,
-html[data-skin=junior] .lp-sub{color:#3A3A42}
-html[data-skin=junior] .vcard a.more,html[data-skin=junior] .social a:hover,html[data-skin=junior] .foot .sites a:hover,
-html[data-skin=junior] .lp-links a:hover,html[data-skin=junior] .crumb a:hover{color:var(--ink)}
-html[data-skin=junior] .cg-shots,html[data-skin=junior] .cg-shots>*{background:#F3ECE3}
-html[data-skin=junior] .cg-card,html[data-skin=junior] .vcard,html[data-skin=junior] .step,html[data-skin=junior] .badge{
-  box-shadow:0 6px 22px rgba(70,45,20,.06)}
-html[data-skin=junior] .qbar{background:var(--line)}
-html[data-skin=junior] .qbar a{background:#FFFFFF;color:var(--ink)}
-html[data-skin=junior] .qbar a.pri{background:var(--accent);color:var(--on-accent)}
-html[data-skin=junior] .foot .logo-word{color:var(--ink)}
+/* ════════════════════ 일산 반 사이트(주니어 · 성인취미) — 흰 바탕 · 주황 · 빨강 ════════════════════
+ * 흰 바탕에 빨강(상단바 · 버튼 · 강조 판)과 주황(소제목 · 단계 번호 · 선)을 포인트로 쓴다.
+ * 대부분 색 토큰만 바꾸고, 기본 CSS 에 박힌 밝은 회색 글자(#D6D6D8 등)만 따로 짙게 덮는다.
+ * 작은 글자에 쓰는 주황은 흰 바탕 대비 4.5:1 을 넘는 #C2410C, 선 · 장식은 밝은 #F26B1D. */
+html:is([data-skin=junior],[data-skin=hobby]){--bg:#FFFFFF;--ink:#17171B;--panel:#FFF6EF;--panel-2:#FFFFFF;--line:#F0E2D6;--line-2:#E3CDBB;
+  --muted:#55555D;--muted-2:#6B6B73;--accent-lit:#C2410C;--orange:#F26B1D}
+html:is([data-skin=junior],[data-skin=hobby]) .hero{color:#FFFFFF}
+html:is([data-skin=junior],[data-skin=hobby]) .hero-glow{display:none}
+html:is([data-skin=junior],[data-skin=hobby]) .about-copy p,html:is([data-skin=junior],[data-skin=hobby]) .badge,
+html:is([data-skin=junior],[data-skin=hobby]) .vcard p,html:is([data-skin=junior],[data-skin=hobby]) .social a,
+html:is([data-skin=junior],[data-skin=hobby]) .lp-links a,html:is([data-skin=junior],[data-skin=hobby]) .prose p,
+html:is([data-skin=junior],[data-skin=hobby]) .lp-sub{color:#3A3A42}
+html:is([data-skin=junior],[data-skin=hobby]) .vcard a.more,html:is([data-skin=junior],[data-skin=hobby]) .social a:hover,
+html:is([data-skin=junior],[data-skin=hobby]) .foot .sites a:hover,html:is([data-skin=junior],[data-skin=hobby]) .lp-links a:hover,
+html:is([data-skin=junior],[data-skin=hobby]) .crumb a:hover{color:var(--ink)}
+html:is([data-skin=junior],[data-skin=hobby]) .cg-shots,html:is([data-skin=junior],[data-skin=hobby]) .cg-shots>*{background:#F6EEE6}
+html:is([data-skin=junior],[data-skin=hobby]) .cg-card,html:is([data-skin=junior],[data-skin=hobby]) .vcard,
+html:is([data-skin=junior],[data-skin=hobby]) .step{box-shadow:0 8px 26px rgba(120,60,20,.07)}
+html:is([data-skin=junior],[data-skin=hobby]) .qbar{background:var(--line)}
+html:is([data-skin=junior],[data-skin=hobby]) .qbar a{background:#FFFFFF;color:var(--ink)}
+html:is([data-skin=junior],[data-skin=hobby]) .qbar a.pri{background:var(--accent);color:var(--on-accent)}
+html:is([data-skin=junior],[data-skin=hobby]) .foot .logo-word{color:var(--ink)}
+/* 주황 포인트: 소제목 앞 짧은 선, 단계 카드 윗선, 반 카드 윗선, 배지 테두리 */
+html:is([data-skin=junior],[data-skin=hobby]) .kicker::before{content:"";display:inline-block;vertical-align:middle;width:22px;height:3px;border-radius:2px;background:var(--orange);margin:-2px 10px 0 0}
+html:is([data-skin=junior],[data-skin=hobby]) .step{border-top:3px solid var(--orange)}
+html:is([data-skin=junior],[data-skin=hobby]) .cg-card{border-top:3px solid var(--orange)}
+html:is([data-skin=junior],[data-skin=hobby]) .badge{border-color:#F7C6A3;background:#FFF6EF}
+/* 빨강 포인트: FAQ 의 Q, 오시는 길 카드 제목 */
+html:is([data-skin=junior],[data-skin=hobby]) .faq summary::before{color:var(--accent)}
+html:is([data-skin=junior],[data-skin=hobby]) .faq details[open] summary{color:var(--accent)}
+/* 공간 영상: 세로 영상이라 글은 왼쪽, 영상은 오른쪽에 세운다 */
+.film-copy{text-align:left}.film-copy .lede{margin-left:0;margin-right:0}
+.film{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto);gap:clamp(32px,5vw,80px);align-items:center}
+.film-video{display:block;width:min(360px,80vw);aspect-ratio:9/16;object-fit:cover;border-radius:16px;background:#111;
+  box-shadow:0 18px 50px rgba(0,0,0,.18)}
+@media (max-width:760px){.film{grid-template-columns:1fr}.film-video{margin:0 auto}}
 `;
 
 const SUB_CSS = `
 /* ════════════════════ 일산 반 사이트(주니어 · 성인취미) 공통 ════════════════════ */
 /* 작품은 6장이라 3열 두 줄로 딱 떨어지게 둔다. 자동 칸 수면 5+1 로 한 장이 남는다. */
-html[data-skin=junior] #works .gal,html[data-skin=hobby] #works .gal{grid-template-columns:repeat(3,1fr)}
-@media (max-width:760px){html[data-skin=junior] #works .gal,html[data-skin=hobby] #works .gal{grid-template-columns:repeat(2,1fr)}}
+html[data-skin=junior] #works .gal,html[data-skin=hobby] #works .gal,html[data-skin=hobby] #gallery .gal{grid-template-columns:repeat(3,1fr)}
+@media (max-width:760px){html[data-skin=junior] #works .gal,html[data-skin=hobby] #works .gal,html[data-skin=hobby] #gallery .gal{grid-template-columns:repeat(2,1fr)}}
 /* 반 카드에 사진이 한 장뿐이면 비율대로 두지 않고 칸을 채운다. 남는 자리가 검게 비지 않게. */
 html[data-skin=junior] .cg-shots[data-n="1"]>*,html[data-skin=hobby] .cg-shots[data-n="1"]>*{flex:1 1 auto!important}
 /* 하단 퀵바는 버튼이 둘이다. 3칸 격자면 한 칸이 빈다. */
@@ -2104,7 +2141,7 @@ const CSS_POST = `
 export function siteCss(d) {
   return `${CSS}${CSS_MOBILE}${CSS_POST}${themeCss(d.theme)}${d.brandWord ? LOGO_WORD_CSS : ''}${
     d.skin === 'ppt' ? PPT_CSS : ''
-  }${d.skin === 'junior' ? JUNIOR_CSS : ''}${d.skin === 'junior' || d.skin === 'hobby' ? SUB_CSS : ''}\n`;
+  }${d.skin === 'junior' || d.skin === 'hobby' ? JUNIOR_CSS : ''}${d.skin === 'junior' || d.skin === 'hobby' ? SUB_CSS : ''}\n`;
 }
 
 export function siteJs() {
@@ -2183,6 +2220,7 @@ ${results(d)}
 ${passList(d)}
 ${classes(d, present)}
 ${galleries(d, present)}
+${film(d, present)}
 ${process(d)}
 ${faq(d)}
 ${localIndex(d)}
