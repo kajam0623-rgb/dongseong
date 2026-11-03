@@ -1907,6 +1907,67 @@ html:is([data-skin=junior],[data-skin=hobby]) .badge{border-color:#F7C6A3;backgr
 /* 빨강 포인트: FAQ 의 Q, 오시는 길 카드 제목 */
 html:is([data-skin=junior],[data-skin=hobby]) .faq summary::before{color:var(--accent)}
 html:is([data-skin=junior],[data-skin=hobby]) .faq details[open] summary{color:var(--accent)}
+/* ── 고급스럽게: 색은 줄이고 여백 · 글자 크기 · 가는 선으로 정돈한다 ──
+ * 빨강은 전화 버튼 · 예약 · Q 처럼 '누를 것'에만, 주황은 소제목 선 · 단계 번호에만.
+ * 그림자와 진한 바탕색을 걷고 1px 선과 넓은 여백으로 구획한다. */
+html:is([data-skin=junior],[data-skin=hobby]){--panel:#F8F6F3;--line:#ECE7E1;--line-2:#DDD5CC;--pad-y:clamp(110px,13vw,190px)}
+html:is([data-skin=junior],[data-skin=hobby]) .hdr{background:rgba(255,255,255,.94);color:var(--ink);box-shadow:none;border-bottom:1px solid var(--line);
+  backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px)}
+html:is([data-skin=junior],[data-skin=hobby]) .hdr .logo-word{color:var(--accent)}
+html:is([data-skin=junior],[data-skin=hobby]) .brand-div{opacity:.25}
+html:is([data-skin=junior],[data-skin=hobby]) .nav a{font-weight:500;color:#3A3A42}
+html:is([data-skin=junior],[data-skin=hobby]) .nav a:hover{color:var(--ink)}
+html:is([data-skin=junior],[data-skin=hobby]) .hdr-tel{background:var(--accent);color:#FFFFFF;font-weight:700;letter-spacing:.01em}
+html:is([data-skin=junior],[data-skin=hobby]) .burger{border-color:var(--line-2);color:var(--ink)}
+html:is([data-skin=junior],[data-skin=hobby]) .mnav{background:#FFFFFF;color:var(--ink);border-top:1px solid var(--line)}
+html:is([data-skin=junior],[data-skin=hobby]) .mnav a{border-bottom-color:var(--line)}
+/* 히어로: 빨간 판을 걷고 큰 흰 글자 하나로. 위에 가는 주황 선 + 작은 영문 레이블 */
+html:is([data-skin=junior],[data-skin=hobby]) .hero-bg{height:100%;animation:none;transform:none}
+/* 취미반 첫 화면은 영상에서 뽑은 장면이라 크게 키우면 거칠다. 살짝 흐리고 어둡게 깔아 배경으로만 쓴다. */
+html[data-skin=hobby] .hero-bg{filter:blur(3px) saturate(.9) brightness(.82);transform:scale(1.04)}
+html:is([data-skin=junior],[data-skin=hobby]) .hero-scrim{background:linear-gradient(90deg,rgba(10,8,6,.78) 0%,rgba(10,8,6,.45) 48%,rgba(10,8,6,.08) 100%)}
+html:is([data-skin=junior],[data-skin=hobby]) .hero-scrim-b{background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,0) 40%,rgba(0,0,0,.55) 100%)}
+html:is([data-skin=junior],[data-skin=hobby]) .hero .tag-plain{display:inline-flex;align-items:center;gap:14px;margin:0 0 22px;font-size:13px;font-weight:600;
+  letter-spacing:.18em;color:rgba(255,255,255,.86);text-shadow:none}
+html:is([data-skin=junior],[data-skin=hobby]) .hero .tag-plain::before{content:"";width:36px;height:1px;background:var(--orange)}
+html:is([data-skin=junior],[data-skin=hobby]) .hero h1{font-size:clamp(36px,5.2vw,76px);line-height:1.12;letter-spacing:-.045em;text-shadow:0 4px 30px rgba(0,0,0,.35)}
+html:is([data-skin=junior],[data-skin=hobby]) .hero h1 .over{font-size:.42em;font-weight:400;letter-spacing:-.02em;margin-bottom:18px;opacity:.92}
+html:is([data-skin=junior],[data-skin=hobby]) .hero h1 .over b{font-weight:700}
+html:is([data-skin=junior],[data-skin=hobby]) .hero h1 .lit--box{background:none;box-shadow:none;padding:0;border-radius:0;color:#FFFFFF;font-weight:800}
+html:is([data-skin=junior],[data-skin=hobby]) .hero-sub{margin-top:26px;font-size:clamp(15px,1.3vw,18px);font-weight:400;opacity:.86;letter-spacing:-.01em}
+/* 섹션 머리: 크게, 가볍게 */
+html:is([data-skin=junior],[data-skin=hobby]) .kicker{font-size:12px;font-weight:600;letter-spacing:.22em;color:var(--accent-lit);margin-bottom:22px}
+html:is([data-skin=junior],[data-skin=hobby]) .kicker::before{width:28px;height:1px;margin:-3px 12px 0 0}
+html:is([data-skin=junior],[data-skin=hobby]) .h2{font-size:clamp(30px,3.6vw,50px);font-weight:700;letter-spacing:-.045em;line-height:1.22}
+html:is([data-skin=junior],[data-skin=hobby]) .lede{font-size:clamp(15px,1.2vw,18px);line-height:1.85;color:var(--muted)}
+/* 카드: 그림자 · 굵은 윗선 대신 1px 선과 넉넉한 안쪽 여백 */
+html:is([data-skin=junior],[data-skin=hobby]) .cg-card,html:is([data-skin=junior],[data-skin=hobby]) .vcard,html:is([data-skin=junior],[data-skin=hobby]) .step{box-shadow:none;border:1px solid var(--line);border-radius:14px}
+html:is([data-skin=junior],[data-skin=hobby]) .cg-card{border-top:1px solid var(--line);transition:border-color .4s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+html:is([data-skin=junior],[data-skin=hobby]) .cg-card:hover{border-color:var(--line-2);transform:translateY(-4px)}
+html:is([data-skin=junior],[data-skin=hobby]) .cg-name{font-size:clamp(22px,2.2vw,30px);font-weight:700;letter-spacing:-.04em}
+html:is([data-skin=junior],[data-skin=hobby]) .cg-range{font-weight:500;letter-spacing:.02em}
+html:is([data-skin=junior],[data-skin=hobby]) .cg-cap{padding:22px 24px 24px;font-size:15px;line-height:1.75;color:#3A3A42}
+html:is([data-skin=junior],[data-skin=hobby]) .badge{border:1px solid var(--line-2);background:transparent;border-radius:4px;font-weight:500;color:#3A3A42;padding:9px 14px}
+html:is([data-skin=junior],[data-skin=hobby]) .about-copy p{font-size:clamp(15px,1.15vw,17px);line-height:1.95}
+html:is([data-skin=junior],[data-skin=hobby]) .fig img,html:is([data-skin=junior],[data-skin=hobby]) .gal .fig img{border-radius:10px}
+html:is([data-skin=junior],[data-skin=hobby]) .gal .shot img{transition:transform .9s cubic-bezier(.16,1,.3,1)}
+html:is([data-skin=junior],[data-skin=hobby]) .gal .shot{overflow:hidden;border-radius:10px}
+html:is([data-skin=junior],[data-skin=hobby]) .gal .shot:hover img{transform:scale(1.04)}
+html:is([data-skin=junior],[data-skin=hobby]) .gal figcaption{margin-top:12px;font-size:13px;letter-spacing:-.01em}
+/* 단계: 상자 대신 가는 윗선 + 큰 숫자 */
+html:is([data-skin=junior],[data-skin=hobby]) .steps{gap:0;border-top:1px solid var(--line-2)}
+html:is([data-skin=junior],[data-skin=hobby]) .step{border:0;border-right:1px solid var(--line);border-radius:0;background:transparent;padding:30px 22px 8px}
+html:is([data-skin=junior],[data-skin=hobby]) .step:last-child{border-right:0}
+html:is([data-skin=junior],[data-skin=hobby]) .step-no{font-size:clamp(28px,2.6vw,38px);font-weight:300;letter-spacing:-.02em;color:var(--orange)}
+html:is([data-skin=junior],[data-skin=hobby]) .step-name{margin-top:16px;font-size:16px;font-weight:600}
+@media (max-width:760px){html:is([data-skin=junior],[data-skin=hobby]) .step{border-right:0;border-bottom:1px solid var(--line);padding:22px 4px}}
+/* FAQ · 오시는 길 */
+html:is([data-skin=junior],[data-skin=hobby]) .faq summary{padding-block:28px;font-weight:600;font-size:17px}
+html:is([data-skin=junior],[data-skin=hobby]) .faq summary::before{top:28px;font-size:15px}
+html:is([data-skin=junior],[data-skin=hobby]) .faq summary::after{top:36px}
+html:is([data-skin=junior],[data-skin=hobby]) .vcard{padding:clamp(28px,2.6vw,38px)}
+html:is([data-skin=junior],[data-skin=hobby]) .vcard h3{letter-spacing:.2em;font-weight:600}
+html:is([data-skin=junior],[data-skin=hobby]) .visit{border-top:1px solid var(--line)}
 /* 공간 영상: 세로 영상이라 글은 왼쪽, 영상은 오른쪽에 세운다 */
 .film-copy{text-align:left}.film-copy .lede{margin-left:0;margin-right:0}
 .film{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto);gap:clamp(32px,5vw,80px);align-items:center}
