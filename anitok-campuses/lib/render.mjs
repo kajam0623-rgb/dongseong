@@ -10,6 +10,18 @@
  * 스크롤 리빌 · 모바일 메뉴 · 갤러리 라이트박스만 담당한다.
  */
 
+/** 문의 클릭(전화·네이버 예약·카카오톡·지도)을 GA4 이벤트로 보낸다. 치과 사이트들과 같은 코드·같은 이벤트 이름. */
+const CLICK_JS = `(function(){var M=[['phone_click',['tel:']],['booking_click',['booking.naver.com']],['kakao_click',['pf.kakao.com','open.kakao.com']],['map_click',['map.naver.com','naver.me/','place.naver.com','map.kakao.com','kko.to','maps.google','goo.gl/maps']]];function k(h){var l=h.toLowerCase();for(var i=0;i<M.length;i++){for(var j=0;j<M[i][1].length;j++){var w=M[i][1][j];if(i===0?l.indexOf(w)===0:l.indexOf(w)>-1)return M[i][0]}}return null}document.addEventListener('click',function(e){try{var a=e.target&&e.target.closest?e.target.closest('a[href]'):null;if(!a)return;var h=a.getAttribute('href')||'',n=k(h);if(!n)return;var t=(a.textContent||'').split(String.fromCharCode(10)).join(' ').trim().slice(0,60);var p={link_url:h.slice(0,200),link_text:t,transport_type:'beacon'};if(typeof window.gtag==='function'){window.gtag('event',n,p)}else{(window.dataLayer=window.dataLayer||[]).push(['event',n,p])}}catch(x){}},true)})();`;
+
+/** GA4 태그 + 문의 클릭. 메인·지역·블로그·404 모든 페이지 head 에 넣는다. */
+function gaHead(d) {
+  const id = d.analytics?.ga4;
+  if (!id) return '';
+  return `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(id)}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(id)}');</script>
+<script>${CLICK_JS}</script>`;
+}
+
 /** HTML 텍스트 노드 이스케이프. 데이터의 모든 문자열은 반드시 이 함수를 거친다. */
 export function esc(v) {
   return String(v ?? '')
@@ -1532,14 +1544,7 @@ ${(d.seo.verification || [])
   .map((v) => `<meta name="${esc(v.name)}" content="${esc(v.content)}">`)
   .join('\n')}
 ${fontHead(d)}
-${
-  d.analytics?.ga4
-    ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(d.analytics.ga4)}"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(
-        d.analytics.ga4
-      )}');</script>`
-    : ''
-}
+${gaHead(d)}
 <meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
 <link rel="stylesheet" href="/s.css">`;
 }
@@ -1723,6 +1728,7 @@ ${fontHead(d)}
 <meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
 <link rel="stylesheet" href="/s.css">
 ${lpJsonLd(d, page, others)}
+${gaHead(d)}
 </head>
 <body>
 ${header(d, { base: '/' })}
@@ -2170,6 +2176,7 @@ ${fontHead(d, { preconnect: false })}
 .nf .code{font-size:clamp(56px,10vw,120px);font-weight:800;letter-spacing:-.06em;color:var(--accent)}
 .nf p{margin:0;font-size:15px;line-height:1.8;color:var(--muted)}
 </style>
+${gaHead(d)}
 </head>
 <body>
 <div class="nf">
@@ -2432,6 +2439,7 @@ ${fontHead(d)}
 <meta name="theme-color" content="${esc(d.theme?.accent || '#BD0D16')}">
 <link rel="stylesheet" href="/s.css">
 ${jsonLd}
+${gaHead(d)}
 </head>
 <body>
 ${header(d, { base: '/' })}
