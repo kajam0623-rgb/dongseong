@@ -58,7 +58,8 @@
   "shortName": "일산 주니어",
   "skin": "junior",
   "site": {
-    "subdomain": "junior-ilsan",
+    "origin": "https://ilsan-junior-anitok.vercel.app",
+    "baseDomain": "",
     "selfHostFont": true
   },
   "seo": {

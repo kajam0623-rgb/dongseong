@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://junior-ilsan.anitok.com/sitemap.xml
+Sitemap: https://ilsan-junior-anitok.vercel.app/sitemap.xml

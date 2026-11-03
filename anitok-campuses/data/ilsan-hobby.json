@@ -58,7 +58,8 @@
   "shortName": "일산 성인취미",
   "skin": "hobby",
   "site": {
-    "subdomain": "hobby-ilsan",
+    "origin": "https://ilsan-hobby-anitok.vercel.app",
+    "baseDomain": "",
     "selfHostFont": true
   },
   "seo": {
