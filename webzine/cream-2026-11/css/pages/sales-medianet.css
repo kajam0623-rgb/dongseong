@@ -1,0 +1,181 @@
+/* =========================================================
+   SBS 미디어넷 세일즈 가이드 (원본 31~41쪽)
+   PDF 실측 컬러: 표 헤더 #84d4b8 / 강조 텍스트 #66caa6 / 표 가격 #84d4b8
+   패널 #e7f6ef · #edf9f3 · 탭 #d4f0e3 / 정보표 값 #f3fbf7 / 블루 #268cd4
+   ========================================================= */
+:root{--mn-blue:#268cd4;--mn-tab:#d4f0e3;--mn-val:#f3fbf7;--mn-gray:#deddde;--mn-box:#d3d2d2}
+
+/* 소제목: 원본은 컬러 글씨 + 전체 폭 얇은 민트 라인 */
+.sub--mint{border-bottom:1px solid var(--c);padding-bottom:6px}
+.sub--mint h3{border-bottom:0;padding-bottom:0}
+.sub h3 .lt{font-weight:300}
+.sub h3 .ink{color:var(--ink)}
+.sub-logo{display:inline-flex!important;align-items:center;flex-wrap:wrap;gap:4px 10px}
+.sub-logo img{height:1.05em;width:auto;display:inline-block}
+.sub-logo img.biz{height:1.4em}
+.sub-plain{font-size:clamp(18px,1.6vw,21px);font-weight:400;letter-spacing:-.04em;color:var(--ink);margin:clamp(32px,4vw,48px) 0 10px}
+.sub-plain .c{color:var(--c-strong);font-weight:600}
+
+/* 표 보조 */
+.tbl .p{color:var(--c);font-weight:600;font-size:1.12em}
+.tbl .pk{font-weight:600}
+.tbl .c-big{color:var(--c-strong);font-weight:500;font-size:1.25em}
+.tbl td.lft{text-align:left;padding-left:clamp(12px,2vw,28px)}
+.tbl tr.total td,.tbl tr.total th{background:#fdfdfd;border-top:2px solid var(--c)}
+.kv dd{background:var(--c-light)}
+del{color:var(--ink);text-decoration:none}
+
+/* 가격 할인 표기 1 : 취소선 → 화살표 → 새 가격 (한 줄) */
+.to{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.to del{position:relative;font-size:.86em}
+.to del::after{content:"";position:absolute;left:-6px;right:-2px;top:52%;height:1px;background:var(--red)}
+.to i{display:inline-block;width:12px;height:10px;margin-left:-2px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M0 5H11M7 1.5L11 5L7 8.5' fill='none' stroke='%23e8262b' stroke-width='1'/%3E%3C/svg%3E") no-repeat center/contain}
+.to b{color:var(--c);font-weight:600;font-size:1.12em}
+/* 가격 할인 표기 2 : 위 취소선, 아래 새 가격, 꺾인 빨간 화살표 */
+.was{position:relative;display:inline-flex;flex-direction:column;align-items:center;line-height:1.3;padding-right:4px}
+.was del{position:relative;font-size:.9em}
+.was del::after{content:"";position:absolute;left:-2px;right:-2px;top:55%;height:1px;background:var(--red)}
+.was::after{content:"";position:absolute;right:-18px;top:.62em;width:22px;height:1.45em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 26' preserveAspectRatio='none'%3E%3Cpath d='M0 .5H21L4 24M4 24l1.2-5.5M4 24l5-2.4' fill='none' stroke='%23e8262b' stroke-width='1'/%3E%3C/svg%3E") no-repeat 0 0/100% 100%}
+.was b{color:var(--c);font-weight:600;font-size:1.18em}
+
+/* ---------- 31 간지 ---------- */
+.mn-div .divider__title{padding-top:0;color:var(--c)}
+/* 원본: 세로선이 본문 왼쪽(SALES GUIDE 글자 사이)을 지나므로 콘텐츠 기준으로 위치 */
+.mn-div .divider__vline{left:calc(max(0px,(100% - var(--max)) / 2) + var(--gutter) + clamp(14px,2vw,28px));background:var(--c)}
+.mn-div .divider__vline::after{background:var(--c)}
+.mn-div .divider__foot{border-bottom-color:var(--c)}
+.mn-div__head{position:relative;margin:clamp(70px,9vw,110px) 0 0 calc((clamp(36px,5vw,72px) - clamp(14px,2vw,28px) + clamp(10px,3vw,40px)) * -1);padding:6px 0 clamp(20px,3vw,40px);background:var(--c-div);display:inline-block}
+.mn-div__logo{width:clamp(200px,24vw,300px);margin-bottom:6px}
+.mn-div__body{padding:clamp(40px,6vw,90px) 0 clamp(190px,20vw,230px)}
+.mn-div__month{font-size:clamp(24px,2.6vw,32px);font-weight:500;letter-spacing:-.05em;color:var(--mn-blue);line-height:1.3}
+.mn-div__chip{display:inline-block;margin:clamp(24px,3vw,40px) 0 0 calc((clamp(36px,5vw,72px) - clamp(14px,2vw,28px)) * -1);background:var(--c);color:#fff;font-size:clamp(15px,1.4vw,18px);font-weight:600;letter-spacing:0;padding:2px 14px;line-height:1.5}
+.mn-div__sum{margin-top:14px;display:grid;gap:12px}
+.mn-div__sum li{color:var(--ink);font-size:clamp(14px,1.2vw,15px);font-weight:300;line-height:1.5;padding-left:10px;text-indent:-10px}
+.mn-div__sum li::before{content:"• "}
+.mn-div__sum strong{display:block;text-indent:0;padding-left:8px;font-size:clamp(17px,1.65vw,21px);font-weight:500;color:var(--c-strong);line-height:1.4}
+.mn-div__media{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,3vw,40px);margin-top:clamp(36px,4vw,48px);max-width:760px}
+.mn-div__ch{display:grid;gap:clamp(10px,1.2vw,14px);align-content:start}
+.mn-div__ch img{height:clamp(20px,2vw,26px);width:auto}
+.mn-div__th{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,1vw,12px);align-items:center}
+.mn-div__th li:nth-child(5){grid-column:3}
+.mn-div__th img{width:100%}
+@media (max-width:600px){
+  .mn-div__media{grid-template-columns:1fr}
+  .mn-div__ch{grid-template-columns:repeat(3,auto);justify-content:start;gap:10px 18px}
+  .mn-div__ch img{height:20px}
+}
+
+/* ---------- 35 프로그램 패키지 (탭 + 패널) ---------- */
+.prog{margin-top:clamp(28px,3.4vw,44px)}
+.prog__tab{display:inline-block;min-width:min(33%,236px);padding:8px clamp(24px,4vw,64px) 4px;background:var(--mn-tab);border-radius:12px 12px 0 0;color:var(--c-strong);font-size:clamp(17px,1.5vw,19px);font-weight:500;letter-spacing:-.04em;text-align:center}
+.prog__body{display:grid;grid-template-columns:47fr 41fr;gap:clamp(20px,3vw,40px);align-items:center;background:var(--mn-tab);padding:clamp(16px,1.6vw,22px) clamp(16px,2.6vw,40px)}
+.info{width:100%;font-size:15px;line-height:1.45;text-align:center;border-collapse:collapse}
+.info th,.info td{padding:clamp(8px,1vw,12px) 10px;border-bottom:1px solid var(--c)}
+.info tr:last-child th,.info tr:last-child td{border-bottom:0}
+.info th{width:30%;background:#fff;font-weight:600;border-right:1px solid var(--c);white-space:nowrap}
+.info td{background:var(--mn-val);font-weight:300}
+@media (max-width:768px){.prog__body{grid-template-columns:1fr}.prog__tab{min-width:0}}
+
+/* ---------- 36 상남자의 여행법 ---------- */
+.show-hd{position:relative;background:var(--c);border-radius:16px 16px 0 0;text-align:center;padding:clamp(14px,1.8vw,22px) 20px clamp(10px,1.2vw,14px)}
+.show-hd__title{font-size:clamp(24px,2.6vw,32px);font-weight:500;color:#fff;letter-spacing:-.04em;line-height:1.3}
+.show-hd__desc{font-size:clamp(14px,1.3vw,16px);font-weight:400;color:var(--ink)}
+.show-hd__tag{position:absolute;left:clamp(14px,5vw,52px);top:clamp(18px,2vw,26px);transform:rotate(-4deg);background:#de9d2a;color:#fff;font-size:clamp(12px,1.1vw,14px);font-weight:500;letter-spacing:-.03em;padding:2px 12px;line-height:1.5}
+.show-photo{margin-top:8px}
+.show-photo img{width:100%}
+@media (max-width:768px){.show-hd{padding-top:44px}.show-hd__tag{left:50%;top:12px;transform:translateX(-50%) rotate(-4deg);white-space:nowrap}}
+.ptbls{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,4vw,48px);margin-top:clamp(24px,3vw,36px)}
+.ptbl{width:100%;border-collapse:separate;border-spacing:6px;margin:-6px;width:calc(100% + 12px);text-align:center;font-size:15px;line-height:1.35}
+.ptbl th,.ptbl td{background:var(--c-light);padding:8px 6px;font-weight:300;height:64px}
+.ptbl th.lbl{background:var(--c);color:#fff;font-size:clamp(17px,1.6vw,20px);font-weight:500;width:32%}
+.ptbl td.pr b{color:var(--c);font-weight:600;font-size:1.2em}
+@media (max-width:768px){.ptbls{grid-template-columns:1fr}}
+
+/* ---------- 37 골프 ---------- */
+.golf-banner{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--c-light);padding:clamp(14px,1.8vw,22px) 16px;font-size:clamp(17px,1.6vw,21px);font-weight:500;letter-spacing:-.04em;color:var(--mn-blue);text-align:center}
+.golf-banner img{width:clamp(22px,2vw,27px);flex:none}
+.golf-cols{display:grid;grid-template-columns:29fr 37fr 29fr;gap:clamp(6px,.8vw,10px);margin-top:clamp(20px,2.4vw,30px)}
+.golf-col h4{font-size:14px;font-weight:400;color:#fff;text-align:center;padding:6px;line-height:1.5}
+.golf-col--klpga h4{background:#d22027}
+.golf-col--kpga h4{background:#337370}
+.golf-col--event h4{color:var(--ink);font-weight:600}
+.golf-col ul{display:grid;gap:clamp(6px,.8vw,10px);margin-top:clamp(6px,.8vw,10px)}
+.golf-col li{display:grid;place-content:center;gap:6px;min-height:clamp(150px,13vw,170px);background:var(--mn-box);border-radius:8px;text-align:center;padding:16px 10px;font-size:clamp(14px,1.2vw,15px);font-weight:300;color:#393536;line-height:1.45}
+.golf-col li strong{font-size:1.1em;font-weight:500}
+.golf-event{position:relative;height:calc(100% - 37px);min-height:300px;display:grid;place-content:center;gap:clamp(18px,2vw,28px);text-align:center;padding:24px 14px;background:url(../../images/sales-medianet/golf-event-bg.jpg) center/cover;font-size:clamp(14px,1.2vw,15px);font-weight:400;color:#393536;line-height:1.85}
+.golf-event::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.55)}
+.golf-event p{position:relative}
+@media (max-width:768px){
+  .golf-cols{grid-template-columns:1fr}
+  .golf-col li{min-height:0}
+  .golf-event{height:auto;min-height:0}
+}
+
+/* ---------- 38 V리그 / ISU ---------- */
+.vl-panel{background:var(--c-light);padding:clamp(18px,2.4vw,30px) clamp(14px,2.6vw,40px) clamp(14px,1.6vw,20px)}
+.vl-panel__top{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:16px clamp(24px,4vw,56px)}
+.vl-panel__top img{width:clamp(200px,24vw,290px)}
+.vl-panel__top p{font-size:clamp(16px,1.6vw,19px);font-weight:300;line-height:1.35}
+.vl-panel__top strong{display:block;font-size:clamp(20px,2vw,26px);font-weight:500;color:var(--c-strong);letter-spacing:-.04em}
+.vl-tbls{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,3vw,44px);margin-top:clamp(16px,2vw,24px)}
+.vtbl{width:100%;border-collapse:collapse;font-size:15px;line-height:1.4;text-align:center}
+.vtbl th,.vtbl td{padding:7px 8px;border-bottom:1px solid var(--c)}
+.vtbl tr:last-child th,.vtbl tr:last-child td{border-bottom:0}
+.vtbl th.lbl{background:var(--c);color:#fff;font-size:clamp(17px,1.6vw,20px);font-weight:500;width:26%;border-bottom:0}
+.vtbl th[scope="row"]:not(.lbl){background:#fff;font-weight:600;width:26%;border-right:1px solid var(--c)}
+.vtbl td{background:var(--mn-val);font-weight:300}
+.vl-panel .note{text-align:right;margin-top:6px}
+@media (max-width:768px){.vl-tbls{grid-template-columns:1fr}}
+.shots{display:grid;grid-template-columns:2fr 1fr;gap:clamp(16px,3vw,40px);margin-top:clamp(18px,2vw,24px)}
+.shots figcaption{font-size:14px;font-weight:300;margin-bottom:6px}
+.shots figcaption::before{content:"▶";font-size:.7em;margin-right:6px;vertical-align:.15em}
+.shots__imgs{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,1.2vw,14px)}
+.shots figure:last-child .shots__imgs{grid-template-columns:1fr}
+@media (max-width:768px){.shots{grid-template-columns:1fr}}
+.isu{position:relative;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:12px clamp(24px,5vw,70px);background:var(--c-light);margin-top:clamp(36px,4vw,56px);padding:clamp(18px,2.4vw,30px) clamp(130px,14vw,190px) clamp(18px,2.4vw,30px) clamp(18px,4vw,56px)}
+.isu h4{font-size:clamp(22px,2.2vw,27px);font-weight:400;color:var(--c-strong);letter-spacing:-.04em}
+.isu ul{font-size:clamp(14px,1.3vw,16px);font-weight:300;line-height:1.85}
+.isu li::before{content:"• "}
+.isu li b{font-weight:400;color:var(--mn-blue)}
+.isu__img{position:absolute;right:clamp(8px,1.2vw,16px);bottom:clamp(10px,1.4vw,16px);width:clamp(110px,12vw,150px)}
+.isu + .tbl-wrap{margin-top:12px}
+@media (max-width:768px){.isu{grid-template-columns:1fr;padding-right:clamp(18px,4vw,56px);padding-top:80px}.isu__img{top:-30px;bottom:auto;width:100px}}
+
+/* ---------- 39 SBS Biz ---------- */
+.biz{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,36px) clamp(12px,1.6vw,24px)}
+.biz article header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;background:var(--c-light);padding:6px 10px}
+.biz h4{font-size:clamp(15px,1.4vw,17px);font-weight:400;color:var(--c-strong);letter-spacing:-.04em}
+.biz header p{font-size:clamp(13px,1.2vw,15px);font-weight:300;white-space:nowrap}
+.biz header b{font-weight:600}
+.biz img{width:100%}
+.biz__cap{text-align:center;margin-top:8px;font-size:clamp(13px,1.2vw,15px);font-weight:300;line-height:1.5}
+.biz__cap strong{display:block;font-size:clamp(15px,1.4vw,17px);font-weight:500;color:var(--c-strong)}
+@media (max-width:768px){.biz{grid-template-columns:1fr}}
+
+/* ---------- 40 한눈에 보기 ---------- */
+.glance + .glance{margin-top:clamp(40px,5vw,64px)}
+.glance__hd{background:var(--mn-tab);border-radius:12px 12px 0 0;padding:6px clamp(14px,1.6vw,22px);font-size:clamp(16px,1.5vw,18px);font-weight:400;color:var(--c-strong);letter-spacing:-.04em}
+.glance__row{display:grid;grid-template-columns:clamp(84px,13vw,140px) 1fr;gap:clamp(8px,1.2vw,12px);margin-top:clamp(10px,1.2vw,14px)}
+.glance__lbl{display:grid;place-items:center;background:var(--mn-gray);border-radius:12px 0 0 12px;color:var(--c-strong);font-size:clamp(18px,1.8vw,22px);font-weight:500;letter-spacing:-.04em;text-align:center}
+.glance__row .tbl-wrap{min-width:0}
+@media (max-width:768px){
+  .glance__row{grid-template-columns:1fr}
+  .glance__lbl{border-radius:12px 12px 0 0;padding:6px;place-items:start;font-size:17px;padding-left:14px}
+}
+
+/* ---------- 41 SOOP / PBA ---------- */
+.mn-title-row{display:flex;align-items:flex-end;flex-wrap:wrap;gap:8px 20px;margin-bottom:clamp(28px,3vw,40px)}
+.mn-title-row .pg-title{margin-bottom:0}
+.mn-title-row__logos{flex:1;min-width:240px;display:flex;justify-content:flex-end;border-bottom:1px solid var(--c);padding-bottom:6px;margin-bottom:.6em}
+.mn-title-row__logos img{width:min(100%,300px)}
+.lead{position:relative;background:var(--c-bg);text-align:center;padding:clamp(16px,2vw,24px) clamp(16px,16vw,200px)}
+.lead p{font-size:clamp(16px,1.5vw,19px);font-weight:400;letter-spacing:-.04em;line-height:1.45}
+.lead strong{display:block;font-size:clamp(16px,1.5vw,19px);font-weight:400;color:var(--c-strong)}
+.lead__logo{position:absolute;right:clamp(14px,2.4vw,30px);top:clamp(12px,1.6vw,20px);width:auto}
+.lead__logo--soop{height:clamp(18px,1.8vw,23px)}
+.lead__logo--pba{height:clamp(16px,1.6vw,22px)}
+@media (max-width:768px){.lead{padding:56px 16px 16px}.lead__logo{right:50%;transform:translateX(50%);top:16px}}
+.issue{margin-top:12px;font-size:15px;font-weight:300;line-height:1.6}
+.issue h4{font-size:17px;font-weight:400}
+.sub-pkg{margin:clamp(20px,2.4vw,28px) 0 10px;font-size:clamp(18px,1.6vw,21px);font-weight:400;letter-spacing:-.04em;color:var(--c-strong)}
+.sub-pkg b{color:var(--ink);font-weight:600}
