@@ -1,0 +1,33 @@
+/* =========================================================
+   Program Table (p49~p58) — 매체 별 편성표
+   촘촘한 원본 편성표는 원본 지면 이미지로 보여준다 (클릭 시 확대)
+   ========================================================= */
+
+/* 제목 : 텍스트 제목 / 채널 로고만 있는 제목 */
+.tb-title{gap:18px;flex-wrap:wrap}
+.tb-title .tb-logo{margin-left:auto;height:auto;flex:none}
+.tb-title--logo .tb-logo{margin-left:0}
+
+/* 매체 바로가기 (원본의 가는 선 형식, 단순 텍스트 링크) */
+.tb-jump{margin:-8px 0 clamp(24px,3vw,36px);border-top:1px solid var(--c);border-bottom:1px solid var(--line)}
+.tb-jump ul{display:flex;flex-wrap:wrap}
+.tb-jump li{display:flex;align-items:center}
+.tb-jump li + li::before{content:"";width:1px;height:12px;background:var(--line)}
+.tb-jump a{display:block;padding:10px clamp(10px,1.4vw,18px);font-size:14px;font-weight:400;color:var(--ink-2);transition:color .2s}
+.tb-jump li:first-child a{padding-left:0}
+.tb-jump a:hover{color:var(--c);text-decoration:underline;text-underline-offset:3px}
+
+/* 원본 지면 이미지 */
+.tb-fig img{width:100%;cursor:zoom-in;background:#fff}
+.tb-fig figcaption{margin-top:8px;text-align:right}
+
+@media (max-width:768px){
+  .tb-jump a{padding:8px 10px;font-size:13px}
+}
+@media (max-width:600px){
+  .tb-title .tb-logo{max-width:40vw}
+  .tb-title:not(.tb-title--logo) .tb-logo{display:none}
+  .tb-jump ul{display:grid;grid-template-columns:repeat(3,1fr)}
+  .tb-jump li + li::before{display:none}
+  .tb-jump a,.tb-jump li:first-child a{padding:8px 0}
+}
