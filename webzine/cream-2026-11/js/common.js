@@ -137,18 +137,73 @@
     requestAnimationFrame(function () { top.classList.toggle('is-on', window.scrollY > window.innerHeight * 0.8); ticking = false; });
   }, { passive: true });
 
+  /* ---------- 모션 키트 준비 ---------- */
+  /* img[data-mx] 는 감싸는 span 으로 옮긴다 (확대·빛줄기는 잘라내는 틀이 필요) */
+  document.querySelectorAll('img[data-mx]').forEach(function (img) {
+    var w = document.createElement('span');
+    w.className = 'mx-wrap ' + (img.getAttribute('data-mx-class') || '');
+    w.setAttribute('data-mx', img.getAttribute('data-mx'));
+    img.removeAttribute('data-mx');
+    if (img.hasAttribute('data-reveal')) { w.setAttribute('data-reveal', img.getAttribute('data-reveal')); img.removeAttribute('data-reveal'); }
+    img.parentNode.insertBefore(w, img); w.appendChild(img);
+  });
+  /* 글자 단위 제목 */
+  document.querySelectorAll('[data-split]').forEach(function (el) {
+    var label = el.textContent.replace(/\s+/g, ' ').trim(), i = 0;
+    (function walk(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function (word) {
+            if (!word) return;
+            if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(' ')); return; }
+            var w = document.createElement('span'); w.style.cssText = 'display:inline-block;white-space:nowrap';
+            Array.from(word).forEach(function (c) {
+              var o = document.createElement('span'), x = document.createElement('span');
+              o.className = 'ch'; o.setAttribute('aria-hidden', 'true'); o.style.setProperty('--ci', i++);
+              x.textContent = c; o.appendChild(x); w.appendChild(o);
+            });
+            frag.appendChild(w);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
+      });
+    })(el);
+    el.classList.add('split'); el.setAttribute('aria-label', label);
+  });
+
   /* ---------- 등장 모션 ---------- */
-  var targets = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+  var targets = Array.prototype.slice.call(document.querySelectorAll('[data-reveal],[data-mx],[data-split]'));
   if ('IntersectionObserver' in window && !reduce) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
     var vh = window.innerHeight;
+    var first = [];
     targets.forEach(function (t) {
-      if (t.getBoundingClientRect().top < vh) t.classList.add('is-in'); else io.observe(t);
+      if (t.getBoundingClientRect().top < vh) first.push(t); else io.observe(t);
     });
+    /* 첫 화면 요소는 한 번 그려진 뒤에 켜야 등장 애니메이션이 보인다 */
+    requestAnimationFrame(function () { requestAnimationFrame(function () { first.forEach(function (t) { t.classList.add('is-in'); }); }); });
   } else {
     targets.forEach(function (t) { t.classList.add('is-in'); });
+  }
+
+  /* ---------- 패럴랙스 (data-parallax="0.06") ---------- */
+  var para = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+  if (para.length && !reduce) {
+    var pTick = false;
+    var runPara = function () {
+      pTick = false; var vh = window.innerHeight;
+      para.forEach(function (el) {
+        var r = el.parentElement.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        var k = parseFloat(el.getAttribute('data-parallax')) || 0.06;
+        el.style.transform = 'translate3d(0,' + ((r.top + r.height / 2 - vh / 2) * -k).toFixed(1) + 'px,0)';
+      });
+    };
+    window.addEventListener('scroll', function () { if (!pTick) { pTick = true; requestAnimationFrame(runPara); } }, { passive: true });
+    window.addEventListener('resize', runPara); runPara();
   }
 
   /* ---------- 이미지 확대 (img[data-zoom]) : 편성표 등 촘촘한 원본 지면용 ---------- */

@@ -3,14 +3,14 @@
 /* ---------- 3쪽 섹션 오프너 ---------- */
 .opener{padding:clamp(56px,7vw,100px) 0 clamp(64px,8vw,110px)}
 .opener__title{font-family:var(--ff-en);font-weight:700;font-size:clamp(64px,9.6vw,136px);line-height:1.04;letter-spacing:-.01em;color:var(--trend)}
-.opener__title span{display:block}
-.opener__title span+span{padding-left:clamp(110px,15vw,215px);display:flex;align-items:flex-end;gap:clamp(12px,1.4vw,20px)}
+.opener__title>span{display:block}
+.opener__title>span+span{padding-left:clamp(110px,15vw,215px);display:flex;align-items:flex-end;gap:clamp(12px,1.4vw,20px)}
 .opener__title small{font-family:var(--ff-en);font-weight:500;font-size:clamp(14px,1.6vw,22px);letter-spacing:0;color:#666;padding-bottom:.55em;white-space:nowrap}
 .opener__grid{margin-top:clamp(48px,8vw,120px);display:grid;grid-template-columns:52fr 48fr;gap:8px;max-width:960px;margin-left:auto}
 .opener__grid .logos{display:grid;grid-template-rows:1fr 1fr;gap:8px}
 .opener__grid .logos figure{border:1px solid #c9c9c9;display:flex;align-items:center;justify-content:center;overflow:hidden}
 @media (max-width:768px){
-  .opener__title span+span{padding-left:0;flex-wrap:wrap}
+  .opener__title>span+span{padding-left:0;flex-wrap:wrap}
   .opener__grid{grid-template-columns:1fr}
   .opener__grid .logos{grid-template-columns:1fr 1fr;grid-template-rows:auto}
 }
@@ -83,3 +83,5 @@
 .sgp .tbl td{white-space:normal}
 .sgp .tbl td:has(del),.sgp #p05 .tbl td:last-child{white-space:nowrap}
 @media (max-width:1180px){.sgp .cols{grid-template-columns:minmax(0,1fr)}}
+.gp-lead span{display:block}
+.opener__title>span{display:block}
