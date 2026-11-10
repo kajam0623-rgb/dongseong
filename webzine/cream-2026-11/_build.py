@@ -56,8 +56,15 @@ for name in PAGES:
     attrs, inner = m.group(1), m.group(2)
     cls = re.search(r'class="([^"]*)"', attrs)
     inner = re.sub(r'\s*<nav class="pager".*?</nav>', '', inner, flags=re.S)
-    inner_wrapped = f'<div class="{cls.group(1)}">{inner}</div>' if cls else inner
-    body_out.append(f'<div class="pg pg-{name}" data-section="{sec}">\n{inner_wrapped}\n</div>')
+    # 뒤표지(62쪽)는 섹션에 속하지 않으므로 따로 떼어 data-section 없이 둔다 (메뉴 표시·세로 탭 꺼짐)
+    back = ''
+    mark = '<!-- 62쪽 : 뒤표지 -->'
+    if mark in inner:
+        inner, back = inner.split(mark, 1)
+    wrap = lambda x: f'<div class="{cls.group(1)}">{x}</div>' if cls else x
+    body_out.append(f'<div class="pg pg-{name}" data-section="{sec}">\n{wrap(inner)}\n</div>')
+    if back:
+        body_out.append(f'<div class="pg pg-{name} pg-back" data-section="">\n{wrap(mark + back)}\n</div>')
     for s in re.findall(r'<script>(.*?)</script>', html, re.S):
         if "classList.add('js')" not in s: scripts.append(s.strip())
     cssfile = f'css/pages/{CSS_OF.get(name, name)}.css'
