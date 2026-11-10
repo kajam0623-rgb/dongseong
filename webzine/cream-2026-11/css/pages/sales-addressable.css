@@ -1,0 +1,88 @@
+/* SBS ADDRESSABLE TV (원본 28–30쪽) */
+
+/* 소제목: 원본은 컬러 글씨 + 전체 폭 컬러 라인 */
+.sa .sub{border-bottom:1px solid var(--c);padding-bottom:4px;margin-bottom:16px}
+.sa .sub h3{border-bottom:0;padding-bottom:0}
+
+.sa-dash li,.sa-lead p{font-size:16px;line-height:1.75;font-weight:300}
+.sa-lead{margin-bottom:22px}
+.sa-indent{padding-left:.75em}
+
+/* 1. 개요 : 왼쪽 불릿 / 오른쪽 광고 순서도 */
+.sa-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:20px 40px;align-items:start}
+.sa-seq figcaption{font-size:16px;font-weight:600;line-height:1.75}
+.sa-seq__bar{position:relative;display:grid;grid-template-columns:197fr 398fr 196fr;margin-top:30px;border:1.5px solid var(--c)}
+.sa-seq__bar > span{display:flex;align-items:center;justify-content:center;min-height:58px;padding:6px 8px;font-size:clamp(16px,1.6vw,20px);font-weight:500;color:var(--c);text-align:center;line-height:1.3}
+.sa-seq__pre,.sa-seq__pre + span{border-left:1.5px solid var(--c)}
+/* 원본 막대의 흰색→연민트 그라데이션 그대로 */
+.sa-seq__pre{background:linear-gradient(90deg,#fff 0%,#daf2e7 100%)}
+.sa-seq__bar > .sa-seq__30{position:absolute;left:60.8%;width:14.6%;bottom:calc(100% + 8px);min-height:0;padding:0 0 4px;font-size:14px;font-weight:300;color:var(--ink);border:0;border-bottom:1px solid var(--c)}
+.sa-seq__30::before,.sa-seq__30::after{content:"";position:absolute;bottom:-1px;width:1px;height:5px;background:var(--c)}
+.sa-seq__30::before{left:0}.sa-seq__30::after{right:0}
+.sa-seq__note{margin-top:6px;text-align:right;font-size:12.5px;font-weight:300;color:#555}
+
+/* 2. 런칭 혜택 : 위·아래 반원 홈이 파인 티켓 */
+.sa-tickets{display:grid;grid-template-columns:repeat(2,minmax(0,440px));gap:24px 60px;padding-left:12%}
+.sa-ticket{--r:24px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:196px;padding:40px 20px;border:1.5px solid var(--c);background:#daf2e7;text-align:center;
+  -webkit-mask:radial-gradient(circle var(--r) at 50% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle var(--r) at 50% 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
+          mask:radial-gradient(circle var(--r) at 50% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle var(--r) at 50% 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.sa-ticket::before,.sa-ticket::after{content:"";position:absolute;left:50%;width:calc(var(--r) * 2 + 3px);aspect-ratio:1;border:1.5px solid var(--c);border-radius:50%;transform:translateX(-50%)}
+.sa-ticket::before{top:calc(-1.5px - var(--r) - 1.5px)}
+.sa-ticket::after{bottom:calc(-1.5px - var(--r) - 1.5px)}
+.sa-ticket__t{font-size:clamp(19px,1.8vw,23px);font-weight:500;line-height:1.45;color:var(--c)}
+.sa-ticket__s{font-size:14px;font-weight:400}
+.sa-ticket__cap{margin-top:6px;text-align:right}
+
+/* 4·5 보너스 표 나란히 */
+.sa-bonus .sub:first-child{margin-top:clamp(32px,4vw,48px)}
+.sa-bonus{display:grid;grid-template-columns:minmax(0,.89fr) minmax(0,1fr);gap:0 clamp(24px,2.4vw,32px)}
+
+/* 6. 광고 집행 프로세스 : 원 5개 + 연결 바(원본 그라데이션) */
+.sa-process{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(16px,4vw,56px);margin:34px 0 8px;counter-reset:none}
+.sa-process::before{content:"";position:absolute;left:10%;right:10%;top:50%;height:34%;transform:translateY(-50%);background:linear-gradient(90deg,#fbfdfc 0%,#ddf3e9 45%,#c2ead8 100%)}
+.sa-process li{position:relative;aspect-ratio:1;border:1.5px solid var(--c);border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;padding:8px}
+.sa-process strong{font-size:clamp(16px,1.6vw,21px);font-weight:600;color:var(--c);line-height:1.3}
+.sa-process span{font-size:clamp(13px,1.2vw,16px);font-weight:300;line-height:1.45}
+.sa-process li.is-last{background:var(--c);color:#fff}
+.sa-process li.is-last strong{color:#fff}
+
+/* 7. 타겟 세그먼트 표 2개 */
+.sa-seg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.875fr);gap:clamp(24px,2.4vw,32px);align-items:start}
+.sa-seg__tbl{font-size:14px}
+.sa-seg__tbl th,.sa-seg__tbl td{padding:5px 8px}
+
+/* 30. FAQ 패널 */
+.sa-faq{background:var(--c-light);padding:clamp(28px,4vw,52px) clamp(22px,4vw,46px);display:grid;gap:clamp(26px,3vw,36px)}
+.sa-faq h3{font-size:clamp(17px,1.6vw,20px);font-weight:600;color:var(--c-strong);line-height:1.4;margin-bottom:8px}
+.sa-faq ul{display:grid;gap:4px}
+.sa-faq li{font-size:16px;font-weight:300;line-height:1.7}
+.sa-faq__item > ul > li{position:relative;padding-left:1.4em}
+.sa-faq__item > ul > li::before{content:"•";position:absolute;left:.4em}
+.sa-faq li ul{gap:0;margin-top:2px}
+.sa-faq li li{position:relative;padding-left:.8em}
+.sa-faq li li::before{content:"-";position:absolute;left:0}
+
+@media (max-width:960px){
+  .sa-intro{grid-template-columns:minmax(0,1fr)}
+  .sa-tickets{padding-left:0}
+  .sa-bonus{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:768px){
+  .sa-tickets{grid-template-columns:minmax(0,1fr)}
+  .sa-ticket{min-height:170px}
+  .sa-ticket-item{width:100%;max-width:420px;justify-self:center}
+  .sa-seg{grid-template-columns:minmax(0,1fr)}
+  .sa-seg__tbl{min-width:0}
+  .sa-seq__bar > span{min-height:50px;font-size:15px}
+  /* 프로세스: 세로 배열 + 세로 연결 바 */
+  .sa-process{grid-template-columns:1fr;justify-items:center;gap:18px}
+  .sa-process::before{left:50%;right:auto;top:10%;bottom:10%;width:60px;height:auto;transform:translateX(-50%);background:linear-gradient(180deg,#fbfdfc 0%,#ddf3e9 45%,#c2ead8 100%)}
+  .sa-process li{width:150px}
+  .sa-dash li,.sa-lead p,.sa-faq li{font-size:15px}
+}
+@media (max-width:768px){
+  .sa .pg-title{display:block}
+  .sa .pg-title small{display:block;margin:6px 0 0;font-size:.55em}
+  .sa .pg-title::before{top:.625em}
+  .sa .pg-title::after{top:calc(.625em - 4px)}
+}
