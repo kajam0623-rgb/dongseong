@@ -1,0 +1,19 @@
+/* index.html — 표지(1쪽) + 목차(2쪽) */
+.spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);max-width:var(--max);margin:0 auto;padding:clamp(24px,4vw,56px) var(--gutter) clamp(56px,7vw,96px);gap:clamp(28px,5vw,80px);align-items:start}
+.cover{box-shadow:0 0 0 1px #ececec;position:sticky;top:calc(var(--hdr) + 24px)}
+@media (max-width:860px){.cover{position:static}}
+.cover img{width:100%}
+.contents{position:relative;padding-top:clamp(8px,2vw,24px)}
+.contents__thumb{width:clamp(120px,16vw,180px)}
+.contents__head{position:relative;margin-top:14px;height:clamp(90px,10vw,130px)}
+.contents__head .no{position:absolute;left:clamp(70px,8vw,110px);top:-.08em;font-family:var(--ff-en);font-weight:700;font-size:clamp(110px,12vw,160px);line-height:1;color:#e9e9e9;letter-spacing:-.02em}
+.contents__head h1{position:relative;font-family:var(--ff-en);font-weight:700;font-size:clamp(30px,3vw,38px);line-height:1;color:var(--gray);letter-spacing:0}
+.contents__toc{margin-top:clamp(28px,4vw,56px);max-width:480px}
+.contents__kakao{display:flex;align-items:center;gap:12px;margin-top:28px}
+.contents__kakao .qr{width:72px}
+.contents__kakao .talk{width:30px;margin-bottom:6px}
+.contents__kakao p{font-size:14px;font-weight:600;line-height:1.35;color:var(--ink)}
+@media (max-width:860px){
+  .spread{grid-template-columns:1fr}
+  .contents__thumb{display:none}
+}
