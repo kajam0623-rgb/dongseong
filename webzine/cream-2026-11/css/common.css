@@ -160,8 +160,8 @@ del,.del{color:#7b7979;text-decoration-color:var(--red)}
 .page--bg{background:var(--c-bg)}
 .page--bg + .page{padding-top:clamp(56px,7vw,96px)}
 .page + .page--bg{margin-top:0}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px)}
-@media (max-width:960px){.cols{grid-template-columns:1fr}}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,4vw,56px)}
+@media (max-width:960px){.cols{grid-template-columns:minmax(0,1fr)}}
 
 /* ---------- 섹션 간지 (SALES GUIDE / SBS DIGITAL / PROGRAM TABLE) ---------- */
 .divider{position:relative;background:var(--c-div);min-height:min(88vh,860px);padding:clamp(48px,7vw,96px) 0;overflow:hidden;color:#fff}

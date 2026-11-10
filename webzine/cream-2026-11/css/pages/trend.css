@@ -23,18 +23,18 @@
 .sgp .tab-row .note{padding-bottom:2px}
 .sgp .tbl thead th{font-size:13px}
 .sgp .tbl .hl{background:#fffccc}
-.sgp .q4{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(150px,auto);align-items:center;gap:14px}
+.sgp .q4{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(130px,auto);align-items:center;gap:14px}
 .sgp .q4__plus{font-size:34px;font-weight:300;color:var(--trend)}
 .sgp .q4__box{border:1px solid var(--trend);border-radius:10px;background:#fff;text-align:center;padding:22px 14px;color:var(--trend);font-size:15px;line-height:1.3}
 .sgp .q4__box b{display:block;font-size:26px;font-weight:500}
 .sgp u{text-underline-offset:2px}
-.top3{display:grid;grid-template-columns:110px 1fr;gap:4px 14px;margin-top:6px}
+.top3{display:grid;grid-template-columns:110px minmax(0,1fr);gap:4px 14px;margin-top:6px}
 .top3 dt{background:var(--trend);color:#fff;font-size:17px;display:flex;align-items:center;justify-content:center;padding:6px}
 .top3 dd{border-top:2px solid var(--trend);border-bottom:2px solid var(--trend);margin:0;display:flex;align-items:center;flex-wrap:wrap;gap:4px 14px;padding:6px 10px;font-size:16px;background:#fff}
 .top3 dd+dt{margin-top:0}
 .top3 dd b{font-weight:500;font-size:20px;color:var(--trend);margin-right:4px}
 .new{display:inline-block;vertical-align:middle;background:#f7941d;color:#fff;font-size:9px;font-weight:700;letter-spacing:0;border-radius:50%;width:22px;height:22px;line-height:22px;text-align:center;margin-right:4px;font-family:var(--ff-en)}
-@media (max-width:600px){.sgp .q4{grid-template-columns:1fr}.sgp .q4__plus{text-align:center}.top3{grid-template-columns:80px 1fr}.top3 dd{font-size:14px}}
+@media (max-width:600px){.sgp .q4{grid-template-columns:minmax(0,1fr)}.sgp .q4__plus{text-align:center}.top3{grid-template-columns:80px 1fr}.top3 dd{font-size:14px}}
 
 /* ---------- 6~7쪽 TREND 기사 ---------- */
 .tr-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
@@ -82,4 +82,4 @@
 .sgp .wrap{max-width:1560px}
 .sgp .tbl td{white-space:normal}
 .sgp .tbl td:has(del),.sgp #p05 .tbl td:last-child{white-space:nowrap}
-@media (max-width:1180px){.sgp .cols{grid-template-columns:1fr}}
+@media (max-width:1180px){.sgp .cols{grid-template-columns:minmax(0,1fr)}}

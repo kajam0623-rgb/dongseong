@@ -1,0 +1,166 @@
+/* =========================================================
+   Contents Line-up (원본 10–17쪽) — PDF 실측 기준
+   ========================================================= */
+.lu-scroll{margin-bottom:0}
+.lu-hd{display:flex;align-items:center;justify-content:center;background:var(--c);color:#fff;font-weight:400;letter-spacing:-.03em;line-height:1.2}
+
+/* ---------- 10쪽 : 드라마 타임라인 ---------- */
+.lu-drama{display:grid;grid-template-columns:clamp(96px,11.2%,138px) 1fr;gap:clamp(10px,1.1vw,14px) clamp(6px,.8vw,10px);min-width:620px}
+.lu-drama__lbl{font-size:clamp(17px,1.7vw,22px);font-weight:600;min-height:clamp(40px,3.8vw,48px)}
+.lu-drama__months{display:grid;grid-template-columns:repeat(3,1fr);font-size:clamp(17px,1.7vw,22px);font-weight:300}
+.lu-drama__months span{text-align:center}
+.lu-drama__months .is-now{font-size:1.3em;font-weight:700}
+.lu-drama__day{display:flex;align-items:center;justify-content:center;background:#fff;color:var(--c-strong);font-size:clamp(16px,1.5vw,19px);font-weight:500}
+.lu-drama__track{position:relative;min-height:clamp(150px,15.5vw,196px)}
+.lu-bar{position:absolute;top:0;bottom:0;display:flex;flex-direction:column}
+.lu-bar img{flex:1;min-height:0;width:100%;object-fit:contain}
+.lu-bar figcaption{flex:none;background:#84a238;color:#fff;text-align:center;font-size:clamp(14px,1.35vw,17px);font-weight:300;letter-spacing:-.04em;padding:6px 8px;line-height:1.35}
+.lu-bar--drx{left:.5%;width:49.5%}
+.lu-bar--drx img{background:#000;object-fit:contain}
+.lu-bar--gp{left:51.6%;right:0}
+.lu-bar--nts{left:53.6%;right:0}
+.lu-bar--nts img{object-fit:contain;padding-top:4px}
+
+/* ---------- 10쪽 : 예능/교양 요일×시간 ---------- */
+.lu-scroll--week{margin-top:clamp(36px,4.4vw,56px)}
+.lu-week{display:grid;grid-template-columns:clamp(96px,11.2%,138px) 1fr;gap:clamp(12px,1.2vw,16px) clamp(6px,.8vw,10px);min-width:720px}
+.lu-week__lbl{font-size:clamp(17px,1.7vw,22px);font-weight:600;min-height:clamp(38px,3.4vw,44px)}
+.lu-week__days{display:grid;grid-template-columns:repeat(7,1fr);font-size:clamp(15px,1.4vw,18px);font-weight:300}
+.lu-week__days span{text-align:center;border-left:1.5px solid #fff;line-height:1.9}
+.lu-week__days span:first-child{border-left:0}
+.lu-week__body{grid-column:1/-1;position:relative;display:grid;grid-template-columns:clamp(96px,11.2%,138px) repeat(7,1fr);grid-template-rows:repeat(90,minmax(0,1fr));column-gap:clamp(6px,.8vw,10px);height:clamp(620px,66vw,800px);isolation:isolate}
+.lu-wm{position:absolute;z-index:-1;left:calc(clamp(96px,11.2%,138px) + 9%);right:10%;top:17%;font-family:var(--ff-en);font-weight:700;font-size:clamp(260px,33vw,470px);line-height:1;letter-spacing:-.06em;color:var(--c-div);text-align:center;pointer-events:none;user-select:none}
+.lu-t{grid-column:1;display:flex;align-items:center;justify-content:center;background:#fff;color:var(--c-strong);font-size:clamp(16px,1.5vw,19px);font-weight:500}
+.lu-p{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;margin:0 clamp(2px,.3vw,5px);border-bottom:4px solid #a6d273;font-size:clamp(14px,1.35vw,17px);font-weight:400;line-height:1.35;letter-spacing:-.04em}
+.lu-p b{display:block;color:#9fcf6a;font-weight:500;margin-bottom:4px}
+.lu-p[style*="grid-column:2/7"]{margin-left:0}
+
+/* ---------- 11쪽 : 간접/가상 세일즈 가이드 ---------- */
+.lu-legend{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:8px}
+.lu-legend__keys{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:300;line-height:1.4}
+.lu-legend__tri{width:0;height:0;border-left:4px solid var(--ink);border-top:3px solid transparent;border-bottom:3px solid transparent;margin-right:2px}
+.lu-legend i{display:inline-block;width:30px;height:11px;margin:0 12px 0 2px}
+.lu-legend .k-dr{background:#c3b4e0}
+.lu-legend .k-ky{background:#f688ad}
+.lu-legend .k-ye{background:#fbcbab}
+.lu-cal{width:100%;table-layout:fixed;border-collapse:collapse;font-size:12.5px;line-height:1.3;font-weight:300;color:var(--ink)}
+.lu-cal thead th{font-weight:400;font-size:14px;padding:0 0 6px;border:0}
+.lu-cal td{border:1px solid var(--gray);height:150px;vertical-align:top;padding:12px 12px 10px}
+.lu-cal td b{display:block;font-weight:400;margin-bottom:4px;font-size:13.5px}
+.lu-cal td p + p{margin-top:5px}
+.lu-cal .ye{background:#fef7f2;border-bottom:4px solid #fbcbab}
+.lu-cal .ye b{color:#f26d4f}
+.lu-cal .ky{background:#feedf1;border-bottom:4px solid #f688ad;vertical-align:middle}
+.lu-cal .ky div{display:grid;grid-template-columns:auto auto;justify-content:center;column-gap:clamp(18px,3vw,36px);align-items:start;padding-bottom:22px}
+.lu-cal .ky b{color:#ee4e86;font-size:13.5px}
+.lu-cal .dr{background:#f5f3fa;border-bottom:4px solid #c3b4e0;text-align:center;vertical-align:middle;padding-bottom:22px}
+.lu-cal .dr b{color:#8a78c6;margin-bottom:12px}
+
+/* ---------- 12–17쪽 : cream ——• Contents Line UP ---------- */
+.lu-spread{padding:clamp(56px,7vw,96px) 0 0}
+.lu-spread>.wrap{max-width:1440px}
+.lu-spread:last-of-type{padding-bottom:clamp(56px,7vw,96px)}
+.lu-head{display:flex;align-items:flex-end;margin-bottom:clamp(28px,3.4vw,44px)}
+.lu-head__line{position:relative;flex:1;min-width:0;border-bottom:1.5px solid var(--c);padding:0 0 6px clamp(10px,1vw,14px);margin-right:clamp(10px,1vw,14px)}
+.lu-head__line::before{content:"";position:absolute;left:0;height:clamp(10px,1.4vw,16px);bottom:0;width:1.5px;background:var(--c)}
+.lu-head__line::after{content:"";position:absolute;right:-4px;bottom:-4.75px;width:8px;height:8px;border-radius:50%;background:var(--c)}
+.lu-head__cream{width:clamp(80px,8.4vw,108px);height:auto}
+.lu-head__line>i{position:absolute;left:-3.25px;bottom:calc(clamp(10px,1.4vw,16px) + 2px);width:8px;height:8px;border-radius:50%;background:var(--c)}
+.lu-head__title{flex:none;font-size:clamp(26px,3.3vw,44px);font-weight:500;line-height:1;letter-spacing:-.01em;margin-bottom:calc(-.5em + 1px)}
+.lu-spread__cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,7vw,110px);align-items:start}
+.lu-spread__cols--1617{gap:clamp(40px,5vw,72px)}
+.lu-pg{padding:0}
+.page.lu-pg + .page.lu-pg{padding-top:0}
+#p12{scroll-margin-top:calc(var(--hdr) + 110px)}
+#p14,#p16{scroll-margin-top:calc(var(--hdr) + 110px)}
+@media (max-width:1000px){
+  .lu-spread__cols,.lu-spread__cols--1617{grid-template-columns:minmax(0,1fr);gap:clamp(56px,8vw,80px)}
+  #p13,#p15,#p17{scroll-margin-top:calc(var(--hdr) + 16px)}
+}
+
+/* 프로그램 카드 (회색 헤더 바) */
+.lu-card__bar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--gray-bar);color:#fff;padding:clamp(10px,1.1vw,14px) clamp(16px,1.6vw,22px);min-height:clamp(50px,4.6vw,60px)}
+.lu-card__bar h3{font-size:clamp(20px,2vw,26px);font-weight:500;letter-spacing:-.05em;line-height:1.2}
+.lu-card__bar p{font-size:clamp(14px,1.25vw,16px);font-weight:500;letter-spacing:-.04em;text-align:right;line-height:1.3}
+.lu-card__photo{width:100%}
+.lu-card__desc{margin-top:clamp(12px,1.3vw,16px);border-top:2px solid var(--c-div);border-bottom:2px solid var(--c-div);padding:clamp(28px,3.4vw,40px) 12px;min-height:clamp(118px,11vw,132px);display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(14px,1.2vw,15.5px);font-weight:400;line-height:1.75;letter-spacing:-.04em}
+.lu-card__desc{display:block}
+.lu-pkg{margin-top:clamp(10px,1vw,12px)}
+.lu-pkg table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:clamp(14px,1.2vw,15px);font-weight:300;text-align:center}
+.lu-pkg thead th{background:var(--c-light);font-weight:600;padding:8px;font-size:clamp(14px,1.2vw,15.5px);border-top:2px solid var(--c-div)}
+.lu-pkg tbody th,.lu-pkg tbody td{position:relative;font-weight:300;height:clamp(56px,5.4vw,66px);padding:6px 8px}
+.lu-pkg tbody th::after,.lu-pkg tbody td::after{content:"";position:absolute;bottom:0;height:1.5px;background:var(--c-div)}
+.lu-pkg tbody th::after{left:0;right:6px}
+.lu-pkg tbody td::after{left:6px;right:0}
+.lu-val{position:relative;display:inline-block}
+.lu-sold{position:absolute;left:calc(100% + clamp(14px,1.8vw,24px));top:50%;width:clamp(32px,3vw,38px);transform:translateY(-50%) rotate(0deg)}
+.lu-pkg__note{text-align:right;font-size:11.5px;font-weight:300;color:var(--ink-2);margin-top:8px}
+
+/* 로고 박스 + 설명 (15·16쪽) */
+.lu-prog + .lu-prog{margin-top:clamp(22px,2.4vw,28px)}
+.lu-prog__row{display:grid;grid-template-columns:48% minmax(0,1fr);gap:clamp(6px,.8vw,9px)}
+.lu-prog__logo{display:flex;align-items:center;justify-content:center;border:1px solid var(--gray-bar);border-top:0;background:#fff;min-height:clamp(170px,15.5vw,224px);padding:clamp(12px,1.4vw,20px)}
+.lu-prog__logo img{width:100%;max-width:330px;height:auto;max-height:180px;object-fit:contain}
+.lu-prog__logo--text p{white-space:nowrap;font-size:clamp(24px,2.6vw,40px);font-weight:800;line-height:1.2;letter-spacing:-.05em;text-align:center;color:#231f20}
+.lu-prog__desc{margin-top:clamp(8px,1vw,12px);border-top:2px solid var(--c-div);border-bottom:2px solid var(--c-div);display:flex;flex-direction:column;justify-content:center;gap:1.35em;padding:16px 6px;text-align:center;font-size:13.5px;font-weight:400;line-height:1.65;letter-spacing:-.04em}
+#p16 .lu-prog__desc{margin-bottom:0}
+@media (max-width:600px){
+  .lu-prog__row{grid-template-columns:minmax(0,1fr)}
+  .lu-prog__logo{min-height:180px}
+  .lu-prog__logo--text p{font-size:30px}
+  .lu-prog__desc{margin-top:0;padding:24px 8px}
+}
+
+/* ---------- 17쪽 : SBS 파워FM ---------- */
+.lu-fm{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13.5px;line-height:1.4;text-align:center}
+.lu-fm col{width:auto}
+.lu-fm thead th{background:var(--c);color:#fff;font-weight:400;font-size:12px;padding:7px 2px;white-space:nowrap;letter-spacing:-.05em;border-left:1px solid rgba(255,255,255,.55)}
+.lu-fm thead th.lu-fm__ch{background:none;color:var(--c-strong);text-align:left;font-size:clamp(17px,1.6vw,20px);font-weight:500;padding:0 0 4px;border:0;vertical-align:bottom;letter-spacing:-.04em}
+.lu-fm__ch small,.lu-love__ch small{font-family:var(--ff-en);font-size:.68em;font-weight:400;letter-spacing:0}
+.lu-fm tbody td,.lu-fm tbody th{border-top:1.5px solid #fff;padding:0;vertical-align:middle}
+.lu-fm__img{padding:0!important}
+.lu-fm__img img{width:100%;display:block}
+.lu-fm tbody th.lu-fm__name{background:var(--c-light);text-align:left;font-weight:500;padding:0 6px 0 clamp(8px,1vw,14px);font-size:13.5px;letter-spacing:-.04em}
+.lu-fm__name small{display:block;color:var(--c-strong);font-size:11.5px;font-weight:300;margin-top:2px}
+.lu-fm tbody tr + tr td,.lu-fm tbody tr + tr th{border-top:1.5px solid var(--c-div)}
+.lu-fm tbody tr + tr .lu-fm__img{border-top:4px solid #fff}
+.lu-fm__rate{font-size:13px;font-weight:400;line-height:1.5}
+.lu-fm__rate,.lu-fm__only{border-left:1px dashed var(--c)}
+.lu-fm__only{font-size:11.5px;font-weight:500}
+.lu-fm tbody td.lu-fm__pkg{border-left:1px dashed var(--c);border-top:0;font-size:13px;line-height:1.6;padding:10px 4px}
+.lu-fm__pkg p + p{margin-top:2.2em}
+.lu-fm__pkg b{display:block;font-weight:500;font-size:12px}
+.lu-fm tbody tr:last-child td,.lu-fm tbody tr:last-child th{border-bottom:1px solid var(--c-div)}
+.lu-fm tbody tr:first-child .lu-fm__pkg{border-bottom:1px solid var(--c-div)}
+.lu-fm__notes{text-align:right;gap:0;margin-top:8px}
+.lu-fm__notes .note{font-size:11.5px}
+.lu-scroll--fm{--tbl-min:560px}
+@media (max-width:768px){.lu-fm{min-width:560px}}
+
+/* ---------- 17쪽 : SBS 러브FM ---------- */
+.lu-love{margin-top:clamp(56px,8vw,120px)}
+.lu-love__ch{color:var(--c-strong);font-size:clamp(17px,1.6vw,20px);font-weight:500;letter-spacing:-.04em;margin-bottom:6px}
+.lu-love__list{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.4vw,22px)}
+.lu-love__list img{width:100%}
+.lu-love__list h4{margin-top:12px;font-size:13.5px;font-weight:600;letter-spacing:-.05em;line-height:1.35}
+.lu-love__time{font-size:12px;font-weight:300;color:var(--c-strong);margin-top:2px;letter-spacing:-.03em}
+.lu-love__desc{margin-top:12px;padding:12px 0;border-top:1px dashed var(--c);border-bottom:1px solid var(--c-div);font-size:12px;font-weight:300;color:var(--ink-2);line-height:1.6;letter-spacing:-.04em}
+@media (max-width:600px){.lu-love__list{grid-template-columns:1fr 1fr;row-gap:28px}}
+
+/* ---------- 모바일 ---------- */
+.lu-scroll--cal{--tbl-min:760px}
+@media (max-width:768px){
+  .lu-cal{min-width:760px}
+  .lu-week__body{height:620px}
+  .lu-wm{font-size:300px}
+  .lu-head__title{font-size:26px}
+  .lu-sold{left:calc(100% + 10px)}
+}
+@media (max-width:768px){
+  .lu-drama{grid-template-columns:64px minmax(0,1fr);min-width:560px}
+  .lu-week{grid-template-columns:64px minmax(0,1fr);min-width:660px}
+  .lu-week__body{grid-template-columns:64px repeat(7,minmax(0,1fr))}
+  .lu-wm{left:calc(64px + 9%)}
+  .lu-drama__lbl,.lu-week__lbl{font-size:15px}
+  .lu-p{font-size:13px}
+}
