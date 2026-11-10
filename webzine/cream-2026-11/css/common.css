@@ -47,8 +47,8 @@ ul,ol{list-style:none}
 table{border-collapse:collapse;border-spacing:0}
 :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.skip{position:fixed;left:12px;top:-60px;z-index:200;background:var(--ink);color:#fff;padding:10px 16px}
-.skip:focus{top:12px}
+.skip{position:fixed;left:12px;top:-60px;z-index:200;background:var(--ink);color:#fff;padding:10px 16px;clip-path:inset(50%)}
+.skip:focus{top:12px;clip-path:none}
 .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
 .en{font-family:var(--ff-en)}
 
