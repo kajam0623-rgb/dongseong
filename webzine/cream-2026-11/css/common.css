@@ -221,7 +221,7 @@ del,.del{color:#7b7979;text-decoration-color:var(--red)}
 
 /* ---------- 모션 키트 (편집 지면 전용: 표지·Trend·Focus·라인업 카드) ----------
    data-mx="kb"     사진이 크게 들어왔다가 제자리로, 이후 아주 느리게 떠다님
-   data-mx="shine"  드라마 제목·로고 위로 빛줄기가 지나감(등장 시 + 몇 초 간격 반복)
+   data-mx="shine"  드라마 제목·로고 위로 빛줄기가 지나감(등장 시 + 16초 간격 반복)
    data-mx="wipe"   자식 사진들이 차례로 닦이듯 열림
    data-mx="rise"   자식 요소들이 차례로 아래에서 올라옴
    data-mx="float"  천천히 위아래로 떠 있음
@@ -237,9 +237,9 @@ del,.del{color:#7b7979;text-decoration-color:var(--red)}
 [data-mx~="shine"]::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0;
   background:linear-gradient(105deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.1) 44%,rgba(255,255,255,.55) 50%,rgba(255,255,255,.1) 56%,rgba(255,255,255,0) 60%) no-repeat;
   background-size:300% 100%;background-position:100% 0}
-[data-mx~="shine"].is-in::after{animation:mx-shine 7s cubic-bezier(.4,0,.25,1) .6s infinite}
+[data-mx~="shine"].is-in::after{animation:mx-shine 16s cubic-bezier(.4,0,.25,1) .6s infinite}
 [data-mx~="shine-strong"]::after{background-image:linear-gradient(105deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.15) 45%,rgba(255,255,255,.7) 50%,rgba(255,255,255,.15) 55%,rgba(255,255,255,0) 60%)}
-@keyframes mx-shine{0%{background-position:100% 0;opacity:1}36%{background-position:0 0;opacity:1}37%,100%{background-position:0 0;opacity:0}}
+@keyframes mx-shine{0%{background-position:100% 0;opacity:1}15%{background-position:0 0;opacity:1}16%,100%{background-position:0 0;opacity:0}}
 [data-mx~="wipe"]>*{clip-path:inset(0 100% 0 0);transition:clip-path 1.3s var(--ease-out)}
 [data-mx~="wipe"]>* img,[data-mx~="wipe"]>img{transform:scale(1.12);transition:transform 2s var(--ease-out)}
 [data-mx~="wipe"].is-in>*{clip-path:inset(0 0 0 0)}
