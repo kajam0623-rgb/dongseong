@@ -39,11 +39,19 @@
   window.CREAM_SECTIONS = SECTIONS;
 
   var section = document.body.getAttribute('data-section') || '';
+  /* 한 장짜리(index.html, data-single)에서는 'x.html#p20' 링크를 같은 문서 안 '#p20' 으로 바꾼다 */
+  var single = document.body.hasAttribute('data-single');
+  var FIRST = { 'trend.html': '#p03', 'lineup.html': '#p10', 'sales-tv.html': '#p18', 'digital.html': '#p44', 'table.html': '#p49' };
+  function link(h) {
+    if (!single) return h;
+    var i = h.indexOf('#');
+    return i >= 0 ? h.slice(i) : (FIRST[h] || h);
+  }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]; }); }
 
   function tocGroup(s) {
     return '<div class="toc-group" style="--tc:' + s.c + '"><p class="toc-group__head"><i></i>' + esc(s.en) + '</p><ol>' +
-      s.items.map(function (it) { return '<li><a href="' + it[2] + '"><b>' + it[0] + '</b><em>' + esc(it[1]) + '</em></a></li>'; }).join('') +
+      s.items.map(function (it) { return '<li><a href="' + link(it[2]) + '"><b>' + it[0] + '</b><em>' + esc(it[1]) + '</em></a></li>'; }).join('') +
       '</ol></div>';
   }
   window.CREAM_TOC = function () { return SECTIONS.map(tocGroup).join(''); };
@@ -53,9 +61,9 @@
   hdr.className = 'hdr';
   hdr.innerHTML =
     '<div class="hdr__in">' +
-      '<a class="hdr__logo" href="index.html" aria-label="cream 2026년 11월호 홈"><img src="images/cream-logo.png" alt="cream" width="1037" height="218"><span class="hdr__vol">2026.11<br>VOL.179</span></a>' +
+      '<a class="hdr__logo" href="' + (single ? '#main' : 'index.html') + '" aria-label="cream 2026년 11월호 홈"><img src="images/cream-logo.png" alt="cream" width="1037" height="218"><span class="hdr__vol">2026.11<br>VOL.179</span></a>' +
       '<nav class="hdr__nav" aria-label="섹션">' + SECTIONS.map(function (s) {
-        return '<a href="' + s.href + '" style="--nc:' + s.c + '"' + (s.key === section ? ' aria-current="page"' : '') + '>' + esc(s.en) + '</a>';
+        return '<a href="' + link(s.href) + '" data-key="' + s.key + '" style="--nc:' + s.c + '"' + (s.key === section ? ' aria-current="page"' : '') + '>' + esc(s.en) + '</a>';
       }).join('') + '</nav>' +
       '<button class="hdr__burger" type="button" aria-label="목차 열기" aria-expanded="false" aria-controls="menu"><span></span></button>' +
     '</div>';
@@ -80,12 +88,30 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { setMenu(false); closeZoom(); } });
 
   /* ---------- 오른쪽 세로 섹션 탭 ---------- */
-  var cur = SECTIONS.filter(function (s) { return s.key === section; })[0];
-  if (cur) {
-    var tab = document.createElement('p');
-    tab.className = 'side-tab'; tab.setAttribute('aria-hidden', 'true');
-    tab.textContent = cur.en.toUpperCase();
-    document.body.appendChild(tab);
+  var tab = document.createElement('p');
+  tab.className = 'side-tab'; tab.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(tab);
+  function setSection(key) {
+    var cur = SECTIONS.filter(function (s) { return s.key === key; })[0];
+    tab.style.display = cur ? '' : 'none';
+    if (cur) { tab.textContent = cur.en.toUpperCase(); tab.setAttribute('data-section', key); }
+    hdr.querySelectorAll('.hdr__nav a').forEach(function (a) {
+      if (a.getAttribute('data-key') === key) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+  }
+  setSection(section);
+  /* 한 장짜리: 화면 위쪽에 걸린 섹션을 따라 헤더 표시와 세로 탭을 바꾼다 */
+  if (single) {
+    var blocks = Array.prototype.slice.call(document.querySelectorAll('.pg[data-section]'));
+    var lastKey = null, spyTick = false;
+    var spy = function () {
+      spyTick = false;
+      var line = window.innerHeight * 0.35, key = '';
+      blocks.forEach(function (b) { if (b.getBoundingClientRect().top <= line) key = b.getAttribute('data-section'); });
+      if (key !== lastKey) { lastKey = key; setSection(key); }
+    };
+    window.addEventListener('scroll', function () { if (!spyTick) { spyTick = true; requestAnimationFrame(spy); } }, { passive: true });
+    spy();
   }
 
   /* ---------- 푸터 ---------- */

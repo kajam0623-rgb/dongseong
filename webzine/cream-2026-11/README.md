@@ -1,11 +1,14 @@
 # cream 2026년 11월호 (VOL.179) 웹진
 
-SBS M&C 월간 매거진 cream 11월호 PDF를 **원본 지면 디자인 그대로** 옮긴 정적 사이트. 빌드 없음 — `index.html`을 열면 된다.
+SBS M&C 월간 매거진 cream 11월호 PDF를 **원본 지면 디자인 그대로** 옮긴 정적 사이트.
+
+`index.html` 한 장에 앞표지 → 목차 → 3~61쪽 → 뒤표지가 순서대로 이어진다. 이 파일은 **자동 생성물**이다.
+아래 원본 페이지(`cover.html` 등)와 `css/pages/*.css`를 고친 뒤 `python3 -I _build.py`를 돌리면 `index.html`과 `css/all-pages.css`가 다시 만들어진다(각 페이지 CSS는 `.pg-페이지명` 범위로 묶여 서로 새지 않는다).
 
 ## 페이지 (원본 쪽수)
 | 파일 | 섹션 | 쪽 |
 |---|---|---|
-| index.html | 표지 + 목차 | 1–2 |
+| cover.html | 표지 + 목차 | 1–2 |
 | trend.html | Trend & Focus | 3–9 |
 | lineup.html | Contents Line-up | 10–17 |
 | sales-tv.html | Sales Guide · SBS-TV | 18–27 |
