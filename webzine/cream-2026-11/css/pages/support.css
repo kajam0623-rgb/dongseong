@@ -99,3 +99,4 @@
 @media (max-width:480px){
   .ct__globe{display:none}
 }
+.backcover{max-width:640px;margin:0 auto}

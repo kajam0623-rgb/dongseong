@@ -26,7 +26,7 @@
 del{color:var(--ink);text-decoration:none}
 
 /* 가격 할인 표기 1 : 취소선 → 화살표 → 새 가격 (한 줄) */
-.to{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.to{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;margin-left:6px}
 .to del{position:relative;font-size:.86em}
 .to del::after{content:"";position:absolute;left:-6px;right:-2px;top:52%;height:1px;background:var(--red)}
 .to i{display:inline-block;width:12px;height:10px;margin-left:-2px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M0 5H11M7 1.5L11 5L7 8.5' fill='none' stroke='%23e8262b' stroke-width='1'/%3E%3C/svg%3E") no-repeat center/contain}
@@ -137,9 +137,10 @@ del{color:var(--ink);text-decoration:none}
 .isu ul{font-size:clamp(14px,1.3vw,16px);font-weight:300;line-height:1.85}
 .isu li::before{content:"• "}
 .isu li b{font-weight:400;color:var(--mn-blue)}
-.isu__img{position:absolute;right:clamp(8px,1.2vw,16px);bottom:clamp(10px,1.4vw,16px);width:clamp(110px,12vw,150px)}
+.isu__img{position:absolute;right:clamp(8px,1.2vw,16px);bottom:clamp(10px,1.4vw,16px);width:clamp(110px,12.5vw,160px)}
+@media (min-width:769px){.isu__img{top:-28px;bottom:auto}}
 .isu + .tbl-wrap{margin-top:12px}
-@media (max-width:768px){.isu{grid-template-columns:1fr;padding-right:clamp(18px,4vw,56px);padding-top:80px}.isu__img{top:-30px;bottom:auto;width:100px}}
+@media (max-width:768px){.isu{grid-template-columns:1fr;padding-right:clamp(18px,4vw,56px);padding-top:80px}.isu__img{top:10px;bottom:auto;width:84px}}
 
 /* ---------- 39 SBS Biz ---------- */
 .biz{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,36px) clamp(12px,1.6vw,24px)}
@@ -179,3 +180,4 @@ del{color:var(--ink);text-decoration:none}
 .issue h4{font-size:17px;font-weight:400}
 .sub-pkg{margin:clamp(20px,2.4vw,28px) 0 10px;font-size:clamp(18px,1.6vw,21px);font-weight:400;letter-spacing:-.04em;color:var(--c-strong)}
 .sub-pkg b{color:var(--ink);font-weight:600}
+.glance .tbl{table-layout:fixed}

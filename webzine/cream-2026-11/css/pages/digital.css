@@ -80,7 +80,7 @@
 .pcard__bar b{font-weight:500}
 /* 원본: 카드 폭의 7% 안쪽에 흰 구분선, 품목·단가 열 위치는 카드별 실측(--pl, --lw: 카드 폭 %) */
 .pcard__list{padding:4px 0 8px}
-.pcard__list div{display:grid;grid-template-columns:calc((var(--lw) - var(--pl)) * 1cqw) auto;align-items:start;margin:0 7cqw;padding:5px 0 5px calc((var(--pl) - 7) * 1cqw);border-bottom:1.5px solid #fff;font-size:clamp(12.5px,4.9cqw,15px);line-height:1.45;letter-spacing:-.03em}
+.pcard__list div{display:grid;grid-template-columns:calc(var(--lw) * 1cqw) auto;align-items:start;margin:0 7cqw;padding:5px 0 5px calc((var(--pl) - 7) * 1cqw);border-bottom:1.5px solid #fff;font-size:clamp(13px,5.3cqw,15.5px);line-height:1.45;letter-spacing:-.03em}
 .pcard__list div:last-child{border-bottom:0}
 .pcard__list dt{font-weight:300}
 .pcard__list dd{font-weight:400;color:var(--dg-org);white-space:nowrap}
@@ -92,7 +92,7 @@
 .yt-stats li{display:flex;flex-direction:column;align-items:center}
 .yt-stats h5{width:100%;height:30px;display:flex;align-items:center;justify-content:center;background:var(--c);border-radius:15px;font-size:15px;font-weight:600;letter-spacing:-.04em}
 .yt-stats p{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;color:var(--dg-org)}
-.yt-stats img{height:44px;width:auto}
+.yt-stats img{height:40px;width:auto}
 .yt-stats li:nth-child(2) img{height:32px}
 .yt-stats li:nth-child(4) img{height:34px;margin-right:12px}
 .yt-stats strong{font-size:clamp(26px,2.6vw,34px);font-weight:700;letter-spacing:-.02em;line-height:1.1}
@@ -205,7 +205,6 @@
   .donut figcaption,.donut__c{padding-top:0;margin-top:0}
   .donut__c{width:100%;max-width:150px;align-self:center}
   .bars li{grid-template-columns:52px 1fr;gap:10px}
-  .pcard__bar{font-size:14px;gap:.6em}
   .yt-stats{gap:16px 12px}
   .yt-stats img{height:32px}
   .yt-stats li:nth-child(2) img{height:24px}
