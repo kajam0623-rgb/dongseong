@@ -1,0 +1,15 @@
+{
+  "note": "ac.search.naver.com 자동완성을 firecrawl 로 한 건씩 직접 조회한 결과다. suggested = 자동완성 개수, selfRank = 자기 자신이 뜬 순위(null = 안 뜸). 검색량이 아니라 '수요의 존재'를 재는 값이다.",
+  "measuredAt": "2026-09-13",
+  "method": "firecrawl_scrape / ac.search.naver.com/nx/ac (rawHtml, maxAge 0)",
+  "results": [
+    { "term": "부천미술학원", "suggested": 4, "selfRank": 1, "siblings": ["부천 미술학원", "부천 미술학원 유치부", "부천 미술학원 채용", "부천 미술학원 차량"] },
+    { "term": "부천만화학원", "suggested": 1, "selfRank": 1, "siblings": ["부천 만화학원"] },
+    { "term": "상동미술학원", "suggested": 1, "selfRank": 1, "siblings": ["상동미술학원"] },
+    { "term": "부평미술학원", "suggested": 1, "selfRank": 1, "siblings": ["부평 미술학원"] },
+    { "term": "중동미술학원", "suggested": 0, "selfRank": null, "siblings": [] },
+    { "term": "부천웹툰학원", "suggested": 0, "selfRank": null, "siblings": [] },
+    { "term": "인천웹툰학원", "suggested": 0, "selfRank": null, "siblings": [],
+      "note": "단, '웹툰학원' 을 조회하면 연관어로 '인천웹툰학원' 이 나온다(content/_shared/keywords.json). 전체 문자열 조회가 0이라고 수요가 0인 것은 아니다." }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "note": "ac.search.naver.com 자동완성을 firecrawl 로 한 건씩 직접 조회한 결과다. suggested = 자동완성 개수, selfRank = 자기 자신이 뜬 순위(null = 안 뜸 = 수요 없음). 검색량이 아니라 '수요의 존재'를 재는 값이다.",
+  "measuredAt": "2026-09-13",
+  "method": "firecrawl_scrape / ac.search.naver.com/nx/ac (rawHtml, maxAge 0)",
+  "results": [
+    { "term": "송파미술학원",   "suggested": 1, "selfRank": 1, "siblings": ["송파미술학원"] },
+    { "term": "강동구미술학원", "suggested": 1, "selfRank": 1, "siblings": ["강동구 미술학원"] },
+    { "term": "강동만화학원",   "suggested": 0, "selfRank": null, "siblings": [] },
+    { "term": "강동미술학원",   "suggested": 0, "selfRank": null, "siblings": [], "note": "'강동구미술학원' 은 뜨는데 '강동미술학원' 은 안 뜬다. 구 이름을 줄이지 말 것." },
+    { "term": "천호미술학원",   "suggested": 0, "selfRank": null, "siblings": [] },
+    { "term": "명일동미술학원", "suggested": 0, "selfRank": null, "siblings": [] }
+  ]
+}

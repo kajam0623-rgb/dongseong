@@ -1,0 +1,15 @@
+{
+  "note": "ac.search.naver.com 자동완성을 firecrawl 로 한 건씩 직접 조회한 결과다. suggested = 자동완성 개수, selfRank = 자기 자신이 뜬 순위(null = 안 뜸 = 수요 없음). 검색량이 아니라 '수요의 존재'를 재는 값이다.",
+  "measuredAt": "2026-09-13",
+  "method": "firecrawl_scrape / ac.search.naver.com/nx/ac (rawHtml, maxAge 0)",
+  "results": [
+    { "term": "수원미술학원", "suggested": 5, "selfRank": 1,
+      "siblings": ["수원미술학원", "수원미술학원 오늘입시를", "수원 미술학원 성인반", "수원 미술학원 구인", "수원 미술학원 유아"] },
+    { "term": "광교미술학원", "suggested": 3, "selfRank": 1,
+      "siblings": ["광교 미술학원", "광교 미술학원 유아", "광교 미술학원 성인"] },
+    { "term": "광교만화학원", "suggested": 1, "selfRank": 1, "siblings": ["광교 만화학원"] },
+    { "term": "수원만화학원", "suggested": 1, "selfRank": 1, "siblings": ["수원 만화학원"] },
+    { "term": "영통미술학원", "suggested": 0, "selfRank": null, "siblings": [] },
+    { "term": "수원웹툰학원", "suggested": 0, "selfRank": null, "siblings": [] }
+  ]
+}

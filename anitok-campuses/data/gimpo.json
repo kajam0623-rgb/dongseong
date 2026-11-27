@@ -1,12 +1,13 @@
 {
   "slug": "gimpo",
   "repo": "gimpo-anitok",
-  "themeName": "orange",
+  "themeName": "gimpo",
   "name": "김포 애니톡 만화애니학원",
   "shortName": "김포",
   "site": {
     "origin": "https://gimpo-anitok.vercel.app",
-    "subdomain": "gimpo"
+    "subdomain": "gimpo",
+    "selfHostFont": true
   },
   "phone": "031-985-5382",
   "address": {
@@ -49,182 +50,190 @@
       "청강대입시",
       "김포일러스트학원",
       "애니톡김포"
-    ]
+    ],
+    "naver": "1a10efa7b4e598ec59628e41b93d71079fcb3d34"
   },
   "hero": {
-    "tag": "15년 전통의 만화학원, 애니톡",
-    "over": "특별한 아이를 위한",
-    "line1": "특별한 교육의 시작!",
-    "line2": "김포 애니톡 만화애니학원!",
-    "sub": "학생은 그리는 걸 배우고, 우리는 듣는 걸 배웁니다",
+    "over": "특별한 아이를 위한 ",
+    "line1": "",
+    "line2": "김포 애니톡 만화애니학원",
+    "sub": "학생은 그리는 걸 배우고 우리는 듣는 걸 배우겠습니다.",
     "image": {
       "local": "hero.webp",
-      "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/9a214195ed007.jpg",
-      "caption": "김포 애니톡 만화애니학원",
+      "caption": "김포 애니톡 만화애니학원 입구",
       "eager": true
     },
-    "ctas": [
-      {
-        "label": "온라인 상담 신청 →",
-        "href": "https://anitok.com/questions"
-      },
-      {
-        "label": "031-985-5382",
-        "href": "tel:031-985-5382"
-      }
-    ]
+    "litBox": true,
+    "tagPlain": "since 2012",
+    "overStrong": "특별한 교육의 시작"
   },
   "about": {
-    "kicker": "Gimpo Campus",
-    "title": "듣는 것부터 시작하는 미대 입시 전문 교육",
+    "kicker": "ANITALK GIMPO",
+    "title": "정확한 방향 위에 과정을 쌓는\n**미대입시 전문 교육기관**",
     "paragraphs": [
-      "15년 전통의 만화학원 애니톡은 한예종, 청강대, 세종대 등 만화 · 애니 주요 대학 합격생을 배출한 강사진과, 목동 · 대치동 전과목 입시 25년 경력의 학원장이 함께하는 미대 입시 전문 교육 기관입니다.",
-      "학생은 그리는 걸 배우고, 우리는 듣는 걸 배웁니다. 특별한 아이를 위한 특별한 교육, 애니톡 김포 캠퍼스가 그 시작을 함께합니다.",
-      "초등 주니어반부터 중등 예비 · 입시반, 고등 입시반, 그리고 성인까지 함께하는 디지털 드로잉반을 운영합니다."
+      "**2012년부터 시작한 만화학원 애니톡**은 한예종, 청강대, 세종대 등\n**만화·애니 주요 대학 합격생을 배출한 강사진**과,\n목동·대치동·종로 **전과목 입시 25년 경력의 학원장**이 함께하는\n**미대입시 전문 교육기관**입니다.",
+      "학생은 그리는 걸 배우고, 우리는 듣는 걸 배웁니다.\n특별한 아이를 위한 특별한 교육,\n애니톡 김포 캠퍼스가 그 시작을 함께합니다.",
+      "초등 주니어반부터 중등 예비·입시반, 고등 입시반,\n그리고 성인까지 함께하는 디지털 드로잉반을 운영합니다."
     ],
     "badges": [
-      "15년 전통 애니톡",
-      "한예종 · 청강대 · 세종대 배출 강사진",
-      "입시 25년 경력 학원장",
-      "애니톡 8개 직영 캠퍼스"
+      "since 2012",
+      "한예종·청강대·세종대 합격생 배출",
+      "입시 경력 25년 학원장",
+      "8개 직영 캠퍼스"
     ],
     "figures": [
       {
-        "local": "about-1.webp",
-        "caption": "김포 수업 현장",
-        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/bf4ed526967fd.jpg"
-      },
-      {
-        "local": "about-2.webp",
-        "caption": "김포 작업 공간",
-        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/35d16f24e4a7e.jpg"
-      },
-      {
-        "local": "about-3.webp",
-        "caption": "김포 학원 내부",
-        "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/fdf97f761d2f3.jpg"
+        "local": "about-ppt.webp",
+        "caption": ""
       }
-    ]
+    ],
+    "theme": "light"
   },
   "results": {
-    "kicker": "Faculty",
-    "title": "가르치는 사람이 만드는 차이",
-    "lede": "김포 캠퍼스는 본원 커리큘럼과 입시 경력을 함께 갖춘 강사진이 운영합니다.",
+    "kicker": "CAREER",
+    "title": "남다른 교육 인사이트",
+    "lede": "애니톡의 모든 캠퍼스는 본원의 커리큘럼과 입시 경력을 갖춘 강사진이 운영합니다.",
     "items": [
       {
         "when": "브랜드",
-        "label": "만화학원 운영",
+        "label": "",
         "value": "15",
-        "unit": "년 전통",
+        "unit": "년의 노하우",
         "detail": [
-          "애니톡 8개 직영 캠퍼스",
-          "만화 · 애니 전문 교육"
+          "since 2012",
+          "만화·애니 입시 교육 전문"
         ]
       },
       {
         "when": "강사진",
-        "label": "합격생 배출 경력",
+        "label": "",
         "value": "한예종",
-        "unit": "외",
+        "unit": "외 주요대학",
         "detail": [
-          "한국예술종합학교",
-          "청강문화산업대학교 · 세종대학교"
+          "세종대·경기대·청강대",
+          "합격생 배출 강사진"
+        ]
+      },
+      {
+        "when": "2016-2026 합격생",
+        "label": "",
+        "value": "394",
+        "unit": "명 청강대 합격",
+        "detail": [
+          "한예종 40명 합격",
+          "서울대·고려대 합격"
         ]
       },
       {
         "when": "학원장",
-        "label": "전과목 입시 경력",
+        "label": "",
         "value": "25",
-        "unit": "년",
+        "unit": "년 경력",
         "detail": [
-          "목동 · 대치동 입시",
-          "미대 입시 전문 운영"
-        ]
-      },
-      {
-        "when": "커리큘럼",
-        "label": "운영 과정",
-        "value": "5",
-        "unit": "개 반",
-        "detail": [
-          "주니어 · 중등예비 · 중등입시",
-          "고등입시 · 디지털드로잉"
+          "목동·대치동·종로",
+          "전과목 입시 전문가"
         ]
       }
     ]
   },
   "classes": {
-    "kicker": "Class",
-    "title": "수업 과목",
-    "lede": "학년과 목표에 따라 반을 나눠 운영합니다.",
+    "kicker": "CLASS",
+    "title": "수업 소개",
+    "lede": "초등 4학년부터 성인까지, 학생에게 맞는 수업을 운영합니다.",
+    "layout": "grid",
     "groups": [
       {
         "name": "주니어반",
-        "range": "초등 4 ~ 6학년",
-        "lead": "그림을 좋아하는 마음에서 시작해 표현력을 키우는 과정입니다.",
+        "range": "초등 4-6학년",
+        "lead": "아이의 눈높이에서 가능성을 찾는 수업을 제공합니다.",
         "items": [
           {
-            "eyebrow": "초4 ~ 초6",
-            "title": "주니어반",
-            "desc": "좋아하는 캐릭터를 그리는 것에서 시작해 나만의 그림으로 완성해 갑니다.",
             "image": {
               "local": "class-junior-1.webp",
-              "caption": "주니어반 수업",
-              "remote": "https://ilsan.anitok.com/gal/c3.webp"
+              "caption": "주니어반 수업작"
+            }
+          },
+          {
+            "image": {
+              "local": "class-junior-2.webp",
+              "caption": "주니어반 수업작"
             }
           }
         ]
       },
       {
-        "name": "중등반",
-        "range": "중학교 1 ~ 3학년",
-        "lead": "예비 과정에서 기본기를 쌓고, 입시 과정에서 실기와 포트폴리오를 준비합니다.",
+        "name": "디지털 드로잉반",
+        "range": "고등 1학년-성인",
+        "lead": "학생의 목표에 맞는 개별 커리큘럼을 운영합니다.",
         "items": [
           {
-            "eyebrow": "중1 ~ 중3",
-            "title": "중등 예비반",
-            "desc": "인체와 명암, 투시 등 기본기를 다지며 그리는 습관을 만드는 과정입니다.",
             "image": {
-              "local": "class-mid-1.webp",
-              "caption": "중등 예비반 수업",
-              "remote": "https://ilsan.anitok.com/gal/j5.webp"
+              "local": "class-cg-1.webp",
+              "caption": "CG반 수업작"
             }
           },
           {
-            "eyebrow": "중2 ~ 중3",
-            "title": "중등 입시반",
-            "desc": "애니고 · 예고 등 고교 입시를 목표로 실기와 포트폴리오를 준비합니다.",
             "image": {
-              "local": "class-mid-2.webp",
-              "caption": "중등 입시반 실기",
-              "remote": "https://ilsan.anitok.com/gal/g8.webp"
+              "local": "class-cg-2.webp",
+              "caption": "CG반 수업작"
             }
           }
         ]
       },
       {
-        "name": "고등 입시반 · 디지털 드로잉반",
-        "range": "고1 ~ 고3 · 초4 ~ 성인",
-        "lead": "대학 실기와 디지털 작업을 목표에 맞춰 나눠서 지도합니다.",
+        "name": "중등예비반",
+        "range": "중등 1-3학년",
+        "lead": "창의와 기초의 균형을 통해 창작의 기초 체력을 키웁니다.",
         "items": [
           {
-            "eyebrow": "고1 ~ 고3",
-            "title": "고등 입시반",
-            "desc": "목표 대학 전형에 맞춘 수시 · 정시 실기를 단계별로 준비합니다.",
             "image": {
-              "local": "class-high-1.webp",
-              "caption": "고등 입시반 실기",
-              "remote": "https://ilsan.anitok.com/gal/c0.webp"
+              "local": "class-midprep-1.webp",
+              "caption": "중등예비반 수업작"
             }
           },
           {
-            "eyebrow": "초4 ~ 성인",
-            "title": "디지털 드로잉반",
-            "desc": "태블릿으로 캐릭터 디자인과 채색, 일러스트 완성까지 다룹니다.",
             "image": {
-              "local": "class-hobby-1.webp",
-              "caption": "디지털 드로잉반 수업",
-              "remote": "https://ilsan.anitok.com/gal/h0.webp"
+              "local": "class-midprep-2.webp",
+              "caption": "중등예비반 수업작"
+            }
+          }
+        ]
+      },
+      {
+        "name": "중등입시반",
+        "range": "중등 3학년",
+        "lead": "예고, 애니고 입시를 위한 정확한 전략을 제시합니다.",
+        "items": [
+          {
+            "image": {
+              "local": "class-midexam-1.webp",
+              "caption": "중등입시반 예시작"
+            }
+          }
+        ]
+      },
+      {
+        "name": "고등예비반",
+        "range": "고등 1-2학년",
+        "lead": "학생 개개인의 성향과 역량에 맞춰 입시를 대비합니다.",
+        "items": [
+          {
+            "image": {
+              "local": "class-highprep-1.webp",
+              "caption": "고등예비반 예시작"
+            }
+          }
+        ]
+      },
+      {
+        "name": "고등입시반",
+        "range": "고등 3학년",
+        "lead": "성적과 실기 모두 관리하는 입시 시스템을 제공합니다.",
+        "items": [
+          {
+            "image": {
+              "local": "class-highexam-1.webp",
+              "caption": "고등입시반 예시작"
             }
           }
         ]
@@ -234,134 +243,119 @@
   "galleries": [
     {
       "id": "gallery",
-      "kicker": "Campus",
+      "kicker": "CAMPUS",
       "title": "캠퍼스 둘러보기",
-      "lede": "김포 애니톡 만화애니학원의 학원 공간과 수업 현장입니다.",
+      "lede": "김포 애니톡 만화애니학원의 수업 공간이자 교육 현장입니다.",
       "items": [
         {
-          "local": "gal-1.webp",
-          "caption": "김포 학원 공간",
-          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/9a214195ed007.jpg"
+          "local": "room-junior.webp",
+          "caption": "주니어반"
         },
         {
-          "local": "gal-2.webp",
-          "caption": "김포 수업 현장",
-          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/bf4ed526967fd.jpg"
+          "local": "room-midprep.webp",
+          "caption": "중등예비반"
         },
         {
-          "local": "gal-3.webp",
-          "caption": "김포 작업 공간",
-          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/35d16f24e4a7e.jpg"
+          "local": "room-highprep.webp",
+          "caption": "고등예비반"
         },
         {
-          "local": "gal-4.webp",
-          "caption": "김포 학원 내부",
-          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/fdf97f761d2f3.jpg"
+          "local": "room-highexam.webp",
+          "caption": "고등입시반"
         },
         {
-          "local": "gal-5.webp",
-          "caption": "김포 드로잉 공간",
-          "remote": "https://cdn.imweb.me/upload/S202603232068c74b0c3ea/c1a630ef0230a.jpg"
+          "local": "room-cg.webp",
+          "caption": "CG반"
         }
       ]
     },
     {
       "id": "works",
-      "kicker": "Student Works",
-      "title": "학생 작품 갤러리",
-      "lede": "애니톡 학생들이 수업에서 완성한 작품입니다. 상황표현 · 칸만화 · 이미지보드 · 일러스트 등 입시와 취미 과정의 결과물을 모았습니다.",
+      "kicker": "STUDENT WORKS",
+      "title": "작품 갤러리",
+      "lede": "애니톡의 학생들과 선생님들의 작품을 소개합니다.",
       "items": [
         {
-          "local": "work-1.webp",
-          "caption": "학생 우수작 · 청강대 게임과 포트폴리오",
-          "remote": "https://cdn.imweb.me/thumbnail/20260324/849f8055ce7c2.jpg"
+          "local": "work-01.webp",
+          "caption": "주니어반 수업작"
         },
         {
-          "local": "work-2.webp",
-          "caption": "일러스트 · 애니톡 디지털드로잉",
-          "remote": "https://cdn.imweb.me/thumbnail/20260324/4293b0b86b882.png"
+          "local": "work-02.webp",
+          "caption": "주니어반 수업작"
         },
         {
-          "local": "work-3.webp",
-          "caption": "상황표현 · 2024 애니톡 상황표현 우수작",
-          "remote": "https://cdn.imweb.me/thumbnail/20260324/4769b4fe02da6.jpg"
+          "local": "work-03.webp",
+          "caption": "중등예비반 수업작"
         },
         {
-          "local": "work-4.webp",
-          "caption": "칸만화",
-          "remote": "https://cdn.imweb.me/thumbnail/20260324/e7da7a080d4dc.jpg"
+          "local": "work-04.webp",
+          "caption": "중등예비반 수업작"
         },
         {
-          "local": "work-5.webp",
-          "caption": "이미지보드 · 2024 애니톡 이미지보드 우수작",
-          "remote": "https://cdn.imweb.me/thumbnail/20260324/a564f2e23391b.jpg"
+          "local": "work-05.webp",
+          "caption": "중등예비반 수업작"
         },
         {
-          "local": "work-6.webp",
-          "caption": "학생 우수작 · 2019",
-          "remote": "https://cdn.imweb.me/thumbnail/20260324/da7fae33ec9be.jpg"
+          "local": "work-06.webp",
+          "caption": "애니톡 상황표현 연구작"
         },
         {
-          "local": "work-7.webp",
-          "caption": "일러스트 · 애니톡 디지털드로잉",
-          "remote": "https://cdn.imweb.me/thumbnail/20260324/4d699c0be5a71.jpg"
+          "local": "work-07.webp",
+          "caption": "애니톡 이미지보드 연구작"
         },
         {
-          "local": "work-8.webp",
-          "caption": "상황표현 · 2023 애니톡 상황표현 우수작",
-          "remote": "https://cdn.imweb.me/thumbnail/20260324/e489df464e17c.jpg"
+          "local": "work-08.webp",
+          "caption": "애니톡 칸만화 연구작"
         },
         {
-          "local": "work-9.webp",
-          "caption": "칸만화 · 2024 애니톡 칸만화 우수작",
-          "remote": "https://cdn.imweb.me/thumbnail/20260324/eb28c4d759fcd.jpg"
+          "local": "work-09.webp",
+          "caption": "고등예비반 수업작"
         },
         {
           "local": "work-10.webp",
-          "caption": "이미지보드 · 2024 애니톡 이미지보드 우수작",
-          "remote": "https://cdn.imweb.me/thumbnail/20260324/1a8cb8b329e6e.jpg"
+          "caption": "CG반 수업작"
         }
       ]
     }
   ],
   "faq": {
     "title": "자주 묻는 질문",
-    "lede": "김포만화학원 · 한강신도시 웹툰학원을 찾는 학부모님과 학생분들이 가장 많이 물어보신 내용입니다.",
+    "lede": "김포 만화학원·김포 웹툰학원·김포 미술학원을 찾는 학부모님들과 학생분들이 가장 많이 물어보시는 내용입니다.",
     "items": [
       {
-        "q": "어떤 반이 운영되나요?",
-        "a": "주니어반(초4~6), 중등 예비반(중1~3), 중등 입시반(중2~3), 고등 입시반(고1~3), 디지털 드로잉반(초4~성인)이 운영됩니다."
+        "q": "초등학생은 몇 학년부터 배울 수 있나요?",
+        "a": "주니어반은 4학년부터 수업이 가능합니다. 다만 3학년의 경우 테스트 후 수업에 참여가 가능하다고 판단될 시 수업이 가능합니다."
       },
       {
-        "q": "선생님들은 어떤 경력인가요?",
-        "a": "한예종, 청강대, 세종대 등 만화 · 애니 주요 대학 합격생을 배출한 강사진과, 목동 · 대치동 전과목 입시 25년 경력의 학원장이 함께 운영합니다."
+        "q": "CG반은 무엇을 배우나요?",
+        "a": "CG반은 드로잉 기초 및 디지털 프로그램 사용법부터 캐릭터 일러스트, 웹툰, 인스타툰 등 학생의 목표에 맞는 맞춤 수업이 진행됩니다."
       },
       {
-        "q": "초등학생도 등록할 수 있나요?",
-        "a": "주니어반은 초등 4학년부터 6학년까지 대상입니다. 디지털 드로잉반도 초등 4학년부터 수강할 수 있습니다."
+        "q": "선생님들의 경력은 어떻게 되나요?",
+        "a": "세종대·경기대 등 만화애니 주요 대학 졸업 후 현장 및 입시 경력을 쌓은 강사진, 대치동·목동 전과목 입시 25년 경력의 학원장이 운영하고 있습니다."
       },
       {
-        "q": "그림을 처음 배워도 괜찮나요?",
-        "a": "괜찮습니다. 중등 예비반과 주니어반은 기본기부터 시작하며, 상담에서 현재 실력을 보고 반과 진도를 배정합니다."
+        "q": "학원은 어디에 있나요?",
+        "a": "운양역 4번 출구 도보 3분, 현대센트럴 스퀘어 3층 316-318호입니다."
       },
       {
-        "q": "성인도 배울 수 있나요?",
-        "a": "디지털 드로잉반은 초등 4학년부터 성인까지 수강할 수 있습니다. 태블릿으로 캐릭터 디자인과 채색, 일러스트를 배웁니다."
-      },
-      {
-        "q": "학원 위치가 어떻게 되나요?",
-        "a": "경기도 김포시 김포한강1로 230 3층입니다. 네이버 지도에서 '김포 애니톡 만화애니학원'으로 검색하시면 길찾기가 가능합니다."
+        "q": "학원비는 어떻게 되나요?",
+        "a": "네이버 지도에서 ‘애니톡 만화애니학원 김포’를 검색하시면 확인이 가능합니다."
       }
     ]
   },
   "local": {
+    "kicker": "LOCAL",
+    "title": "지역별 과목별 안내",
+    "lede": "찾으시는 지역과 배우고싶은 과목에 맞는 안내 페이지입니다.",
     "area": "김포",
     "areaSlug": "gimpo",
     "subjects": [
       "manhwa",
       "webtoon",
       "ani",
-      "drawing"
+      "drawing",
+      "misul"
     ],
     "nearby": [
       {
@@ -369,26 +363,6 @@
         "slug": "hangang",
         "subject": "manhwa",
         "note": "한강신도시 권역 안에 있는 만화 수업입니다."
-      },
-      {
-        "area": "구래동",
-        "slug": "gurae",
-        "subject": "webtoon",
-        "note": "구래동 인근 학생들이 함께 수강하고 있습니다."
-      }
-    ],
-    "nearbyAll": [
-      {
-        "area": "한강신도시",
-        "slug": "hangang",
-        "subject": "manhwa",
-        "note": "한강신도시 권역 안에 있는 만화 수업입니다."
-      },
-      {
-        "area": "구래동",
-        "slug": "gurae",
-        "subject": "webtoon",
-        "note": "구래동 인근 학생들이 함께 수강하고 있습니다."
       },
       {
         "area": "장기동",
@@ -399,9 +373,83 @@
       {
         "area": "운양동",
         "slug": "unyang",
-        "subject": "ani",
-        "note": "운양동 인근에서도 다니는 학생들이 있습니다."
+        "subject": "manhwa",
+        "note": "학원이 있는 운양역 바로 앞 권역입니다."
+      },
+      {
+        "area": "구래동",
+        "slug": "gurae",
+        "subject": "webtoon",
+        "note": "구래동 인근 학생들이 함께 수강하고 있습니다."
+      },
+      {
+        "area": "구래동",
+        "slug": "gurae",
+        "subject": "misul",
+        "note": "구래동 인근 학생들이 함께 수강하고 있습니다."
+      },
+      {
+        "area": "장기동",
+        "slug": "janggi",
+        "subject": "misul",
+        "note": "장기동 인근 학생들도 함께 수강하고 있습니다."
+      },
+      {
+        "area": "운양동",
+        "slug": "unyang",
+        "subject": "misul",
+        "note": "학원이 있는 운양역 바로 앞 권역입니다."
       }
     ]
+  },
+  "process": null,
+  "hours": {
+    "line1": "평일 13:00-22:00",
+    "line2": "토요일 10:00-18:00",
+    "schemaOrg": [
+      "Mo-Fr 13:00-22:00",
+      "Sa 10:00-18:00"
+    ]
+  },
+  "nav": [
+    {
+      "label": "학원소개",
+      "href": "#about"
+    },
+    {
+      "label": "합격실적",
+      "href": "#results"
+    },
+    {
+      "label": "수업과목",
+      "href": "#classes"
+    },
+    {
+      "label": "갤러리",
+      "href": "#gallery"
+    },
+    {
+      "label": "작품 갤러리",
+      "href": "#works"
+    },
+    {
+      "label": "오시는 길",
+      "href": "#visit"
+    }
+  ],
+  "brandLogo": "https://cdn.imweb.me/thumbnail/20260323/40ecf7572706b.png",
+  "visit": {
+    "kicker": "VISIT",
+    "title": "오시는 길과 상담 안내",
+    "booking": "**네이버 예약으로 상담 시간을\n바로 정할 수 있습니다.**\n원하는 날짜와 시간을\n선택해 주세요",
+    "bookingBtn": "상담 시간 정하기",
+    "consult": "**온라인 상담 문의**로\n궁금한 점을 편하게 남겨 주세요",
+    "consultBtn": "",
+    "socialNoPlace": true
+  },
+  "skin": "ppt",
+  "brandWord": {
+    "main": "ANITALK",
+    "sub": "ANIMATION CARTOON PROFESSIONAL SCHOOL"
   }
 }
